@@ -15,6 +15,7 @@
 #include "NJLDimensionfulCouplings.h"
 #include "SU3NJL3DCutoff.h"
 #include "SU3NJL3DCutoffVacuum.h"
+#include "SU3NJL3DCutoffFixedChemPotTemp.h"
 #include "SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h"
 #include "SU3NJL3DCutoffBetaEqFixedTempRhoB.h"
 #include "SU3NJL3DCutoffMesonPropagators.h"
@@ -244,7 +245,19 @@ int main(void)
     double k = 0.9;
     double aux = realKlevanskyA3DCutoffNEW(cutoffEverywhere, Lambda, T, effCP1, M1, k, 1E-10);
 
-    cout << aux << "\n";
+    cout << aux << "\n\n";
+
+
+    //find solution in the at finite temperature and fixed chemical potentials
+    SU3NJL3DCutoffFixedChemPotTemp inMedium(parameters, 0.215, 0.0, 0.0, 0.0);
+    inMedium.solve(1E-8, hybrids, vacuum.getUpQuarkEffectiveMass(), 
+                                  vacuum.getDownQuarkEffectiveMass(), 
+                                  vacuum.getStrangeQuarkEffectiveMass());
+
+    cout << "inMediumSolution=" << inMedium.testSolution(1E-8) << "\n";
+    cout << "Mu=" << inMedium.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << inMedium.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << inMedium.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
 
 

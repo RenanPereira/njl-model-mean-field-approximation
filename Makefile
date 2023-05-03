@@ -8,7 +8,11 @@ DEPS = src/rootSolverGSL.h src/OneVariableFunction.h src/Interpolation1DimGSL.h 
 	 src/UnitaryGroup3Dimensions.h \
        src/generalPhysicsAndMath.h src/OneFermionLineIntegral.h src/TwoFermionLineIntegral.h \
        src/NJLDimensionfulCouplings.h \
-       src/SU3NJL3DCutoff.h src/SU3NJL3DCutoffVacuum.h src/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h src/SU3NJL3DCutoffBetaEqFixedTempRhoB.h \
+       src/SU3NJL3DCutoff.h \
+       src/SU3NJL3DCutoffVacuum.h \
+       src/SU3NJL3DCutoffFixedChemPotTemp.h \
+       src/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h \
+       src/SU3NJL3DCutoffBetaEqFixedTempRhoB.h \
        src/SU3NJL3DCutoffMesonProjectors.h src/SU3NJL3DCutoffMesonPropagators.h \
        src/SU3NJL3DCutoffDifferentialCrossSections.h src/SU3NJL3DCutoffCrossSections.h src/SU3NJL3DCutoffIntegratedCrossSections.h 
 
@@ -18,7 +22,11 @@ OBJ = obj/main.o \
       obj/UnitaryGroup3Dimensions.o \
       obj/generalPhysicsAndMath.o obj/OneFermionLineIntegral.o obj/TwoFermionLineIntegral.o \
       obj/NJLDimensionfulCouplings.o \
-      obj/SU3NJL3DCutoff.o obj/SU3NJL3DCutoffVacuum.o obj/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.o obj/SU3NJL3DCutoffBetaEqFixedTempRhoB.o \
+      obj/SU3NJL3DCutoff.o \
+      obj/SU3NJL3DCutoffVacuum.o \
+      obj/SU3NJL3DCutoffFixedChemPotTemp.o \
+      obj/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.o \
+      obj/SU3NJL3DCutoffBetaEqFixedTempRhoB.o \
       obj/SU3NJL3DCutoffMesonProjectors.o obj/SU3NJL3DCutoffMesonPropagators.o \
       obj/SU3NJL3DCutoffDifferentialCrossSections.o obj/SU3NJL3DCutoffCrossSections.o obj/SU3NJL3DCutoffIntegratedCrossSections.o
 
