@@ -273,7 +273,7 @@ int main(void)
     double effMassU = inMedium.getUpQuarkEffectiveMass();
     double effMassD = inMedium.getDownQuarkEffectiveMass();
     double effMassS = inMedium.getStrangeQuarkEffectiveMass();
-
+/*
     scatteringProcess process = UUUU;
     evaluateCrossSectionProcess12To34ToFile(parameters, T, 
                                             effChemPotU, effChemPotD, effChemPotS, 
@@ -281,7 +281,7 @@ int main(void)
                                             1E-8, process,  
                                             false, 1E-4,
                                             20);
-
+*/
 /*
     evaluateCrossSectionsKlevanskyPaper(parameters, T, 
                                         effChemPotU, effChemPotD, effChemPotS, 
@@ -290,6 +290,20 @@ int main(void)
                                         false, 1E-4,
                                         200);
 */
+    double cutoff3DAux = 0.60229999999999994653;
+    double TAux = 0.21499999999999999667;
+    double effChemPot1Aux = 0.00000000000000000000;
+    double effChemPot2Aux = 0.00000000000000000000;
+    double effMass1Aux = 0.07583397596444776956;
+    double effMass2Aux = 0.07583397596449900635;
+    double zeroMomAux = -0.00000000000000642859;
+    double threeMomAux = 0.84797571231830937144;
+    double etaAux = 1.00000000000000000000;
+
+    double aux = real16Pi2f1Scat3DCutoff(TAux, effChemPot1Aux, effChemPot2Aux, cutoff3DAux, effMass1Aux, effMass2Aux, zeroMomAux, threeMomAux, 1E-8);
+    cout << aux << "\n";
+
+
 
 	//STOP CLOCK AND PRINT RUN TIME
     double stop_s = omp_get_wtime();

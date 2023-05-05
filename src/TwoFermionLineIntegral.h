@@ -100,6 +100,19 @@ public:
 
     void printIntegrandVariables() override
     {   
+        printf("integralID = %s\n", integralID.c_str());
+        printf("cutoff3D = %.20f\n", threeMomentumCutoff);
+        printf("T = %.20f\n", temperature);
+        printf("effChemPot1 = %.20f\n", effectiveChemicalPotential1);
+        printf("effChemPot2 = %.20f\n", effectiveChemicalPotential2);
+        printf("effMass1 = %.20f\n", effectiveMass1);
+        printf("effMass2 = %.20f\n", effectiveMass2);
+        printf("zeroMom = %.20f\n", zeroMomentum);
+        printf("threeMom = %.20f\n", threeMomentum);
+        printf("eta = %.20f\n", etaVariable);
+        /*
+        int defaultPrecision = int(cout.precision());
+        cout << setprecision(15); //must include #include <iomanip>
         cout << "integralID = " << integralID << "\n";
         cout << "cutoff3D = " << threeMomentumCutoff << "\n";
         cout << "T = " << temperature << "\n";
@@ -110,12 +123,8 @@ public:
         cout << "zeroMom = " << zeroMomentum << "\n";
         cout << "threeMom = " << threeMomentum << "\n";
         cout << "eta = "  << etaVariable << "\n";
-        cout << "(cutoff3D, T, effChemPot1, effChemPot2, effMass1, effMass2, extZeroMom, extThreeMom, eta)\n";
-        cout << "(" << threeMomentumCutoff << ", " << temperature << ", " 
-                    << effectiveChemicalPotential1 << ", " << effectiveChemicalPotential2 << ", "
-                    << effectiveMass1 << ", " << effectiveMass2 << ", "
-                    << zeroMomentum << ", " << threeMomentum << ", "
-                    << etaVariable << ")" << "\n";
+        cout << setprecision(defaultPrecision);
+        */
     }
 };
 
