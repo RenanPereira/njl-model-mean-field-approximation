@@ -131,5 +131,20 @@ double crossSectionProcess12To34(SU3NJL3DCutoffParameters , double ,
                                  double , double , scatteringProcess ,
                                  bool , double );
 
+void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters , double , 
+                                             double , double , double , 
+                                             double , double , double , 
+                                             double , scatteringProcess , 
+                                             bool , double ,
+                                             int );
+
+void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters , double , 
+                                         double , double , double , 
+                                         double , double , double , 
+                                         double , 
+                                         bool , double ,
+                                         int );
+
+
 
 #endif

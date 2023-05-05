@@ -1,5 +1,9 @@
 #include <cmath>
 #include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <omp.h>
+#include "generalPhysicsAndMath.h"
 #include "SU3NJL3DCutoffCrossSections.h"
 
 
@@ -233,10 +237,99 @@ double crossSectionProcess12To34(SU3NJL3DCutoffParameters parametersNJL, double 
     //include the Fermi blocking factor for the final states 
     crossSection = crossSection*( 1.0 - fermiDistribution(T, E3 - cP3) )*( 1.0 - fermiDistribution(T, E4 - cP4) );
 
+    //for processes involving completely identical particles, we have to remove extra counting
+    if ( process==UUUU || process==DDDD || process==SSSS ){ crossSection = 0.5*crossSection; }
+
     return crossSection;
 }
 
 
+void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters parametersNJL, double T, 
+                                             double effChemPotU, double effChemPotD, double effChemPotS, 
+                                             double effMassU, double effMassD, double effMassS, 
+                                             double propIntPrecision, scatteringProcess process, 
+                                             bool largeAngleScatteringContribution, double crossSecIntPrecision,
+                                             int numberOfPoints)
+{   
+    //create arrays to save the calculation of the cross sections as a function of the center of mass energy
+    vector<double> sqrtCenterOfMassEnergy(numberOfPoints);
+    vector<double> crossSection(numberOfPoints);
 
 
+    //set incoming and outgoing masses
+    double m1, m2, m3, m4;
+    inOutMassesGivenScatteringProcess(effMassU, effMassD, effMassS, process, m1, m2, m3, m4);
+
+
+    //calculate quantities for iteration
+    double sqrtCenterOfMassMin = sqrt( centerOfMassEnergyThreshold( m1, m2, m3, m4) + 1E-8 );
+    double sqrtCenterOfMassMax = sqrt( sMaximumKlevansky(parametersNJL.getThreeMomentumCutoff(), effMassU, effMassD, effMassS) );
+    double sqrtDelta = (sqrtCenterOfMassMax - sqrtCenterOfMassMin)/(numberOfPoints-1);
+
+
+    int numberThreads = omp_get_max_threads() - 2; //leave one thread free
+    cout << "Number of threads being used: " << numberThreads << "\n";
+    #pragma omp parallel for schedule(dynamic) num_threads( numberThreads )
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        sqrtCenterOfMassEnergy[i] = sqrtCenterOfMassMin + i*sqrtDelta;
+        double s = pow(sqrtCenterOfMassEnergy[i],2);
+        crossSection[i] = crossSectionProcess12To34(parametersNJL, T, 
+                                                    effChemPotU, effChemPotD, effChemPotS, 
+                                                    effMassU, effMassD, effMassS, 
+                                                    s, propIntPrecision, process, 
+                                                    largeAngleScatteringContribution, crossSecIntPrecision);
+        crossSection[i] = inverseGeVSquaredToMiliBarn*crossSection[i];
+    }
+
+
+    //create filename
+    string fileName = "crossSection" 
+                    + scatteringProcessToString(process) 
+                    + "_T" + to_string(T) 
+                    + "_CPU" + to_string(effChemPotU)
+                    + "_CPD" + to_string(effChemPotD)
+                    + "_CPS" + to_string(effChemPotS);
+    std::replace( fileName.begin(), fileName.end(), '.', ','); 
+    fileName = fileName + ".dat";
+
+
+    std::ofstream fileCrossSection;
+    fileCrossSection.open(fileName, std::ofstream::out | std::ios::trunc);
+    fileCrossSection.precision(15);
+    for (int i = 0; i <numberOfPoints; ++i)
+    {
+        fileCrossSection.width(25);   fileCrossSection << sqrtCenterOfMassEnergy[i];
+        fileCrossSection.width(25);   fileCrossSection << crossSection[i];
+        fileCrossSection << std::endl;
+    }
+    fileCrossSection.close();
+
+}
+
+
+void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters parametersNJL, double T, 
+                                         double effChemPotU, double effChemPotD, double effChemPotS, 
+                                         double effMassU, double effMassD, double effMassS, 
+                                         double propIntPrecision, 
+                                         bool largeAngleScatteringContribution, double crossSecIntPrecision,
+                                         int numberOfPoints)
+{   
+    vector<scatteringProcess> processes = { UDUD, USUS, UUUU, SSSS,
+                                            UDBarUDBar, USBarUSBar,
+                                            UUBarUUBar, UUBarDDBar, UUBarSSBar,
+                                            SSBarUUBar, SSBarSSBar };
+
+    for (int i = 0; i < int(processes.size()); ++i)
+    {
+        cout << "Calculating cross section for the process: " << scatteringProcessToString(processes[i]) << "\n";
+        evaluateCrossSectionProcess12To34ToFile(parametersNJL, T, 
+                                                effChemPotU, effChemPotD, effChemPotS, 
+                                                effMassU, effMassD, effMassS, 
+                                                propIntPrecision, processes[i], 
+                                                largeAngleScatteringContribution, crossSecIntPrecision,
+                                                numberOfPoints);   
+    }
+
+}
 

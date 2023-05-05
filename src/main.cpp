@@ -84,7 +84,7 @@ int main(void)
          << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
-
+/*
     double pressureVac = vacuum.calculatePressure();
     double energyVac = vacuum.calculateEnergyDensity();
     cout << "pressure=" << pressureVac << "\n";
@@ -92,7 +92,7 @@ int main(void)
 
     double pressureVacElec = vacuum.calculateVacuumPressureElectrons(electronMass_GeV);
     cout << "pressureElec=" << pressureVacElec << "\n";
-
+*/
 
 /*
     SU3NJL3DCutoffEqualChemPotFixedTempRhoB inMedium(parameters);
@@ -229,7 +229,7 @@ int main(void)
 
     cout << test2OG << "\n";
 */
-
+/*
     int a = 6;
     int b = 1;
     int c = 5;
@@ -245,11 +245,18 @@ int main(void)
     double k = 0.9;
     double aux = realKlevanskyA3DCutoffNEW(cutoffEverywhere, Lambda, T, effCP1, M1, k, 1E-10);
 
-    cout << aux << "\n\n";
+    cout << aux << "\n";
+    cout << "\n\n";
+    
+*/  
 
+    double T = 0.215;
+    double effChemPotU = 0.0;
+    double effChemPotD = 0.0;
+    double effChemPotS = 0.0;
 
     //find solution in the at finite temperature and fixed chemical potentials
-    SU3NJL3DCutoffFixedChemPotTemp inMedium(parameters, 0.215, 0.0, 0.0, 0.0);
+    SU3NJL3DCutoffFixedChemPotTemp inMedium(parameters, T, effChemPotU, effChemPotD, effChemPotS);
     inMedium.solve(1E-8, hybrids, vacuum.getUpQuarkEffectiveMass(), 
                                   vacuum.getDownQuarkEffectiveMass(), 
                                   vacuum.getStrangeQuarkEffectiveMass());
@@ -260,9 +267,29 @@ int main(void)
          << "Ms=" << inMedium.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
 
+    cout << "\n\n";
 
 
+    double effMassU = inMedium.getUpQuarkEffectiveMass();
+    double effMassD = inMedium.getDownQuarkEffectiveMass();
+    double effMassS = inMedium.getStrangeQuarkEffectiveMass();
 
+    scatteringProcess process = UUUU;
+    evaluateCrossSectionProcess12To34ToFile(parameters, T, 
+                                            effChemPotU, effChemPotD, effChemPotS, 
+                                            effMassU, effMassD, effMassS, 
+                                            1E-8, process,  
+                                            false, 1E-4,
+                                            20);
+
+/*
+    evaluateCrossSectionsKlevanskyPaper(parameters, T, 
+                                        effChemPotU, effChemPotD, effChemPotS, 
+                                        effMassU, effMassD, effMassS, 
+                                        1E-8,
+                                        false, 1E-4,
+                                        200);
+*/
 
 	//STOP CLOCK AND PRINT RUN TIME
     double stop_s = omp_get_wtime();
