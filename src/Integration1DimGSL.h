@@ -287,9 +287,13 @@ class Integration1DimGSLQAWCQAGS : public Integration1DimGSL
 private:
 	ChangeQAWCToQAGSParameters numeratorParameters;
 	double singularity;
+	double minimumDistanceBetweenBoundAndSingularity = 0.0;
 
 public:
 	Integration1DimGSLQAWCQAGS(double , double , double, GeneralIntegrandParameters* , double (double, void*), double , double , int );
+	Integration1DimGSLQAWCQAGS(double , double , double, GeneralIntegrandParameters* , double (double, void*), double , double , int , double);
+
+	bool isSingularityInsideTheIntegrationInterval();
 
 	double getSingularity(){ return singularity; }
 

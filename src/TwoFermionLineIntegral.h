@@ -124,6 +124,12 @@ public:
         cout << "threeMom = " << threeMomentum << "\n";
         cout << "eta = "  << etaVariable << "\n";
         cout << setprecision(defaultPrecision);
+        cout << "(cutoff3D, T, effChemPot1, effChemPot2, effMass1, effMass2, extZeroMom, extThreeMom, eta)\n";
+        cout << "(" << threeMomentumCutoff << ", " << temperature << ", " 
+                    << effectiveChemicalPotential1 << ", " << effectiveChemicalPotential2 << ", "
+                    << effectiveMass1 << ", " << effectiveMass2 << ", "
+                    << zeroMomentum << ", " << threeMomentum << ", "
+                    << etaVariable << ")" << "\n";
         */
     }
 };

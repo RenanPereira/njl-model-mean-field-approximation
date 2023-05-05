@@ -883,15 +883,15 @@ double real16Pi2f1Pair3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(+1.0);
 
         aux.setIntegralID("realf1PairPlus_A_g1");
-        Integration1DimGSLQAWCQAGS realf1PairPlus_A_g1(A, g1, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairPlus_A_g1(A, g1, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairPlus_A_g1.evaluate();
 
         aux.setIntegralID("realf1PairPlus_g1_g2");
-        Integration1DimGSLQAWCQAGS realf1PairPlus_g1_g2(g1, g2, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairPlus_g1_g2(g1, g2, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairPlus_g1_g2.evaluate();
 
         aux.setIntegralID("realf1PairPlus_g2_B");
-        Integration1DimGSLQAWCQAGS realf1PairPlus_g2_B(g2, B, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairPlus_g2_B(g2, B, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairPlus_g2_B.evaluate();
 
         ////////////////////////////////////////
@@ -899,15 +899,15 @@ double real16Pi2f1Pair3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(-1.0);
 
         aux.setIntegralID("realf1PairMinus_A_g1");
-        Integration1DimGSLQAWCQAGS realf1PairMinus_A_g1(A, g1, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairMinus_A_g1(A, g1, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairMinus_A_g1.evaluate();
 
         aux.setIntegralID("realf1PairMinus_g1_g2");
-        Integration1DimGSLQAWCQAGS realf1PairMinus_g1_g2(g1, g2, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairMinus_g1_g2(g1, g2, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairMinus_g1_g2.evaluate();
 
         aux.setIntegralID("realf1PairMinus_g2_B");
-        Integration1DimGSLQAWCQAGS realf1PairMinus_g2_B(g2, B, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairMinus_g2_B(g2, B, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairMinus_g2_B.evaluate();
     }
     else if( M1>M2 && fabs(M1-M2)>TFLI_ZERO_MASS_DIFFERENCE )  //in this case g1>=g2
@@ -917,15 +917,15 @@ double real16Pi2f1Pair3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(+1.0);
 
         aux.setIntegralID("realf1PairPlus_A_g2");
-        Integration1DimGSLQAWCQAGS realf1PairPlus_A_g2(A, g2, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairPlus_A_g2(A, g2, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairPlus_A_g2.evaluate();
 
         aux.setIntegralID("realf1PairPlus_g2_g1");
-        Integration1DimGSLQAWCQAGS realf1PairPlus_g2_g1(g2, g1, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairPlus_g2_g1(g2, g1, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairPlus_g2_g1.evaluate();
 
         aux.setIntegralID("realf1PairPlus_g1_B");
-        Integration1DimGSLQAWCQAGS realf1PairPlus_g1_B(g1, B, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairPlus_g1_B(g1, B, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairPlus_g1_B.evaluate();
 
         ////////////////////////////////////////
@@ -933,15 +933,15 @@ double real16Pi2f1Pair3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(-1.0);
 
         aux.setIntegralID("realf1PairMinus_A_g2");
-        Integration1DimGSLQAWCQAGS realf1PairMinus_A_g2(A, g2, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairMinus_A_g2(A, g2, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairMinus_A_g2.evaluate();
 
         aux.setIntegralID("realf1PairMinus_g2_g1");
-        Integration1DimGSLQAWCQAGS realf1PairMinus_g2_g1(g2, g1, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairMinus_g2_g1(g2, g1, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairMinus_g2_g1.evaluate();
 
         aux.setIntegralID("realf1PairMinus_g1_B");
-        Integration1DimGSLQAWCQAGS realf1PairMinus_g1_B(g1, B, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairMinus_g1_B(g1, B, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairMinus_g1_B.evaluate();
     }
     else //M1==M2, in this case g2==g1
@@ -951,11 +951,11 @@ double real16Pi2f1Pair3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(+1.0);
 
         aux.setIntegralID("realf1PairPlus_A_g1");
-        Integration1DimGSLQAWCQAGS realf1PairPlus_A_g1(A, g1, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairPlus_A_g1(A, g1, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairPlus_A_g1.evaluate();
 
         aux.setIntegralID("realf1PairPlus_g1_B");
-        Integration1DimGSLQAWCQAGS realf1PairPlus_g1_B(g1, B, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairPlus_g1_B(g1, B, -sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairPlus_g1_B.evaluate();
 
         ////////////////////////////////////////
@@ -963,11 +963,11 @@ double real16Pi2f1Pair3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(-1.0);
 
         aux.setIntegralID("realf1PairMinus_A_g1");
-        Integration1DimGSLQAWCQAGS realf1PairMinus_A_g1(A, g1, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairMinus_A_g1(A, g1, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairMinus_A_g1.evaluate();
 
         aux.setIntegralID("realf1PairMinus_g1_B");
-        Integration1DimGSLQAWCQAGS realf1PairMinus_g1_B(g1, B, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1PairMinus_g1_B(g1, B, +sing, &aux, real16Pi2f1Pair3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Pair = real16Pi2f1Pair + realf1PairMinus_g1_B.evaluate();
 
     }
@@ -1117,15 +1117,15 @@ double real16Pi2f1Scat3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(+1.0);
 
         aux.setIntegralID("realf1ScatPlus_a_L");
-        Integration1DimGSLQAWCQAGS realf1ScatPlus_a_L(a, L, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatPlus_a_L(a, L, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatPlus_a_L.evaluate();
 
         aux.setIntegralID("realf1ScatPlus_L_g2");
-        Integration1DimGSLQAWCQAGS realf1ScatPlus_L_g2(L, g2, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatPlus_L_g2(L, g2, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatPlus_L_g2.evaluate();
 
         aux.setIntegralID("realf1ScatPlus_g2_b");
-        Integration1DimGSLQAWCQAGS realf1ScatPlus_g2_b(g2, b, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatPlus_g2_b(g2, b, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatPlus_g2_b.evaluate();
 
         ////////////////////////////////////////
@@ -1133,15 +1133,15 @@ double real16Pi2f1Scat3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(-1.0);
 
         aux.setIntegralID("realf1ScatMinus_a_L");
-        Integration1DimGSLQAWCQAGS realf1ScatMinus_a_L(a, L, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatMinus_a_L(a, L, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatMinus_a_L.evaluate();
 
         aux.setIntegralID("realf1ScatMinus_L_g2");
-        Integration1DimGSLQAWCQAGS realf1ScatMinus_L_g2(L, g2, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatMinus_L_g2(L, g2, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatMinus_L_g2.evaluate();
 
         aux.setIntegralID("realf1ScatMinus_g2_b");
-        Integration1DimGSLQAWCQAGS realf1ScatMinus_g2_b(g2, b, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatMinus_g2_b(g2, b, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatMinus_g2_b.evaluate();
     }
     else if ( M1>M2 && fabs(M1-M2)>TFLI_ZERO_MASS_DIFFERENCE )  //in this case, g1 is inside the interval of integration and g2 is not; L also separates the integration but g1<L;
@@ -1151,15 +1151,15 @@ double real16Pi2f1Scat3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(+1.0);
 
         aux.setIntegralID("realf1ScatPlus_a_g1");
-        Integration1DimGSLQAWCQAGS realf1ScatPlus_a_g1(a, g1, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatPlus_a_g1(a, g1, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatPlus_a_g1.evaluate();
 
         aux.setIntegralID("realf1ScatPlus_g1_L");
-        Integration1DimGSLQAWCQAGS realf1ScatPlus_g1_L(g1, L, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatPlus_g1_L(g1, L, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatPlus_g1_L.evaluate();
 
         aux.setIntegralID("realf1ScatPlus_L_b");
-        Integration1DimGSLQAWCQAGS realf1ScatPlus_L_b(L, b, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatPlus_L_b(L, b, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatPlus_L_b.evaluate();
 
         ////////////////////////////////////////
@@ -1167,15 +1167,15 @@ double real16Pi2f1Scat3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(-1.0);
 
         aux.setIntegralID("realf1ScatMinus_a_g1");
-        Integration1DimGSLQAWCQAGS realf1ScatMinus_a_g1(a, g1, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatMinus_a_g1(a, g1, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatMinus_a_g1.evaluate();
 
         aux.setIntegralID("realf1ScatMinus_g1_L");
-        Integration1DimGSLQAWCQAGS realf1ScatMinus_g1_L(g1, L, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatMinus_g1_L(g1, L, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatMinus_g1_L.evaluate();
 
         aux.setIntegralID("realf1ScatMinus_L_b");
-        Integration1DimGSLQAWCQAGS realf1ScatMinus_L_b(L, b, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatMinus_L_b(L, b, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatMinus_L_b.evaluate();
     }
     else  //M1==M2, in this case g1==a and g2=b, only the L point separates the integration
@@ -1185,11 +1185,11 @@ double real16Pi2f1Scat3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(+1.0);
 
         aux.setIntegralID("realf1ScatPlus_a_L");
-        Integration1DimGSLQAWCQAGS realf1ScatPlus_a_L(a, L, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatPlus_a_L(a, L, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatPlus_a_L.evaluate();
 
         aux.setIntegralID("realf1ScatPlus_L_b");
-        Integration1DimGSLQAWCQAGS realf1ScatPlus_L_b(L, b, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatPlus_L_b(L, b, -sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatPlus_L_b.evaluate();
 
         ////////////////////////////////////////
@@ -1197,11 +1197,11 @@ double real16Pi2f1Scat3DCutoff(double T, double effCP1, double effCP2, double cu
         aux.setEtaVariable(-1.0);
 
         aux.setIntegralID("realf1ScatMinus_a_L");
-        Integration1DimGSLQAWCQAGS realf1ScatMinus_a_L(a, L, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatMinus_a_L(a, L, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatMinus_a_L.evaluate();
 
         aux.setIntegralID("realf1ScatMinus_L_b");
-        Integration1DimGSLQAWCQAGS realf1ScatMinus_L_b(L, b, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace);
+        Integration1DimGSLQAWCQAGS realf1ScatMinus_L_b(L, b, +sing, &aux, real16Pi2f1Scat3DCutoffNumerator, integralPrecision, integralPrecision, integrationWorkspace, TFLI_ZERO);
         real16Pi2f1Scat = real16Pi2f1Scat + realf1ScatMinus_L_b.evaluate();
     }
 
@@ -1356,6 +1356,9 @@ double real16Pi2f1PairZero3Momentum3DCutoffNumerator(double E, void *parameters)
 double real16Pi2f1PairZero3Momentum3DCutoff(double T, double effCP1, double effCP2, double cutoff, double M1, double M2, double w, double integralPrecision)
 {   
     int integrationWorkspace = 1000;
+
+    //this is a temporary trick to perform some integrations, the case of equal masses and zero momentum has to be implemented
+    if ( fabs(M1-M2)<TFLI_ZERO_MASS_DIFFERENCE ){ M2 = M2 + TFLI_ZERO; }
 
     double A = E0(M1, M2);
     double B = ELambda(cutoff, M1, M2);

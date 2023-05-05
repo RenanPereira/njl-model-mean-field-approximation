@@ -454,9 +454,46 @@ Integration1DimGSLQAWCQAGS::Integration1DimGSLQAWCQAGS(double lowerBoundAux, dou
 }
 
 
+Integration1DimGSLQAWCQAGS::Integration1DimGSLQAWCQAGS(double lowerBoundAux, double upperBoundAux, double singularityAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux , double minimumDistanceBetweenBoundAndSingularityAux)
+{   
+    setVariables(lowerBoundAux, upperBoundAux, integrandParametersAux, integrand, absolutePrecisionAux, relativePrecisionAux, workspaceLimitSizeAux);
+
+    singularity = singularityAux;
+
+    minimumDistanceBetweenBoundAndSingularity = minimumDistanceBetweenBoundAndSingularityAux;
+
+    numeratorParameters = ChangeQAWCToQAGSParameters(integrandParameters, integrand, singularity);
+}
+
+
+bool Integration1DimGSLQAWCQAGS::isSingularityInsideTheIntegrationInterval()
+{
+    if ( fabs(lowerBound-upperBound)<1E-15 )
+    {
+        //in this case we consider that lowerBound==upperBound!
+        return false;
+    }
+    else
+    {
+        if ( lowerBound<upperBound )
+        {
+            if ( lowerBound<singularity && singularity<upperBound ){ return true; }
+            else{ return false; }
+        }
+        else
+        {
+            if ( upperBound<singularity && singularity<lowerBound ){ return true; }
+            else{ return false; }
+        }
+    }
+}
+
+
 double Integration1DimGSLQAWCQAGS::evaluate()
 {   
-    if ( lowerBound<singularity && singularity<upperBound )
+    if ( isSingularityInsideTheIntegrationInterval()==true && 
+         fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
+         fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity )
     {   
         //evaluate the principal value of the integral
         Integration1DimGSLQAWC integralQAWC(lowerBound, upperBound, singularity, integrandParameters, F.function, absolutePrecision, relativePrecision, workspaceLimitSize);
