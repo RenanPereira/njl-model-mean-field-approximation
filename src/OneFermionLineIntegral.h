@@ -60,6 +60,23 @@ gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double 
 
 double sigmaNJL3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
 
+double gEEta(double , double , double , double , double , double , double , double );
+
+double realKlevanskyAPair3DCutoffIntegrand(double , void *);
+
+double realKlevanskyAPair3DCutoff(double , double , double , double , double , double , double );
+
+double gEpsilonEta(double , double , double , double , double , double , double , double );
+
+double realKlevanskyAScat3DCutoffIntegrand(double , void *);
+
+double realKlevanskyAScat3DCutoff(double , double , double , double , double , double , double );
+
+double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
+
+gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
+
+/*
 double f0kVacuum(double , double , double );
 
 double f0kConvergentIntegrand1(double , void *);
@@ -73,20 +90,6 @@ double f03DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , d
 double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
 
 gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
-
-
-double gEEta(double , double , double , double , double , double , double , double );
-
-double realKlevanskyAPair3DCutoffIntegrand(double , void *);
-
-double realKlevanskyAPair3DCutoff(double , double , double , double , double , double , double );
-
-double gEpsilonEta(double , double , double , double , double , double , double , double );
-
-double realKlevanskyAScat3DCutoffIntegrand(double , void *);
-
-double realKlevanskyAScat3DCutoff(double , double , double , double , double , double , double );
-
-double realKlevanskyA3DCutoffNEW(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
+*/
 
 #endif
