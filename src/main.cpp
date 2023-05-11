@@ -235,25 +235,14 @@ int main(void)
     int c = 5;
     gsl_complex fabc = unitaryGroup3DCalculateAntisymmetricStructureConstant(a, b, c);
 
-    cout << GSL_REAL(fabc) << "\t" << GSL_IMAG(fabc) << "\n\n";
-
-
-    double T = 0.3;
-    double effCP1 = 0.3;
-    double Lambda = 1.0;
-    double M1 = 0.3;
-    double k = 0.9;
-    double aux = realKlevanskyA3DCutoffNEW(cutoffEverywhere, Lambda, T, effCP1, M1, k, 1E-10);
-
-    cout << aux << "\n";
-    cout << "\n\n";
-    
+    cout << GSL_REAL(fabc) << "\t" << GSL_IMAG(fabc) << "\n\n";    
 */  
 
+/*
     double T = 0.215;
-    double effChemPotU = 0.0;
-    double effChemPotD = 0.0;
-    double effChemPotS = 0.0;
+    double effChemPotU = 0.6;
+    double effChemPotD = 0.6;
+    double effChemPotS = 0.6;
 
     //find solution in the at finite temperature and fixed chemical potentials
     SU3NJL3DCutoffFixedChemPotTemp inMedium(parameters, T, effChemPotU, effChemPotD, effChemPotS);
@@ -273,22 +262,41 @@ int main(void)
     double effMassU = inMedium.getUpQuarkEffectiveMass();
     double effMassD = inMedium.getDownQuarkEffectiveMass();
     double effMassS = inMedium.getStrangeQuarkEffectiveMass();
-/*
-    scatteringProcess process = UUUU;
-    evaluateCrossSectionProcess12To34ToFile(parameters, T, 
-                                            effChemPotU, effChemPotD, effChemPotS, 
-                                            effMassU, effMassD, effMassS, 
-                                            1E-8, process,  
-                                            false, 1E-4,
-                                            20);
 */
 
+    double effMassU, effMassD, effMassS;
+
+    double T = 0.250;
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, hybrids);
+
+    effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
+    effMassD = finiteTempSol[int(finiteTempSol.size()-1)].getDownQuarkEffectiveMass();
+    effMassS = finiteTempSol[int(finiteTempSol.size()-1)].getStrangeQuarkEffectiveMass();
+
+    cout << "Mu=" << effMassU << "GeV" << "\t" 
+         << "Md=" << effMassD << "GeV" << "\t" 
+         << "Ms=" << effMassS << "GeV" << "\n";
+
+
+    double chemPot = 0.300;
+    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, hybrids);
+
+    effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
+    effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();
+    effMassS = inMediumSol[int(inMediumSol.size()-1)].getStrangeQuarkEffectiveMass();
+
+    cout << "Mu=" << effMassU << "GeV" << "\t" 
+         << "Md=" << effMassD << "GeV" << "\t" 
+         << "Ms=" << effMassS << "GeV" << "\n";
+
+
     evaluateCrossSectionsKlevanskyPaper(parameters, T, 
-                                        effChemPotU, effChemPotD, effChemPotS, 
+                                        chemPot, chemPot, chemPot, 
                                         effMassU, effMassD, effMassS, 
                                         1E-8,
                                         false, 1E-4,
                                         200);
+
 
 
 

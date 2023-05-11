@@ -4,6 +4,8 @@
 #include <vector>
 #include "generalPhysicsAndMath.h"
 #include "NJLDimensionfulCouplings.h"
+#include "SU3NJL3DCutoffVacuum.h"
+
 using namespace std;
 
 
@@ -13,9 +15,9 @@ private:
 	SU3NJL3DCutoffParameters parametersNJL;
 
 	double temperature;
-	double upQuarkEffectiveChemicalPotential;
-	double downQuarkEffectiveChemicalPotential;
-	double strangeQuarkEffectiveChemicalPotential;
+	double upQuarkChemicalPotential;
+	double downQuarkChemicalPotential;
+	double strangeQuarkChemicalPotential;
 
 	double upQuarkEffectiveMass = 0.0/0.0;
 	double downQuarkEffectiveMass = 0.0/0.0;
@@ -34,9 +36,9 @@ public:
 	double getUpQuarkEffectiveMass(){ return upQuarkEffectiveMass; };
 	double getDownQuarkEffectiveMass(){ return downQuarkEffectiveMass; };
 	double getStrangeQuarkEffectiveMass(){ return strangeQuarkEffectiveMass; };
-	double getUpQuarkEffectiveChemicalPotential(){ return upQuarkEffectiveChemicalPotential; };
-	double getDownQuarkEffectiveChemicalPotential(){ return downQuarkEffectiveChemicalPotential; };
-	double getStrangeQuarkEffectiveChemicalPotential(){ return strangeQuarkEffectiveChemicalPotential; };
+	double getUpQuarkChemicalPotential(){ return upQuarkChemicalPotential; };
+	double getDownQuarkChemicalPotential(){ return downQuarkChemicalPotential; };
+	double getStrangeQuarkChemicalPotential(){ return strangeQuarkChemicalPotential; };
 
 	void solve(double , MultiRootFindingMethod , double , double , double );
 	bool testSolution(double );
@@ -45,13 +47,16 @@ private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };
 	void setDownQuarkEffectiveMass(double downQuarkEffectiveMassAux){ downQuarkEffectiveMass = downQuarkEffectiveMassAux; };
 	void setStrangeQuarkEffectiveMass(double strangeQuarkEffectiveMassAux){ strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux; };
-	void setUpQuarkEffectiveChemicalPotential(double upQuarkEffectiveChemicalPotentialAux){ upQuarkEffectiveChemicalPotential = upQuarkEffectiveChemicalPotentialAux; };
-	void setDownQuarkEffectiveChemicalPotential(double downQuarkEffectiveChemicalPotentialAux){ downQuarkEffectiveChemicalPotential = downQuarkEffectiveChemicalPotentialAux; };
-	void setStrangeQuarkEffectiveChemicalPotential(double strangeQuarkEffectiveChemicalPotentialAux){ strangeQuarkEffectiveChemicalPotential = strangeQuarkEffectiveChemicalPotentialAux; };
+	void setUpQuarkChemicalPotential(double upQuarkChemicalPotentialAux){ upQuarkChemicalPotential = upQuarkChemicalPotentialAux; };
+	void setDownQuarkChemicalPotential(double downQuarkChemicalPotentialAux){ downQuarkChemicalPotential = downQuarkChemicalPotentialAux; };
+	void setStrangeQuarkChemicalPotential(double strangeQuarkChemicalPotentialAux){ strangeQuarkChemicalPotential = strangeQuarkChemicalPotentialAux; };
 };
 
 
 int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vector *, void *, gsl_vector *);
 
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffVacuum , double , int , double , MultiRootFindingMethod );
+
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp , double , int , double , MultiRootFindingMethod );
 
 #endif

@@ -14,9 +14,9 @@ SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(void* auxiliar)
 
 	temperature = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->temperature;
 
-	upQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->upQuarkEffectiveChemicalPotential;
-	downQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->downQuarkEffectiveChemicalPotential;
-	strangeQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->strangeQuarkEffectiveChemicalPotential;
+	upQuarkChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->upQuarkChemicalPotential;
+	downQuarkChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->downQuarkChemicalPotential;
+	strangeQuarkChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->strangeQuarkChemicalPotential;
 
 	upQuarkEffectiveMass = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->upQuarkEffectiveMass;
 	downQuarkEffectiveMass = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->downQuarkEffectiveMass;
@@ -26,17 +26,17 @@ SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(void* auxiliar)
 
 SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(SU3NJL3DCutoffParameters parametersNJLAux, 
 															   double temperatureAux, 
-															   double upQuarkEffectiveChemicalPotentialAux,
-															   double downQuarkEffectiveChemicalPotentialAux,
-															   double strangeQuarkEffectiveChemicalPotentialAux)
+															   double upQuarkChemicalPotentialAux,
+															   double downQuarkChemicalPotentialAux,
+															   double strangeQuarkChemicalPotentialAux)
 {
 	parametersNJL = parametersNJLAux;
 
 	temperature = temperatureAux;
 
-	upQuarkEffectiveChemicalPotential = upQuarkEffectiveChemicalPotentialAux;
-	downQuarkEffectiveChemicalPotential = downQuarkEffectiveChemicalPotentialAux;
-	strangeQuarkEffectiveChemicalPotential = strangeQuarkEffectiveChemicalPotentialAux;
+	upQuarkChemicalPotential = upQuarkChemicalPotentialAux;
+	downQuarkChemicalPotential = downQuarkChemicalPotentialAux;
+	strangeQuarkChemicalPotential = strangeQuarkChemicalPotentialAux;
 }
 
 
@@ -84,15 +84,22 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
     double m0S = solution.getParametersNJL().getStrangeQuarkCurrentMass();
 
     double T = solution.getTemperature();
-    double effCPU = solution.getUpQuarkEffectiveChemicalPotential();
-    double effCPD = solution.getDownQuarkEffectiveChemicalPotential();
-    double effCPS = solution.getStrangeQuarkEffectiveChemicalPotential();
+    double cPU = solution.getUpQuarkChemicalPotential();
+    double cPD = solution.getDownQuarkChemicalPotential();
+    double cPS = solution.getStrangeQuarkChemicalPotential();
 
+    //This solution does not take into account vector degrees of freedom
+    lagrangianInteractions lagrangianInteractionsAux = solution.getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
+    if ( lagrangianInteractionsAux!=interactions_4SP_det && lagrangianInteractionsAux!=interactions_4SP_det_8SP  )
+    {   
+        cout << "Lagrangian interactions contain vector degrees of freedom! The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
+        abort();
+    }
 
     //Calculate the sigma field and density for each quark flavour
-    double sigmaU = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCPU, mU, sigmaIntegralPrecision);
-    double sigmaD = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCPD, mD, sigmaIntegralPrecision);
-    double sigmaS = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCPS, mS, sigmaIntegralPrecision);
+    double sigmaU = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, cPU, mU, sigmaIntegralPrecision);
+    double sigmaD = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, cPD, mD, sigmaIntegralPrecision);
+    double sigmaS = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, cPS, mS, sigmaIntegralPrecision);
 
 	//system of equations
     double f0 = SU3NJLNulledGapEquation(couplings, mU-m0U, sigmaU, sigmaD, sigmaS, 0.0, 0.0, 0.0);
@@ -134,4 +141,67 @@ bool SU3NJL3DCutoffFixedChemPotTemp::testSolution(double precision)
     else{ return false; }
 }
 
+
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffVacuum vacuumSol, double maxTemperature, int numberOfPoints, double precision, MultiRootFindingMethod method)
+{
+    double chemPotU = 0.0;
+    double chemPotD = 0.0;
+    double chemPotS = 0.0;
+
+    double effMassU = vacuumSol.getUpQuarkEffectiveMass();
+    double effMassD = vacuumSol.getDownQuarkEffectiveMass();
+    double effMassS = vacuumSol.getStrangeQuarkEffectiveMass();
+
+    double minTemperature = 1E-5;
+    double deltaTemperature = (maxTemperature-minTemperature)/(numberOfPoints - 1);
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        double T = minTemperature + i*deltaTemperature;
+
+        SU3NJL3DCutoffFixedChemPotTemp inMediumSol(vacuumSol.getParametersNJL(), T, chemPotU, chemPotD, chemPotS);
+        inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
+
+        effMassU = inMediumSol.getUpQuarkEffectiveMass();
+        effMassD = inMediumSol.getDownQuarkEffectiveMass();
+        effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
+
+        //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
+
+        if (inMediumSol.testSolution(1E-8)==true){ solutions.push_back(inMediumSol); }
+    }
+
+    return solutions;
+}
+
+
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp finiteTSol, double maxChemPot, int numberOfPoints, double precision, MultiRootFindingMethod method)
+{
+    double effMassU = finiteTSol.getUpQuarkEffectiveMass();
+    double effMassD = finiteTSol.getDownQuarkEffectiveMass();
+    double effMassS = finiteTSol.getStrangeQuarkEffectiveMass();
+
+    double minChemPot = 1E-5;
+    double delta = (maxChemPot-minChemPot)/(numberOfPoints - 1);
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        double chemPot = minChemPot + i*delta;
+
+        SU3NJL3DCutoffFixedChemPotTemp inMediumSol(finiteTSol.getParametersNJL(), finiteTSol.getTemperature(), chemPot, chemPot, chemPot);
+        inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
+
+        effMassU = inMediumSol.getUpQuarkEffectiveMass();
+        effMassD = inMediumSol.getDownQuarkEffectiveMass();
+        effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
+
+        //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
+
+        if (inMediumSol.testSolution(1E-8)==true){ solutions.push_back(inMediumSol); }
+    }
+
+    return solutions;
+}
 

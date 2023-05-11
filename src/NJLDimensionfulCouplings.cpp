@@ -8,7 +8,9 @@ using namespace std;
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2)
 {	
 	if ( interactionsAux==interactions_4SP_det )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 	}
@@ -19,7 +21,9 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3)
 {
 	if ( interactionsAux==interactions_4SP_det_4VP )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		fourQuarkVPCoupling = c3;
@@ -31,14 +35,18 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4)
 {
 	if ( interactionsAux==interactions_4SP_det_8SP )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		eightQuarkSPOziViolatingCoupling = c3;
 		eightQuarkSPNonOziViolatingCoupling = c4;
 	}
 	else if ( interactionsAux==interactions_4SP_det_4VP_4VIPI )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		fourQuarkVPCoupling = c3;
@@ -51,7 +59,9 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5)
 {
 	if ( interactionsAux==interactions_4SP_det_4VP_8VP_8SPVP )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		fourQuarkVPCoupling = c3;
@@ -65,7 +75,9 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6)
 {
 	if ( interactionsAux==interactions_4SP_det_8SP_4VP_8VP )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		eightQuarkSPOziViolatingCoupling = c3;
@@ -80,7 +92,9 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7)
 {
 	if ( interactionsAux==interactions_4SP_det_8SP_4VP_8VP_8SPVP )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		eightQuarkSPOziViolatingCoupling = c3;
@@ -90,7 +104,9 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		eightQuarkSPVPCoupling = c7;
 	}
 	else if( interactionsAux==interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		fourQuarkVPCoupling = c3;
@@ -106,7 +122,9 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7, double c8, double c9)
 {
 	if ( interactionsAux==interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI )
-	{
+	{	
+		interactions = interactionsAux;
+
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		eightQuarkSPOziViolatingCoupling = c3;
@@ -124,7 +142,9 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7, double c8, double c9, double c10, double c11)
 {
 	if ( interactionsAux==interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI )
-	{
+	{	
+		interactions = interactionsAux;
+		
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		eightQuarkSPOziViolatingCoupling = c3;
