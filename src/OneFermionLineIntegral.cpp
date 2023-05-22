@@ -171,7 +171,9 @@ double realKlevanskyAPair3DCutoff(double T, double effCP1, double cutoff, double
 
     double A = dEdepsilon_EMin(cutoff, M1, M2, k);
     double B = dEdepsilon_EMax(cutoff, M1, M2, k);
+    
     double g1 = dEdepsilon_gamma1E(cutoff, M1, M2, k);
+    double g2 = dEdepsilon_gamma2E(cutoff, M1, M2, k);
 
     TwoFermionLine3DCutoffIntegrand aux(T, effCP1, 0.0, cutoff, M1, M2, 0.0, k);
     double realKlevanskyAPair = 0.0;
@@ -185,9 +187,13 @@ double realKlevanskyAPair3DCutoff(double T, double effCP1, double cutoff, double
     Integration1DimGSLQAGS realKlevanskyAPairPlus_A_g1(A, g1, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
     realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairPlus_A_g1.evaluate();
 
-    aux.setIntegralID("realKlevanskyAPairPlus_g1_B");
-    Integration1DimGSLQAGS realKlevanskyAPairPlus_g1_B(g1, B, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
-    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairPlus_g1_B.evaluate();
+    aux.setIntegralID("realKlevanskyAPairPlus_g1_g2");
+    Integration1DimGSLQAGS realKlevanskyAPairPlus_g1_g2(g1, g2, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairPlus_g1_g2.evaluate();
+
+    aux.setIntegralID("realKlevanskyAPairPlus_g2_B");
+    Integration1DimGSLQAGS realKlevanskyAPairPlus_g2_B(g2, B, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairPlus_g2_B.evaluate();
 
     ////////////////////////////////////////
     //eta = -1.0
@@ -197,9 +203,13 @@ double realKlevanskyAPair3DCutoff(double T, double effCP1, double cutoff, double
     Integration1DimGSLQAGS realKlevanskyAPairMinus_A_g1(A, g1, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
     realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairMinus_A_g1.evaluate();
 
-    aux.setIntegralID("realKlevanskyAPairMinus_g1_B");
-    Integration1DimGSLQAGS realKlevanskyAPairMinus_g1_B(g1, B, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
-    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairMinus_g1_B.evaluate();
+    aux.setIntegralID("realKlevanskyAPairMinus_g1_g2");
+    Integration1DimGSLQAGS realKlevanskyAPairMinus_g1_g2(g1, g2, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairMinus_g1_g2.evaluate();
+
+    aux.setIntegralID("realKlevanskyAPairMinus_g2_B");
+    Integration1DimGSLQAGS realKlevanskyAPairMinus_g2_B(g2, B, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairMinus_g2_B.evaluate();
 
 
     realKlevanskyAPair = ( -2.0/k )*realKlevanskyAPair;
@@ -274,7 +284,9 @@ double realKlevanskyAScat3DCutoff(double T, double effCP1, double cutoff, double
 
     double a = depsilondE_epsilonMin(cutoff, M1, M2, k);
     double b = depsilondE_epsilonMax(cutoff, M1, M2, k);
+
     double L = depsilondE_LambdaSwitchepsilon(cutoff, M1, M2);
+    double g2 = depsilondE_gamma2epsilon(cutoff, M1, M2, k);
 
     TwoFermionLine3DCutoffIntegrand aux(T, effCP1, 0.0, cutoff, M1, M2, 0.0, k);
     double realKlevanskyAScat = 0.0;
@@ -288,9 +300,13 @@ double realKlevanskyAScat3DCutoff(double T, double effCP1, double cutoff, double
     Integration1DimGSLQAGS realKlevanskyAScatPlus_a_L(a, L, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
     realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatPlus_a_L.evaluate();
 
-    aux.setIntegralID("realKlevanskyAScatPlus_L_b");
-    Integration1DimGSLQAGS realKlevanskyAScatPlus_L_b(L, b, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
-    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatPlus_L_b.evaluate();
+    aux.setIntegralID("realKlevanskyAScatPlus_L_g2");
+    Integration1DimGSLQAGS realKlevanskyAScatPlus_L_g2(L, g2, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatPlus_L_g2.evaluate();
+
+    aux.setIntegralID("realKlevanskyAScatPlus_g2_b");
+    Integration1DimGSLQAGS realKlevanskyAScatPlus_g2_b(g2, b, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatPlus_g2_b.evaluate();
 
     ////////////////////////////////////////
     //eta = -1.0
@@ -300,9 +316,13 @@ double realKlevanskyAScat3DCutoff(double T, double effCP1, double cutoff, double
     Integration1DimGSLQAGS realKlevanskyAScatMinus_a_L(a, L, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
     realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatMinus_a_L.evaluate();
 
-    aux.setIntegralID("realKlevanskyAScatMinus_L_b");
-    Integration1DimGSLQAGS realKlevanskyAScatMinus_L_b(L, b, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
-    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatMinus_L_b.evaluate();
+    aux.setIntegralID("realKlevanskyAScatMinus_L_g2");
+    Integration1DimGSLQAGS realKlevanskyAScatMinus_L_g2(L, g2, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatMinus_L_g2.evaluate();
+
+    aux.setIntegralID("realKlevanskyAScatMinus_g2_b");
+    Integration1DimGSLQAGS realKlevanskyAScatMinus_g2_b(g2, b, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatMinus_g2_b.evaluate();
 
     realKlevanskyAScat = ( -1.0/k )*realKlevanskyAScat;
 
@@ -330,9 +350,9 @@ double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguScheme
         {
             // k finite case
             
-            //This quantity is independent of the value chose for M2! However, I built the integrations supposing M1=M2
+            //This quantity is independent of the value chose for M2! However, I built the integration regions supposing M2>M1
             double M1 = M;
-            double M2 = M;
+            double M2 = 1.5*M1;
 
             realKlevanskyA = realKlevanskyA + realKlevanskyAPair3DCutoff(T, Cp, cutoff, M1, M2, k, integralPrecision);
             realKlevanskyA = realKlevanskyA + realKlevanskyAScat3DCutoff(T, Cp, cutoff, M1, M2, k, integralPrecision);

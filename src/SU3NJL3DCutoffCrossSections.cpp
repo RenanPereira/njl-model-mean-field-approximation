@@ -238,7 +238,11 @@ double crossSectionProcess12To34(SU3NJL3DCutoffParameters parametersNJL, double 
     crossSection = crossSection*( 1.0 - fermiDistribution(T, E3 - cP3) )*( 1.0 - fermiDistribution(T, E4 - cP4) );
 
     //for processes involving completely identical particles, we have to remove extra counting
-    if ( process==UUUU || process==DDDD || process==SSSS ){ crossSection = 0.5*crossSection; }
+    if ( process==UUUU || process==DDDD || process==SSSS ||
+         process==UBarUBarUBarUBar || process==DBarDBarDBarDBar || process==SBarSBarSBarSBar )
+    { 
+        crossSection = 0.5*crossSection; 
+    }
 
     return crossSection;
 }
@@ -315,10 +319,49 @@ void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters parametersNJL,
                                          bool largeAngleScatteringContribution, double crossSecIntPrecision,
                                          int numberOfPoints)
 {   
+    ////////////////////////////////////////////////////////////
+    // Mu=Md, Cpu_u=Cp_d=Cp_s=0.0
+    // uu->uu, ud->ud, us->us, ss->ss
+    // uubar->uubar, uubar->ddbar, uubar->ssbar, udbar->udbar, usbar->usbar, ssbar->uubar, ssbar->ssbar
+
     vector<scatteringProcess> processes = { UDUD, USUS, UUUU, SSSS,
                                             UDBarUDBar, USBarUSBar,
                                             UUBarUUBar, UUBarDDBar, UUBarSSBar,
                                             SSBarUUBar, SSBarSSBar };
+
+    for (int i = 0; i < int(processes.size()); ++i)
+    {
+        cout << "Calculating cross section for the process: " << scatteringProcessToString(processes[i]) << "\n";
+        evaluateCrossSectionProcess12To34ToFile(parametersNJL, T, 
+                                                effChemPotU, effChemPotD, effChemPotS, 
+                                                effMassU, effMassD, effMassS, 
+                                                propIntPrecision, processes[i], 
+                                                largeAngleScatteringContribution, crossSecIntPrecision,
+                                                numberOfPoints);   
+    }
+
+}
+
+
+void evaluateCrossSectionsPaperFiniteChemicalPotential(SU3NJL3DCutoffParameters parametersNJL, double T, 
+                                                       double effChemPotU, double effChemPotD, double effChemPotS, 
+                                                       double effMassU, double effMassD, double effMassS, 
+                                                       double propIntPrecision, 
+                                                       bool largeAngleScatteringContribution, double crossSecIntPrecision,
+                                                       int numberOfPoints)
+{   
+    ////////////////////////////////////////////////////////////
+    // Mu=Md, Cpu_u=Cp_d=Cp_s
+    // uu->uu, ud->ud, us->us, ss->ss, 
+    // uubar->uubar, uubar->ddbar, uubar->ssbar, udbar->udbar ,usbar->usbar, subar->subar, ssbar->uubar, ssbar->ssbar
+    // ubarubar->ubarubar, sbarsbar->sbarsbar, ubardbar->ubardbar, ubarsbar->ubarsbar
+
+    vector<scatteringProcess> processes = { UDUD, USUS, UUUU, SSSS,
+                                            UDBarUDBar, USBarUSBar,
+                                            UUBarUUBar, UUBarDDBar, UUBarSSBar,
+                                            SSBarUUBar, SSBarSSBar,
+                                            SUBarSUBar, UBarUBarUBarUBar, SBarSBarSBarSBar,
+                                            UBarDBarUBarDBar, UBarSBarUBarSBar };
 
     for (int i = 0; i < int(processes.size()); ++i)
     {

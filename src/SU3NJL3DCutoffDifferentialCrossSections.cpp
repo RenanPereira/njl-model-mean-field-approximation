@@ -46,9 +46,10 @@ string scatteringProcessToString(scatteringProcess process)
     else if ( process==SSBarDDBar ){ return "SSBarDDBar"; }
     else if ( process==SSBarSSBar ){ return "SSBarSSBar"; }
     else if ( process==UBarUBarUBarUBar ){ return "UBarUBarUBarUBar"; }
+    else if ( process==DBarDBarDBarDBar ){ return "DBarDBarDBarDBar"; }
+    else if ( process==SBarSBarSBarSBar ){ return "SBarSBarSBarSBar"; }
     else if ( process==UBarDBarUBarDBar ){ return "UBarDBarUBarDBar"; }
     else if ( process==UBarSBarUBarSBar ){ return "UBarSBarUBarSBar"; }
-    else if ( process==SBarSBarSBarSBar ){ return "SBarSBarSBarSBar"; }
 
     return "0";
 }
@@ -82,9 +83,10 @@ void inOutMassesGivenScatteringProcess(double effMU, double effMD, double effMS,
     else if ( process==SSBarDDBar ){ m1 = effMS; m2 = effMS; m3 = effMD; m4 = effMD; }
     else if ( process==SSBarSSBar ){ m1 = effMS; m2 = effMS; m3 = effMS; m4 = effMS; }
     else if ( process==UBarUBarUBarUBar ){ m1 = effMU; m2 = effMU; m3 = effMU; m4 = effMU; }
+    else if ( process==DBarDBarDBarDBar ){ m1 = effMD; m2 = effMD; m3 = effMD; m4 = effMD; }
+    else if ( process==SBarSBarSBarSBar ){ m1 = effMS; m2 = effMS; m3 = effMS; m4 = effMS; }
     else if ( process==UBarDBarUBarDBar ){ m1 = effMU; m2 = effMD; m3 = effMU; m4 = effMD; }
     else if ( process==UBarSBarUBarSBar ){ m1 = effMU; m2 = effMS; m3 = effMU; m4 = effMS; }
-    else if ( process==SBarSBarSBarSBar ){ m1 = effMS; m2 = effMS; m3 = effMS; m4 = effMS; }
 }
 
 
@@ -116,9 +118,10 @@ void inChemicalPotentialsGivenScatteringProcess(double effCPU, double effCPD, do
     else if ( process==SSBarDDBar ){ cP1 = effCPS; cP2 = -effCPS; }
     else if ( process==SSBarSSBar ){ cP1 = effCPS; cP2 = -effCPS; }
     else if ( process==UBarUBarUBarUBar ){ cP1 = -effCPU; cP2 = -effCPU; }
+    else if ( process==DBarDBarDBarDBar ){ cP1 = -effCPD; cP2 = -effCPD; }
+    else if ( process==SBarSBarSBarSBar ){ cP1 = -effCPS; cP2 = -effCPS; }
     else if ( process==UBarDBarUBarDBar ){ cP1 = -effCPU; cP2 = -effCPD; }
     else if ( process==UBarSBarUBarSBar ){ cP1 = -effCPU; cP2 = -effCPS; }
-    else if ( process==SBarSBarSBarSBar ){ cP1 = -effCPS; cP2 = -effCPS; }
 }
 
 
@@ -149,9 +152,10 @@ void outChemicalPotentialsGivenScatteringProcess(double effCPU, double effCPD, d
     else if ( process==SSBarDDBar ){ cP3 = effCPD; cP4 = -effCPD; }
     else if ( process==SSBarSSBar ){ cP3 = effCPS; cP4 = -effCPS; }
     else if ( process==UBarUBarUBarUBar ){ cP3 = -effCPU; cP4 = -effCPU; }
+    else if ( process==DBarDBarDBarDBar ){ cP3 = -effCPD; cP4 = -effCPD; }
+    else if ( process==SBarSBarSBarSBar ){ cP3 = -effCPS; cP4 = -effCPS; }
     else if ( process==UBarDBarUBarDBar ){ cP3 = -effCPU; cP4 = -effCPD; }
     else if ( process==UBarSBarUBarSBar ){ cP3 = -effCPU; cP4 = -effCPS; }
-    else if ( process==SBarSBarSBarSBar ){ cP3 = -effCPS; cP4 = -effCPS; }
 }
 
 

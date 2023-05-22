@@ -13,7 +13,8 @@ enum scatteringProcess { UDUD, DUDU, USUS, SUSU, DSDS, SDSD, UUUU, DDDD, SSSS,
                          UUBarUUBar, UUBarDDBar, UUBarSSBar,
                          DDBarUUBar, DDBarDDBar, DDBarSSBar,
                          SSBarUUBar, SSBarDDBar, SSBarSSBar,
-                         UBarUBarUBarUBar, UBarDBarUBarDBar, UBarSBarUBarSBar, SBarSBarSBarSBar };
+                         UBarUBarUBarUBar, DBarDBarDBarDBar, SBarSBarSBarSBar,
+                         UBarDBarUBarDBar, UBarSBarUBarSBar };
 
 string scatteringProcessToString(scatteringProcess );
 

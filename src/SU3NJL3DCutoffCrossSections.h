@@ -145,6 +145,13 @@ void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters , double ,
                                          bool , double ,
                                          int );
 
+void evaluateCrossSectionsPaperFiniteChemicalPotential(SU3NJL3DCutoffParameters , double , 
+                                                       double , double , double , 
+                                                       double , double , double , 
+                                                       double , 
+                                                       bool , double ,
+                                                       int );
+
 
 
 #endif
