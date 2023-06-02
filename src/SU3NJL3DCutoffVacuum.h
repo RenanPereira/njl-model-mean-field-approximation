@@ -4,6 +4,7 @@
 #include <vector>
 #include "generalPhysicsAndMath.h"
 #include "NJLDimensionfulCouplings.h"
+#include "SU3NJL3DCutoffMesonPropagators.h"
 using namespace std;
 
 
@@ -28,14 +29,18 @@ public:
 	double getDownQuarkEffectiveMass(){ return downQuarkEffectiveMass; };
 	double getStrangeQuarkEffectiveMass(){ return strangeQuarkEffectiveMass; };
 
+	//gap equations
 	void solve(double , MultiRootFindingMethod , double , double , double );
 	bool testSolution(double );
 
+	//thermodynamics
 	double calculatePressure();
 	double calculateEnergyDensity();
 	double calculateEntropyDensity(){ return 0.0; }
-
 	double calculateVacuumPressureElectrons(double );
+
+	//meson properties
+	SU3NJL3DCutoffNonDiagonalMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
 
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };

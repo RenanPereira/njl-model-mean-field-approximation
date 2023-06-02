@@ -4,6 +4,7 @@
 #include "OneFermionLineIntegral.h"
 #include "SU3NJL3DCutoff.h"
 #include "SU3NJL3DCutoffFixedChemPotTemp.h"
+#include "SU3NJL3DCutoffIntegratedCrossSections.h"
 
 using namespace std;
 
@@ -203,5 +204,79 @@ std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteCh
     }
 
     return solutions;
+}
+
+
+
+//Evaluate Cross section for paper at finite chemical potential using Klevansky parameter set
+void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPot, int numberOfCrossSectionPoints)
+{
+    //define Klevansky parameters
+    //parameter set A (Klevansky parameter set)
+    double cutoff = 0.6023;
+    double gs = 10.116734156126128;
+    double kappa = -155.93878816540243;
+    double m0u = 0.0055;
+    double m0d = 0.0055;
+    double m0s = 0.1407;
+
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(interactions_4SP_det, gs, kappa);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+
+
+    //numerical precisions
+    double gapPrecision = 1E-8;
+    double mesonPropagatorIntegralPrecision = 1E-8;
+    double crossSectionIntegralPrecision = 1E-4;
+
+
+    //find solution in the vacuum for the Klevansky parameter set
+    SU3NJL3DCutoffVacuum vacuum(parameters);
+    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
+
+    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
+    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+
+
+    //solve gap equation from the vacuum up to finite temperature
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, gapPrecision, hybrids);
+
+    double effMassU, effMassD, effMassS;
+    effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
+    effMassD = finiteTempSol[int(finiteTempSol.size()-1)].getDownQuarkEffectiveMass();
+    effMassS = finiteTempSol[int(finiteTempSol.size()-1)].getStrangeQuarkEffectiveMass();
+
+    cout << "Mu=" << effMassU << "GeV" << "\t" 
+         << "Md=" << effMassD << "GeV" << "\t" 
+         << "Ms=" << effMassS << "GeV" << "\n";
+
+
+    //solve gap equation from the finite temperature up to finite chemical potential
+    if( chemPot>0.0 )
+    {
+        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, gapPrecision, hybrids);
+
+        effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
+        effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();
+        effMassS = inMediumSol[int(inMediumSol.size()-1)].getStrangeQuarkEffectiveMass();
+
+        cout << "Mu=" << effMassU << "GeV" << "\t" 
+             << "Md=" << effMassD << "GeV" << "\t" 
+             << "Ms=" << effMassS << "GeV" << "\n";
+    }
+
+
+    //evaluate cross sections
+    evaluateCrossSectionsPaperFiniteChemicalPotential(parameters, T, 
+                                                      chemPot, chemPot, chemPot, 
+                                                      effMassU, effMassD, effMassS, 
+                                                      mesonPropagatorIntegralPrecision,
+                                                      false, crossSectionIntegralPrecision,
+                                                      numberOfCrossSectionPoints);
 }
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "SU3NJL3DCutoffIntegratedCrossSections.h"
 #include "OneFermionLineIntegral.h"
+#include "rootSolverGSL.h"
 
 
 //Zero variables necessary in this file: ICS=IntegratedCrossSections
@@ -1423,5 +1424,4 @@ double integratedCrossSectionProcess12To34Zhuang(SU3NJL3DCutoffParameters parame
 
     return integratedCrossSection;
 }
-
 

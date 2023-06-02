@@ -796,3 +796,145 @@ ComplexSquareMatrixGSL neutral038ScalarsPropagator(SU3NJL3DCutoffParameters para
     
     return neutral038Propagator;
 }
+
+
+
+gsl_complex nonDiagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
+					  		           double effChemPotU, double effChemPotD, double effChemPotS, 
+					  		           double effMassU, double effMassD, double effMassS, 
+					  		           double k0, double k, double Gamma, double integralPrecision,
+					  		           mesonState meson)
+{   
+	gsl_complex mesonPropagator;
+
+	if ( meson==pionPlus )
+	{
+		mesonPropagator = pionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==pionMinus )
+	{
+		mesonPropagator = pionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==kaonPlus )
+	{
+		mesonPropagator = kaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==kaonMinus )
+	{
+		mesonPropagator = kaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==neutralKaon )
+	{
+		mesonPropagator = neutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==antiNeutralKaon )
+	{
+		mesonPropagator = antiNeutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==sigmaPionPlus )
+	{
+		mesonPropagator = sigmaPionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==sigmaPionMinus )
+	{
+		mesonPropagator = sigmaPionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==sigmaKaonPlus )
+	{
+		mesonPropagator = sigmaKaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==sigmaKaonMinus )
+	{
+		mesonPropagator = sigmaKaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==neutralSigmaKaon )
+	{
+		mesonPropagator = neutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if ( meson==antiNeutralSigmaKaon )
+	{
+		mesonPropagator = antiNeutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+
+    return mesonPropagator;
+}
+
+
+gsl_complex nonDiagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
+					  		           double effChemPotU, double effChemPotD, double effChemPotS, 
+					  		           double effMassU, double effMassD, double effMassS, 
+					  		           double k0, double k, double integralPrecision,
+					  		           mesonState meson)
+{
+	gsl_complex mesonPropagator = 
+	nonDiagonalMesonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, meson);
+    
+    return mesonPropagator;
+}
+
+
+ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
+					  		          		   double effChemPotU, double effChemPotD, double effChemPotS, 
+					  		          		   double effMassU, double effMassD, double effMassS, 
+					  		          		   double k0, double k, double Gamma, double integralPrecision,
+					  		          		   mesonState meson)
+{
+	ComplexSquareMatrixGSL mesonPropagator(3);
+
+	if( meson==diagonalPseudoscalars )
+	{
+		mesonPropagator = 
+		neutral038PseudoscalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+	else if( meson==diagonalScalars )
+	{
+		mesonPropagator = 
+		neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	}
+
+	return mesonPropagator;
+}
+
+
+ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
+					  		          		   double effChemPotU, double effChemPotD, double effChemPotS, 
+					  		          		   double effMassU, double effMassD, double effMassS, 
+					  		          		   double k0, double k, double integralPrecision,
+					  		          		   mesonState meson)
+{
+	ComplexSquareMatrixGSL mesonPropagator = 
+	diagonalMesonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, meson);
+
+	return mesonPropagator;
+}
+
+
+int SU3NJL3DCutoffNonDiagonalMesonMassEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
+{
+	//define variables
+    double mesonMass = gsl_vector_get(x,0);
+    double mesonWidth = gsl_vector_get(x,1);
+
+    //define parameters
+    SU3NJL3DCutoffNonDiagonalMeson meson(auxiliar);
+
+    //calculate the inverse meson propagator
+    double k0 = mesonMass;
+    double k = 0.0;
+    double gamma = mesonWidth;
+    gsl_complex inverseMesonPropagator = meson.getInversePropagator(k0, k, gamma);
+
+    double f0 = GSL_REAL( inverseMesonPropagator );
+    double f1 = GSL_IMAG( inverseMesonPropagator );
+
+	gsl_vector_set (f, 0, f0);
+	gsl_vector_set (f, 1, f1);
+
+	return GSL_SUCCESS;
+}
+
+
+
+
+
+

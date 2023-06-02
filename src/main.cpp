@@ -62,7 +62,8 @@ int main(void)
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
 
-
+    SU3NJL3DCutoffNonDiagonalMeson aux = vacuum.calculateMesonMassAndWidth(pionPlus, 1E-6, hybrids, 0.2, 0.1);
+    cout << aux.getMesonMass() << "\t" << aux.getMesonWidth() << "\n";
 
 
 

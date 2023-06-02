@@ -59,4 +59,7 @@ std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAt
 
 std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp , double , int , double , MultiRootFindingMethod );
 
+void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double , double , int );
+
+
 #endif
