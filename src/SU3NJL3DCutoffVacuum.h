@@ -40,7 +40,7 @@ public:
 	double calculateVacuumPressureElectrons(double );
 
 	//meson properties
-	SU3NJL3DCutoffNonDiagonalMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
+	SU3NJL3DCutoffMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
 
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };

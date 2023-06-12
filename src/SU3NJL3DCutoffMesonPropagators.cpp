@@ -909,30 +909,39 @@ ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters paramete
 }
 
 
-int SU3NJL3DCutoffNonDiagonalMesonMassEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
+int SU3NJL3DCutoffMesonMassEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
 	//define variables
     double mesonMass = gsl_vector_get(x,0);
     double mesonWidth = gsl_vector_get(x,1);
 
     //define parameters
-    SU3NJL3DCutoffNonDiagonalMeson meson(auxiliar);
+    SU3NJL3DCutoffMeson meson(auxiliar);
 
-    //calculate the inverse meson propagator
-    double k0 = mesonMass;
-    double k = 0.0;
-    double gamma = mesonWidth;
-    gsl_complex inverseMesonPropagator = meson.getInversePropagator(k0, k, gamma);
+    //calculate inverse meson propagators and set the real and imaginary parts to zero
+   	double k0 = mesonMass;
+	double k = 0.0;
+	double gamma = mesonWidth;
+	double f0, f1;
+	if ( meson.getMesonState()!=diagonalPseudoscalars && meson.getMesonState()!=diagonalScalars )
+	{
+	    gsl_complex inverseMesonPropagator = meson.calculateInverseNonDiagonalPropagator(k0, k, gamma);
 
-    double f0 = GSL_REAL( inverseMesonPropagator );
-    double f1 = GSL_IMAG( inverseMesonPropagator );
+	    f0 = GSL_REAL( inverseMesonPropagator );
+	    f1 = GSL_IMAG( inverseMesonPropagator );
+	}
+	else
+	{
+	    vector<gsl_complex> eigenvalue = meson.calculateInverseDiagonalPropagatorEigenvalues(k0, k, gamma);
 
+	    f0 = GSL_REAL( eigenvalue[0] );
+	    f1 = GSL_IMAG( eigenvalue[0] );
+	}
 	gsl_vector_set (f, 0, f0);
 	gsl_vector_set (f, 1, f1);
 
 	return GSL_SUCCESS;
 }
-
 
 
 

@@ -199,10 +199,10 @@ ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters , double
                                                mesonState );
 
 
-int SU3NJL3DCutoffNonDiagonalMesonMassEquations(const gsl_vector *, void *, gsl_vector *);
+int SU3NJL3DCutoffMesonMassEquations(const gsl_vector *, void *, gsl_vector *);
 
 
-class SU3NJL3DCutoffNonDiagonalMeson
+class SU3NJL3DCutoffMeson
 {
 private:
     SU3NJL3DCutoffParameters parametersNJL;
@@ -216,17 +216,14 @@ private:
     double integralPrecision;
     mesonState meson;
 
-    double mesonMass = 0.0/0.0;
-    double mesonWidth = 0.0/0.0;
-
-    vector<double> diagonalMesonMasses = {0.0/0.0, 0.0/0.0, 0.0/0.0};
-    vector<double> diagonalMesonWidths = {0.0/0.0, 0.0/0.0, 0.0/0.0};
+    double mesonMass = 0;
+    double mesonWidth = 0;
 
 public:
-    SU3NJL3DCutoffNonDiagonalMeson(SU3NJL3DCutoffParameters parametersNJLAux, double TAux, 
-                                   double effChemPotUAux, double effChemPotDAux, double effChemPotSAux, 
-                                   double effMassUAux, double effMassDAux, double effMassSAux, 
-                                   double integralPrecisionAux, mesonState mesonAux)
+    SU3NJL3DCutoffMeson(SU3NJL3DCutoffParameters parametersNJLAux, double TAux, 
+                        double effChemPotUAux, double effChemPotDAux, double effChemPotSAux, 
+                        double effMassUAux, double effMassDAux, double effMassSAux, 
+                        double integralPrecisionAux, mesonState mesonAux)
     {
         parametersNJL = parametersNJLAux;
         temperature = TAux;
@@ -240,26 +237,35 @@ public:
         meson = mesonAux;
     };
 
-    SU3NJL3DCutoffNonDiagonalMeson(void* auxiliar)
+    SU3NJL3DCutoffMeson(void* auxiliar)
     {   
-        parametersNJL = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->parametersNJL;
-        temperature = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->temperature;
-        upQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->upQuarkEffectiveChemicalPotential;
-        downQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->downQuarkEffectiveChemicalPotential;
-        strangeQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->strangeQuarkEffectiveChemicalPotential;
-        upQuarkEffectiveMass = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->upQuarkEffectiveMass;
-        downQuarkEffectiveMass = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->downQuarkEffectiveMass;
-        strangeQuarkEffectiveMass = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->strangeQuarkEffectiveMass;
-        integralPrecision = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->integralPrecision;
-        meson = ((class SU3NJL3DCutoffNonDiagonalMeson *)(auxiliar))->meson;
+        parametersNJL = ((class SU3NJL3DCutoffMeson *)(auxiliar))->parametersNJL;
+        temperature = ((class SU3NJL3DCutoffMeson *)(auxiliar))->temperature;
+        upQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffMeson *)(auxiliar))->upQuarkEffectiveChemicalPotential;
+        downQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffMeson *)(auxiliar))->downQuarkEffectiveChemicalPotential;
+        strangeQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffMeson *)(auxiliar))->strangeQuarkEffectiveChemicalPotential;
+        upQuarkEffectiveMass = ((class SU3NJL3DCutoffMeson *)(auxiliar))->upQuarkEffectiveMass;
+        downQuarkEffectiveMass = ((class SU3NJL3DCutoffMeson *)(auxiliar))->downQuarkEffectiveMass;
+        strangeQuarkEffectiveMass = ((class SU3NJL3DCutoffMeson *)(auxiliar))->strangeQuarkEffectiveMass;
+        integralPrecision = ((class SU3NJL3DCutoffMeson *)(auxiliar))->integralPrecision;
+        meson = ((class SU3NJL3DCutoffMeson *)(auxiliar))->meson;
     };
 
+    SU3NJL3DCutoffParameters getParametersNJL(){ return parametersNJL; };
+    double getTemperature(){ return temperature; };
+    double getUpQuarkEffectiveChemicalPotential(){ return upQuarkEffectiveChemicalPotential; };
+    double getDownQuarkEffectiveChemicalPotential(){ return downQuarkEffectiveChemicalPotential; };
+    double getStrangeQuarkEffectiveChemicalPotential(){ return strangeQuarkEffectiveChemicalPotential; };
+    double getUpQuarkEffectiveMass(){ return upQuarkEffectiveMass; };
+    double getDownQuarkEffectiveMass(){ return downQuarkEffectiveMass; };
+    double getStrangeQuarkEffectiveMass(){ return strangeQuarkEffectiveMass; };
+    double getMesonPropagatorIntegralPrecision(){ return integralPrecision; };
+    mesonState getMesonState(){ return meson; }
 
-    //non-diagonal mesons
     double getMesonMass(){ return mesonMass; }
     double getMesonWidth(){ return mesonWidth; }
 
-    gsl_complex getPropagator(double zeroMomentum, double threeMomentum, double gamma)
+    gsl_complex calculateNonDiagonalPropagator(double zeroMomentum, double threeMomentum, double gamma)
     {   
         gsl_complex propagator;
         propagator = nonDiagonalMesonPropagator(parametersNJL, temperature, 
@@ -271,20 +277,41 @@ public:
         return propagator;
     }
 
-    gsl_complex getInversePropagator(double zeroMomentum, double threeMomentum, double gamma)
+    gsl_complex calculateInverseNonDiagonalPropagator(double zeroMomentum, double threeMomentum, double gamma)
     {   
-        gsl_complex propagator = getPropagator(zeroMomentum, threeMomentum, gamma);
+        gsl_complex propagator = calculateNonDiagonalPropagator(zeroMomentum, threeMomentum, gamma);
 
         return ( gsl_complex_inverse( propagator ) );
+    }
+
+    ComplexSquareMatrixGSL calculateDiagonalPropagator(double zeroMomentum, double threeMomentum, double gamma)
+    {   
+        ComplexSquareMatrixGSL propagator = 
+        diagonalMesonPropagator(parametersNJL, temperature, 
+                                upQuarkEffectiveChemicalPotential, downQuarkEffectiveChemicalPotential, strangeQuarkEffectiveChemicalPotential, 
+                                upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
+                                zeroMomentum, threeMomentum, gamma, integralPrecision,
+                                meson);
+
+        return propagator;
+    }
+
+    vector<gsl_complex> calculateInverseDiagonalPropagatorEigenvalues(double zeroMomentum, double threeMomentum, double gamma)
+    {   
+        ComplexSquareMatrixGSL propagator = calculateDiagonalPropagator(zeroMomentum, threeMomentum, gamma);
+
+        vector<gsl_complex> eigenvalues = calculateEigenvalues3By3ComplexMatrix( propagator.inverse() );
+
+        return eigenvalues;
     }
 
     void calculateMesonMassAndWidth(double precision, MultiRootFindingMethod method, double mesonMassGuess, double mesonWidthGuess)
     {   
         double x[2];
-        x[0] = mesonMassGuess; 
-        x[1] = mesonWidthGuess; 
+        x[0] = mesonMassGuess + 1E-6; 
+        x[1] = mesonWidthGuess + 1E-6;
         
-        multiDimensionalRootFind(2, precision, &x[0], this, &SU3NJL3DCutoffNonDiagonalMesonMassEquations, method);
+        multiDimensionalRootFind(2, precision, &x[0], this, &SU3NJL3DCutoffMesonMassEquations, method);
 
         mesonMass = x[0];
         mesonWidth = x[1];

@@ -62,12 +62,38 @@ int main(void)
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
 
-    SU3NJL3DCutoffNonDiagonalMeson aux = vacuum.calculateMesonMassAndWidth(pionPlus, 1E-6, hybrids, 0.2, 0.1);
-    cout << aux.getMesonMass() << "\t" << aux.getMesonWidth() << "\n";
 
 
+    /////////////////////////////////////////////
+    double maximumTemperature = 0.350;
+    int numberOfPoints = 400;
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, maximumTemperature, numberOfPoints, 1E-8, hybrids);
 
 
+    mesonState meson = pionPlus;
+    double mesonPropertiesPrecision = 1E-6;
+    MultiRootFindingMethod method = hybrids;
+    double mesonMassVacuumGuess = 0.2;
+    double mesonWidthVacuumGuess = 0.2;
+
+    vector<SU3NJL3DCutoffMeson> mesonFiniteT = 
+    mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, finiteTSolution, meson, mesonPropertiesPrecision, method, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+
+
+    ///////////////////////////////////////////
+
+    for (int i = 0; i < int(mesonFiniteT.size()); ++i)
+    {
+        cout << mesonFiniteT[i].getTemperature() << "\t" <<
+                mesonFiniteT[i].getUpQuarkEffectiveMass() << "\t" << 
+                mesonFiniteT[i].getDownQuarkEffectiveMass() << "\t" << 
+                mesonFiniteT[i].getStrangeQuarkEffectiveMass() << "\t" <<
+                mesonFiniteT[i].getMesonMass() << "\t" <<
+                mesonFiniteT[i].getMesonWidth() << "\n";
+    }
+
+    
 
 	//STOP CLOCK AND PRINT RUN TIME
     double stop_s = omp_get_wtime();

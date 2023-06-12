@@ -143,6 +143,22 @@ bool SU3NJL3DCutoffFixedChemPotTemp::testSolution(double precision)
 }
 
 
+
+SU3NJL3DCutoffMeson SU3NJL3DCutoffFixedChemPotTemp::calculateMesonMassAndWidth(mesonState meson, double precision, MultiRootFindingMethod method, double mesonMassGuess, double mesonWidthGuess)
+{   
+    double mesonPropagatorPrecision = parametersNJL.getSigmaIntegralPrecision();
+
+    SU3NJL3DCutoffMeson mesonAux(parametersNJL, temperature, 
+                                 upQuarkChemicalPotential, downQuarkChemicalPotential, strangeQuarkChemicalPotential, 
+                                 upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
+                                 mesonPropagatorPrecision, meson);
+
+    mesonAux.calculateMesonMassAndWidth(precision, method, mesonMassGuess, mesonWidthGuess);
+
+    return mesonAux;
+}
+
+
 std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffVacuum vacuumSol, double maxTemperature, int numberOfPoints, double precision, MultiRootFindingMethod method)
 {
     double chemPotU = 0.0;
@@ -204,6 +220,49 @@ std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteCh
     }
 
     return solutions;
+}
+
+
+vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential
+(SU3NJL3DCutoffVacuum vacuumSolution, vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, mesonState meson, double mesonPropertiesPrecision, MultiRootFindingMethod method, double mesonMassVacuumGuess, double mesonWidthVacuumGuess)
+{
+    //calculate meson mass and width in the vacuum and add it to vector
+    SU3NJL3DCutoffMeson mesonVacuum = vacuumSolution.calculateMesonMassAndWidth(meson, mesonPropertiesPrecision, method, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+
+    vector<SU3NJL3DCutoffMeson> mesonFiniteT;
+    mesonFiniteT.push_back( mesonVacuum );
+
+    for (int i = 0; i < int(finiteTempSolution.size()); ++i)
+    {   
+        double mesonMassGuess, mesonWidthGuess;
+        if ( i==0 )
+        {   
+            //use vacuum point as guess
+            mesonMassGuess = mesonFiniteT[i].getMesonMass();
+            mesonWidthGuess = mesonFiniteT[i].getMesonWidth();
+        }
+        else
+        {   
+            //use 2 previous points to find a guess
+            double x1, y1, x2, y2, x;
+            x1 = mesonFiniteT[i].getTemperature();
+            x2 = mesonFiniteT[i-1].getTemperature();
+            x = finiteTempSolution[i].getTemperature();
+
+            y1 = mesonFiniteT[i].getMesonMass();
+            y2 = mesonFiniteT[i-1].getMesonMass();
+            mesonMassGuess = linearFit(x, x1, y1, x2, y2);
+
+            y1 = mesonFiniteT[i].getMesonWidth();
+            y2 = mesonFiniteT[i-1].getMesonWidth();
+            mesonWidthGuess = linearFit(x, x1, y1, x2, y2);
+        }
+        
+        SU3NJL3DCutoffMeson mesonFiniteTAux = finiteTempSolution[i].calculateMesonMassAndWidth(meson, mesonPropertiesPrecision, method, mesonMassGuess, mesonWidthGuess);
+        mesonFiniteT.push_back( mesonFiniteTAux );
+    }
+
+    return mesonFiniteT;
 }
 
 
@@ -279,4 +338,5 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
                                                       false, crossSectionIntegralPrecision,
                                                       numberOfCrossSectionPoints);
 }
+
 

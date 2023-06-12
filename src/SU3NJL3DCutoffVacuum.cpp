@@ -124,20 +124,23 @@ double SU3NJL3DCutoffVacuum::calculateVacuumPressureElectrons(double electronMas
 }
 
 
-SU3NJL3DCutoffNonDiagonalMeson SU3NJL3DCutoffVacuum::calculateMesonMassAndWidth(mesonState meson, double precision, MultiRootFindingMethod method, double mesonMassGuess, double mesonWidthGuess)
+SU3NJL3DCutoffMeson SU3NJL3DCutoffVacuum::calculateMesonMassAndWidth(mesonState meson, double precision, MultiRootFindingMethod method, double mesonMassGuess, double mesonWidthGuess)
 {   
     double temperature = 0.0;
     double effChemPot = 0.0;
     double mesonPropagatorPrecision = parametersNJL.getSigmaIntegralPrecision();
 
-    SU3NJL3DCutoffNonDiagonalMeson mesonAux(parametersNJL, temperature, 
-                                            effChemPot, effChemPot, effChemPot, 
-                                            upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                                            mesonPropagatorPrecision, meson);
+    SU3NJL3DCutoffMeson mesonAux(parametersNJL, temperature, 
+                                 effChemPot, effChemPot, effChemPot, 
+                                 upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
+                                 mesonPropagatorPrecision, meson);
 
     mesonAux.calculateMesonMassAndWidth(precision, method, mesonMassGuess, mesonWidthGuess);
 
     return mesonAux;
 }
+
+
+
 
 
