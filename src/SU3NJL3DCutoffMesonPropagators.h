@@ -318,7 +318,7 @@ public:
     }
 };
 
-
+double mesonStateMassAtMeltingPoint(double , double , double , mesonState );
 
 
 #endif

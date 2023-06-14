@@ -803,55 +803,55 @@ gsl_complex nonDiagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, d
 					  		           double effChemPotU, double effChemPotD, double effChemPotS, 
 					  		           double effMassU, double effMassD, double effMassS, 
 					  		           double k0, double k, double Gamma, double integralPrecision,
-					  		           mesonState meson)
+					  		           mesonState mesonID)
 {   
 	gsl_complex mesonPropagator;
 
-	if ( meson==pionPlus )
+	if ( mesonID==pionPlus )
 	{
 		mesonPropagator = pionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==pionMinus )
+	else if ( mesonID==pionMinus )
 	{
 		mesonPropagator = pionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==kaonPlus )
+	else if ( mesonID==kaonPlus )
 	{
 		mesonPropagator = kaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==kaonMinus )
+	else if ( mesonID==kaonMinus )
 	{
 		mesonPropagator = kaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==neutralKaon )
+	else if ( mesonID==neutralKaon )
 	{
 		mesonPropagator = neutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==antiNeutralKaon )
+	else if ( mesonID==antiNeutralKaon )
 	{
 		mesonPropagator = antiNeutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==sigmaPionPlus )
+	else if ( mesonID==sigmaPionPlus )
 	{
 		mesonPropagator = sigmaPionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==sigmaPionMinus )
+	else if ( mesonID==sigmaPionMinus )
 	{
 		mesonPropagator = sigmaPionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==sigmaKaonPlus )
+	else if ( mesonID==sigmaKaonPlus )
 	{
 		mesonPropagator = sigmaKaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==sigmaKaonMinus )
+	else if ( mesonID==sigmaKaonMinus )
 	{
 		mesonPropagator = sigmaKaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==neutralSigmaKaon )
+	else if ( mesonID==neutralSigmaKaon )
 	{
 		mesonPropagator = neutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if ( meson==antiNeutralSigmaKaon )
+	else if ( mesonID==antiNeutralSigmaKaon )
 	{
 		mesonPropagator = antiNeutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
@@ -864,10 +864,10 @@ gsl_complex nonDiagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, d
 					  		           double effChemPotU, double effChemPotD, double effChemPotS, 
 					  		           double effMassU, double effMassD, double effMassS, 
 					  		           double k0, double k, double integralPrecision,
-					  		           mesonState meson)
+					  		           mesonState mesonID)
 {
 	gsl_complex mesonPropagator = 
-	nonDiagonalMesonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, meson);
+	nonDiagonalMesonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, mesonID);
     
     return mesonPropagator;
 }
@@ -877,16 +877,16 @@ ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters paramete
 					  		          		   double effChemPotU, double effChemPotD, double effChemPotS, 
 					  		          		   double effMassU, double effMassD, double effMassS, 
 					  		          		   double k0, double k, double Gamma, double integralPrecision,
-					  		          		   mesonState meson)
+					  		          		   mesonState mesonID)
 {
 	ComplexSquareMatrixGSL mesonPropagator(3);
 
-	if( meson==diagonalPseudoscalars )
+	if( mesonID==diagonalPseudoscalars )
 	{
 		mesonPropagator = 
 		neutral038PseudoscalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
 	}
-	else if( meson==diagonalScalars )
+	else if( mesonID==diagonalScalars )
 	{
 		mesonPropagator = 
 		neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
@@ -900,10 +900,10 @@ ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters paramete
 					  		          		   double effChemPotU, double effChemPotD, double effChemPotS, 
 					  		          		   double effMassU, double effMassD, double effMassS, 
 					  		          		   double k0, double k, double integralPrecision,
-					  		          		   mesonState meson)
+					  		          		   mesonState mesonID)
 {
 	ComplexSquareMatrixGSL mesonPropagator = 
-	diagonalMesonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, meson);
+	diagonalMesonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, mesonID);
 
 	return mesonPropagator;
 }
@@ -944,6 +944,18 @@ int SU3NJL3DCutoffMesonMassEquations(const gsl_vector *x, void *auxiliar, gsl_ve
 }
 
 
+double mesonStateMassAtMeltingPoint(double Mu, double Md, double Ms, mesonState mesonID)
+{
+	double k0 = 0;
 
+	if 	   ( mesonID==pionPlus || mesonID==pionMinus || mesonID==sigmaPionPlus || mesonID==sigmaPionMinus ){ k0 = Mu + Md; }
+	else if( mesonID==kaonPlus || mesonID==kaonMinus || mesonID==sigmaKaonPlus || mesonID==sigmaKaonMinus  ){ k0 = Mu + Ms; }
+	else if( mesonID==neutralKaon || mesonID==antiNeutralKaon || mesonID==neutralSigmaKaon || mesonID==antiNeutralSigmaKaon  ){ k0 = Md + Ms; }
+	else
+	{	
+		cout << "Meson not defined in mesonStateMassAtMeltingPoint! Aborting! \n";
+		abort();
+	}
 
-
+	return k0;
+}

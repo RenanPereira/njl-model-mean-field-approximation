@@ -104,18 +104,16 @@ double sigmaNJL3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutof
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-
+/*
 double gEEta(double T, double effCP1, double cutoff, double M1, double M2, double k, double eta, double E)
 {   
     double C = dEdepsilon_epsilonMin(cutoff, M1, M2, k, E);
     double D = dEdepsilon_epsilonMax(cutoff, M1, M2, k, E);
 
-/*
-    double gPlusEtaAux;
-    gEEtaAux =  + 0.5*( D - C )
-                + 2.0*T*log( 1 + exp( (- E + C/2 - eta*effCP1 )/T ) )
-                - 2.0*T*log( 1 + exp( (- E + D/2 - eta*effCP1 )/T ) );
-*/
+    //double gPlusEtaAux;
+    //gEEtaAux =  + 0.5*( D - C )
+    //            + 2.0*T*log( 1 + exp( (- E + C/2 - eta*effCP1 )/T ) )
+    //            - 2.0*T*log( 1 + exp( (- E + D/2 - eta*effCP1 )/T ) );
 
     //arguments inside the logarithms
     double argD1 = - E + 0.5*D - eta*effCP1;
@@ -223,12 +221,10 @@ double gEpsilonEta(double T, double effCP1, double cutoff, double M1, double M2,
     double c = depsilondE_EMin(M1, M2, k, epsilon);
     double d = depsilondE_EMax(cutoff, M1, M2, k, epsilon);
 
-/*
-    double gPlusEtaAux;
-    gEpsilonEtaAux =  + 0.5*( d - c )
-                      - T*log( 1 + exp( ( epsilon/2 - c - eta*effCP1 )/T ) )
-                      + T*log( 1 + exp( ( epsilon/2 - d - eta*effCP1 )/T ) );
-*/
+    //double gPlusEtaAux;
+    //gEpsilonEtaAux =  + 0.5*( d - c )
+    //                  - T*log( 1 + exp( ( epsilon/2 - c - eta*effCP1 )/T ) )
+    //                  + T*log( 1 + exp( ( epsilon/2 - d - eta*effCP1 )/T ) );
 
     //arguments inside the logarithms
     double argC1 = 0.5*epsilon - c - eta*effCP1;
@@ -372,10 +368,10 @@ gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguSchem
 
     return AKlev;
 }
+*/
 
 
 
-/*
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Implementation of the Klevansky's A integral in the sphere-sphere intersection regularization without the CORRECT change of variables
 //f0k loop function in the vacuum
@@ -522,7 +518,7 @@ gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguSchem
 
     return AKlev;
 }
-*/
+
 
 
 

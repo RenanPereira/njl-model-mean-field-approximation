@@ -13,20 +13,20 @@ class SU3NJL3DCutoffFixedChemPotTemp
 {
 private:
 	SU3NJL3DCutoffParameters parametersNJL;
-
 	double temperature;
 	double upQuarkChemicalPotential;
 	double downQuarkChemicalPotential;
 	double strangeQuarkChemicalPotential;
-
 	double upQuarkEffectiveMass = 0.0/0.0;
 	double downQuarkEffectiveMass = 0.0/0.0;
 	double strangeQuarkEffectiveMass = 0.0/0.0;
+	mesonState mesonID;
 
 public:
 	SU3NJL3DCutoffFixedChemPotTemp(){};
 	SU3NJL3DCutoffFixedChemPotTemp(void* );
 	SU3NJL3DCutoffFixedChemPotTemp(SU3NJL3DCutoffParameters , double , double , double , double );
+	SU3NJL3DCutoffFixedChemPotTemp(SU3NJL3DCutoffParameters , double , double , double );
 
 	SU3NJL3DCutoffParameters getParametersNJL(){ return parametersNJL; };
 
@@ -40,13 +40,16 @@ public:
 	double getDownQuarkChemicalPotential(){ return downQuarkChemicalPotential; };
 	double getStrangeQuarkChemicalPotential(){ return strangeQuarkChemicalPotential; };
 
+	mesonState getMesonID(){ return mesonID; };
+	void setMesonID(mesonState mesonIDAux){ mesonID = mesonIDAux; };
+
 	//gap equations
 	void solve(double , MultiRootFindingMethod , double , double , double );
 	bool testSolution(double );
 
 	//meson properties
     SU3NJL3DCutoffMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
-
+    void findNondiagonalMesonMottTemperature(mesonState , double , MultiRootFindingMethod , double , double , double , double );
 
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };
@@ -65,6 +68,10 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroC
 vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp , double , int , double , MultiRootFindingMethod );
 
 vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedChemPotTemp> , mesonState , double , MultiRootFindingMethod , double , double );
+
+int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const gsl_vector *, void *, gsl_vector *);
+
+SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedChemPotTemp> , mesonState , double , MultiRootFindingMethod , double , double );
 
 void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double , double , int );
 

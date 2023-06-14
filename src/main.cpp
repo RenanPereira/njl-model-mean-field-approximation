@@ -44,17 +44,18 @@ int main(void)
     double m0d = 0.0055;
     double m0s = 0.1407;
 
+    
     //Fix Lagrangian dimensionful couplings
     NJLDimensionfulCouplings couplings(interactions_4SP_det, gs, kappa);
-
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
 
-
-    //find solution in the vacuum
+/*
+    //solve model in the vacuum
+    double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(1E-8, hybrids, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
 
     cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
     cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
@@ -62,38 +63,73 @@ int main(void)
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
 
-
-
-    /////////////////////////////////////////////
-    double maximumTemperature = 0.350;
+    //solve model at zero chemical potential up to some finite temperature
+    double maximumTemperature = 0.400;
     int numberOfPoints = 400;
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, maximumTemperature, numberOfPoints, 1E-8, hybrids);
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, maximumTemperature, numberOfPoints, gapPrecision, hybrids);
 
 
-    mesonState meson = pionPlus;
-    double mesonPropertiesPrecision = 1E-6;
-    MultiRootFindingMethod method = hybrids;
-    double mesonMassVacuumGuess = 0.2;
-    double mesonWidthVacuumGuess = 0.2;
+    //Search for meson melting points in the range of temperatures considered above
+    double mesonPropertiesPrecision = 1E-7;
+    double mesonMassVacuumGuess;
+    double mesonWidthVacuumGuess;
+    mesonState mesonID;
 
-    vector<SU3NJL3DCutoffMeson> mesonFiniteT = 
-    mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, finiteTSolution, meson, mesonPropertiesPrecision, method, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    mesonMassVacuumGuess = 0.2;
+    mesonWidthVacuumGuess = 0.2;
+    mesonID = pionPlus;
+    SU3NJL3DCutoffFixedChemPotTemp meltingPointPionPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, hybrids, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    cout << meltingPointPionPlus.getTemperature() << "\n";
 
 
-    ///////////////////////////////////////////
-
-    for (int i = 0; i < int(mesonFiniteT.size()); ++i)
-    {
-        cout << mesonFiniteT[i].getTemperature() << "\t" <<
-                mesonFiniteT[i].getUpQuarkEffectiveMass() << "\t" << 
-                mesonFiniteT[i].getDownQuarkEffectiveMass() << "\t" << 
-                mesonFiniteT[i].getStrangeQuarkEffectiveMass() << "\t" <<
-                mesonFiniteT[i].getMesonMass() << "\t" <<
-                mesonFiniteT[i].getMesonWidth() << "\n";
-    }
-
+    ///////////////////////////////////////////////////////////////////////////
+*/
     
+    double T = 0.2;
+    double effChemPotU = 0.5;
+    double effChemPotD = 0.5;
+    double effChemPotS = 0.5;
+    double effMassU = 0.4;
+    double effMassD = 0.5;
+    double effMassS = 0.6;
+    double s = 2.1*effMassS;
+    scatteringProcess process = SSBarUUBar;
+
+/*
+    double test= crossSectionProcess12To34(parameters, T, 
+                                           effChemPotU, effChemPotD, effChemPotS, 
+                                           effMassU, effMassD, effMassS, 
+                                           s, 1E-8, process, 
+                                           false, 1E-4);
+    cout << test << "\n";
+*/
+
+/*
+    double test2 = integratedCrossSectionProcess12To34(parameters, T, 
+                                                       effChemPotU, effChemPotD, effChemPotS, 
+                                                       effMassU, effMassD, effMassS, 
+                                                       1E-8, process, 
+                                                       false, 1E-4,
+                                                       1E-12, 1E-3);
+*/
+/*
+    double test2 = integratedCrossSectionProcess12To34Klevansky(parameters, T, 
+                                                       effChemPotU, effChemPotD, effChemPotS, 
+                                                       effMassU, effMassD, effMassS, 
+                                                       1E-8, process, 
+                                                       true, 1E-4,
+                                                       1E-12, 1E-3);
+*/
+/*
+    double test2 = integratedCrossSectionProcess12To34Zhuang(parameters, T, 
+                                                       effChemPotU, effChemPotD, effChemPotS, 
+                                                       effMassU, effMassD, effMassS, 
+                                                       1E-8, process, 
+                                                       true, 1E-4,
+                                                       1E-3);  
+*/    
+
 
 	//STOP CLOCK AND PRINT RUN TIME
     double stop_s = omp_get_wtime();
