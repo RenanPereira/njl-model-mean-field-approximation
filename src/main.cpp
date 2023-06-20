@@ -50,42 +50,27 @@ int main(void)
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    parameters.setParameterSetName("setA");
 
-/*
+
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
     vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
 
+    cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
     cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
          << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
-
-    //solve model at zero chemical potential up to some finite temperature
-    double maximumTemperature = 0.400;
-    int numberOfPoints = 400;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, maximumTemperature, numberOfPoints, gapPrecision, hybrids);
-
-
-    //Search for meson melting points in the range of temperatures considered above
-    double mesonPropertiesPrecision = 1E-7;
-    double mesonMassVacuumGuess;
-    double mesonWidthVacuumGuess;
-    mesonState mesonID;
-
-    mesonMassVacuumGuess = 0.2;
-    mesonWidthVacuumGuess = 0.2;
-    mesonID = pionPlus;
-    SU3NJL3DCutoffFixedChemPotTemp meltingPointPionPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, hybrids, mesonMassVacuumGuess, mesonWidthVacuumGuess);
-    cout << meltingPointPionPlus.getTemperature() << "\n";
+    //someVacuumAndThermalPropertiesKlevanskyParameterSet();
 
 
     ///////////////////////////////////////////////////////////////////////////
-*/
+
     
+/*
     double T = 0.2;
     double effChemPotU = 0.5;
     double effChemPotD = 0.5;
@@ -93,45 +78,47 @@ int main(void)
     double effMassU = 0.4;
     double effMassD = 0.5;
     double effMassS = 0.6;
-    double s = 2.1*effMassS;
-    scatteringProcess process = SSBarUUBar;
+    scatteringProcess process = UDUD;
 
-/*
-    double test= crossSectionProcess12To34(parameters, T, 
-                                           effChemPotU, effChemPotD, effChemPotS, 
-                                           effMassU, effMassD, effMassS, 
-                                           s, 1E-8, process, 
-                                           false, 1E-4);
-    cout << test << "\n";
+    SU3NJL3DCutoffIntegratedCrossSection intCrossSection(parameters, T, 
+                                                         effChemPotU, effChemPotD, effChemPotS, 
+                                                         effMassU, effMassD, effMassS, 
+                                                         1E-8, process,
+                                                         false, 1E-4,
+                                                         1E-12, 1E-3,
+                                                         completeWithCOV);
+
+    intCrossSection.setIntegratedCrossSection();
+    intCrossSection.setQuarkNumbers();
+    cout << intCrossSection.getIntegratedCrossSection() << "\n";
 */
 
-/*
-    double test2 = integratedCrossSectionProcess12To34(parameters, T, 
-                                                       effChemPotU, effChemPotD, effChemPotS, 
-                                                       effMassU, effMassD, effMassS, 
-                                                       1E-8, process, 
-                                                       false, 1E-4,
-                                                       1E-12, 1E-3);
-*/
-/*
-    double test2 = integratedCrossSectionProcess12To34Klevansky(parameters, T, 
-                                                       effChemPotU, effChemPotD, effChemPotS, 
-                                                       effMassU, effMassD, effMassS, 
-                                                       1E-8, process, 
-                                                       true, 1E-4,
-                                                       1E-12, 1E-3);
-*/
-/*
-    double test2 = integratedCrossSectionProcess12To34Zhuang(parameters, T, 
-                                                       effChemPotU, effChemPotD, effChemPotS, 
-                                                       effMassU, effMassD, effMassS, 
-                                                       1E-8, process, 
-                                                       true, 1E-4,
-                                                       1E-3);  
-*/    
 
 
-	//STOP CLOCK AND PRINT RUN TIME
+
+    evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(parameters,
+                                                                     0.120, 
+                                                                     0.300, 
+                                                                     200, 
+                                                                     10, 
+                                                                     false, 
+                                                                     completeCOV);
+
+
+
+/*
+    evaluateIntegratedCrossSectionsWithFixedTemperatureForPaper(parameters,
+                                                                0.212, 
+                                                                200, 
+                                                                5, 
+                                                                0.400,
+                                                                false, 
+                                                                completeCOV);
+*/
+
+
+
+    //STOP CLOCK AND PRINT RUN TIME
     double stop_s = omp_get_wtime();
     double run_time = (stop_s-start_s);
     std::cout << "Run Time: " << run_time << std::endl;

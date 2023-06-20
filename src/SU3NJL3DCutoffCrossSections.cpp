@@ -196,7 +196,7 @@ double crossSectionProcess12To34(SU3NJL3DCutoffParameters parametersNJL, double 
                                  double s, double propIntPrecision, scatteringProcess process, 
                                  bool largeAngleScatteringContribution, double crossSecIntPrecision)
 {   
-    string integralID = "crossSectionProcess" + scatteringProcessToString(process);
+    string integralID = "crossSectionProcess" + toString(process);
     CrossSectionIntegrand aux(integralID, parametersNJL, T, 
                               effChemPotU, effChemPotD, effChemPotS, 
                               effMassU, effMassD, effMassS, 
@@ -216,7 +216,7 @@ double crossSectionProcess12To34(SU3NJL3DCutoffParameters parametersNJL, double 
     { 
         cout << "Chosen value for the value of s=" << s 
              << " (the center of mass energy) is smaller then the energy threshold, smin=" << sMin
-             << ", for the scattering process " << scatteringProcessToString(process) << "! Returning 0!\n"; 
+             << ", for the scattering process " << toString(process) << "! Returning 0!\n"; 
         return 0.0; 
     }
 
@@ -289,7 +289,7 @@ void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters parameters
 
     //create filename
     string fileName = "crossSection" 
-                    + scatteringProcessToString(process) 
+                    + toString(process) 
                     + "_T" + to_string(T) 
                     + "_CPU" + to_string(effChemPotU)
                     + "_CPD" + to_string(effChemPotD)
@@ -331,7 +331,7 @@ void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters parametersNJL,
 
     for (int i = 0; i < int(processes.size()); ++i)
     {
-        cout << "Calculating cross section for the process: " << scatteringProcessToString(processes[i]) << "\n";
+        cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
         evaluateCrossSectionProcess12To34ToFile(parametersNJL, T, 
                                                 effChemPotU, effChemPotD, effChemPotS, 
                                                 effMassU, effMassD, effMassS, 
@@ -365,7 +365,7 @@ void evaluateCrossSectionsPaperFiniteChemicalPotential(SU3NJL3DCutoffParameters 
 
     for (int i = 0; i < int(processes.size()); ++i)
     {
-        cout << "Calculating cross section for the process: " << scatteringProcessToString(processes[i]) << "\n";
+        cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
         evaluateCrossSectionProcess12To34ToFile(parametersNJL, T, 
                                                 effChemPotU, effChemPotD, effChemPotS, 
                                                 effMassU, effMassD, effMassS, 

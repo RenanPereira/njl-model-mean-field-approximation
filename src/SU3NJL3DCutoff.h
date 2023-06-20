@@ -25,6 +25,8 @@ private:
     double downQuarkCurrentMass = 0.0;
     double strangeQuarkCurrentMass = 0.0;
 
+    string parameterSetName = "";
+
 public:
     SU3NJL3DCutoffParameters(){};
     SU3NJL3DCutoffParameters(NJL3DCutoffRegularizationScheme reguSchemeAux, double threeMomentumCutoffAux, NJLDimensionfulCouplings couplingsAux, double m0u, double m0d, double m0s)
@@ -41,23 +43,21 @@ public:
         threeMomentumCutoff = threeMomentumCutoffAux;
     }
 
-    NJLDimensionfulCouplings getDimensionfulCouplings(){ return couplings; };
+    void setSigmaIntegralPrecision(double sigmaIntegralPrecisionAux){ sigmaIntegralPrecision = sigmaIntegralPrecisionAux; };
+    void setThermoIntegralPrecision(double thermoIntegralPrecisionAux){ thermoIntegralPrecision = thermoIntegralPrecisionAux; };
+    void setNumberOfColours(double numberOfColoursAux){ numberOfColours = numberOfColoursAux; };
+    void setParameterSetName(string parameterSetNameAux){ parameterSetName = parameterSetNameAux; };
 
+    NJLDimensionfulCouplings getDimensionfulCouplings(){ return couplings; };
     NJL3DCutoffRegularizationScheme getNJL3DCutoffRegularizationScheme(){ return reguScheme; };
     double getThreeMomentumCutoff(){ return threeMomentumCutoff; };
-    
     double getNumberOfColours(){ return numberOfColours; };
-
-    void setSigmaIntegralPrecision(double sigmaIntegralPrecisionAux){ sigmaIntegralPrecision = sigmaIntegralPrecisionAux; };
     double getSigmaIntegralPrecision(){ return sigmaIntegralPrecision; };
-    void setThermoIntegralPrecision(double thermoIntegralPrecisionAux){ thermoIntegralPrecision = thermoIntegralPrecisionAux; };
     double getThermoIntegralPrecision(){ return thermoIntegralPrecision; };
-
     double getUpQuarkCurrentMass(){ return upQuarkCurrentMass; };
     double getDownQuarkCurrentMass(){ return downQuarkCurrentMass; };
     double getStrangeQuarkCurrentMass(){ return strangeQuarkCurrentMass; };
-
-    void setNumberOfColours(double numberOfColoursAux){ numberOfColours = numberOfColoursAux; };
+    string getParameterSetName(){ return parameterSetName; };
 };
 
 

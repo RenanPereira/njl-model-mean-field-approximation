@@ -94,7 +94,7 @@ public:
         cout << "effMassS = " << strangeQuarkEffectiveMass << "\n";
         cout << "s = " << centerOfMassEnergy << "\n";
         cout << "propagatorPrecision = " << propagatorIntegralPrecision << "\n";
-        cout << "scatteringProcess = " << scatteringProcessToString(process) << "\n";
+        cout << "scatteringProcess = " << toString(process) << "\n";
     }
 };
 

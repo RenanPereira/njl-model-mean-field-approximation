@@ -196,21 +196,53 @@ std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAt
         effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
 
         //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
-
-        if (inMediumSol.testSolution(1E-8)==true){ solutions.push_back(inMediumSol); }
+        if (inMediumSol.testSolution(precision)==true){ solutions.push_back(inMediumSol); }
     }
 
     return solutions;
 }
 
 
-std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp finiteTSol, double maxChemPot, int numberOfPoints, double precision, MultiRootFindingMethod method)
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureAtZeroChemicalPotentialToHigherTemperature(SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, double maxTemperature, int numberOfPoints, double precision, MultiRootFindingMethod method)
+{
+    double chemPotU = 0.0;
+    double chemPotD = 0.0;
+    double chemPotS = 0.0;
+
+    double effMassU = minTemperatureSolution.getUpQuarkEffectiveMass();
+    double effMassD = minTemperatureSolution.getDownQuarkEffectiveMass();
+    double effMassS = minTemperatureSolution.getStrangeQuarkEffectiveMass();
+
+    double minTemperature = minTemperatureSolution.getTemperature();
+    double deltaTemperature = (maxTemperature-minTemperature)/(numberOfPoints - 1);
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        double T = minTemperature + i*deltaTemperature;
+
+        SU3NJL3DCutoffFixedChemPotTemp inMediumSol(minTemperatureSolution.getParametersNJL(), T, chemPotU, chemPotD, chemPotS);
+        inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
+
+        effMassU = inMediumSol.getUpQuarkEffectiveMass();
+        effMassD = inMediumSol.getDownQuarkEffectiveMass();
+        effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
+
+        //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
+        if (inMediumSol.testSolution(precision)==true){ solutions.push_back(inMediumSol); }
+    }
+
+    return solutions;
+}
+
+
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp finiteTSol, double maxChemPot, int numberOfPoints, double precision, MultiRootFindingMethod method)
 {
     double effMassU = finiteTSol.getUpQuarkEffectiveMass();
     double effMassD = finiteTSol.getDownQuarkEffectiveMass();
     double effMassS = finiteTSol.getStrangeQuarkEffectiveMass();
 
-    double minChemPot = 1E-5;
+    double minChemPot = finiteTSol.getUpQuarkChemicalPotential();
     double delta = (maxChemPot-minChemPot)/(numberOfPoints - 1);
 
     vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
@@ -227,7 +259,7 @@ std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteCh
 
         //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
 
-        if (inMediumSol.testSolution(1E-8)==true){ solutions.push_back(inMediumSol); }
+        if (inMediumSol.testSolution(precision)==true){ solutions.push_back(inMediumSol); }
     }
 
     return solutions;
@@ -452,6 +484,86 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
                                                       mesonPropagatorIntegralPrecision,
                                                       false, crossSectionIntegralPrecision,
                                                       numberOfCrossSectionPoints);
+}
+
+
+void someVacuumAndThermalPropertiesKlevanskyParameterSet()
+{
+
+    //parameter set A (Klevansky parameter set)
+    double cutoff = 0.6023;
+    double gs = 10.116734156126128;
+    double kappa = -155.93878816540243;
+    double m0u = 0.0055;
+    double m0d = 0.0055;
+    double m0s = 0.1407;
+
+    
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(interactions_4SP_det, gs, kappa);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    parameters.setParameterSetName("setA");
+
+
+    //solve model in the vacuum
+    double gapPrecision = 1E-8;
+    SU3NJL3DCutoffVacuum vacuum(parameters);
+    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
+    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+
+
+    cout << "Pseudoscalar meson masses:\n";
+
+    SU3NJL3DCutoffMeson pionPlusMassSolution = vacuum.calculateMesonMassAndWidth(pionPlus, 1E-7, hybrids, 0.2, 0.2);
+    cout << pionPlusMassSolution.getMesonMass() << "\t" << pionPlusMassSolution.getMesonWidth() << "\n";
+
+    SU3NJL3DCutoffMeson kaonPlusMassSolution = vacuum.calculateMesonMassAndWidth(kaonPlus, 1E-7, hybrids, 0.4, 0.2);
+    cout << kaonPlusMassSolution.getMesonMass() << "\t" << kaonPlusMassSolution.getMesonWidth() << "\n";
+
+    SU3NJL3DCutoffMeson diagonalMassSolution;
+    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(diagonalPseudoscalars, 1E-7, hybrids, 0.5, 0.2);
+    cout << diagonalMassSolution.getMesonMass() << "\t" << diagonalMassSolution.getMesonWidth() << "\n";
+
+    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(diagonalPseudoscalars, 1E-7, hybrids, 1.0, 0.2);
+    cout << diagonalMassSolution.getMesonMass() << "\t" << diagonalMassSolution.getMesonWidth() << "\n";
+
+     cout << "Scalar meson masses:\n";
+
+    SU3NJL3DCutoffMeson sigmaPionPlusMassSolution = vacuum.calculateMesonMassAndWidth(sigmaPionPlus, 1E-7, hybrids, 0.2, 0.2);
+    cout << sigmaPionPlusMassSolution.getMesonMass() << "\t" << sigmaPionPlusMassSolution.getMesonWidth() << "\n";
+
+
+    //solve model at zero chemical potential up to some finite temperature
+    double maximumTemperature = 0.400;
+    int numberOfPoints = 400;
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, maximumTemperature, numberOfPoints, gapPrecision, hybrids);
+
+
+    //Search for meson melting points in the range of temperatures considered above
+    double mesonPropertiesPrecision = 1E-7;
+    double mesonMassVacuumGuess;
+    double mesonWidthVacuumGuess;
+    mesonState mesonID;
+
+    mesonMassVacuumGuess = 0.2;
+    mesonWidthVacuumGuess = 0.2;
+    mesonID = pionPlus;
+    SU3NJL3DCutoffFixedChemPotTemp meltingPointPionPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, hybrids, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    cout << "pionPlus TMott: " << meltingPointPionPlus.getTemperature() << "\n";
+
+    mesonMassVacuumGuess = 0.5;
+    mesonWidthVacuumGuess = 0.2;
+    mesonID = kaonPlus;
+    SU3NJL3DCutoffFixedChemPotTemp meltingPointKaonPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, hybrids, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    cout << "kaonPlus TMott: " << meltingPointKaonPlus.getTemperature() << "\n";
 }
 
 

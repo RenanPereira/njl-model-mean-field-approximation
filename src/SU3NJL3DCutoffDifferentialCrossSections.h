@@ -16,7 +16,7 @@ enum scatteringProcess { UDUD, DUDU, USUS, SUSU, DSDS, SDSD, UUUU, DDDD, SSSS,
                          UBarUBarUBarUBar, DBarDBarDBarDBar, SBarSBarSBarSBar,
                          UBarDBarUBarDBar, UBarSBarUBarSBar };
 
-string scatteringProcessToString(scatteringProcess );
+string toString(scatteringProcess );
 
 void inOutMassesGivenScatteringProcess(double , double , double , scatteringProcess , double& , double& , double& , double& );
 

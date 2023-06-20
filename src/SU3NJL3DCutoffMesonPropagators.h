@@ -220,6 +220,7 @@ private:
     double mesonWidth = 0;
 
 public:
+    SU3NJL3DCutoffMeson(){};
     SU3NJL3DCutoffMeson(SU3NJL3DCutoffParameters parametersNJLAux, double TAux, 
                         double effChemPotUAux, double effChemPotDAux, double effChemPotSAux, 
                         double effMassUAux, double effMassDAux, double effMassSAux, 
@@ -236,7 +237,6 @@ public:
         integralPrecision = integralPrecisionAux;
         meson = mesonAux;
     };
-
     SU3NJL3DCutoffMeson(void* auxiliar)
     {   
         parametersNJL = ((class SU3NJL3DCutoffMeson *)(auxiliar))->parametersNJL;

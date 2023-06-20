@@ -65,6 +65,8 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
 
 vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffVacuum , double , int , double , MultiRootFindingMethod );
 
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureAtZeroChemicalPotentialToHigherTemperature(SU3NJL3DCutoffFixedChemPotTemp , double , int , double , MultiRootFindingMethod );
+
 vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp , double , int , double , MultiRootFindingMethod );
 
 vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedChemPotTemp> , mesonState , double , MultiRootFindingMethod , double , double );
@@ -74,6 +76,8 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
 SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedChemPotTemp> , mesonState , double , MultiRootFindingMethod , double , double );
 
 void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double , double , int );
+
+void someVacuumAndThermalPropertiesKlevanskyParameterSet();
 
 
 #endif

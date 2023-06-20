@@ -142,5 +142,3 @@ SU3NJL3DCutoffMeson SU3NJL3DCutoffVacuum::calculateMesonMassAndWidth(mesonState 
 
 
 
-
-

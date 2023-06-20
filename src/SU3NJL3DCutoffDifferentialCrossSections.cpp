@@ -19,7 +19,7 @@
 //UBarUBar->UBarUBar, UBarDBar->UBarDBar, UBarSBar->UBarSBar, SBarSBar->SBarSBar
 
 
-string scatteringProcessToString(scatteringProcess process)
+string toString(scatteringProcess process)
 { 
     if      ( process==UDUD ){ return "UDUD"; }
     else if ( process==DUDU ){ return "DUDU"; }

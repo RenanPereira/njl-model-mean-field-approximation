@@ -26,10 +26,6 @@ G8SPVIPI = -gSigmaRho;
 */
 
 
-
-double integration_precision = 1E-8;
-
-
 double SU3BaryonDensity(double upQuarkDensity, double downQuarkDensity, double strangeQuarkDensity)
 {
 	double rhoB = (1.0/3.0)*( upQuarkDensity + downQuarkDensity + strangeQuarkDensity );
