@@ -17,12 +17,16 @@ G8SP2 = 16 g2;
 G4VP = -gOmega;
 G4VIPI = -gRho;
 
-G8VP = -gOmegaOmega;
-G8VIPI = -gRhoRho;
+G8VP = -gOmega2;
+G8VIPI = -gRho2;
 G8VPVIPI = -gOmegaRho;
 
 G8SPVP = -gSigmaOmega;
 G8SPVIPI = -gSigmaRho;
+
+G12VP = -gOmega3;
+
+G16VP = -gOmega4;
 */
 
 
@@ -36,23 +40,34 @@ double SU3BaryonDensity(double upQuarkDensity, double downQuarkDensity, double s
 
 double SU3NJLNulledGapEquation(NJLDimensionfulCouplings couplings, double Mf_minus_m0f, double sigma_f, double sigma_fplus1, double sigma_fplus2, double rho_f, double rho_fplus1, double rho_fplus2)
 {	
-	double gS = couplings.getFourQuarkSPCoupling();
-	double kappa = couplings.getDeterminantCoupling();
-	double g1 = couplings.getEightQuarkSPOziViolatingCoupling();
-	double g2 = couplings.getEightQuarkSPNonOziViolatingCoupling();
+    //no interactions
+    double nullGap = 0.0;
+    nullGap = Mf_minus_m0f;
 
-	double gSigmaOmega = couplings.getEightQuarkSPVPCoupling();
-	double gSigmaRho = couplings.getEightQuarkSPVIPICoupling();
+    //4scalar interactions
+    double gS = couplings.getFourQuarkSPCoupling();
+    nullGap = nullGap 
+            + 2.0*gS*sigma_f;
 
-	double nullGap = 0.0;
+    //6scalar interactions
+    double kappa = couplings.getDeterminantCoupling();
+	nullGap = nullGap 
+			+ 2.0*kappa*sigma_fplus1*sigma_fplus2;
 
-	nullGap = Mf_minus_m0f 
-			+ 2.0*gS*sigma_f 
-			+ 2.0*kappa*sigma_fplus1*sigma_fplus2
-			+ 4.0*g1*sigma_f*( pow(sigma_f,2) + pow(sigma_fplus1,2) + pow(sigma_fplus2,2) ) 
-			+ 4.0*g2*pow(sigma_f,3)
-			- (8.0/3.0)*gSigmaOmega*( pow(rho_f + rho_fplus1 + rho_fplus2, 2) )*sigma_f
-			- (16.0/3.0)*gSigmaRho*( pow(rho_f,2) + pow(rho_fplus1,2) + pow(rho_fplus2,2) - rho_f*rho_fplus1 - rho_fplus1*rho_fplus2 - rho_f*rho_fplus2 )*sigma_f;
+    //8scalar interactions
+    double g1 = couplings.getEightQuarkSPOziViolatingCoupling();
+    double g2 = couplings.getEightQuarkSPNonOziViolatingCoupling();
+    nullGap = nullGap 
+            + 4.0*g1*sigma_f*( pow(sigma_f,2) + pow(sigma_fplus1,2) + pow(sigma_fplus2,2) ) 
+            + 4.0*g2*pow(sigma_f,3);
+
+    //4scalar_4vector interactions
+    double gSigmaOmega = couplings.getEightQuarkSPVPCoupling();
+    double gSigmaRho = couplings.getEightQuarkSPVIPICoupling();
+    nullGap = nullGap 
+            - (8.0/3.0)*gSigmaOmega*( pow(rho_f + rho_fplus1 + rho_fplus2, 2) )*sigma_f
+            - (16.0/3.0)*gSigmaRho*( pow(rho_f,2) + pow(rho_fplus1,2) + pow(rho_fplus2,2) - rho_f*rho_fplus1 - rho_fplus1*rho_fplus2 - rho_f*rho_fplus2 )*sigma_f;
+
 
 	return nullGap;
 }
@@ -60,25 +75,38 @@ double SU3NJLNulledGapEquation(NJLDimensionfulCouplings couplings, double Mf_min
 
 double SU3NJLQuarkChemicalPotential(NJLDimensionfulCouplings couplings, double effectiveCP_f, double rho_f, double rho_fplus1, double rho_fplus2, double sigma_f, double sigma_fplus1, double sigma_fplus2)
 {	
-	double gOmega = couplings.getFourQuarkVPCoupling();
-	double gRho = couplings.getFourQuarkVIPICoupling();
-	double gOmegaOmega = couplings.getEightQuarkVPCoupling();
-	double gRhoRho = couplings.getEightQuarkVIPICoupling();
-	double gOmegaRho = couplings.getEightQuarkVPVIPICoupling();
-	double gSigmaOmega = couplings.getEightQuarkSPVPCoupling();
-	double gSigmaRho = couplings.getEightQuarkSPVIPICoupling();
+    //no interactions
+    double cp_f = 0.0;
+    cp_f = effectiveCP_f;
 
-	double cp_f = 0.0;
+    //4vector interactions
+    double gOmega = couplings.getFourQuarkVPCoupling();
+    double gRho = couplings.getFourQuarkVIPICoupling();
+    cp_f = cp_f 
+         + (4.0/3.0)*gOmega*(rho_f + rho_fplus1 + rho_fplus2)
+         + (4.0/3.0)*gRho*(2.0*rho_f - rho_fplus1 - rho_fplus2);
 
-	cp_f = effectiveCP_f 
-		 + (4.0/3.0)*gOmega*(rho_f + rho_fplus1 + rho_fplus2)
-		 + (4.0/3.0)*gRho*(2.0*rho_f - rho_fplus1 - rho_fplus2)
-		 + (16.0/9.0)*gOmegaOmega*pow( (rho_f + rho_fplus1 + rho_fplus2) , 3)
-		 + (32.0/9.0)*gRhoRho*pow( (2.0*rho_f - rho_fplus1 - rho_fplus2) , 3)
-		 + (32.0/3.0)*gRhoRho*(rho_f - rho_fplus1)*(rho_fplus2 - rho_f)*(2.0*rho_f - rho_fplus1 - rho_fplus2)
-		 + (8.0/9.0)*gOmegaRho*(rho_f + rho_fplus1 + rho_fplus2)*(4.0*pow(rho_f,2) + pow(rho_fplus1,2) + pow(rho_fplus2,2) - rho_f*rho_fplus1 - rho_f*rho_fplus2 - 4.0*rho_fplus1*rho_fplus2)
-		 + (8.0/3.0)*gSigmaOmega*(rho_f + rho_fplus1 + rho_fplus2)*( pow(sigma_f,2) + pow(sigma_fplus1,2) + pow(sigma_fplus2,2) )
-		 + (8.0/3.0)*gSigmaRho*(2.0*rho_f - rho_fplus1 - rho_fplus2)*( pow(sigma_f,2) + pow(sigma_fplus1,2) + pow(sigma_fplus2,2) );
+    //8vector interactions
+    double gOmega2 = couplings.getEightQuarkVPCoupling();
+    double gRho2 = couplings.getEightQuarkVIPICoupling();
+    double gOmegaRho = couplings.getEightQuarkVPVIPICoupling();
+	cp_f = cp_f 
+		 + (16.0/9.0)*gOmega2*pow( (rho_f + rho_fplus1 + rho_fplus2) , 3)
+		 + (32.0/9.0)*gRho2*pow( (2.0*rho_f - rho_fplus1 - rho_fplus2) , 3)
+		 + (32.0/3.0)*gRho2*(rho_f - rho_fplus1)*(rho_fplus2 - rho_f)*(2.0*rho_f - rho_fplus1 - rho_fplus2)
+		 + (8.0/9.0)*gOmegaRho*(rho_f + rho_fplus1 + rho_fplus2)*(4.0*pow(rho_f,2) + pow(rho_fplus1,2) + pow(rho_fplus2,2) - rho_f*rho_fplus1 - rho_f*rho_fplus2 - 4.0*rho_fplus1*rho_fplus2);
+
+    //4scalar_4vector interactions
+    double gSigmaOmega = couplings.getEightQuarkSPVPCoupling();
+    double gSigmaRho = couplings.getEightQuarkSPVIPICoupling();
+    cp_f = cp_f 
+         + (8.0/3.0)*gSigmaOmega*(rho_f + rho_fplus1 + rho_fplus2)*( pow(sigma_f,2) + pow(sigma_fplus1,2) + pow(sigma_fplus2,2) )
+         + (8.0/3.0)*gSigmaRho*(2.0*rho_f - rho_fplus1 - rho_fplus2)*( pow(sigma_f,2) + pow(sigma_fplus1,2) + pow(sigma_fplus2,2) );
+
+    //12vector interactions
+    double gOmega3 = couplings.getTwelveQuarkVPCoupling();
+    cp_f = cp_f 
+         + (16.0/9.0)*gOmega3*pow( (rho_f + rho_fplus1 + rho_fplus2) , 5);
 
 	return cp_f;
 }
@@ -86,33 +114,53 @@ double SU3NJLQuarkChemicalPotential(NJLDimensionfulCouplings couplings, double e
 
 double SU3NJLInteractionPotential(NJLDimensionfulCouplings couplings, double sigmaU, double sigmaD, double sigmaS, double rhoU, double rhoD, double rhoS)
 {	
-	double gS = couplings.getFourQuarkSPCoupling();
-	double kappa = couplings.getDeterminantCoupling();
-	double g1 = couplings.getEightQuarkSPOziViolatingCoupling();
-	double g2 = couplings.getEightQuarkSPNonOziViolatingCoupling();
-
-	double gOmega = couplings.getFourQuarkVPCoupling();
-	double gRho = couplings.getFourQuarkVIPICoupling();
-	double gOmegaOmega = couplings.getEightQuarkVPCoupling();
-	double gRhoRho = couplings.getEightQuarkVIPICoupling();
-	double gOmegaRho = couplings.getEightQuarkVPVIPICoupling();
-
-	double gSigmaOmega = couplings.getEightQuarkSPVPCoupling();
-	double gSigmaRho = couplings.getEightQuarkSPVIPICoupling();
-
+    //no interactions
 	double interactionPotential = 0.0;
 
-    interactionPotential = + 1.0*gS*( pow(sigmaU,2) + pow(sigmaD,2) + pow(sigmaS,2) )
-                   		   + 4.0*kappa*sigmaU*sigmaD*sigmaS
-                   		   + 3.0*g1*pow( pow(sigmaU,2) + pow(sigmaD,2) + pow(sigmaS,2) ,2)
-                   		   + 3.0*g2*( pow(sigmaU,4) + pow(sigmaD,4) + pow(sigmaS,4) )
-                   		   - (2.0/3.0)*gOmega*pow(rhoU+rhoD+rhoS, 2)
-                   		   - gRho*( pow(rhoU-rhoD, 2) + (1.0/3.0)*gRho*pow(rhoU+rhoD-2.0*rhoS, 2) )
-                  		   - (4.0/3.0)*gOmegaOmega*pow(rhoU+rhoD+rhoS, 4)
-                  		   - 3.0*gRhoRho*pow( pow(rhoU-rhoD, 2) + (1.0/3.0)*pow(rhoU+rhoD-2.0*rhoS, 2) , 2)
-                  		   - 2.0*gOmegaRho*pow(rhoU+rhoD+rhoS, 2)*( pow(rhoU-rhoD, 2) + (1.0/3.0)*pow(rhoU+rhoD-2.0*rhoS, 2) )
-                  		   - 4.0*gSigmaOmega*( pow(rhoU+rhoD+rhoS, 2) )*( pow(sigmaU,2) + pow(sigmaD,2) + pow(sigmaS,2) )
-                  		   - 8.0*gSigmaRho*(  pow(rhoU,2) + pow(rhoD,2) + pow(rhoS,2) - rhoU*rhoD - rhoD*rhoS - rhoU*rhoS )*( pow(sigmaU,2) + pow(sigmaD,2) + pow(sigmaS,2) );
+    //4scalar interactions
+    double gS = couplings.getFourQuarkSPCoupling();
+    interactionPotential = interactionPotential 
+                         + 1.0*gS*( pow(sigmaU,2) + pow(sigmaD,2) + pow(sigmaS,2) );
+
+    //6scalar interaction
+    double kappa = couplings.getDeterminantCoupling();
+    interactionPotential = interactionPotential
+                         + 4.0*kappa*sigmaU*sigmaD*sigmaS;
+
+    //8scalar interactions
+    double g1 = couplings.getEightQuarkSPOziViolatingCoupling();
+    double g2 = couplings.getEightQuarkSPNonOziViolatingCoupling();
+    interactionPotential = interactionPotential
+                         + 3.0*g1*pow( pow(sigmaU,2) + pow(sigmaD,2) + pow(sigmaS,2) ,2)
+                         + 3.0*g2*( pow(sigmaU,4) + pow(sigmaD,4) + pow(sigmaS,4) );
+
+    //4vector interactions
+    double gOmega = couplings.getFourQuarkVPCoupling();
+    double gRho = couplings.getFourQuarkVIPICoupling();
+    interactionPotential = interactionPotential
+                         - (2.0/3.0)*gOmega*pow(rhoU+rhoD+rhoS, 2)
+                         - gRho*( pow(rhoU-rhoD, 2) + (1.0/3.0)*pow(rhoU+rhoD-2.0*rhoS, 2) );
+
+    //8vector interactions
+    double gOmega2 = couplings.getEightQuarkVPCoupling();
+    double gRho2 = couplings.getEightQuarkVIPICoupling();
+    double gOmegaRho = couplings.getEightQuarkVPVIPICoupling();
+    interactionPotential = interactionPotential
+                         - (4.0/3.0)*gOmega2*pow(rhoU+rhoD+rhoS, 4)
+                         - 3.0*gRho2*pow( pow(rhoU-rhoD, 2) + (1.0/3.0)*pow(rhoU+rhoD-2.0*rhoS, 2) , 2)
+                         - 2.0*gOmegaRho*pow(rhoU+rhoD+rhoS, 2)*( pow(rhoU-rhoD, 2) + (1.0/3.0)*pow(rhoU+rhoD-2.0*rhoS, 2) );
+
+    //4scalar_4vector interactions
+    double gSigmaOmega = couplings.getEightQuarkSPVPCoupling();
+    double gSigmaRho = couplings.getEightQuarkSPVIPICoupling();
+    interactionPotential = interactionPotential
+                  		 - 4.0*gSigmaOmega*( pow(rhoU+rhoD+rhoS, 2) )*( pow(sigmaU,2) + pow(sigmaD,2) + pow(sigmaS,2) )
+                  		 - 8.0*gSigmaRho*(  pow(rhoU,2) + pow(rhoD,2) + pow(rhoS,2) - rhoU*rhoD - rhoD*rhoS - rhoS*rhoU )*( pow(sigmaU,2) + pow(sigmaD,2) + pow(sigmaS,2) );
+
+    //12vector interactions
+    double gOmega3 = couplings.getTwelveQuarkVPCoupling();
+    interactionPotential = interactionPotential 
+                         - (40.0/27.0)*gOmega3*pow(rhoU+rhoD+rhoS, 6);       
 
     return interactionPotential;
 }

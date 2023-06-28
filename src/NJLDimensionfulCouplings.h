@@ -9,6 +9,9 @@ using namespace std;
 
 enum lagrangianInteractions { interactions_4SP_det,
 							  interactions_4SP_det_4VP,
+							  interactions_4SP_det_4VP_8VP,
+							  interactions_4SP_det_4VP_8VP_12VP,
+							  interactions_4SP_det_4VP_8VP_12VP_16VP,
 							  interactions_4SP_det_4VP_4VIPI,
 							  interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI,
 							  interactions_4SP_det_4VP_8VP_8SPVP,
@@ -42,6 +45,12 @@ private:
 	double eightQuarkSPVPCoupling = 0.0;//gSigmaOmega
 	double eightQuarkSPVIPICoupling = 0.0;//gSigmaRho
 
+	//12 quark interaction couplings[GeV-14]
+	double twelveQuarkVPCoupling = 0.0;//gOmega3
+
+	//16 quark interaction couplings[GeV-20]
+	double sixteenQuarkVPCoupling = 0.0;//gOmega4
+
 public:
 	NJLDimensionfulCouplings(){};
 	NJLDimensionfulCouplings(lagrangianInteractions , double , double );
@@ -54,10 +63,13 @@ public:
 	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double , double , double , double , double , double , double );
 
 	lagrangianInteractions getLagrangianInteractions(){ return interactions; };
+	
 	double getFourQuarkSPCoupling(){ return fourQuarkSPCoupling; };
 	double getFourQuarkVPCoupling(){ return fourQuarkVPCoupling; };
 	double getFourQuarkVIPICoupling(){ return fourQuarkVIPICoupling; };
+	
 	double getDeterminantCoupling(){ return determinantCoupling; };
+	
 	double getEightQuarkSPOziViolatingCoupling(){ return eightQuarkSPOziViolatingCoupling; };
 	double getEightQuarkSPNonOziViolatingCoupling(){ return eightQuarkSPNonOziViolatingCoupling; };
 	double getEightQuarkVPCoupling(){ return eightQuarkVPCoupling; };
@@ -65,6 +77,10 @@ public:
 	double getEightQuarkVPVIPICoupling(){ return eightQuarkVPVIPICoupling; };
 	double getEightQuarkSPVPCoupling(){ return eightQuarkSPVPCoupling; };
 	double getEightQuarkSPVIPICoupling(){ return eightQuarkSPVIPICoupling; };
+
+	double getTwelveQuarkVPCoupling(){ return twelveQuarkVPCoupling; };
+
+	double getSixteenQuarkVPCoupling(){ return sixteenQuarkVPCoupling; };
 };
 
 
