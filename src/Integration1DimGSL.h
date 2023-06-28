@@ -29,6 +29,7 @@ class Integration1DimGSL
 public:
 	double lowerBound;
 	double upperBound;
+	double minimumDistanceBetweenBounds = 1E-14;
 
 	GeneralIntegrandParameters* integrandParameters;
 	gsl_function F;
@@ -361,6 +362,8 @@ double integrandTestQAGP(double , void *);
 double integrandTestQAGI(double , void *);
 
 double integrandRiemannCPV(double , void *);
+
+double integrandTestQAWS(double , void *);
 
 void testIntegration1DimGSL();
 

@@ -76,18 +76,25 @@ Integration1DimGSLQNG::Integration1DimGSLQNG(double lowerBoundAux, double upperB
 //QNG method integral evaluator
 double Integration1DimGSLQNG::evaluate()
 {   
-    //save original handler, turn off the error handler
-    gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
+    if ( fabs(lowerBound-upperBound)>minimumDistanceBetweenBounds )
+    {
+        //save original handler, turn off the error handler
+        gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
 
 
-    int code = gsl_integration_qng(&F, lowerBound, upperBound, absolutePrecision, relativePrecision, &result, &error, &numberFunctionEvaluations);
-    
-    //handle possible integration error
-    errorHandler(code, "QNG");
+        int code = gsl_integration_qng(&F, lowerBound, upperBound, absolutePrecision, relativePrecision, &result, &error, &numberFunctionEvaluations);
+        
+        //handle possible integration error
+        errorHandler(code, "QNG");
 
 
-    //reset the error handler to previous state before switching off
-    gsl_set_error_handler(old_error_handler);
+        //reset the error handler to previous state before switching off
+        gsl_set_error_handler(old_error_handler);
+    }
+    else
+    {
+        result = 0.0;
+    }
 
     return result;
 }
@@ -107,24 +114,31 @@ Integration1DimGSLQAG::Integration1DimGSLQAG(double lowerBoundAux, double upperB
 //QAG method integral evaluator
 double Integration1DimGSLQAG::evaluate()
 {   
-    //save original handler, turn off the error handler
-    gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
+    if ( fabs(lowerBound-upperBound)>minimumDistanceBetweenBounds )
+    {
+        //save original handler, turn off the error handler
+        gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
 
 
-    //allocate memory
-    gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
-    
-    int code = gsl_integration_qag(&F, lowerBound, upperBound, absolutePrecision, relativePrecision, workspaceLimitSize, key, workPtr, &result, &error);
+        //allocate memory
+        gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
+        
+        int code = gsl_integration_qag(&F, lowerBound, upperBound, absolutePrecision, relativePrecision, workspaceLimitSize, key, workPtr, &result, &error);
 
-    //handle possible integration error
-    errorHandler(code, "QAG");
+        //handle possible integration error
+        errorHandler(code, "QAG");
 
-    //clean memory
-    gsl_integration_workspace_free(workPtr);
+        //clean memory
+        gsl_integration_workspace_free(workPtr);
 
-    
-    //reset the error handler to previous state before switching off
-    gsl_set_error_handler(old_error_handler);
+        
+        //reset the error handler to previous state before switching off
+        gsl_set_error_handler(old_error_handler);
+    }
+    else
+    {
+        result = 0.0;
+    }
 
     return result;
 }
@@ -140,24 +154,31 @@ Integration1DimGSLQAGS::Integration1DimGSLQAGS(double lowerBoundAux, double uppe
 //QAGS method integral evaluator
 double Integration1DimGSLQAGS::evaluate()
 {   
-    //save original handler, turn off the error handler
-    gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
+    if ( fabs(lowerBound-upperBound)>minimumDistanceBetweenBounds )
+    {
+        //save original handler, turn off the error handler
+        gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
 
 
-    //allocate memory
-    gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
-    
-    int code = gsl_integration_qags(&F, lowerBound, upperBound, absolutePrecision, relativePrecision, workspaceLimitSize, workPtr, &result, &error);
+        //allocate memory
+        gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
+        
+        int code = gsl_integration_qags(&F, lowerBound, upperBound, absolutePrecision, relativePrecision, workspaceLimitSize, workPtr, &result, &error);
 
-    //handle possible integration error
-    errorHandler(code, "QAGS");
+        //handle possible integration error
+        errorHandler(code, "QAGS");
 
-    //clean memory
-    gsl_integration_workspace_free(workPtr);
+        //clean memory
+        gsl_integration_workspace_free(workPtr);
 
-    
-    //reset the error handler to previous state before switching off
-    gsl_set_error_handler(old_error_handler);
+        
+        //reset the error handler to previous state before switching off
+        gsl_set_error_handler(old_error_handler);
+    }
+    else
+    {
+        result = 0.0;
+    }
 
     return result;
 }
@@ -184,24 +205,31 @@ Integration1DimGSLQAWC::Integration1DimGSLQAWC(double lowerBoundAux, double uppe
 //QAWC method integral evaluator
 double Integration1DimGSLQAWC::evaluate()
 {   
-    //save original handler, turn off the error handler
-    gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
+    if ( fabs(lowerBound-upperBound)>minimumDistanceBetweenBounds )
+    {
+        //save original handler, turn off the error handler
+        gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
 
 
-    //allocate memory
-    gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
-    
-    int code = gsl_integration_qawc(&F, lowerBound, upperBound, singularity, absolutePrecision, relativePrecision, workspaceLimitSize, workPtr, &result, &error);
+        //allocate memory
+        gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
+        
+        int code = gsl_integration_qawc(&F, lowerBound, upperBound, singularity, absolutePrecision, relativePrecision, workspaceLimitSize, workPtr, &result, &error);
 
-    //handle possible integration error
-    errorHandler(code, "QAWC");
+        //handle possible integration error
+        errorHandler(code, "QAWC");
 
-    //clean memory
-    gsl_integration_workspace_free(workPtr);
+        //clean memory
+        gsl_integration_workspace_free(workPtr);
 
-    
-    //reset the error handler to previous state before switching off
-    gsl_set_error_handler(old_error_handler);
+        
+        //reset the error handler to previous state before switching off
+        gsl_set_error_handler(old_error_handler);
+    }
+    else
+    {
+        result = 0.0;
+    }
 
     return result;
 }
@@ -230,24 +258,31 @@ Integration1DimGSLQAGP::Integration1DimGSLQAGP(double lowerBoundAux, double uppe
 //QAGP method integral evaluator
 double Integration1DimGSLQAGP::evaluate()
 {   
-    //save original handler, turn off the error handler
-    gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
+    if ( fabs(lowerBound-upperBound)>minimumDistanceBetweenBounds )
+    {
+        //save original handler, turn off the error handler
+        gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
 
 
-    //allocate memory
-    gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
-    
-    int code = gsl_integration_qagp(&F, &singularities[0], int(singularities.size()), absolutePrecision, relativePrecision, workspaceLimitSize, workPtr,  &result, &error);
+        //allocate memory
+        gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
+        
+        int code = gsl_integration_qagp(&F, &singularities[0], int(singularities.size()), absolutePrecision, relativePrecision, workspaceLimitSize, workPtr,  &result, &error);
 
-    //handle possible integration error
-    errorHandler(code, "QAGP");
+        //handle possible integration error
+        errorHandler(code, "QAGP");
 
-    //clean memory
-    gsl_integration_workspace_free(workPtr);
+        //clean memory
+        gsl_integration_workspace_free(workPtr);
 
-    
-    //reset the error handler to previous state before switching off
-    gsl_set_error_handler(old_error_handler);
+        
+        //reset the error handler to previous state before switching off
+        gsl_set_error_handler(old_error_handler);
+    }
+    else
+    {
+        result = 0.0;
+    }
 
     return result;
 }
@@ -263,24 +298,31 @@ Integration1DimGSLCQUAD::Integration1DimGSLCQUAD(double lowerBoundAux, double up
 //CQUAD method integral evaluator
 double Integration1DimGSLCQUAD::evaluate()
 {   
-    //save original handler, turn off the error handler
-    gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
+    if ( fabs(lowerBound-upperBound)>minimumDistanceBetweenBounds )
+    {
+        //save original handler, turn off the error handler
+        gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
 
 
-    //allocate memory
-    gsl_integration_cquad_workspace *workPtr = gsl_integration_cquad_workspace_alloc(workspaceLimitSize);
-    
-    int code = gsl_integration_cquad(&F, lowerBound, upperBound, absolutePrecision, relativePrecision, workPtr, &result, &error, &numberFunctionEvaluations);
+        //allocate memory
+        gsl_integration_cquad_workspace *workPtr = gsl_integration_cquad_workspace_alloc(workspaceLimitSize);
+        
+        int code = gsl_integration_cquad(&F, lowerBound, upperBound, absolutePrecision, relativePrecision, workPtr, &result, &error, &numberFunctionEvaluations);
 
-    //handle possible integration error
-    errorHandler(code, "CQUAD");
+        //handle possible integration error
+        errorHandler(code, "CQUAD");
 
-    //clean memory
-    gsl_integration_cquad_workspace_free(workPtr);
+        //clean memory
+        gsl_integration_cquad_workspace_free(workPtr);
 
-    
-    //reset the error handler to previous state before switching off
-    gsl_set_error_handler(old_error_handler);
+        
+        //reset the error handler to previous state before switching off
+        gsl_set_error_handler(old_error_handler);
+    }
+    else
+    {
+        result = 0.0;
+    }
 
     return result;
 }
@@ -396,10 +438,10 @@ Integration1DimGSLQAWS::Integration1DimGSLQAWS(double lowerBoundAux, double uppe
     if ( betaAux>-1.0 ){ beta = betaAux; }
     else{ cout << "Using QAWS method: problem with chosen beta parameter! Remember, beta>-1! \n "; abort(); }
 
-    if ( mu==0 || mu ==1 ){ mu = muAux; }
+    if ( muAux==0 || muAux==1 ){ mu = muAux; }
     else{ cout << "Using QAWS method: problem with chosen mu parameter! Remember, mu=0 or mu=1! \n "; abort(); }
 
-    if ( nu==0 || nu ==1 ){ nu = nuAux; }
+    if ( nuAux==0 || nuAux==1 ){ nu = nuAux; }
     else{ cout << "Using QAWS method: problem with chosen nu parameter! Remember, nu=0 or nu=1! \n "; abort(); }
 }
 
@@ -407,27 +449,34 @@ Integration1DimGSLQAWS::Integration1DimGSLQAWS(double lowerBoundAux, double uppe
 //QAWS method integral evaluator
 double Integration1DimGSLQAWS::evaluate()
 {   
-    //save original handler, turn off the error handler
-    gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
+    if ( fabs(lowerBound-upperBound)>minimumDistanceBetweenBounds )
+    {
+        //save original handler, turn off the error handler
+        gsl_error_handler_t *old_error_handler = gsl_set_error_handler_off();
 
 
-    //allocate memory
-    gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
-    gsl_integration_qaws_table *table = gsl_integration_qaws_table_alloc(alpha, beta , mu, nu);
+        //allocate memory
+        gsl_integration_workspace *workPtr = gsl_integration_workspace_alloc(workspaceLimitSize);
+        gsl_integration_qaws_table *table = gsl_integration_qaws_table_alloc(alpha, beta , mu, nu);
+        
+        int code = gsl_integration_qaws(&F, lowerBound, upperBound, table, absolutePrecision, relativePrecision, workspaceLimitSize, workPtr, &result, &error);
+
+        //handle possible integration error
+        errorHandler(code, "QAWS");
+
+        //clean memory
+        gsl_integration_qaws_table_free(table);
+        gsl_integration_workspace_free(workPtr);
+
+        
+        //reset the error handler to previous state before switching off
+        gsl_set_error_handler(old_error_handler);
+    }
+    else
+    {
+        result = 0.0;
+    }
     
-    int code = gsl_integration_qaws(&F, lowerBound, upperBound, table, absolutePrecision, relativePrecision, workspaceLimitSize, workPtr, &result, &error);
-
-    //handle possible integration error
-    errorHandler(code, "QAGS");
-
-    //clean memory
-    gsl_integration_qaws_table_free(table);
-    gsl_integration_workspace_free(workPtr);
-
-    
-    //reset the error handler to previous state before switching off
-    gsl_set_error_handler(old_error_handler);
-
     return result;
 }
 
@@ -468,7 +517,7 @@ Integration1DimGSLQAWCQAGS::Integration1DimGSLQAWCQAGS(double lowerBoundAux, dou
 
 bool Integration1DimGSLQAWCQAGS::isSingularityInsideTheIntegrationInterval()
 {
-    if ( fabs(lowerBound-upperBound)<1E-15 )
+    if ( fabs(lowerBound-upperBound)<minimumDistanceBetweenBounds )
     {
         //in this case we consider that lowerBound==upperBound!
         return false;
@@ -686,6 +735,16 @@ double integrandRiemannCPV(double x, void *parameters)
 }
 
 
+double integrandTestQAWS(double x, void *parameters)
+{   
+    (void)(parameters); /* avoid unused parameter warning */
+
+    double integrand = ( 5.0/( 8.0*sqrt(3) ) )*pow(x,2);
+
+    return integrand;
+}
+
+
 void testIntegration1DimGSL()
 {   
     cout << "Testing several GSL integration methods with different integrands.\n";
@@ -727,6 +786,19 @@ void testIntegration1DimGSL()
     Integration1DimGSLQAGI integralQAGI(&aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
     double resultQAGI = integralQAGI.evaluate();
     cout << "resultQAGI: " << resultQAGI << "\n";
+
+    Integration1DimGSLQAGIU integralQAGIU(0, &aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
+    double resultQAGIU = 2*integralQAGIU.evaluate();
+    cout << "resultQAGIU: " << resultQAGIU << "\n";
+
+    Integration1DimGSLQAGIL integralQAGIL(0, &aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
+    double resultQAGIL = 2*integralQAGIL.evaluate();
+    cout << "resultQAGIL: " << resultQAGIL << "\n";
+
+    TestIntegrandParameters aux5("integrandTestQAWS");
+    Integration1DimGSLQAWS integralQAWS(-1.0, +2.0, &aux1, integrandTestQAWS, 1E-8, 1E-8, 1000, -0.5, 0.0, 0, 0);
+    double resultQAWS = integralQAWS.evaluate();
+    cout << "resultQAWS: " << resultQAWS << "\n";
 }
 
 

@@ -59,10 +59,14 @@ double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double ,
 gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double );
 
 double sigmaNJL3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
-/*
+
 double gEEta(double , double , double , double , double , double , double , double );
 
 double realKlevanskyAPair3DCutoffIntegrand(double , void *);
+
+double realKlevanskyAPair3DCutoffM2LargerM1(double , double , double , double , double , double , double );
+
+double realKlevanskyAPair3DCutoffM2EqualM1(double , double , double , double , double , double , double );
 
 double realKlevanskyAPair3DCutoff(double , double , double , double , double , double , double );
 
@@ -70,22 +74,11 @@ double gEpsilonEta(double , double , double , double , double , double , double 
 
 double realKlevanskyAScat3DCutoffIntegrand(double , void *);
 
+double realKlevanskyAScat3DCutoffM2LargerM1(double , double , double , double , double , double , double );
+
+double realKlevanskyAScat3DCutoffM2EqualM1(double , double , double , double , double , double , double );
+
 double realKlevanskyAScat3DCutoff(double , double , double , double , double , double , double );
-
-double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
-
-gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
-*/
-
-double f0kVacuum(double , double , double );
-
-double f0kConvergentIntegrand1(double , void *);
-
-double f0kConvergentIntegrand2(double , void *);
-
-double f0kConvergentIntegrand3(double , void *);
-
-double f03DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
 
 double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
 

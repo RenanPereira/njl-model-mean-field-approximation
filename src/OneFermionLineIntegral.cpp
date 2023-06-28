@@ -104,7 +104,7 @@ double sigmaNJL3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutof
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-/*
+
 double gEEta(double T, double effCP1, double cutoff, double M1, double M2, double k, double eta, double E)
 {   
     double C = dEdepsilon_epsilonMin(cutoff, M1, M2, k, E);
@@ -163,7 +163,7 @@ double realKlevanskyAPair3DCutoffIntegrand(double E, void *parameters)
 }
 
 
-double realKlevanskyAPair3DCutoff(double T, double effCP1, double cutoff, double M1, double M2, double k, double integralPrecision)
+double realKlevanskyAPair3DCutoffM2LargerM1(double T, double effCP1, double cutoff, double M1, double M2, double k, double integralPrecision)
 {   
     int integrationWorkspace = 1000;
 
@@ -211,6 +211,67 @@ double realKlevanskyAPair3DCutoff(double T, double effCP1, double cutoff, double
 
 
     realKlevanskyAPair = ( -2.0/k )*realKlevanskyAPair;
+
+    return realKlevanskyAPair;
+}
+
+
+double realKlevanskyAPair3DCutoffM2EqualM1(double T, double effCP1, double cutoff, double M1, double M2, double k, double integralPrecision)
+{   
+    int integrationWorkspace = 1000;
+
+    double A = dEdepsilon_EMin(cutoff, M1, M2, k);
+    double B = dEdepsilon_EMax(cutoff, M1, M2, k);
+    
+    double g1 = dEdepsilon_gamma1E(cutoff, M1, M2, k);
+
+    TwoFermionLine3DCutoffIntegrand aux(T, effCP1, 0.0, cutoff, M1, M2, 0.0, k);
+    double realKlevanskyAPair = 0.0;
+
+
+    ////////////////////////////////////////
+    //eta = +1.0
+    aux.setEtaVariable(+1.0);
+
+    aux.setIntegralID("realKlevanskyAPairPlus_A_g1");
+    Integration1DimGSLQAGS realKlevanskyAPairPlus_A_g1(A, g1, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairPlus_A_g1.evaluate();
+
+    aux.setIntegralID("realKlevanskyAPairPlus_g1_B");
+    Integration1DimGSLQAGS realKlevanskyAPairPlus_g1_B(g1, B, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairPlus_g1_B.evaluate();
+
+    ////////////////////////////////////////
+    //eta = -1.0
+    aux.setEtaVariable(-1.0);
+
+    aux.setIntegralID("realKlevanskyAPairMinus_A_g1");
+    Integration1DimGSLQAGS realKlevanskyAPairMinus_A_g1(A, g1, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairMinus_A_g1.evaluate();
+
+    aux.setIntegralID("realKlevanskyAPairMinus_g1_B");
+    Integration1DimGSLQAGS realKlevanskyAPairMinus_g1_B(g1, B, &aux, realKlevanskyAPair3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAPair = realKlevanskyAPair + realKlevanskyAPairMinus_g1_B.evaluate();
+
+
+    realKlevanskyAPair = ( -2.0/k )*realKlevanskyAPair;
+
+    return realKlevanskyAPair;
+}
+
+
+double realKlevanskyAPair3DCutoff(double T, double effCP1, double cutoff, double M1, double M2, double k, double integralPrecision)
+{   
+    double realKlevanskyAPair = 0.0;
+
+    if ( M2>M1 )
+    {
+        realKlevanskyAPair = realKlevanskyAPair3DCutoffM2LargerM1(T, effCP1, cutoff, M1, M2, k, integralPrecision);
+    }
+    else
+    {
+        realKlevanskyAPair = realKlevanskyAPair3DCutoffM2EqualM1(T, effCP1, cutoff, M1, M2, k, integralPrecision);
+    }
 
     return realKlevanskyAPair;
 }
@@ -274,7 +335,7 @@ double realKlevanskyAScat3DCutoffIntegrand(double epsilon, void *parameters)
 }
 
 
-double realKlevanskyAScat3DCutoff(double T, double effCP1, double cutoff, double M1, double M2, double k, double integralPrecision)
+double realKlevanskyAScat3DCutoffM2LargerM1(double T, double effCP1, double cutoff, double M1, double M2, double k, double integralPrecision)
 {   
     int integrationWorkspace = 1000;
 
@@ -326,6 +387,66 @@ double realKlevanskyAScat3DCutoff(double T, double effCP1, double cutoff, double
 }
 
 
+double realKlevanskyAScat3DCutoffM2EqualM1(double T, double effCP1, double cutoff, double M1, double M2, double k, double integralPrecision)
+{   
+    int integrationWorkspace = 1000;
+
+    double a = depsilondE_epsilonMin(cutoff, M1, M2, k);
+    double b = depsilondE_epsilonMax(cutoff, M1, M2, k);
+
+    double L = depsilondE_LambdaSwitchepsilon(cutoff, M1, M2);
+
+    TwoFermionLine3DCutoffIntegrand aux(T, effCP1, 0.0, cutoff, M1, M2, 0.0, k);
+    double realKlevanskyAScat = 0.0;
+
+
+    ////////////////////////////////////////
+    //eta = +1.0
+    aux.setEtaVariable(+1.0);
+
+    aux.setIntegralID("realKlevanskyAScatPlus_a_L");
+    Integration1DimGSLQAGS realKlevanskyAScatPlus_a_L(a, L, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatPlus_a_L.evaluate();
+
+    aux.setIntegralID("realKlevanskyAScatPlus_L_b");
+    Integration1DimGSLQAGS realKlevanskyAScatPlus_L_b(L, b, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatPlus_L_b.evaluate();
+
+    ////////////////////////////////////////
+    //eta = -1.0
+    aux.setEtaVariable(-1.0);
+
+    aux.setIntegralID("realKlevanskyAScatMinus_a_L");
+    Integration1DimGSLQAGS realKlevanskyAScatMinus_a_L(a, L, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatMinus_a_L.evaluate();
+
+    aux.setIntegralID("realKlevanskyAScatMinus_L_b");
+    Integration1DimGSLQAGS realKlevanskyAScatMinus_L_b(L, b, &aux, realKlevanskyAScat3DCutoffIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
+    realKlevanskyAScat = realKlevanskyAScat + realKlevanskyAScatMinus_L_b.evaluate();
+
+    realKlevanskyAScat = ( -1.0/k )*realKlevanskyAScat;
+
+    return realKlevanskyAScat;
+}
+
+
+double realKlevanskyAScat3DCutoff(double T, double effCP1, double cutoff, double M1, double M2, double k, double integralPrecision)
+{
+    double realKlevanskyAScat = 0.0;
+
+    if ( M2>M1 )
+    {
+        realKlevanskyAScat = realKlevanskyAScat3DCutoffM2LargerM1(T, effCP1, cutoff, M1, M2, k, integralPrecision);
+    }
+    else
+    {
+        realKlevanskyAScat = realKlevanskyAScat3DCutoffM2EqualM1(T, effCP1, cutoff, M1, M2, k, integralPrecision);
+    }
+
+    return realKlevanskyAScat;
+}
+
+
 double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double Cp, double M, double k, double integralPrecision)
 {   
     double realKlevanskyA = 0.0;
@@ -348,7 +469,7 @@ double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguScheme
             
             //This quantity is independent of the value chose for M2! However, I built the integration regions supposing M2>M1
             double M1 = M;
-            double M2 = 1.5*M1;
+            double M2 = M;
 
             realKlevanskyA = realKlevanskyA + realKlevanskyAPair3DCutoff(T, Cp, cutoff, M1, M2, k, integralPrecision);
             realKlevanskyA = realKlevanskyA + realKlevanskyAScat3DCutoff(T, Cp, cutoff, M1, M2, k, integralPrecision);
@@ -368,157 +489,4 @@ gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguSchem
 
     return AKlev;
 }
-*/
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Implementation of the Klevansky's A integral in the sphere-sphere intersection regularization without the CORRECT change of variables
-//f0k loop function in the vacuum
-double f0kVacuum(double cutoff, double M, double k)
-{   
-    double f0k = (1.0/2.0)*( + ( cutoff - k/2.0 )*sqrt( pow(cutoff - k/2.0, 2) + pow(M,2) )
-                             + pow(M,2)*log( fabs(M) )
-                             - pow(M,2)*log( cutoff - k/2.0 + sqrt( pow(cutoff - k/2.0, 2) + pow(M,2) ) ) 
-                            );
-
-    //k-dependent term, if k is to small, use series expansion around k~0 up to second order
-    if (k>1E-10)
-    {
-        f0k = f0k + ( 2.0/(3.0*k) )*pow( pow(cutoff,2) - pow(k/2.0,2) + pow(M,2) , 3.0/2.0)
-                  - ( 2.0/(3.0*k) )*( (cutoff-k/2.0)*(cutoff+k) + pow(M,2) )*sqrt( pow(cutoff - k/2.0, 2) + pow(M,2) );
-    }
-    else//series expansion
-    {
-        f0k = f0k + k*pow(cutoff,2)/( 4.0*sqrt( pow(cutoff,2) + pow(M,2) ) )
-                  - k*k*( 3.0*pow(M,2)*cutoff + 2.0*pow(cutoff,3) )/( 12.0*pow( pow(cutoff,2) + pow(M,2) , 3.0/2.0) );
-    }
-
-    f0k = ( 1.0/(4.0*M_PI*M_PI) )*f0k;
-
-    return f0k;
-}
-
-
-double f0kConvergentIntegrand1(double E, void *parameters)
-{   
-    OneFermionLine3DCutoffIntegrand aux(parameters);
-    double T = aux.getTemperature();
-    double Cp = aux.getEffectiveChemicalPotential();
-    double M = aux.getEffectiveMass();
-
-    double f0kIntegrand = sqrt( pow(E,2) - pow(M,2) )*( - fermiDistribution(T, E-Cp) - fermiDistribution(T, E+Cp) );
-
-    return f0kIntegrand;
-}
-
-
-double f0kConvergentIntegrand2(double E, void *parameters)
-{   
-    OneFermionLine3DCutoffIntegrand aux(parameters);
-    double T = aux.getTemperature();
-    double Cp = aux.getEffectiveChemicalPotential();
-    
-    double f0kIntegrand = 1.0*( - fermiDistribution(T, E-Cp) - fermiDistribution(T, E+Cp) );
-
-    return f0kIntegrand;
-}
-
-
-double f0kConvergentIntegrand3(double E, void *parameters)
-{   
-    OneFermionLine3DCutoffIntegrand aux(parameters);
-    double T = aux.getTemperature();
-    double Cp = aux.getEffectiveChemicalPotential();
-    
-    double f0kIntegrand = ( -pow(E,2) )*( - fermiDistribution(T, E-Cp) - fermiDistribution(T, E+Cp) );
-
-    return f0kIntegrand;
-}
-
-
-double f03DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double Cp, double M, double k, double integralPrecision)
-{   
-    int integrationWorkspace = 1000;
-
-    double f0k = 0.0;
-
-    if ( k>=2.0*cutoff || k<0.0)
-    {
-        f0k = 0.0;
-    }
-    else
-    {   
-        //finite temperature
-        //vacuum contribution (divergent)
-        f0k = f0kVacuum(cutoff, M, k);
-
-        //in-medium contribution (convergent)
-        if ( reguScheme==cutoffEverywhere || reguScheme==cutoffEverywhereWithCTmu )
-        {   
-            //////////////////////////////////////////////////////////////////////
-            //convergent term 1
-            OneFermionLine3DCutoffIntegrand params1("f0kConvergent1", T, Cp, M);
-            double min1 = M;
-            double max1 = sqrt( pow(cutoff-k/2.0, 2) + pow(M,2) );
-            
-            Integration1DimGSLQAGS f0kConvergent1(min1, max1, &params1, f0kConvergentIntegrand1, integralPrecision, integralPrecision, integrationWorkspace);
-            f0k = f0k + ( 1.0/(4.0*M_PI*M_PI) )*f0kConvergent1.evaluate();       
-
-            if (k>1E-10)
-            {   
-                //////////////////////////////////////////////////////////////////////
-                //convergent term 2
-                OneFermionLine3DCutoffIntegrand params2("f0kConvergent2", T, Cp, M);
-                double min2 = sqrt( pow(cutoff-k/2.0, 2) + pow(M,2) );
-                double max2 = sqrt( pow(cutoff,2) - pow(k/2.0,2) + pow(M,2) );
-
-                Integration1DimGSLQAGS f0kConvergent2(min2, max2, &params2, f0kConvergentIntegrand2, integralPrecision, integralPrecision, integrationWorkspace);
-                f0k = f0k + ( 1.0/(4.0*M_PI*M_PI) )*( ( pow(cutoff,2) - pow(k/2.,2) + pow(M,2) )/k )*f0kConvergent2.evaluate();
-                
-                //////////////////////////////////////////////////////////////////////
-                //convergent term 3
-                OneFermionLine3DCutoffIntegrand params3("f0kConvergent3", T, Cp, M);
-                double min3 = sqrt( pow(cutoff-k/2.0, 2) + pow(M,2) );
-                double max3 = sqrt( pow(cutoff,2) - pow(k/2.0,2) + pow(M,2) );
-
-                Integration1DimGSLQAGS f0kConvergent3(min3, max3, &params3, f0kConvergentIntegrand3, integralPrecision, integralPrecision, integrationWorkspace);
-                f0k = f0k + ( 1.0/(4.0*M_PI*M_PI) )*( 1.0/k )*f0kConvergent3.evaluate();
-            }     
-        }
-        else if ( reguScheme==cutoffOnDivergentIntegralsOnly )
-        {   
-            OneFermionLine3DCutoffIntegrand params1("f0kConvergent1", T, Cp, M);
-
-            Integration1DimGSLQAGIU f0kConvergent1(M, &params1, f0kConvergentIntegrand1, integralPrecision, integralPrecision, integrationWorkspace);
-            f0k = f0k + ( 1.0/(4.0*M_PI*M_PI) )*f0kConvergent1.evaluate();       
-        }
-    }
-
-    return f0k;
-}
-
-
-double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double Cp, double M, double k, double integralPrecision)
-{   
-    double f0 = f03DCutoff(reguScheme, cutoff, T, Cp, M, k, integralPrecision);
-
-    double AKlev = -(16.0*M_PI*M_PI)*f0;
-
-    return AKlev;
-}
-
-
-gsl_complex klevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double Cp, double M, double k, double integralPrecision)
-{
-    double ReAKlev = realKlevanskyAIntegral3DCutoff(reguScheme, cutoff, T, Cp, M, k, integralPrecision);
-    double ImAKlev = 0.0;
-
-    gsl_complex AKlev = gsl_complex_rect(ReAKlev, ImAKlev);
-
-    return AKlev;
-}
-
-
-
 

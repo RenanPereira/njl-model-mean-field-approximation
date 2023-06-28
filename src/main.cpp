@@ -64,46 +64,28 @@ int main(void)
          << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
-    //someVacuumAndThermalPropertiesKlevanskyParameterSet();
 
 
-    ///////////////////////////////////////////////////////////////////////////
 
-    
+ 
+    //evaluate integrated cross sections at zero chemical potential
+    evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(parameters,
+                                                                     0.301, 
+                                                                     0.400, 
+                                                                     200, 
+                                                                     100, 
+                                                                     false, 
+                                                                     completeCOV);
+
 /*
-    double T = 0.2;
-    double effChemPotU = 0.5;
-    double effChemPotD = 0.5;
-    double effChemPotS = 0.5;
-    double effMassU = 0.4;
-    double effMassD = 0.5;
-    double effMassS = 0.6;
-    scatteringProcess process = UDUD;
-
-    SU3NJL3DCutoffIntegratedCrossSection intCrossSection(parameters, T, 
-                                                         effChemPotU, effChemPotD, effChemPotS, 
-                                                         effMassU, effMassD, effMassS, 
-                                                         1E-8, process,
-                                                         false, 1E-4,
-                                                         1E-12, 1E-3,
-                                                         completeWithCOV);
-
-    intCrossSection.setIntegratedCrossSection();
-    intCrossSection.setQuarkNumbers();
-    cout << intCrossSection.getIntegratedCrossSection() << "\n";
-*/
-
-
-
-
     evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(parameters,
                                                                      0.120, 
                                                                      0.300, 
                                                                      200, 
-                                                                     10, 
-                                                                     false, 
+                                                                     181, 
+                                                                     true, 
                                                                      completeCOV);
-
+*/
 
 
 /*

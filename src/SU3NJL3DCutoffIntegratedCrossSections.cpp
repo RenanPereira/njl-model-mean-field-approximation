@@ -1471,7 +1471,7 @@ vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlong
     int size = int(finiteTemperatureSolution.size());
     vector<SU3NJL3DCutoffIntegratedCrossSection> integratedCrossSectionFiniteTemperature(size);
 
-    int numberThreads = omp_get_max_threads() - 1; //leave one thread free
+    int numberThreads = omp_get_max_threads() - 2; //leave one thread free
     cout << "Number of threads being used: " << numberThreads << "\n";
     #pragma omp parallel for schedule(dynamic) num_threads( numberThreads )
     for (int i = 0; i < size; ++i)
@@ -1733,7 +1733,7 @@ void evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(SU3NJL3DCu
     }
 
 
-   	double propagatorIntegralPrecision = 1E-8;
+   	double propagatorIntegralPrecision = 1E-6;
     double crossSectionIntegralPrecision = 1E-4;
     double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
     double integratedCrossSectionIntegralPrecision_dX = 1E-3;
