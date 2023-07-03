@@ -1692,25 +1692,19 @@ void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTraj
 }
 
 
-void evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(SU3NJL3DCutoffParameters parameters,
-																	  double minimumTemperature, 
-																	  double maximumTemperature, 
-																	  int numberOfPointsFromVacToMinTemp, 
-																	  int numberOfPointsFromMinToMaxTemp, 
-																	  bool largeAngleScatteringContribution, 
-																	  IntegratedCrossSectionApproximationMethod approximationMethod)
+void evaluateIntegratedCrossSectionsWithZeroChemicalPotential(SU3NJL3DCutoffVacuum vacuum,
+															  double gapPrecision,
+															  double minimumTemperature, 
+															  double maximumTemperature, 
+															  int numberOfPointsFromVacToMinTemp, 
+															  int numberOfPointsFromMinToMaxTemp, 
+															  bool largeAngleScatteringContribution, 
+															  IntegratedCrossSectionApproximationMethod approximationMethod,
+															  double propagatorIntegralPrecision,
+															  double crossSectionIntegralPrecision,
+															  double integratedCrossSectionIntegralPrecision_dXdY,
+															  double integratedCrossSectionIntegralPrecision_dX)
 {
-    //solve model in the vacuum
-    double gapPrecision = 1E-8;
-    SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
-
-    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
-    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
-         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
-         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
-
-
     //solve model at zero chemical potential up to some finite temperature
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
     solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, minimumTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, hybrids);
@@ -1732,11 +1726,6 @@ void evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(SU3NJL3DCu
         	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-
-   	double propagatorIntegralPrecision = 1E-6;
-    double crossSectionIntegralPrecision = 1E-4;
-    double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
-    double integratedCrossSectionIntegralPrecision_dX = 1E-3;
     evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(finiteTSolution, 
                                                                                             propagatorIntegralPrecision,
                                                                                             largeAngleScatteringContribution, 
@@ -1748,24 +1737,19 @@ void evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(SU3NJL3DCu
 }
 
 
-void evaluateIntegratedCrossSectionsWithFixedTemperatureForPaper(SU3NJL3DCutoffParameters parameters,
-																 double fixedTemperature, 
-																 int numberOfPointsFromVacToMinTemp, 
-																 int numberOfPointsChemPot, 
-																 double maxChemPot,
-																 bool largeAngleScatteringContribution, 
-																 IntegratedCrossSectionApproximationMethod approximationMethod)
+void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum vacuum,
+														 double gapPrecision,
+														 double fixedTemperature, 
+														 int numberOfPointsFromVacToMinTemp, 
+														 int numberOfPointsChemPot, 
+														 double maxChemPot,
+														 bool largeAngleScatteringContribution, 
+														 IntegratedCrossSectionApproximationMethod approximationMethod,
+														 double propagatorIntegralPrecision,
+														 double crossSectionIntegralPrecision,
+													     double integratedCrossSectionIntegralPrecision_dXdY,
+														 double integratedCrossSectionIntegralPrecision_dX)
 {
-    //solve model in the vacuum
-    double gapPrecision = 1E-8;
-    SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
-
-    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
-    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
-         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
-         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
-
     //solve model at zero chemical potential up to some finite temperature
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
     solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, fixedTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, hybrids);
@@ -1792,12 +1776,6 @@ void evaluateIntegratedCrossSectionsWithFixedTemperatureForPaper(SU3NJL3DCutoffP
              << finiteChemPotSolution[i].getDownQuarkEffectiveMass() << "\t"
              << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
-
-
-    double propagatorIntegralPrecision = 1E-8;
-    double crossSectionIntegralPrecision = 1E-4;
-    double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
-    double integratedCrossSectionIntegralPrecision_dX = 1E-3;
 
     evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(finiteChemPotSolution, 
                                                                                       propagatorIntegralPrecision,

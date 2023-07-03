@@ -156,4 +156,8 @@ vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTempera
 
 void addVacuumSolution(SU3NJL3DCutoffVacuum , double , double , double , vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> &);
 
+vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod );
+
+void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod );
+
 #endif

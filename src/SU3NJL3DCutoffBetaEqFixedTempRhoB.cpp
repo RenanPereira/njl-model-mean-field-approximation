@@ -855,4 +855,101 @@ void addVacuumSolution(SU3NJL3DCutoffVacuum vacuum, double electronMass, double 
 }
 
 
+vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> 
+calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum, 
+                                  double minimumBaryonDensity, double maximumBaryonDensity, int numberOfPoints, 
+                                  double gapPrecision, MultiRootFindingMethod method)
+{
+    double pressureVacuum = vacuum.calculatePressure();
+    double energyVacuum = vacuum.calculateEnergyDensity();
+    cout << "pressureVacuum=" << pressureVacuum << "\n";
+    cout << "energyDensityVacuum=" << energyVacuum << "\n";
 
+    double pressureVacuumElectron = vacuum.calculateVacuumPressureElectrons(electronMass_GeV);
+    cout << "pressureVacuumElectron=" << pressureVacuumElectron << "\n";
+
+
+    vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> betaEqSolutions;
+    addVacuumSolution(vacuum, electronMass_GeV, pressureVacuum, pressureVacuumElectron, betaEqSolutions);
+
+
+    //guesses for i=0
+    double mUGuess = vacuum.getUpQuarkEffectiveMass();
+    double mDGuess = vacuum.getDownQuarkEffectiveMass();
+    double mSGuess = vacuum.getStrangeQuarkEffectiveMass();
+    double effCPUGuess = mUGuess + 1E-3;
+    double effCPDGuess = mUGuess + 1E-3;
+    double effCPSGuess = mUGuess + 1E-3;
+
+
+    double temperature = 0.0;
+    double delta = (maximumBaryonDensity-minimumBaryonDensity)/(numberOfPoints-1);
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        //step in density
+        double rhoB = minimumBaryonDensity + i*delta;
+
+        //create object
+        SU3NJL3DCutoffBetaEqFixedTempRhoB betaEq(vacuum.getParametersNJL(), electronMass_GeV, temperature, rhoB);
+
+        //find quark masses and effective chemical potential
+        betaEq.solve(gapPrecision, method, mUGuess, mDGuess, mSGuess, effCPUGuess, effCPDGuess, effCPSGuess);
+
+        //guesses for next step
+        mUGuess = betaEq.getUpQuarkEffectiveMass();
+        mDGuess = betaEq.getDownQuarkEffectiveMass();
+        mSGuess = betaEq.getStrangeQuarkEffectiveMass();
+        effCPUGuess = betaEq.getUpQuarkEffectiveChemicalPotential();
+        effCPDGuess = betaEq.getDownQuarkEffectiveChemicalPotential();
+        effCPSGuess = betaEq.getStrangeQuarkEffectiveChemicalPotential();
+
+        //calculate thermodynamics
+        betaEq.setBetaEqThermodynamics(pressureVacuum, pressureVacuumElectron);
+
+
+        //print to console
+        cout << rhoB/pow(hc_GeVfm,3) << "\t"
+             << betaEq.getUpQuarkEffectiveMass() << "\t"
+             << betaEq.getDownQuarkEffectiveMass() << "\t"
+             << betaEq.getStrangeQuarkEffectiveMass() << "\t"
+             << betaEq.getUpQuarkEffectiveChemicalPotential() << "\t"
+             << betaEq.getDownQuarkEffectiveChemicalPotential() << "\t"
+             << betaEq.getStrangeQuarkEffectiveChemicalPotential() << "\n";
+
+
+        //push to solutions vector
+        betaEqSolutions.push_back(betaEq);
+    }
+
+
+    return betaEqSolutions;
+}
+
+
+void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum vacuum, 
+                                                    double minimumBaryonDensity, double maximumBaryonDensity, int numberOfPoints, 
+                                                    double gapPrecision, MultiRootFindingMethod method)
+{
+    vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> betaEqSolutions = 
+    calculateZeroTemperatureSolutions(vacuum, minimumBaryonDensity, maximumBaryonDensity, numberOfPoints, gapPrecision, method);
+
+
+    //save all information in file
+    writeSolutionsToFile(betaEqSolutions, "solutions.dat", true);
+
+
+    //find chiral transition if it exists
+    vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> transitionPoints = findChiralTransitionPointsFixedTemperature(betaEqSolutions, gapPrecision, method);
+
+
+    //save EOS to file: if it has first order phase transition, save only after restoration 
+    if ( int(transitionPoints.size())>0 )
+    {   
+        double minRhoB = transitionPoints[1].getBaryonDensity();
+        writeEOSToFile(betaEqSolutions, "eos.dat", true, minRhoB);
+    }
+    else
+    {
+        writeEOSToFile(betaEqSolutions, "eos.dat", true);
+    }
+}

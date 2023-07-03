@@ -575,20 +575,14 @@ void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTraj
                                                                                        double , double , double , 
                                                                                        IntegratedCrossSectionApproximationMethod );
 
-void evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(SU3NJL3DCutoffParameters , 
-                                                                      double , 
-                                                                      double , 
-                                                                      int , 
-                                                                      int , 
-                                                                      bool , 
-                                                                      IntegratedCrossSectionApproximationMethod );
+void evaluateIntegratedCrossSectionsWithZeroChemicalPotential(SU3NJL3DCutoffVacuum ,
+                                                              double , double , double , int , int , bool , 
+                                                              IntegratedCrossSectionApproximationMethod ,
+                                                              double , double , double , double );
 
-void evaluateIntegratedCrossSectionsWithFixedTemperatureForPaper(SU3NJL3DCutoffParameters ,
-                                                                 double , 
-                                                                 int , 
-                                                                 int , 
-                                                                 double ,
-                                                                 bool , 
-                                                                 IntegratedCrossSectionApproximationMethod );
+void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum ,
+                                                         double , double , int , int , double , bool , 
+                                                         IntegratedCrossSectionApproximationMethod ,
+                                                         double , double , double , double );
 
 #endif
