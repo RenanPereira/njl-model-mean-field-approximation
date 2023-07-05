@@ -155,3 +155,61 @@
 
 
 
+/*
+
+//Code used to test EoS in beta equilibrium versus old code mark_6: everything checks out!
+
+/////////////////////////////////////////////////////////////////////////////////////
+//Neutron star equation of state stuff
+
+
+    //parameter set (Renan Master thesis parameter set)
+    double cutoff = 0.6023;
+    double gs = 2*( 1.835/pow(cutoff,2) );
+    double kappa = -12.360/pow(cutoff,5);
+    double m0u = 0.0055;
+    double m0d = 0.0055;
+    double m0s = 0.1407;
+
+    double gOmega1 = 1.0*pow(0.5*gs, 1);
+    double gRho1 = 1.0*pow(0.5*gs, 1);
+    double gOmega2 = 10.0*pow(0.5*gs, 4);
+    double gRho2 = 10.0*pow(0.5*gs, 4);
+    double gOmegaRho = 10.0*pow(0.5*gs, 4);
+    double gSigmaOmega = 10.0*pow(0.5*gs, 4);
+    double gSigmaRho = 5.0*pow(0.5*gs, 4);
+    
+    //double gOmega3 = -10.0*pow(0.5*gs, 7);
+
+    
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI, 
+                                       gs, kappa, gOmega1, gRho1, gOmega2, gRho2, gOmegaRho, gSigmaOmega, gSigmaRho);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    parameters.setParameterSetName("renanMasterThesis");
+
+
+    //solve model in the vacuum
+    double gapPrecision = 1E-8;
+    SU3NJL3DCutoffVacuum vacuum(parameters);
+    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuum.testSolution(gapPrecision) << "\n";
+    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+
+
+    double rhoi = 1E-5*pow(hc_GeVfm, 3);
+    double rhof = 2.50*pow(hc_GeVfm, 3);
+    int NrhoB = 5000;
+    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, hybrids);
+
+
+
+
+*/
+

@@ -149,13 +149,20 @@ int main(void)
     double m0d = 0.0055;
     double m0s = 0.1407;
 
-    double gOmega1 = 0.2*pow(0.5*gs, 1);
-    double gOmega2 = 8.0*pow(0.5*gs, 4);
-    double gOmega3 = -10.0*pow(0.5*gs, 7);
+    double gOmega1 = 0.0*pow(0.5*gs, 1);
+    double gRho1 = 0.0*pow(0.5*gs, 1);
+    double gOmega2 = 0.0*pow(0.5*gs, 4);
+    double gRho2 = 0.0*pow(0.5*gs, 4);
+    double gOmegaRho = 0.0*pow(0.5*gs, 4);
+    double gSigmaOmega = 0.0*pow(0.5*gs, 4);
+    double gSigmaRho = 50.0*pow(0.5*gs, 4);
+    
+    //double gOmega3 = -10.0*pow(0.5*gs, 7);
 
     
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det_4VP_8VP_12VP, gs, kappa, gOmega1, gOmega2, gOmega3);
+    NJLDimensionfulCouplings couplings(interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI, 
+                                       gs, kappa, gOmega1, gRho1, gOmega2, gRho2, gOmegaRho, gSigmaOmega, gSigmaRho);
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);

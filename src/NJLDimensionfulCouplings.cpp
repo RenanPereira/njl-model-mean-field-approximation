@@ -155,6 +155,18 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		eightQuarkVIPICoupling = c8;
 		eightQuarkVPVIPICoupling = c9;
 	}
+	else if ( interactions==interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI )
+	{
+		fourQuarkSPCoupling = c1;
+		determinantCoupling = c2;
+		fourQuarkVPCoupling = c3;
+		fourQuarkVIPICoupling = c4;
+		eightQuarkVPCoupling = c5;
+		eightQuarkVIPICoupling = c6;
+		eightQuarkVPVIPICoupling = c7;
+		eightQuarkSPVPCoupling = c8;
+		eightQuarkSPVIPICoupling = c9;
+	}
 	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
 }
 
