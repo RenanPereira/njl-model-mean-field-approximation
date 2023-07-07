@@ -203,11 +203,44 @@ std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAt
 }
 
 
-std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureAtZeroChemicalPotentialToHigherTemperature(SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, double maxTemperature, int numberOfPoints, double precision, MultiRootFindingMethod method)
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, double maxTemperature, int numberOfPoints, double precision, MultiRootFindingMethod method)
 {
     double chemPotU = 0.0;
     double chemPotD = 0.0;
     double chemPotS = 0.0;
+
+    double effMassU = minTemperatureSolution.getUpQuarkEffectiveMass();
+    double effMassD = minTemperatureSolution.getDownQuarkEffectiveMass();
+    double effMassS = minTemperatureSolution.getStrangeQuarkEffectiveMass();
+
+    double minTemperature = minTemperatureSolution.getTemperature();
+    double deltaTemperature = (maxTemperature-minTemperature)/(numberOfPoints - 1);
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        double T = minTemperature + i*deltaTemperature;
+
+        SU3NJL3DCutoffFixedChemPotTemp inMediumSol(minTemperatureSolution.getParametersNJL(), T, chemPotU, chemPotD, chemPotS);
+        inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
+
+        effMassU = inMediumSol.getUpQuarkEffectiveMass();
+        effMassD = inMediumSol.getDownQuarkEffectiveMass();
+        effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
+
+        //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
+        if (inMediumSol.testSolution(precision)==true){ solutions.push_back(inMediumSol); }
+    }
+
+    return solutions;
+}
+
+
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperature(SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, double maxTemperature, int numberOfPoints, double precision, MultiRootFindingMethod method)
+{
+    double chemPotU = minTemperatureSolution.getUpQuarkChemicalPotential();
+    double chemPotD = minTemperatureSolution.getDownQuarkChemicalPotential();
+    double chemPotS = minTemperatureSolution.getStrangeQuarkChemicalPotential();
 
     double effMassU = minTemperatureSolution.getUpQuarkEffectiveMass();
     double effMassD = minTemperatureSolution.getDownQuarkEffectiveMass();

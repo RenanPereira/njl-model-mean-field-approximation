@@ -20,7 +20,8 @@ enum lagrangianInteractions { interactions_4SP_det,
 							  interactions_4SP_det_8SP_4VP_8VP,
 							  interactions_4SP_det_8SP_4VP_8VP_8SPVP,
 							  interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI,
-							  interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI };
+							  interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI,
+							  interactions_4SP_det_multiVP };
 
 
 class NJLDimensionfulCouplings
@@ -52,6 +53,10 @@ private:
 	//16 quark interaction couplings[GeV-20]
 	double sixteenQuarkVPCoupling = 0.0;//gOmega4
 
+	//multi VP quark interaction couplings: the number of elements corresponds to the number of considered increasing VP interactions
+	vector<double> multiQuarkVPCoupling = {};
+	bool interactionsIncludeMultiQuarkVPCouplings = false;
+
 public:
 	NJLDimensionfulCouplings(){};
 	NJLDimensionfulCouplings(lagrangianInteractions , double , double );
@@ -62,6 +67,7 @@ public:
 	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double , double , double );
 	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double , double , double , double , double );
 	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double , double , double , double , double , double , double );
+	NJLDimensionfulCouplings(lagrangianInteractions , double , double , vector<double> );
 
 	lagrangianInteractions getLagrangianInteractions(){ return interactions; };
 	
@@ -82,8 +88,17 @@ public:
 	double getTwelveQuarkVPCoupling(){ return twelveQuarkVPCoupling; };
 
 	double getSixteenQuarkVPCoupling(){ return sixteenQuarkVPCoupling; };
+
+	vector<double> getMultiQuarkVPCoupling(){ return multiQuarkVPCoupling; }
+	double getMultiQuarkVPCoupling(int i){ return multiQuarkVPCoupling[i]; }
+	bool getInteractionsIncludeMultiQuarkVPCouplings(){ return interactionsIncludeMultiQuarkVPCouplings; }
+	int numberOfMultiQuarkVPCoupling(){ return int( multiQuarkVPCoupling.size() ); }
+
+	void errorWrongConstructor();
 };
 
+
+vector<double> multiQuarkVPCouplingWithDimensions(vector<double> , double );
 
 
 #endif

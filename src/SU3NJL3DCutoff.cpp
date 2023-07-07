@@ -108,6 +108,25 @@ double SU3NJLQuarkChemicalPotential(NJLDimensionfulCouplings couplings, double e
     cp_f = cp_f 
          + (16.0/9.0)*gOmega3*pow( (rho_f + rho_fplus1 + rho_fplus2) , 5);
 
+    //16vector interactions
+    double gOmega4 = couplings.getSixteenQuarkVPCoupling();
+    cp_f = cp_f 
+         + (128.0/81.0)*gOmega4*pow( (rho_f + rho_fplus1 + rho_fplus2) , 7);
+
+
+    //multi VP quark interaction     
+    if ( couplings.getInteractionsIncludeMultiQuarkVPCouplings()==true )
+    {
+        double rho = rho_f + rho_fplus1 + rho_fplus2;
+        for (int i = 0; i < couplings.numberOfMultiQuarkVPCoupling(); ++i)
+        {   
+            double X = i + 1.0;
+            double gOmegaX = couplings.getMultiQuarkVPCoupling(i);
+            cp_f = cp_f 
+                 + ( 2.0*X*pow(2.0/3.0, X) )*gOmegaX*pow(rho, 2.0*X - 1.0);
+        }
+    }
+
 	return cp_f;
 }
 
@@ -161,6 +180,26 @@ double SU3NJLInteractionPotential(NJLDimensionfulCouplings couplings, double sig
     double gOmega3 = couplings.getTwelveQuarkVPCoupling();
     interactionPotential = interactionPotential 
                          - (40.0/27.0)*gOmega3*pow(rhoU+rhoD+rhoS, 6);       
+
+    //16vector interactions
+    double gOmega4 = couplings.getSixteenQuarkVPCoupling();
+    interactionPotential = interactionPotential 
+                         - (112.0/81.0)*gOmega4*pow(rhoU+rhoD+rhoS, 8);     
+
+
+    //multi VP quark interaction     
+    if ( couplings.getInteractionsIncludeMultiQuarkVPCouplings()==true )
+    {
+        double rho = rhoU+rhoD+rhoS;
+        for (int i = 0; i < couplings.numberOfMultiQuarkVPCoupling(); ++i)
+        {   
+            double X = i + 1.0;
+            double gOmegaX = couplings.getMultiQuarkVPCoupling(i);
+            interactionPotential = interactionPotential 
+                                 - ( (2.0*X - 1.0)*pow(2.0/3.0, X) )*gOmegaX*pow(rho, 2.0*X);
+        }
+    }
+
 
     return interactionPotential;
 }

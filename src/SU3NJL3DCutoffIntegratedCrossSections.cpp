@@ -1717,7 +1717,7 @@ void evaluateIntegratedCrossSectionsWithZeroChemicalPotential(SU3NJL3DCutoffVacu
     }
 
     finiteTSolution = 
-    solveFromFiniteTemperatureAtZeroChemicalPotentialToHigherTemperature(finiteTSolution[finiteTSolution.size()-1], maximumTemperature, numberOfPointsFromMinToMaxTemp, gapPrecision, hybrids);
+    solveFromLowToHighTemperatureAtZeroChemicalPotential(finiteTSolution[finiteTSolution.size()-1], maximumTemperature, numberOfPointsFromMinToMaxTemp, gapPrecision, hybrids);
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
     {
         cout << finiteTSolution[i].getTemperature() << "\t" 
@@ -1788,3 +1788,63 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum va
 }
 
 
+void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(SU3NJL3DCutoffVacuum vacuum,
+															   double gapPrecision,
+															   double chemPot,
+															   double minimumTemperature, 
+															   double maximumTemperature, 
+															   int numberOfPointsFromVacToMinTemp, 
+															   int numberOfPointsMinTempToChemPot, 
+															   int numberOfPointsFromMinToMaxTemp, 
+															   bool largeAngleScatteringContribution, 
+															   IntegratedCrossSectionApproximationMethod approximationMethod,
+															   double propagatorIntegralPrecision,
+															   double crossSectionIntegralPrecision,
+															   double integratedCrossSectionIntegralPrecision_dXdY,
+															   double integratedCrossSectionIntegralPrecision_dX)
+{
+    //solve model at zero chemical potential up to some finite temperature
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, minimumTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, hybrids);
+    for (int i = 0; i < int(finiteTSolution.size()); ++i)
+    {
+        cout << finiteTSolution[i].getTemperature() << "\t" 
+        	 << finiteTSolution[i].getUpQuarkEffectiveMass() << "\t"
+        	 << finiteTSolution[i].getDownQuarkEffectiveMass() << "\t"
+        	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
+    }
+
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], chemPot, numberOfPointsMinTempToChemPot, gapPrecision, hybrids);
+    for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
+    {   
+        cout << finiteChemPotSolution[i].getTemperature() << "\t"
+             << finiteChemPotSolution[i].getUpQuarkChemicalPotential() << "\t"
+             << finiteChemPotSolution[i].getDownQuarkChemicalPotential() << "\t"
+             << finiteChemPotSolution[i].getStrangeQuarkChemicalPotential() << "\t"
+             << finiteChemPotSolution[i].getUpQuarkEffectiveMass() << "\t"
+             << finiteChemPotSolution[i].getDownQuarkEffectiveMass() << "\t"
+             << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
+    }
+
+
+    finiteTSolution = 
+    solveFromLowToHighTemperature(finiteChemPotSolution[finiteChemPotSolution.size()-1], maximumTemperature, numberOfPointsFromMinToMaxTemp, gapPrecision, hybrids);
+    for (int i = 0; i < int(finiteTSolution.size()); ++i)
+    {
+        cout << finiteTSolution[i].getTemperature() << "\t" 
+        	 << finiteTSolution[i].getUpQuarkChemicalPotential() << "\t"
+        	 << finiteTSolution[i].getUpQuarkEffectiveMass() << "\t"
+        	 << finiteTSolution[i].getDownQuarkEffectiveMass() << "\t"
+        	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
+    }
+
+
+    evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(finiteTSolution, 
+                                                                                            propagatorIntegralPrecision,
+                                                                                            largeAngleScatteringContribution, 
+                                                                                            crossSectionIntegralPrecision,
+                                                                                            integratedCrossSectionIntegralPrecision_dXdY, 
+                                                                                            integratedCrossSectionIntegralPrecision_dX, 
+                                                                                            approximationMethod);
+}

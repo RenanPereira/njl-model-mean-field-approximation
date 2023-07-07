@@ -585,4 +585,9 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum ,
                                                          IntegratedCrossSectionApproximationMethod ,
                                                          double , double , double , double );
 
+void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(SU3NJL3DCutoffVacuum ,
+                                                               double , double , double , double , int , int , int , bool , 
+                                                               IntegratedCrossSectionApproximationMethod ,
+                                                               double , double , double , double );
+
 #endif

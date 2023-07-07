@@ -5,6 +5,12 @@
 using namespace std;
 
 
+void NJLDimensionfulCouplings::errorWrongConstructor()
+{
+	cout << "Wrong constructor for this lagrangian interaction!\n"; abort();
+}
+
+
 NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2)
 {	
 	interactions = interactionsAux;
@@ -14,7 +20,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 	}
-	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
+	else{ errorWrongConstructor(); }
 }
 
 
@@ -28,7 +34,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		determinantCoupling = c2;
 		fourQuarkVPCoupling = c3;
 	}
-	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
+	else{ errorWrongConstructor(); }
 }
 
 
@@ -57,7 +63,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		fourQuarkVPCoupling = c3;
 		eightQuarkVPCoupling = c4;
 	}
-	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
+	else{ errorWrongConstructor(); }
 }
 
 
@@ -81,7 +87,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		eightQuarkVPCoupling = c4;
 		twelveQuarkVPCoupling = c5;
 	}
-	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
+	else{ errorWrongConstructor(); }
 }
 
 
@@ -107,7 +113,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		twelveQuarkVPCoupling = c5;
 		sixteenQuarkVPCoupling = c6;
 	}
-	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
+	else{ errorWrongConstructor(); }
 }
 
 
@@ -135,7 +141,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		eightQuarkVIPICoupling = c6;
 		eightQuarkVPVIPICoupling = c7;
 	}
-	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
+	else{ errorWrongConstructor(); }
 }
 
 
@@ -167,7 +173,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		eightQuarkSPVPCoupling = c8;
 		eightQuarkSPVIPICoupling = c9;
 	}
-	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
+	else{ errorWrongConstructor(); }
 }
 
 
@@ -189,6 +195,40 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 		eightQuarkSPVPCoupling = c10;
 		eightQuarkSPVIPICoupling = c11;
 	}
-	else{ cout << "Wrong constructor for this lagrangian interaction!\n"; abort(); }
+	else{ errorWrongConstructor(); }
+}
+
+
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, vector<double> v)
+{	
+	interactions = interactionsAux;
+
+	if ( interactions==interactions_4SP_det_multiVP )
+	{	
+		fourQuarkSPCoupling = c1;
+		determinantCoupling = c2;
+		multiQuarkVPCoupling = v;
+		if ( int( multiQuarkVPCoupling.size() )!=0 )
+		{
+			interactionsIncludeMultiQuarkVPCouplings = true;
+		}
+	}
+	else{ errorWrongConstructor(); }
+}
+
+
+vector<double> multiQuarkVPCouplingWithDimensions(vector<double> multiQuarkVPCouplingWithoutDimensions, double couplingGeVMinus2)
+{
+	vector<double> multiQuarkVPDimensionfullCouplings;
+
+    for (int i = 0; i < int( multiQuarkVPCouplingWithoutDimensions.size() ); ++i)
+    {	
+    	int p = 1 + 3*i;
+    	double gs = couplingGeVMinus2;
+    	double ci = multiQuarkVPCouplingWithoutDimensions[i];
+    	multiQuarkVPDimensionfullCouplings.push_back( ci*pow(gs,p) );
+    }
+
+    return multiQuarkVPDimensionfullCouplings;
 }
 

@@ -68,6 +68,24 @@ int main(void)
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setB");
+*/
+/*
+    //parameter set C
+    double cutoff = 0.586967971572559;
+    double gs = 2.7596253718366/pow(cutoff, 2);
+    double kappa = -11.7520217701553/pow(cutoff, 5);
+    double g1 = 44.861215303826/pow(cutoff, 8);
+    double g2 = -24.3337469126998/pow(cutoff, 8);
+    double m0u = 0.00600659282357854;
+    double m0d = 0.00600659282357854;
+    double m0s = 0.138868437136382;
+
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(interactions_4SP_det_8SP, gs, kappa, g1, g2);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    parameters.setParameterSetName("setC");
 
 
     //solve model in the vacuum
@@ -80,9 +98,52 @@ int main(void)
     cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
          << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+*/
+/*
+    double chemPot = 0.318434158842783;
+    double minimumTemperature = 0.040;
+    double maximumTemperature = 0.300;
+    int numberOfPointsFromVacToMinTemp = 200; 
+    int numberOfPointsMinTempToChemPot = 200;
+    int numberOfPointsFromMinToMaxTemp = 261;
+    bool largeAngleScatteringContribution = false;
+    IntegratedCrossSectionApproximationMethod approximationMethod = completeCOV;
+    double propagatorIntegralPrecision = 1E-7;
+    double crossSectionIntegralPrecision = 1E-4;
+    double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
+    double integratedCrossSectionIntegralPrecision_dX = 1E-3;
+    evaluateIntegratedCrossSectionsWithFixedChemicalPotential(vacuum,
+                                                              1E-8,
+                                                              chemPot,
+                                                              minimumTemperature, 
+                                                              maximumTemperature, 
+                                                              numberOfPointsFromVacToMinTemp, 
+                                                              numberOfPointsMinTempToChemPot,
+                                                              numberOfPointsFromMinToMaxTemp, 
+                                                              largeAngleScatteringContribution, 
+                                                              approximationMethod,
+                                                              propagatorIntegralPrecision,
+                                                              crossSectionIntegralPrecision,
+                                                              integratedCrossSectionIntegralPrecision_dXdY,
+                                                              integratedCrossSectionIntegralPrecision_dX);
 
-
-
+    largeAngleScatteringContribution = true;
+    evaluateIntegratedCrossSectionsWithFixedChemicalPotential(vacuum,
+                                                              1E-8,
+                                                              chemPot,
+                                                              minimumTemperature, 
+                                                              maximumTemperature, 
+                                                              numberOfPointsFromVacToMinTemp, 
+                                                              numberOfPointsMinTempToChemPot,
+                                                              numberOfPointsFromMinToMaxTemp, 
+                                                              largeAngleScatteringContribution, 
+                                                              approximationMethod,
+                                                              propagatorIntegralPrecision,
+                                                              crossSectionIntegralPrecision,
+                                                              integratedCrossSectionIntegralPrecision_dXdY,
+                                                              integratedCrossSectionIntegralPrecision_dX);
+*/
+/*
     double minimumTemperature = 0.120;
     double maximumTemperature = 0.300;
     int numberOfPointsFromVacToMinTemp = 200; 
@@ -121,18 +182,6 @@ int main(void)
                                                              integratedCrossSectionIntegralPrecision_dX);
 */
 
- /*
-    //evaluate integrated cross sections at zero chemical potential
-    evaluateIntegratedCrossSectionsWithZeroChemicalPotentialForPaper(parameters,
-                                                                     0.301, 
-                                                                     0.400, 
-                                                                     200, 
-                                                                     100, 
-                                                                     false, 
-                                                                     completeCOV);
-*/
-
-
 
 
 
@@ -149,20 +198,20 @@ int main(void)
     double m0d = 0.0055;
     double m0s = 0.1407;
 
-    double gOmega1 = 0.0*pow(0.5*gs, 1);
-    double gRho1 = 0.0*pow(0.5*gs, 1);
-    double gOmega2 = 0.0*pow(0.5*gs, 4);
-    double gRho2 = 0.0*pow(0.5*gs, 4);
-    double gOmegaRho = 0.0*pow(0.5*gs, 4);
-    double gSigmaOmega = 0.0*pow(0.5*gs, 4);
-    double gSigmaRho = 50.0*pow(0.5*gs, 4);
-    
+    //double gOmega1 = 0.2*pow(0.5*gs, 1);
+    //double gOmega2 = 5.0*pow(0.5*gs, 4);
     //double gOmega3 = -10.0*pow(0.5*gs, 7);
+    //double gOmega4 = 7.0*pow(0.5*gs, 10);
 
+    //Fix Lagrangian dimensionful couplings
+    //NJLDimensionfulCouplings couplings(interactions_4SP_det_4VP_8VP_12VP_16VP, gs, kappa, gOmega1, gOmega2, gOmega3, gOmega4);
+
+    vector<double> gOmega = {0.5, 1.0, -3.0, 3.0, -1.0};
+    gOmega = multiQuarkVPCouplingWithDimensions(gOmega, 0.5*gs);
     
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI, 
-                                       gs, kappa, gOmega1, gRho1, gOmega2, gRho2, gOmegaRho, gSigmaOmega, gSigmaRho);
+    NJLDimensionfulCouplings couplings(interactions_4SP_det_multiVP, gs, kappa, gOmega);
+
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
@@ -182,7 +231,7 @@ int main(void)
 
 
     double rhoi = 1E-5*pow(hc_GeVfm, 3);
-    double rhof = 2.50*pow(hc_GeVfm, 3);
+    double rhof = 3.50*pow(hc_GeVfm, 3);
     int NrhoB = 5000;
     writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, hybrids);
 */
