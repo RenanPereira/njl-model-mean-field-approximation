@@ -928,7 +928,8 @@ calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum,
 
 void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum vacuum, 
                                                     double minimumBaryonDensity, double maximumBaryonDensity, int numberOfPoints, 
-                                                    double gapPrecision, MultiRootFindingMethod method)
+                                                    double gapPrecision, MultiRootFindingMethod method,
+                                                    string fileName)
 {
     vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> betaEqSolutions = 
     calculateZeroTemperatureSolutions(vacuum, minimumBaryonDensity, maximumBaryonDensity, numberOfPoints, gapPrecision, method);
@@ -946,10 +947,10 @@ void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum vacuum,
     if ( int(transitionPoints.size())>0 )
     {   
         double minRhoB = transitionPoints[1].getBaryonDensity();
-        writeEOSToFile(betaEqSolutions, "eos.dat", true, minRhoB);
+        writeEOSToFile(betaEqSolutions, fileName, true, minRhoB);
     }
     else
     {
-        writeEOSToFile(betaEqSolutions, "eos.dat", true);
+        writeEOSToFile(betaEqSolutions, fileName, true);
     }
 }

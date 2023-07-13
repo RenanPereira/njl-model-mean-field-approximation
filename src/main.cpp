@@ -206,11 +206,11 @@ int main(void)
     //Fix Lagrangian dimensionful couplings
     //NJLDimensionfulCouplings couplings(interactions_4SP_det_4VP_8VP_12VP_16VP, gs, kappa, gOmega1, gOmega2, gOmega3, gOmega4);
 
-    vector<double> gOmega = {0.5, 1.0, -3.0, 3.0, -1.0};
-    gOmega = multiQuarkVPCouplingWithDimensions(gOmega, 0.5*gs);
+    vector<double> gOmegaAdimensional = {0.8, 1.0, -3.0, 3.0, -1.0};
+    vector<double> gOmegaDimensionful = multiQuarkVPCouplingWithDimensions(gOmegaAdimensional, 0.5*gs);
     
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det_multiVP, gs, kappa, gOmega);
+    NJLDimensionfulCouplings couplings(interactions_4SP_det_multiVP, gs, kappa, gOmegaDimensionful);
 
 
     //Create NJL parameter set
@@ -231,11 +231,21 @@ int main(void)
 
 
     double rhoi = 1E-5*pow(hc_GeVfm, 3);
-    double rhof = 3.50*pow(hc_GeVfm, 3);
-    int NrhoB = 5000;
-    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, hybrids);
-*/
+    double rhof = 3.80*pow(hc_GeVfm, 3);
+    int NrhoB = 8000;
+    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, hybrids, "eos.dat");
 
+
+    std::ofstream file;
+    file.open("gOmega.dat", std::fstream::in | std::ofstream::out | std::ios::trunc);
+    string gOmegaId;
+    for (int i = 0; i < int( gOmegaAdimensional.size() ); ++i)
+    {
+        gOmegaId = gOmegaId + "_" + to_string(gOmegaAdimensional[i]);
+    }
+    file << gOmegaId;
+    file.close();
+*/
 
 
     //STOP CLOCK AND PRINT RUN TIME

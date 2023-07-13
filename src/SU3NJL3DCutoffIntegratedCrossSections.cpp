@@ -1741,7 +1741,9 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum va
 														 double gapPrecision,
 														 double fixedTemperature, 
 														 int numberOfPointsFromVacToMinTemp, 
-														 int numberOfPointsChemPot, 
+														 int numberOfPointsFromMinTempToMinChemPot, 
+														 int numberOfPointsFromMinToMaxChemPot, 
+														 double minChemPot,
 														 double maxChemPot,
 														 bool largeAngleScatteringContribution, 
 														 IntegratedCrossSectionApproximationMethod approximationMethod,
@@ -1765,17 +1767,48 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum va
              << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], maxChemPot, numberOfPointsChemPot, gapPrecision, hybrids);
-    for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
-    {   
-        cout << finiteChemPotSolution[i].getTemperature() << "\t"
-             << finiteChemPotSolution[i].getUpQuarkChemicalPotential() << "\t"
-             << finiteChemPotSolution[i].getDownQuarkChemicalPotential() << "\t"
-             << finiteChemPotSolution[i].getStrangeQuarkChemicalPotential() << "\t"
-             << finiteChemPotSolution[i].getUpQuarkEffectiveMass() << "\t"
-             << finiteChemPotSolution[i].getDownQuarkEffectiveMass() << "\t"
-             << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution;
+    if ( minChemPot>0 )
+    {
+    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], minChemPot, numberOfPointsFromMinTempToMinChemPot, gapPrecision, hybrids);
+        for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
+	    {   
+	        cout << finiteChemPotSolution[i].getTemperature() << "\t"
+	             << finiteChemPotSolution[i].getUpQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getDownQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getStrangeQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getUpQuarkEffectiveMass() << "\t"
+	             << finiteChemPotSolution[i].getDownQuarkEffectiveMass() << "\t"
+	             << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
+	    }
+
+    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteChemPotSolution[finiteChemPotSolution.size()-1], maxChemPot, numberOfPointsFromMinToMaxChemPot, gapPrecision, hybrids);
+	    for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
+	    {   
+	        cout << finiteChemPotSolution[i].getTemperature() << "\t"
+	             << finiteChemPotSolution[i].getUpQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getDownQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getStrangeQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getUpQuarkEffectiveMass() << "\t"
+	             << finiteChemPotSolution[i].getDownQuarkEffectiveMass() << "\t"
+	             << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
+	    }
     }
+    else
+    {
+    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], maxChemPot, numberOfPointsFromMinTempToMinChemPot, gapPrecision, hybrids);
+	    for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
+	    {   
+	        cout << finiteChemPotSolution[i].getTemperature() << "\t"
+	             << finiteChemPotSolution[i].getUpQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getDownQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getStrangeQuarkChemicalPotential() << "\t"
+	             << finiteChemPotSolution[i].getUpQuarkEffectiveMass() << "\t"
+	             << finiteChemPotSolution[i].getDownQuarkEffectiveMass() << "\t"
+	             << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
+	    }
+	}
 
     evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(finiteChemPotSolution, 
                                                                                       propagatorIntegralPrecision,

@@ -158,6 +158,6 @@ void addVacuumSolution(SU3NJL3DCutoffVacuum , double , double , double , vector<
 
 vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod );
 
-void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod );
+void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod , string );
 
 #endif
