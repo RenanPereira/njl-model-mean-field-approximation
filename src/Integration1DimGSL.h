@@ -322,6 +322,7 @@ public:
 	double result;
 
 public:
+	CompositeTrapezoidalSum(){};
 	CompositeTrapezoidalSum(double , double , int , GeneralIntegrandParameters* , double (double, void*) );
 	CompositeTrapezoidalSum(double , double , int , GeneralIntegrandParameters* , double (double, void*) , TrapezoidalRule );
 
@@ -330,7 +331,7 @@ public:
 	double evaluateNormal();
 	double evaluateAlternative();
 	double evaluate();
-	double evaluateCauchyPV(double singularity);
+	double evaluateAvoidingSingularPoint(double singularity);
 };
 
 

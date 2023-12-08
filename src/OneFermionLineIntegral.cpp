@@ -467,9 +467,9 @@ double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguScheme
         {
             // k finite case
             
-            //This quantity is independent of the value chose for M2! However, I built the integration regions supposing M2>M1
+            //This quantity is independent of the value chose for M2!
             double M1 = M;
-            double M2 = M;
+            double M2 = 2.0*M;
 
             realKlevanskyA = realKlevanskyA + realKlevanskyAPair3DCutoff(T, Cp, cutoff, M1, M2, k, integralPrecision);
             realKlevanskyA = realKlevanskyA + realKlevanskyAScat3DCutoff(T, Cp, cutoff, M1, M2, k, integralPrecision);

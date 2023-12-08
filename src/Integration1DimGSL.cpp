@@ -665,8 +665,58 @@ double CompositeTrapezoidalSum::evaluate()
 }
 
 
-double CompositeTrapezoidalSum::evaluateCauchyPV(double singularity)
-{   
+double CompositeTrapezoidalSum::evaluateAvoidingSingularPoint(double singularity)
+{ 
+
+    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
+    double delta = 2*dx;
+
+    double area = 0.0;
+
+    double a = 0;
+    double b = 0;
+    double orientation = +1;
+    if ( lowerBound<upperBound )
+    {
+        a = lowerBound;
+        b = upperBound;
+        orientation = +1;
+    }
+    else
+    {
+        a = upperBound;
+        b = lowerBound;
+        orientation = -1;   
+    }
+
+    if ( fabs(b-singularity)<fabs(a-singularity) )
+    {
+        CompositeTrapezoidalSum LowRiemannSum(a, singularity-delta - fabs(b - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + LowRiemannSum.evaluate();
+    
+        CompositeTrapezoidalSum MiddleRiemannSum2(singularity-delta - fabs(b - (singularity+delta)), singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + MiddleRiemannSum2.evaluate();
+
+        CompositeTrapezoidalSum UpperRiemannSum(singularity+delta, b, numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + UpperRiemannSum.evaluate();
+
+        area = orientation*area;
+    }
+    else
+    {
+        CompositeTrapezoidalSum LowRiemannSum(a, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + LowRiemannSum.evaluate();
+        
+        CompositeTrapezoidalSum MiddleRiemannSum2(singularity+delta, (singularity+delta) + fabs(a - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + MiddleRiemannSum2.evaluate();
+
+        CompositeTrapezoidalSum UpperRiemannSum((singularity+delta) + fabs(a - (singularity+delta)), b, numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + UpperRiemannSum.evaluate();
+    }
+    
+    return area;
+
+/*
     double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
     double delta = 2*dx;
 
@@ -679,6 +729,7 @@ double CompositeTrapezoidalSum::evaluateCauchyPV(double singularity)
     area = area + UpperRiemannSum.evaluate();
     
     return area;
+*/
 }
 
 
@@ -814,7 +865,7 @@ void testCompositeTrapezoidalSum()
 
     TestIntegrandParameters aux2("integrandRiemannCPV");
     CompositeTrapezoidalSum trapezoidalSumCPV(-1.0, 2.0, 100, &aux2, integrandRiemannCPV, alternative);
-    double resultTrapezoidalSumCPV = trapezoidalSumCPV.evaluateCauchyPV(1.0);
+    double resultTrapezoidalSumCPV = trapezoidalSumCPV.evaluateAvoidingSingularPoint(1.0);
     cout << "resultTrapezoidalSumCPV: " << resultTrapezoidalSumCPV << "\n";
 }
 
