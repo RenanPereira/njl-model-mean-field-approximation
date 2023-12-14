@@ -24,6 +24,40 @@ public:
 };
 
 
+enum TrapezoidalRule { normal, alternative };
+
+
+class CompositeTrapezoidalSum
+{	
+public:
+	double lowerBound;
+	double upperBound;
+	int numberOfPartitions;
+
+	GeneralIntegrandParameters* integrandParameters;
+	double (* integrand)(double, void * parameters);
+
+	TrapezoidalRule rule;
+	
+	double result;
+
+public:
+	CompositeTrapezoidalSum(){};
+	CompositeTrapezoidalSum(double , double , int , GeneralIntegrandParameters* , double (double, void*) );
+	CompositeTrapezoidalSum(double , double , int , GeneralIntegrandParameters* , double (double, void*) , TrapezoidalRule );
+
+	void setVariables(double , double , int , GeneralIntegrandParameters* , double (double, void*), TrapezoidalRule );
+
+	double evaluateNormal();
+	double evaluateAlternative();
+	double evaluate();
+	double evaluateAvoidingSingularPoint(double singularity);
+};
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+
 class Integration1DimGSL
 {	
 public:
@@ -299,39 +333,8 @@ public:
 	double getSingularity(){ return singularity; }
 
 	double evaluate() override;
-};
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-
-enum TrapezoidalRule { normal, alternative };
-
-class CompositeTrapezoidalSum
-{	
-public:
-	double lowerBound;
-	double upperBound;
-	int numberOfPartitions;
-
-	GeneralIntegrandParameters* integrandParameters;
-	double (* integrand)(double, void * parameters);
-
-	TrapezoidalRule rule;
-	
-	double result;
-
-public:
-	CompositeTrapezoidalSum(){};
-	CompositeTrapezoidalSum(double , double , int , GeneralIntegrandParameters* , double (double, void*) );
-	CompositeTrapezoidalSum(double , double , int , GeneralIntegrandParameters* , double (double, void*) , TrapezoidalRule );
-
-	void setVariables(double , double , int , GeneralIntegrandParameters* , double (double, void*), TrapezoidalRule );
-
-	double evaluateNormal();
-	double evaluateAlternative();
-	double evaluate();
-	double evaluateAvoidingSingularPoint(double singularity);
+	double evaluateCompositeTrapezoidalSum(int , TrapezoidalRule );
 };
 
 

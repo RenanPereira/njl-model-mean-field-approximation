@@ -6,6 +6,180 @@
 using namespace std;
 
 
+void CompositeTrapezoidalSum::setVariables(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), TrapezoidalRule ruleAux)
+{
+    lowerBound = lowerBoundAux;
+    upperBound = upperBoundAux;
+    numberOfPartitions = numberOfPartitionsAux;
+
+    integrandParameters = integrandParametersAux;
+    integrand = integrandAux;
+
+    rule = ruleAux;
+
+    //check if number of partitions are appropriate for the chosen rule
+    if ( rule==normal )
+    {
+        if ( numberOfPartitions<2 )
+        {
+            cout << "CompositeTrapezoidalSum: to use the normal trapezoidal rule, at least 2 partitions are necessary!\n";
+            abort();
+        }
+    }
+
+    if ( rule==alternative )
+    {
+        if ( numberOfPartitions<8 )
+        {
+            cout << "CompositeTrapezoidalSum: to use the alternative trapezoidal rule, at least 8 partitions are necessary!\n";
+            abort();
+        }
+    }
+}
+
+
+CompositeTrapezoidalSum::CompositeTrapezoidalSum(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*))
+{
+    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, normal);
+}
+
+
+CompositeTrapezoidalSum::CompositeTrapezoidalSum(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), TrapezoidalRule ruleAux)
+{
+    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, ruleAux);
+}
+
+
+double CompositeTrapezoidalSum::evaluateNormal()
+{   
+    
+    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
+    double area = 0.0;
+    for (int i = 1; i < numberOfPartitions-1; ++i)
+    {   
+        area = area + integrand(lowerBound + i*dx, integrandParameters);
+    }
+
+    area = dx*( area + 0.5*integrand(lowerBound, integrandParameters) + 0.5*integrand(upperBound, integrandParameters) );
+    result = area;
+    
+    return area;
+}
+
+
+double CompositeTrapezoidalSum::evaluateAlternative()
+{   
+    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
+    double area = 0.0;
+    for (int i = 4; i < numberOfPartitions-4; ++i)
+    {   
+        area = area + integrand(lowerBound + i*dx, integrandParameters);
+    }
+
+    area = ( dx/(48.0) )*( + 17.0*integrand(lowerBound + 0*dx, integrandParameters)
+                           + 59.0*integrand(lowerBound + 1*dx, integrandParameters)
+                           + 43.0*integrand(lowerBound + 2*dx, integrandParameters)
+                           + 49.0*integrand(lowerBound + 3*dx, integrandParameters)
+                           + 48.0*area
+                           + 49.0*integrand(upperBound - 3*dx, integrandParameters)
+                           + 43.0*integrand(upperBound - 2*dx, integrandParameters)
+                           + 59.0*integrand(upperBound - 1*dx, integrandParameters)
+                           + 17.0*integrand(upperBound - 0*dx, integrandParameters)
+                         );
+    result = area;
+
+    return area;
+}
+
+
+double CompositeTrapezoidalSum::evaluate()
+{   
+    double area = 0.0;
+
+    if ( rule==normal )
+    {
+        area = evaluateNormal();
+    }
+    else if ( rule==alternative )
+    {
+        area = evaluateAlternative();
+    }
+
+    return area;
+}
+
+
+double CompositeTrapezoidalSum::evaluateAvoidingSingularPoint(double singularity)
+{ 
+
+    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
+    double delta = 2*dx;
+
+    double area = 0.0;
+
+    double a = 0;
+    double b = 0;
+    double orientation = +1;
+    if ( lowerBound<upperBound )
+    {
+        a = lowerBound;
+        b = upperBound;
+        orientation = +1;
+    }
+    else
+    {
+        a = upperBound;
+        b = lowerBound;
+        orientation = -1;   
+    }
+
+    if ( fabs(b-singularity)<fabs(a-singularity) )
+    {
+        CompositeTrapezoidalSum LowRiemannSum(a, singularity-delta - fabs(b - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + LowRiemannSum.evaluate();
+    
+        CompositeTrapezoidalSum MiddleRiemannSum2(singularity-delta - fabs(b - (singularity+delta)), singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + MiddleRiemannSum2.evaluate();
+
+        CompositeTrapezoidalSum UpperRiemannSum(singularity+delta, b, numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + UpperRiemannSum.evaluate();
+
+        area = orientation*area;
+    }
+    else
+    {
+        CompositeTrapezoidalSum LowRiemannSum(a, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + LowRiemannSum.evaluate();
+        
+        CompositeTrapezoidalSum MiddleRiemannSum2(singularity+delta, (singularity+delta) + fabs(a - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + MiddleRiemannSum2.evaluate();
+
+        CompositeTrapezoidalSum UpperRiemannSum((singularity+delta) + fabs(a - (singularity+delta)), b, numberOfPartitions, integrandParameters, integrand, rule);
+        area = area + UpperRiemannSum.evaluate();
+    }
+    
+    return area;
+
+/*
+    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
+    double delta = 2*dx;
+
+    double area = 0.0;
+    
+    CompositeTrapezoidalSum LowRiemannSum(lowerBound, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
+    area = area + LowRiemannSum.evaluate();
+    
+    CompositeTrapezoidalSum UpperRiemannSum(singularity+delta, upperBound, numberOfPartitions, integrandParameters, integrand, rule);
+    area = area + UpperRiemannSum.evaluate();
+    
+    return area;
+*/
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+
 void Integration1DimGSL::setVariables(double lowerBoundAux, double upperBoundAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux)
 {
     lowerBound = lowerBoundAux;
@@ -559,177 +733,21 @@ double Integration1DimGSLQAWCQAGS::evaluate()
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////
-
-
-void CompositeTrapezoidalSum::setVariables(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), TrapezoidalRule ruleAux)
-{
-    lowerBound = lowerBoundAux;
-    upperBound = upperBoundAux;
-    numberOfPartitions = numberOfPartitionsAux;
-
-    integrandParameters = integrandParametersAux;
-    integrand = integrandAux;
-
-    rule = ruleAux;
-
-    //check if number of partitions are appropriate for the chosen rule
-    if ( rule==normal )
-    {
-        if ( numberOfPartitions<2 )
-        {
-            cout << "CompositeTrapezoidalSum: to use the normal trapezoidal rule, at least 2 partitions are necessary!\n";
-            abort();
-        }
-    }
-
-    if ( rule==alternative )
-    {
-        if ( numberOfPartitions<8 )
-        {
-            cout << "CompositeTrapezoidalSum: to use the alternative trapezoidal rule, at least 8 partitions are necessary!\n";
-            abort();
-        }
-    }
-}
-
-
-CompositeTrapezoidalSum::CompositeTrapezoidalSum(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*))
-{
-    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, normal);
-}
-
-
-CompositeTrapezoidalSum::CompositeTrapezoidalSum(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), TrapezoidalRule ruleAux)
-{
-    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, ruleAux);
-}
-
-
-double CompositeTrapezoidalSum::evaluateNormal()
+double Integration1DimGSLQAWCQAGS::evaluateCompositeTrapezoidalSum(int numberOfPartitions, TrapezoidalRule rule)
 {   
-    
-    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
-    double area = 0.0;
-    for (int i = 1; i < numberOfPartitions-1; ++i)
+    CompositeTrapezoidalSum trapezoidalSum(lowerBound, upperBound, numberOfPartitions, &numeratorParameters, changeQAWCIntegrandToQAGSIntegrand, rule);
+
+    if ( isSingularityInsideTheIntegrationInterval()==true && 
+         fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
+         fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity )
     {   
-        area = area + integrand(lowerBound + i*dx, integrandParameters);
-    }
 
-    area = dx*( area + 0.5*integrand(lowerBound, integrandParameters) + 0.5*integrand(upperBound, integrandParameters) );
-    result = area;
-    
-    return area;
-}
-
-
-double CompositeTrapezoidalSum::evaluateAlternative()
-{   
-    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
-    double area = 0.0;
-    for (int i = 4; i < numberOfPartitions-4; ++i)
-    {   
-        area = area + integrand(lowerBound + i*dx, integrandParameters);
-    }
-
-    area = ( dx/(48.0) )*( + 17.0*integrand(lowerBound + 0*dx, integrandParameters)
-                           + 59.0*integrand(lowerBound + 1*dx, integrandParameters)
-                           + 43.0*integrand(lowerBound + 2*dx, integrandParameters)
-                           + 49.0*integrand(lowerBound + 3*dx, integrandParameters)
-                           + 48.0*area
-                           + 49.0*integrand(upperBound - 3*dx, integrandParameters)
-                           + 43.0*integrand(upperBound - 2*dx, integrandParameters)
-                           + 59.0*integrand(upperBound - 1*dx, integrandParameters)
-                           + 17.0*integrand(upperBound - 0*dx, integrandParameters)
-                         );
-    result = area;
-
-    return area;
-}
-
-
-double CompositeTrapezoidalSum::evaluate()
-{   
-    double area = 0.0;
-
-    if ( rule==normal )
-    {
-        area = evaluateNormal();
-    }
-    else if ( rule==alternative )
-    {
-        area = evaluateAlternative();
-    }
-
-    return area;
-}
-
-
-double CompositeTrapezoidalSum::evaluateAvoidingSingularPoint(double singularity)
-{ 
-
-    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
-    double delta = 2*dx;
-
-    double area = 0.0;
-
-    double a = 0;
-    double b = 0;
-    double orientation = +1;
-    if ( lowerBound<upperBound )
-    {
-        a = lowerBound;
-        b = upperBound;
-        orientation = +1;
+        return trapezoidalSum.evaluateAvoidingSingularPoint(singularity);
     }
     else
-    {
-        a = upperBound;
-        b = lowerBound;
-        orientation = -1;   
+    {   
+        return trapezoidalSum.evaluate();
     }
-
-    if ( fabs(b-singularity)<fabs(a-singularity) )
-    {
-        CompositeTrapezoidalSum LowRiemannSum(a, singularity-delta - fabs(b - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + LowRiemannSum.evaluate();
-    
-        CompositeTrapezoidalSum MiddleRiemannSum2(singularity-delta - fabs(b - (singularity+delta)), singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + MiddleRiemannSum2.evaluate();
-
-        CompositeTrapezoidalSum UpperRiemannSum(singularity+delta, b, numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + UpperRiemannSum.evaluate();
-
-        area = orientation*area;
-    }
-    else
-    {
-        CompositeTrapezoidalSum LowRiemannSum(a, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + LowRiemannSum.evaluate();
-        
-        CompositeTrapezoidalSum MiddleRiemannSum2(singularity+delta, (singularity+delta) + fabs(a - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + MiddleRiemannSum2.evaluate();
-
-        CompositeTrapezoidalSum UpperRiemannSum((singularity+delta) + fabs(a - (singularity+delta)), b, numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + UpperRiemannSum.evaluate();
-    }
-    
-    return area;
-
-/*
-    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
-    double delta = 2*dx;
-
-    double area = 0.0;
-    
-    CompositeTrapezoidalSum LowRiemannSum(lowerBound, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
-    area = area + LowRiemannSum.evaluate();
-    
-    CompositeTrapezoidalSum UpperRiemannSum(singularity+delta, upperBound, numberOfPartitions, integrandParameters, integrand, rule);
-    area = area + UpperRiemannSum.evaluate();
-    
-    return area;
-*/
 }
 
 

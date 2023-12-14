@@ -48,3 +48,25 @@ Thumbs.db
 *.mov
 *.wmv
 
+bin/nambuJonaLasinioModel.out
+obj/ComplexSquareMatrixGSL.o
+obj/generalPhysicsAndMath.o
+obj/Integration1DimGSL.o
+obj/Interpolation1DimGSL.o
+obj/main.o
+obj/NJLDimensionfulCouplings.o
+obj/OneFermionLineIntegral.o
+obj/OneVariableFunction.o
+obj/rootSolverGSL.o
+obj/SU3NJL3DCutoff.o
+obj/SU3NJL3DCutoffBetaEqFixedTempRhoB.o
+obj/SU3NJL3DCutoffCrossSections.o
+obj/SU3NJL3DCutoffDifferentialCrossSections.o
+obj/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.o
+obj/SU3NJL3DCutoffFixedChemPotTemp.o
+obj/SU3NJL3DCutoffIntegratedCrossSections.o
+obj/SU3NJL3DCutoffMesonProjectors.o
+obj/SU3NJL3DCutoffMesonPropagators.o
+obj/SU3NJL3DCutoffVacuum.o
+obj/TwoFermionLineIntegral.o
+obj/UnitaryGroup3Dimensions.o

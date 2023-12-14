@@ -63,10 +63,11 @@ int main(void)
 
 
     TestIntegrandParameters aux2("integrandTestCauchy2");
-    Integration1DimGSLQAWC integralQAWC(xMin, xMax, sing, &aux2, integrandQAWC2, 1E-8, 1E-8, 1000);
-    double resultQAWC = integralQAWC.evaluate();
-    cout << "resultQAWC: " << resultQAWC << "\n";
-    //cout << 100*fabs((resultQAWC - log(2.0))/log(2.0)) << "\n";
+    Integration1DimGSLQAWCQAGS integralQAWCQAGS(xMin, xMax, sing, &aux2, integrandQAWC2, 1E-8, 1E-8, 1000);
+    double resultQAWCQAGS = integralQAWCQAGS.evaluate();
+    cout << "resultQAWCQAGS: " << resultQAWCQAGS << "\n";
+    cout << "trapezoidalSum: " << integralQAWCQAGS.evaluateCompositeTrapezoidalSum(10, alternative) << "\n";
+    //cout << 100*fabs((resultQAWCQAGS - log(2.0))/log(2.0)) << "\n";
 
 
     TestIntegrandParameters aux3("integrandRiemannCPV");
@@ -74,13 +75,6 @@ int main(void)
     double resultTrapezoidalSumCPV = trapezoidalSumCPV.evaluateAvoidingSingularPoint(sing);
     cout << "resultTrapezoidalSumCPV: " << resultTrapezoidalSumCPV << "\n";
     //cout << 100*fabs((resultTrapezoidalSumCPV - log(2.0))/log(2.0)) << "\n";
-
-/*
-    TestIntegrandParameters aux4("integrandRiemannCPVNumerator");
-    CompositeTrapezoidalSumAvoidCauchySingularPointGivenNumerator trapezoidalSumCPVNumerator(&aux4, integrandQAWC2);
-    double resultTrapezoidalSumCPVNumerator = trapezoidalSumCPVNumerator.evaluate();
-    cout << "resultTrapezoidalSumCPVNumerator: " << resultTrapezoidalSumCPVNumerator << "\n";
-*/
 
 /*
     //parameter set A (Klevansky parameter set)
