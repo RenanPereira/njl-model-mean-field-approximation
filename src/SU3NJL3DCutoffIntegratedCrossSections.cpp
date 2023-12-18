@@ -893,7 +893,7 @@ double integratedCrossSectionProcess12To34(SU3NJL3DCutoffParameters parametersNJ
     double sMin = pow(m1+m2,2);
     double sMax = pow(sqrt( pow(cutoff,2) + pow(m1,2) ) + sqrt( pow(cutoff,2) + pow(m2,2) ), 2);
 
-    CompositeTrapezoidalSum trapezoidalSum(1.001*sMin, 0.999*sMax, 10, &aux, integratedCrossSectionIntegrand_ds, alternative);
+    Integration1DimNewtonCotes trapezoidalSum(1.001*sMin, 0.999*sMax, 10, &aux, integratedCrossSectionIntegrand_ds, alternativeCompositeSimpson);
     double normalization_ds = trapezoidalSum.evaluate();
     aux.setNormalizationRiemannSum_ds(normalization_ds);
 
@@ -1258,7 +1258,7 @@ double integratedCrossSectionProcess12To34Klevansky(SU3NJL3DCutoffParameters par
     double sMin = centerOfMassEnergyThreshold(m1, m2, m3, m4);
     double sMax = sMaximumKlevansky(cutoff, effMassU, effMassD, effMassS);
 
-    CompositeTrapezoidalSum trapezoidalSum(1.001*sMin, 0.999*sMax, 10, &aux, integratedCrossSectionKlevanskyIntegrand_ds, alternative);
+    Integration1DimNewtonCotes trapezoidalSum(1.001*sMin, 0.999*sMax, 10, &aux, integratedCrossSectionKlevanskyIntegrand_ds, alternativeCompositeSimpson);
     double normalization_ds = trapezoidalSum.evaluate();
     aux.setNormalizationRiemannSum_ds(normalization_ds);
 
@@ -1434,7 +1434,7 @@ double integratedCrossSectionProcess12To34Zhuang(SU3NJL3DCutoffParameters parame
 									  		 		   process,
 									  		 		   integralPrecision_ds);
 
-    CompositeTrapezoidalSum trapezoidalSum(1.001*sMin, 0.999*sMax, 10, &aux, integratedCrossSectionZhuangIntegrand_ds, alternative);
+    Integration1DimNewtonCotes trapezoidalSum(1.001*sMin, 0.999*sMax, 10, &aux, integratedCrossSectionZhuangIntegrand_ds, alternativeCompositeSimpson);
     double normalization_ds = trapezoidalSum.evaluate();
     aux.setNormalizationRiemannSum_ds(normalization_ds);
 

@@ -29,52 +29,15 @@
 using namespace std;
 
 
-double integrandQAWC2(double x, void *parameters)
-{   
-    (void)(parameters); /* avoid unused parameter warning */
-
-    double integrand = 1.0;
-
-    return integrand;
-}
-
-
-double sing = 2.0;
-
-double integrandRiemannCPV2(double x, void *parameters)
-{   
-    (void)(parameters); /* avoid unused parameter warning */
-
-    double integrand = ( 1 )/( x - sing );
-
-    return integrand;
-}
-
-
 int main(void)
 {	
 	//START COUNTING TIME
     double start_s = omp_get_wtime();
 
 
-    double xMin = -5.0;
-    double xMax = 5.0;
-    sing = 4;
+    testIntegration1DimGSL();
+    testIntegration1DimNewtonCotes();
 
-
-    TestIntegrandParameters aux2("integrandTestCauchy2");
-    Integration1DimGSLQAWCQAGS integralQAWCQAGS(xMin, xMax, sing, &aux2, integrandQAWC2, 1E-8, 1E-8, 1000);
-    double resultQAWCQAGS = integralQAWCQAGS.evaluate();
-    cout << "resultQAWCQAGS: " << resultQAWCQAGS << "\n";
-    cout << "trapezoidalSum: " << integralQAWCQAGS.evaluateCompositeTrapezoidalSum(10, alternative) << "\n";
-    //cout << 100*fabs((resultQAWCQAGS - log(2.0))/log(2.0)) << "\n";
-
-
-    TestIntegrandParameters aux3("integrandRiemannCPV");
-    CompositeTrapezoidalSum trapezoidalSumCPV(xMin, xMax, 10, &aux3, integrandRiemannCPV2, alternative);
-    double resultTrapezoidalSumCPV = trapezoidalSumCPV.evaluateAvoidingSingularPoint(sing);
-    cout << "resultTrapezoidalSumCPV: " << resultTrapezoidalSumCPV << "\n";
-    //cout << 100*fabs((resultTrapezoidalSumCPV - log(2.0))/log(2.0)) << "\n";
 
 /*
     //parameter set A (Klevansky parameter set)

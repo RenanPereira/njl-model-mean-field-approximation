@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void CompositeTrapezoidalSum::setVariables(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), TrapezoidalRule ruleAux)
+void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), NewtonCotesRule ruleAux)
 {
     lowerBound = lowerBoundAux;
     upperBound = upperBoundAux;
@@ -18,39 +18,39 @@ void CompositeTrapezoidalSum::setVariables(double lowerBoundAux, double upperBou
     rule = ruleAux;
 
     //check if number of partitions are appropriate for the chosen rule
-    if ( rule==normal )
+    if ( rule==trapezoidal )
     {
         if ( numberOfPartitions<2 )
         {
-            cout << "CompositeTrapezoidalSum: to use the normal trapezoidal rule, at least 2 partitions are necessary!\n";
+            cout << "Integration1DimNewtonCotes: to use the trapezoidal rule, at least 2 partitions are necessary!\n";
             abort();
         }
     }
 
-    if ( rule==alternative )
+    if ( rule==alternativeCompositeSimpson )
     {
         if ( numberOfPartitions<8 )
         {
-            cout << "CompositeTrapezoidalSum: to use the alternative trapezoidal rule, at least 8 partitions are necessary!\n";
+            cout << "Integration1DimNewtonCotes: to use the alternative Composite Simpson rule, at least 8 partitions are necessary!\n";
             abort();
         }
     }
 }
 
 
-CompositeTrapezoidalSum::CompositeTrapezoidalSum(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*))
+Integration1DimNewtonCotes::Integration1DimNewtonCotes(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*))
 {
-    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, normal);
+    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, trapezoidal);
 }
 
 
-CompositeTrapezoidalSum::CompositeTrapezoidalSum(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), TrapezoidalRule ruleAux)
+Integration1DimNewtonCotes::Integration1DimNewtonCotes(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), NewtonCotesRule ruleAux)
 {
     setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, ruleAux);
 }
 
 
-double CompositeTrapezoidalSum::evaluateNormal()
+double Integration1DimNewtonCotes::evaluateTrapezoidal()
 {   
     
     double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
@@ -67,7 +67,7 @@ double CompositeTrapezoidalSum::evaluateNormal()
 }
 
 
-double CompositeTrapezoidalSum::evaluateAlternative()
+double Integration1DimNewtonCotes::evaluateAlternativeCompositeSimpson()
 {   
     double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
     double area = 0.0;
@@ -76,15 +76,15 @@ double CompositeTrapezoidalSum::evaluateAlternative()
         area = area + integrand(lowerBound + i*dx, integrandParameters);
     }
 
-    area = ( dx/(48.0) )*( + 17.0*integrand(lowerBound + 0*dx, integrandParameters)
-                           + 59.0*integrand(lowerBound + 1*dx, integrandParameters)
-                           + 43.0*integrand(lowerBound + 2*dx, integrandParameters)
-                           + 49.0*integrand(lowerBound + 3*dx, integrandParameters)
+    area = ( dx/(48.0) )*( + 17.0*integrand(lowerBound + 0.0*dx, integrandParameters)
+                           + 59.0*integrand(lowerBound + 1.0*dx, integrandParameters)
+                           + 43.0*integrand(lowerBound + 2.0*dx, integrandParameters)
+                           + 49.0*integrand(lowerBound + 3.0*dx, integrandParameters)
                            + 48.0*area
-                           + 49.0*integrand(upperBound - 3*dx, integrandParameters)
-                           + 43.0*integrand(upperBound - 2*dx, integrandParameters)
-                           + 59.0*integrand(upperBound - 1*dx, integrandParameters)
-                           + 17.0*integrand(upperBound - 0*dx, integrandParameters)
+                           + 49.0*integrand(upperBound - 3.0*dx, integrandParameters)
+                           + 43.0*integrand(upperBound - 2.0*dx, integrandParameters)
+                           + 59.0*integrand(upperBound - 1.0*dx, integrandParameters)
+                           + 17.0*integrand(upperBound - 0.0*dx, integrandParameters)
                          );
     result = area;
 
@@ -92,24 +92,24 @@ double CompositeTrapezoidalSum::evaluateAlternative()
 }
 
 
-double CompositeTrapezoidalSum::evaluate()
+double Integration1DimNewtonCotes::evaluate()
 {   
     double area = 0.0;
 
-    if ( rule==normal )
+    if ( rule==trapezoidal )
     {
-        area = evaluateNormal();
+        area = evaluateTrapezoidal();
     }
-    else if ( rule==alternative )
+    else if ( rule==alternativeCompositeSimpson )
     {
-        area = evaluateAlternative();
+        area = evaluateAlternativeCompositeSimpson();
     }
 
     return area;
 }
 
 
-double CompositeTrapezoidalSum::evaluateAvoidingSingularPoint(double singularity)
+double Integration1DimNewtonCotes::evaluateAvoidingSingularPoint(double singularity)
 { 
 
     double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
@@ -135,26 +135,26 @@ double CompositeTrapezoidalSum::evaluateAvoidingSingularPoint(double singularity
 
     if ( fabs(b-singularity)<fabs(a-singularity) )
     {
-        CompositeTrapezoidalSum LowRiemannSum(a, singularity-delta - fabs(b - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
+        Integration1DimNewtonCotes LowRiemannSum(a, singularity-delta - fabs(b - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
         area = area + LowRiemannSum.evaluate();
     
-        CompositeTrapezoidalSum MiddleRiemannSum2(singularity-delta - fabs(b - (singularity+delta)), singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
+        Integration1DimNewtonCotes MiddleRiemannSum2(singularity-delta - fabs(b - (singularity+delta)), singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
         area = area + MiddleRiemannSum2.evaluate();
 
-        CompositeTrapezoidalSum UpperRiemannSum(singularity+delta, b, numberOfPartitions, integrandParameters, integrand, rule);
+        Integration1DimNewtonCotes UpperRiemannSum(singularity+delta, b, numberOfPartitions, integrandParameters, integrand, rule);
         area = area + UpperRiemannSum.evaluate();
 
         area = orientation*area;
     }
     else
     {
-        CompositeTrapezoidalSum LowRiemannSum(a, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
+        Integration1DimNewtonCotes LowRiemannSum(a, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
         area = area + LowRiemannSum.evaluate();
         
-        CompositeTrapezoidalSum MiddleRiemannSum2(singularity+delta, (singularity+delta) + fabs(a - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
+        Integration1DimNewtonCotes MiddleRiemannSum2(singularity+delta, (singularity+delta) + fabs(a - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
         area = area + MiddleRiemannSum2.evaluate();
 
-        CompositeTrapezoidalSum UpperRiemannSum((singularity+delta) + fabs(a - (singularity+delta)), b, numberOfPartitions, integrandParameters, integrand, rule);
+        Integration1DimNewtonCotes UpperRiemannSum((singularity+delta) + fabs(a - (singularity+delta)), b, numberOfPartitions, integrandParameters, integrand, rule);
         area = area + UpperRiemannSum.evaluate();
     }
     
@@ -166,10 +166,10 @@ double CompositeTrapezoidalSum::evaluateAvoidingSingularPoint(double singularity
 
     double area = 0.0;
     
-    CompositeTrapezoidalSum LowRiemannSum(lowerBound, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
+    Integration1DimNewtonCotes LowRiemannSum(lowerBound, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
     area = area + LowRiemannSum.evaluate();
     
-    CompositeTrapezoidalSum UpperRiemannSum(singularity+delta, upperBound, numberOfPartitions, integrandParameters, integrand, rule);
+    Integration1DimNewtonCotes UpperRiemannSum(singularity+delta, upperBound, numberOfPartitions, integrandParameters, integrand, rule);
     area = area + UpperRiemannSum.evaluate();
     
     return area;
@@ -733,9 +733,9 @@ double Integration1DimGSLQAWCQAGS::evaluate()
 }
 
 
-double Integration1DimGSLQAWCQAGS::evaluateCompositeTrapezoidalSum(int numberOfPartitions, TrapezoidalRule rule)
+double Integration1DimGSLQAWCQAGS::evaluateIntegration1DimNewtonCotes(int numberOfPartitions, NewtonCotesRule rule)
 {   
-    CompositeTrapezoidalSum trapezoidalSum(lowerBound, upperBound, numberOfPartitions, &numeratorParameters, changeQAWCIntegrandToQAGSIntegrand, rule);
+    Integration1DimNewtonCotes trapezoidalSum(lowerBound, upperBound, numberOfPartitions, &numeratorParameters, changeQAWCIntegrandToQAGSIntegrand, rule);
 
     if ( isSingularityInsideTheIntegrationInterval()==true && 
          fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
@@ -757,7 +757,7 @@ double Integration1DimGSLQAWCQAGS::evaluateCompositeTrapezoidalSum(int numberOfP
 double integrandTest(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
-    double integrand = (1.0/3.0)*pow(x,2);
+    double integrand = pow(x,2);
 
     return integrand;
 }
@@ -768,7 +768,7 @@ double integrandTestCauchy(double x, void *parameters)
     (void)(parameters); /* avoid unused parameter warning */
     x = x; /* avoid unused parameter warning */
 
-    double integrand = (-1.0/log(2.0))*( 1.0 );
+    double integrand = ( 1.0 );
 
     return integrand;
 }
@@ -778,7 +778,7 @@ double integrandTestQAGP(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
-    double integrand = -0.25*(1.0/sqrt(x))*log(x);
+    double integrand = (1.0/sqrt(x))*log(x);
 
     return integrand;
 }
@@ -788,7 +788,7 @@ double integrandTestQAGI(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
-    double integrand = ( sqrt(1.0/M_PI) )*exp( -pow(x,2) );
+    double integrand = exp( -pow(x,2) );
 
     return integrand;
 }
@@ -798,7 +798,7 @@ double integrandRiemannCPV(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
-    double integrand = (-1.0/log(2.0))*( 1.0 )/( x-1.0 );
+    double integrand = ( 1.0 )/( x-1.0 );
 
     return integrand;
 }
@@ -808,7 +808,7 @@ double integrandTestQAWS(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
-    double integrand = ( 5.0/( 8.0*sqrt(3) ) )*pow(x,2);
+    double integrand = pow(x,2);
 
     return integrand;
 }
@@ -819,71 +819,107 @@ void testIntegration1DimGSL()
     cout << "Testing several GSL integration methods with different integrands.\n";
     cout << "All the integrals are normalized to 1.\n";
 
+    double normalization = 0.0;
+
     TestIntegrandParameters aux1("integrandTest");
     Integration1DimGSLQNG integralQNG(-1.0, +2.0, &aux1, integrandTest, 1E-8, 1E-8);
-    double resultQNG = integralQNG.evaluate();
+    normalization = (1.0/3.0);
+    double resultQNG = normalization*integralQNG.evaluate();
     cout << "resultQNG: " << resultQNG << "\n";
 
 
     Integration1DimGSLQAG integralQAG(-1.0, +2.0, &aux1, integrandTest, 1E-8, 1E-8, 1000, 1);
-    double resultQAG = integralQAG.evaluate();
+    normalization = (1.0/3.0);
+    double resultQAG = normalization*integralQAG.evaluate();
     cout << "resultQAG: " << resultQAG << "\n";
 
 
     Integration1DimGSLQAGS integralQAGS(-1.0, +2.0, &aux1, integrandTest, 1E-8, 1E-8, 1000);
-    double resultQAGS = integralQAGS.evaluate();
+    normalization = (1.0/3.0);
+    double resultQAGS = normalization*integralQAGS.evaluate();
     cout << "resultQAGS: " << resultQAGS << "\n";
 
 
     TestIntegrandParameters aux2("integrandTestCauchy");
     Integration1DimGSLQAWC integralQAWC(-1.0, +2.0, 1.0, &aux2, integrandTestCauchy, 1E-8, 1E-8, 1000);
-    double resultQAWC = integralQAWC.evaluate();
+    normalization = (-1.0/log(2.0));
+    double resultQAWC = normalization*integralQAWC.evaluate();
     cout << "resultQAWC: " << resultQAWC << "\n";
 
 
     TestIntegrandParameters aux3("integrandTestQAGP");
     Integration1DimGSLQAGP integralQAGP(0, +1.0, {0.0}, &aux3, integrandTestQAGP, 1E-8, 1E-8, 1000);
-    double resultQAGP = integralQAGP.evaluate();
+    normalization = -0.25;
+    double resultQAGP = normalization*integralQAGP.evaluate();
     cout << "resultQAGP: " << resultQAGP << "\n";
 
     Integration1DimGSLCQUAD integralCQUAD(0, +1.0, &aux3, integrandTestQAGP, 1E-8, 1E-8, 1000);
-    double resultCQUAD = integralCQUAD.evaluate();
+    normalization = -0.25;
+    double resultCQUAD = normalization*integralCQUAD.evaluate();
     cout << "resultCQUAD: " << resultCQUAD << "\n";
 
 
     TestIntegrandParameters aux4("integrandTestQAGI");
     Integration1DimGSLQAGI integralQAGI(&aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
-    double resultQAGI = integralQAGI.evaluate();
+    normalization = ( sqrt(1.0/M_PI) );
+    double resultQAGI = normalization*integralQAGI.evaluate();
     cout << "resultQAGI: " << resultQAGI << "\n";
 
     Integration1DimGSLQAGIU integralQAGIU(0, &aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
-    double resultQAGIU = 2*integralQAGIU.evaluate();
+    normalization = ( sqrt(1.0/M_PI) );
+    double resultQAGIU = normalization*2*integralQAGIU.evaluate();
     cout << "resultQAGIU: " << resultQAGIU << "\n";
 
     Integration1DimGSLQAGIL integralQAGIL(0, &aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
-    double resultQAGIL = 2*integralQAGIL.evaluate();
+    normalization = ( sqrt(1.0/M_PI) );
+    double resultQAGIL = normalization*2*integralQAGIL.evaluate();
     cout << "resultQAGIL: " << resultQAGIL << "\n";
 
     TestIntegrandParameters aux5("integrandTestQAWS");
     Integration1DimGSLQAWS integralQAWS(-1.0, +2.0, &aux1, integrandTestQAWS, 1E-8, 1E-8, 1000, -0.5, 0.0, 0, 0);
-    double resultQAWS = integralQAWS.evaluate();
+    normalization = ( 5.0/( 8.0*sqrt(3) ) );
+    double resultQAWS = normalization*integralQAWS.evaluate();
     cout << "resultQAWS: " << resultQAWS << "\n";
+
+
+    TestIntegrandParameters aux6("integrandTestQAWCQAGS");
+    Integration1DimGSLQAWCQAGS integralQAWCQAGSIn(-5.0, 5.0, 4.0, &aux6, integrandTestCauchy, 1E-8, 1E-8, 1000);
+    normalization = (-1.0/log(9.0));
+    
+    double resultQAWCQAGSIn = normalization*integralQAWCQAGSIn.evaluate();
+    cout << "resultQAWCQAGSIn: " << resultQAWCQAGSIn << "\n";
+
+    double compositeSumQAWCQAGSIn = normalization*integralQAWCQAGSIn.evaluateIntegration1DimNewtonCotes(10, alternativeCompositeSimpson);
+    cout << "compositeSumQAWCQAGSIn: " << compositeSumQAWCQAGSIn << "\n";
+
+    Integration1DimGSLQAWCQAGS integralQAWCQAGSOut(-5.0, 5.0, 8.0, &aux6, integrandTestCauchy, 1E-8, 1E-8, 1000);
+    normalization = (-1.0/log(13.0/3.0));
+    
+    double resultQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluate();
+    cout << "resultQAWCQAGSOut: " << resultQAWCQAGSOut << "\n";
+
+    double compositeSumQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluateIntegration1DimNewtonCotes(10, alternativeCompositeSimpson);
+    cout << "compositeSumQAWCQAGSOut: " << compositeSumQAWCQAGSOut << "\n";
 }
 
 
-void testCompositeTrapezoidalSum()
+void testIntegration1DimNewtonCotes()
 {   
     cout << "Testing several Composite Trapezoidal Sum integration methods with different integrands.\n";
     cout << "All the integrals are normalized to 1.\n";
 
+    double normalization = 0.0;
+
     TestIntegrandParameters aux1("integrandTest");
-    CompositeTrapezoidalSum trapezoidalSum(-1.0, +2.0, 100, &aux1, integrandTest);
-    double resultTrapezoidalSum = trapezoidalSum.evaluate();
+    Integration1DimNewtonCotes trapezoidalSum(-1.0, +2.0, 100, &aux1, integrandTest);
+    normalization = (1.0/3.0);
+    double resultTrapezoidalSum = normalization*trapezoidalSum.evaluate();
     cout << "resultTrapezoidalSum: " << resultTrapezoidalSum << "\n";
 
     TestIntegrandParameters aux2("integrandRiemannCPV");
-    CompositeTrapezoidalSum trapezoidalSumCPV(-1.0, 2.0, 100, &aux2, integrandRiemannCPV, alternative);
-    double resultTrapezoidalSumCPV = trapezoidalSumCPV.evaluateAvoidingSingularPoint(1.0);
+    Integration1DimNewtonCotes trapezoidalSumCPV(-1.0, 2.0, 100, &aux2, integrandRiemannCPV, alternativeCompositeSimpson);
+    normalization = (-1.0/log(2.0));
+    double resultTrapezoidalSumCPV = normalization*trapezoidalSumCPV.evaluateAvoidingSingularPoint(1.0);
     cout << "resultTrapezoidalSumCPV: " << resultTrapezoidalSumCPV << "\n";
 }
 

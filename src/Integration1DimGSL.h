@@ -24,10 +24,10 @@ public:
 };
 
 
-enum TrapezoidalRule { normal, alternative };
+enum NewtonCotesRule { trapezoidal, alternativeCompositeSimpson };
 
 
-class CompositeTrapezoidalSum
+class Integration1DimNewtonCotes
 {	
 public:
 	double lowerBound;
@@ -37,19 +37,19 @@ public:
 	GeneralIntegrandParameters* integrandParameters;
 	double (* integrand)(double, void * parameters);
 
-	TrapezoidalRule rule;
+	NewtonCotesRule rule;
 	
 	double result;
 
 public:
-	CompositeTrapezoidalSum(){};
-	CompositeTrapezoidalSum(double , double , int , GeneralIntegrandParameters* , double (double, void*) );
-	CompositeTrapezoidalSum(double , double , int , GeneralIntegrandParameters* , double (double, void*) , TrapezoidalRule );
+	Integration1DimNewtonCotes(){};
+	Integration1DimNewtonCotes(double , double , int , GeneralIntegrandParameters* , double (double, void*) );
+	Integration1DimNewtonCotes(double , double , int , GeneralIntegrandParameters* , double (double, void*) , NewtonCotesRule );
 
-	void setVariables(double , double , int , GeneralIntegrandParameters* , double (double, void*), TrapezoidalRule );
+	void setVariables(double , double , int , GeneralIntegrandParameters* , double (double, void*), NewtonCotesRule );
 
-	double evaluateNormal();
-	double evaluateAlternative();
+	double evaluateTrapezoidal();
+	double evaluateAlternativeCompositeSimpson();
 	double evaluate();
 	double evaluateAvoidingSingularPoint(double singularity);
 };
@@ -334,7 +334,7 @@ public:
 
 	double evaluate() override;
 
-	double evaluateCompositeTrapezoidalSum(int , TrapezoidalRule );
+	double evaluateIntegration1DimNewtonCotes(int , NewtonCotesRule );
 };
 
 
@@ -371,7 +371,7 @@ double integrandTestQAWS(double , void *);
 
 void testIntegration1DimGSL();
 
-void testCompositeTrapezoidalSum();
+void testIntegration1DimNewtonCotes();
 
 
 #endif
