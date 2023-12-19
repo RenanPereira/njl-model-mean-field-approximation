@@ -2,60 +2,11 @@
 #define INTEGRATION1DIMGSL_H
 
 
+#include "Integration1DimNewtonCotes.h"
 #include <gsl/gsl_integration.h>
 #include <vector>
 
 using namespace std;
-
-
-class GeneralIntegrandParameters
-{
-public:
-    virtual void printIntegrandVariables()
-    {
-        cout << "The method 'printIntegrandVariables' is using the default method from the class GeneralIntegrandParameters!" << "\n";
-    }
-
-    virtual void behaviourAfterFailedIntegration()
-    { 
-    	cout << "Using the default behaviour after a failed integration: abort!" << "\n";
-    	abort(); 
-    };
-};
-
-
-enum NewtonCotesRule { trapezoidal, alternativeCompositeSimpson };
-
-
-class Integration1DimNewtonCotes
-{	
-public:
-	double lowerBound;
-	double upperBound;
-	int numberOfPartitions;
-
-	GeneralIntegrandParameters* integrandParameters;
-	double (* integrand)(double, void * parameters);
-
-	NewtonCotesRule rule;
-	
-	double result;
-
-public:
-	Integration1DimNewtonCotes(){};
-	Integration1DimNewtonCotes(double , double , int , GeneralIntegrandParameters* , double (double, void*) );
-	Integration1DimNewtonCotes(double , double , int , GeneralIntegrandParameters* , double (double, void*) , NewtonCotesRule );
-
-	void setVariables(double , double , int , GeneralIntegrandParameters* , double (double, void*), NewtonCotesRule );
-
-	double evaluateTrapezoidal();
-	double evaluateAlternativeCompositeSimpson();
-	double evaluate();
-	double evaluateAvoidingSingularPoint(double singularity);
-};
-
-
-////////////////////////////////////////////////////////////////////////////////////////
 
 
 class Integration1DimGSL
@@ -337,41 +288,17 @@ public:
 	double evaluateIntegration1DimNewtonCotes(int , NewtonCotesRule );
 };
 
+double integrandTestGSL(double , void *);
 
-////////////////////////////////////////////////////////////////////////////////////////
+double integrandTestGSLCauchy(double , void *);
 
+double integrandTestGSLQAGP(double , void *);
 
-class TestIntegrandParameters : public GeneralIntegrandParameters
-{
-public:
-    string integralID;
+double integrandTestGSLQAGI(double , void *);
 
-public:
-    TestIntegrandParameters(){};
-    TestIntegrandParameters(string integralIDAux){ integralID = integralIDAux; };
-
-    void printIntegrandVariables() override
-    {   
-        cout << integralID << "\n";
-    }
-    
-};
-
-double integrandTest(double , void *);
-
-double integrandTestCauchy(double , void *);
-
-double integrandTestQAGP(double , void *);
-
-double integrandTestQAGI(double , void *);
-
-double integrandRiemannCPV(double , void *);
-
-double integrandTestQAWS(double , void *);
+double integrandTestGSLQAWS(double , void *);
 
 void testIntegration1DimGSL();
-
-void testIntegration1DimNewtonCotes();
 
 
 #endif

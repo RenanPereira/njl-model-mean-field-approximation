@@ -4,8 +4,8 @@ SHELL := /bin/bash
 CXX = g++ -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++11 -fopenmp
 
 
-DEPS = src/rootSolverGSL.h src/OneVariableFunction.h src/Interpolation1DimGSL.h src/Integration1DimGSL.h src/ComplexSquareMatrixGSL.h \
-	 src/UnitaryGroup3Dimensions.h \
+DEPS = src/OneVariableFunction.h src/Integration1DimNewtonCotes.h src/UnitaryGroup3Dimensions.h \
+       src/rootSolverGSL.h src/Interpolation1DimGSL.h src/Integration1DimGSL.h src/ComplexSquareMatrixGSL.h \
        src/generalPhysicsAndMath.h src/OneFermionLineIntegral.h src/TwoFermionLineIntegral.h \
        src/NJLDimensionfulCouplings.h \
        src/SU3NJL3DCutoff.h \
@@ -18,8 +18,8 @@ DEPS = src/rootSolverGSL.h src/OneVariableFunction.h src/Interpolation1DimGSL.h 
 
 
 OBJ = obj/main.o \
-      obj/rootSolverGSL.o obj/OneVariableFunction.o obj/Interpolation1DimGSL.o obj/Integration1DimGSL.o obj/ComplexSquareMatrixGSL.o \
-      obj/UnitaryGroup3Dimensions.o \
+      obj/OneVariableFunction.o  obj/Integration1DimNewtonCotes.o obj/UnitaryGroup3Dimensions.o \
+      obj/rootSolverGSL.o obj/Interpolation1DimGSL.o obj/Integration1DimGSL.o obj/ComplexSquareMatrixGSL.o \
       obj/generalPhysicsAndMath.o obj/OneFermionLineIntegral.o obj/TwoFermionLineIntegral.o \
       obj/NJLDimensionfulCouplings.o \
       obj/SU3NJL3DCutoff.o \

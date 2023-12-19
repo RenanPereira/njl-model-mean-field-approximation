@@ -70,3 +70,4 @@ obj/SU3NJL3DCutoffMesonPropagators.o
 obj/SU3NJL3DCutoffVacuum.o
 obj/TwoFermionLineIntegral.o
 obj/UnitaryGroup3Dimensions.o
+obj/Integration1DimNewtonCotes.o

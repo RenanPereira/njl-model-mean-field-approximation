@@ -6,180 +6,6 @@
 using namespace std;
 
 
-void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), NewtonCotesRule ruleAux)
-{
-    lowerBound = lowerBoundAux;
-    upperBound = upperBoundAux;
-    numberOfPartitions = numberOfPartitionsAux;
-
-    integrandParameters = integrandParametersAux;
-    integrand = integrandAux;
-
-    rule = ruleAux;
-
-    //check if number of partitions are appropriate for the chosen rule
-    if ( rule==trapezoidal )
-    {
-        if ( numberOfPartitions<2 )
-        {
-            cout << "Integration1DimNewtonCotes: to use the trapezoidal rule, at least 2 partitions are necessary!\n";
-            abort();
-        }
-    }
-
-    if ( rule==alternativeCompositeSimpson )
-    {
-        if ( numberOfPartitions<8 )
-        {
-            cout << "Integration1DimNewtonCotes: to use the alternative Composite Simpson rule, at least 8 partitions are necessary!\n";
-            abort();
-        }
-    }
-}
-
-
-Integration1DimNewtonCotes::Integration1DimNewtonCotes(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*))
-{
-    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, trapezoidal);
-}
-
-
-Integration1DimNewtonCotes::Integration1DimNewtonCotes(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), NewtonCotesRule ruleAux)
-{
-    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, ruleAux);
-}
-
-
-double Integration1DimNewtonCotes::evaluateTrapezoidal()
-{   
-    
-    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
-    double area = 0.0;
-    for (int i = 1; i < numberOfPartitions-1; ++i)
-    {   
-        area = area + integrand(lowerBound + i*dx, integrandParameters);
-    }
-
-    area = dx*( area + 0.5*integrand(lowerBound, integrandParameters) + 0.5*integrand(upperBound, integrandParameters) );
-    result = area;
-    
-    return area;
-}
-
-
-double Integration1DimNewtonCotes::evaluateAlternativeCompositeSimpson()
-{   
-    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
-    double area = 0.0;
-    for (int i = 4; i < numberOfPartitions-4; ++i)
-    {   
-        area = area + integrand(lowerBound + i*dx, integrandParameters);
-    }
-
-    area = ( dx/(48.0) )*( + 17.0*integrand(lowerBound + 0.0*dx, integrandParameters)
-                           + 59.0*integrand(lowerBound + 1.0*dx, integrandParameters)
-                           + 43.0*integrand(lowerBound + 2.0*dx, integrandParameters)
-                           + 49.0*integrand(lowerBound + 3.0*dx, integrandParameters)
-                           + 48.0*area
-                           + 49.0*integrand(upperBound - 3.0*dx, integrandParameters)
-                           + 43.0*integrand(upperBound - 2.0*dx, integrandParameters)
-                           + 59.0*integrand(upperBound - 1.0*dx, integrandParameters)
-                           + 17.0*integrand(upperBound - 0.0*dx, integrandParameters)
-                         );
-    result = area;
-
-    return area;
-}
-
-
-double Integration1DimNewtonCotes::evaluate()
-{   
-    double area = 0.0;
-
-    if ( rule==trapezoidal )
-    {
-        area = evaluateTrapezoidal();
-    }
-    else if ( rule==alternativeCompositeSimpson )
-    {
-        area = evaluateAlternativeCompositeSimpson();
-    }
-
-    return area;
-}
-
-
-double Integration1DimNewtonCotes::evaluateAvoidingSingularPoint(double singularity)
-{ 
-
-    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
-    double delta = 2*dx;
-
-    double area = 0.0;
-
-    double a = 0;
-    double b = 0;
-    double orientation = +1;
-    if ( lowerBound<upperBound )
-    {
-        a = lowerBound;
-        b = upperBound;
-        orientation = +1;
-    }
-    else
-    {
-        a = upperBound;
-        b = lowerBound;
-        orientation = -1;   
-    }
-
-    if ( fabs(b-singularity)<fabs(a-singularity) )
-    {
-        Integration1DimNewtonCotes LowRiemannSum(a, singularity-delta - fabs(b - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + LowRiemannSum.evaluate();
-    
-        Integration1DimNewtonCotes MiddleRiemannSum2(singularity-delta - fabs(b - (singularity+delta)), singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + MiddleRiemannSum2.evaluate();
-
-        Integration1DimNewtonCotes UpperRiemannSum(singularity+delta, b, numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + UpperRiemannSum.evaluate();
-
-        area = orientation*area;
-    }
-    else
-    {
-        Integration1DimNewtonCotes LowRiemannSum(a, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + LowRiemannSum.evaluate();
-        
-        Integration1DimNewtonCotes MiddleRiemannSum2(singularity+delta, (singularity+delta) + fabs(a - (singularity+delta)), numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + MiddleRiemannSum2.evaluate();
-
-        Integration1DimNewtonCotes UpperRiemannSum((singularity+delta) + fabs(a - (singularity+delta)), b, numberOfPartitions, integrandParameters, integrand, rule);
-        area = area + UpperRiemannSum.evaluate();
-    }
-    
-    return area;
-
-/*
-    double dx = (upperBound-lowerBound)/(numberOfPartitions-1);
-    double delta = 2*dx;
-
-    double area = 0.0;
-    
-    Integration1DimNewtonCotes LowRiemannSum(lowerBound, singularity-delta, numberOfPartitions, integrandParameters, integrand, rule);
-    area = area + LowRiemannSum.evaluate();
-    
-    Integration1DimNewtonCotes UpperRiemannSum(singularity+delta, upperBound, numberOfPartitions, integrandParameters, integrand, rule);
-    area = area + UpperRiemannSum.evaluate();
-    
-    return area;
-*/
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-
 void Integration1DimGSL::setVariables(double lowerBoundAux, double upperBoundAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux)
 {
     lowerBound = lowerBoundAux;
@@ -751,10 +577,7 @@ double Integration1DimGSLQAWCQAGS::evaluateIntegration1DimNewtonCotes(int number
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////
-
-
-double integrandTest(double x, void *parameters)
+double integrandTestGSL(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
     double integrand = pow(x,2);
@@ -763,7 +586,7 @@ double integrandTest(double x, void *parameters)
 }
 
 
-double integrandTestCauchy(double x, void *parameters)
+double integrandTestGSLCauchy(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
     x = x; /* avoid unused parameter warning */
@@ -774,7 +597,7 @@ double integrandTestCauchy(double x, void *parameters)
 }
 
 
-double integrandTestQAGP(double x, void *parameters)
+double integrandTestGSLQAGP(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
@@ -784,7 +607,7 @@ double integrandTestQAGP(double x, void *parameters)
 }
 
 
-double integrandTestQAGI(double x, void *parameters)
+double integrandTestGSLQAGI(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
@@ -794,17 +617,7 @@ double integrandTestQAGI(double x, void *parameters)
 }
 
 
-double integrandRiemannCPV(double x, void *parameters)
-{   
-    (void)(parameters); /* avoid unused parameter warning */
-
-    double integrand = ( 1.0 )/( x-1.0 );
-
-    return integrand;
-}
-
-
-double integrandTestQAWS(double x, void *parameters)
+double integrandTestGSLQAWS(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
@@ -821,69 +634,69 @@ void testIntegration1DimGSL()
 
     double normalization = 0.0;
 
-    TestIntegrandParameters aux1("integrandTest");
-    Integration1DimGSLQNG integralQNG(-1.0, +2.0, &aux1, integrandTest, 1E-8, 1E-8);
+    TestIntegrandParameters aux1("integrandTestGSL");
+    Integration1DimGSLQNG integralQNG(-1.0, +2.0, &aux1, integrandTestGSL, 1E-8, 1E-8);
     normalization = (1.0/3.0);
     double resultQNG = normalization*integralQNG.evaluate();
     cout << "resultQNG: " << resultQNG << "\n";
 
 
-    Integration1DimGSLQAG integralQAG(-1.0, +2.0, &aux1, integrandTest, 1E-8, 1E-8, 1000, 1);
+    Integration1DimGSLQAG integralQAG(-1.0, +2.0, &aux1, integrandTestGSL, 1E-8, 1E-8, 1000, 1);
     normalization = (1.0/3.0);
     double resultQAG = normalization*integralQAG.evaluate();
     cout << "resultQAG: " << resultQAG << "\n";
 
 
-    Integration1DimGSLQAGS integralQAGS(-1.0, +2.0, &aux1, integrandTest, 1E-8, 1E-8, 1000);
+    Integration1DimGSLQAGS integralQAGS(-1.0, +2.0, &aux1, integrandTestGSL, 1E-8, 1E-8, 1000);
     normalization = (1.0/3.0);
     double resultQAGS = normalization*integralQAGS.evaluate();
     cout << "resultQAGS: " << resultQAGS << "\n";
 
 
-    TestIntegrandParameters aux2("integrandTestCauchy");
-    Integration1DimGSLQAWC integralQAWC(-1.0, +2.0, 1.0, &aux2, integrandTestCauchy, 1E-8, 1E-8, 1000);
+    TestIntegrandParameters aux2("integrandTestGSLCauchy");
+    Integration1DimGSLQAWC integralQAWC(-1.0, +2.0, 1.0, &aux2, integrandTestGSLCauchy, 1E-8, 1E-8, 1000);
     normalization = (-1.0/log(2.0));
     double resultQAWC = normalization*integralQAWC.evaluate();
     cout << "resultQAWC: " << resultQAWC << "\n";
 
 
-    TestIntegrandParameters aux3("integrandTestQAGP");
-    Integration1DimGSLQAGP integralQAGP(0, +1.0, {0.0}, &aux3, integrandTestQAGP, 1E-8, 1E-8, 1000);
+    TestIntegrandParameters aux3("integrandTestGSLQAGP");
+    Integration1DimGSLQAGP integralQAGP(0, +1.0, {0.0}, &aux3, integrandTestGSLQAGP, 1E-8, 1E-8, 1000);
     normalization = -0.25;
     double resultQAGP = normalization*integralQAGP.evaluate();
     cout << "resultQAGP: " << resultQAGP << "\n";
 
-    Integration1DimGSLCQUAD integralCQUAD(0, +1.0, &aux3, integrandTestQAGP, 1E-8, 1E-8, 1000);
+    Integration1DimGSLCQUAD integralCQUAD(0, +1.0, &aux3, integrandTestGSLQAGP, 1E-8, 1E-8, 1000);
     normalization = -0.25;
     double resultCQUAD = normalization*integralCQUAD.evaluate();
     cout << "resultCQUAD: " << resultCQUAD << "\n";
 
 
-    TestIntegrandParameters aux4("integrandTestQAGI");
-    Integration1DimGSLQAGI integralQAGI(&aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
+    TestIntegrandParameters aux4("integrandTestGSLQAGI");
+    Integration1DimGSLQAGI integralQAGI(&aux4, integrandTestGSLQAGI, 1E-8, 1E-8, 1000);
     normalization = ( sqrt(1.0/M_PI) );
     double resultQAGI = normalization*integralQAGI.evaluate();
     cout << "resultQAGI: " << resultQAGI << "\n";
 
-    Integration1DimGSLQAGIU integralQAGIU(0, &aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
+    Integration1DimGSLQAGIU integralQAGIU(0, &aux4, integrandTestGSLQAGI, 1E-8, 1E-8, 1000);
     normalization = ( sqrt(1.0/M_PI) );
     double resultQAGIU = normalization*2*integralQAGIU.evaluate();
     cout << "resultQAGIU: " << resultQAGIU << "\n";
 
-    Integration1DimGSLQAGIL integralQAGIL(0, &aux4, integrandTestQAGI, 1E-8, 1E-8, 1000);
+    Integration1DimGSLQAGIL integralQAGIL(0, &aux4, integrandTestGSLQAGI, 1E-8, 1E-8, 1000);
     normalization = ( sqrt(1.0/M_PI) );
     double resultQAGIL = normalization*2*integralQAGIL.evaluate();
     cout << "resultQAGIL: " << resultQAGIL << "\n";
 
-    TestIntegrandParameters aux5("integrandTestQAWS");
-    Integration1DimGSLQAWS integralQAWS(-1.0, +2.0, &aux1, integrandTestQAWS, 1E-8, 1E-8, 1000, -0.5, 0.0, 0, 0);
+    TestIntegrandParameters aux5("integrandTestGSLQAWS");
+    Integration1DimGSLQAWS integralQAWS(-1.0, +2.0, &aux1, integrandTestGSLQAWS, 1E-8, 1E-8, 1000, -0.5, 0.0, 0, 0);
     normalization = ( 5.0/( 8.0*sqrt(3) ) );
     double resultQAWS = normalization*integralQAWS.evaluate();
     cout << "resultQAWS: " << resultQAWS << "\n";
 
 
-    TestIntegrandParameters aux6("integrandTestQAWCQAGS");
-    Integration1DimGSLQAWCQAGS integralQAWCQAGSIn(-5.0, 5.0, 4.0, &aux6, integrandTestCauchy, 1E-8, 1E-8, 1000);
+    TestIntegrandParameters aux6("integrandTestGSLQAWCQAGS");
+    Integration1DimGSLQAWCQAGS integralQAWCQAGSIn(-5.0, 5.0, 4.0, &aux6, integrandTestGSLCauchy, 1E-8, 1E-8, 1000);
     normalization = (-1.0/log(9.0));
     
     double resultQAWCQAGSIn = normalization*integralQAWCQAGSIn.evaluate();
@@ -892,35 +705,12 @@ void testIntegration1DimGSL()
     double compositeSumQAWCQAGSIn = normalization*integralQAWCQAGSIn.evaluateIntegration1DimNewtonCotes(10, alternativeCompositeSimpson);
     cout << "compositeSumQAWCQAGSIn: " << compositeSumQAWCQAGSIn << "\n";
 
-    Integration1DimGSLQAWCQAGS integralQAWCQAGSOut(-5.0, 5.0, 8.0, &aux6, integrandTestCauchy, 1E-8, 1E-8, 1000);
+    Integration1DimGSLQAWCQAGS integralQAWCQAGSOut(-5.0, 5.0, 8.0, &aux6, integrandTestGSLCauchy, 1E-8, 1E-8, 1000);
     normalization = (-1.0/log(13.0/3.0));
     
     double resultQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluate();
     cout << "resultQAWCQAGSOut: " << resultQAWCQAGSOut << "\n";
 
-    double compositeSumQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluateIntegration1DimNewtonCotes(10, alternativeCompositeSimpson);
-    cout << "compositeSumQAWCQAGSOut: " << compositeSumQAWCQAGSOut << "\n";
+    double newtonCotesSumQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluateIntegration1DimNewtonCotes(10, alternativeCompositeSimpson);
+    cout << "newtonCotesSumQAWCQAGSOut: " << newtonCotesSumQAWCQAGSOut << "\n";
 }
-
-
-void testIntegration1DimNewtonCotes()
-{   
-    cout << "Testing several Composite Trapezoidal Sum integration methods with different integrands.\n";
-    cout << "All the integrals are normalized to 1.\n";
-
-    double normalization = 0.0;
-
-    TestIntegrandParameters aux1("integrandTest");
-    Integration1DimNewtonCotes trapezoidalSum(-1.0, +2.0, 100, &aux1, integrandTest);
-    normalization = (1.0/3.0);
-    double resultTrapezoidalSum = normalization*trapezoidalSum.evaluate();
-    cout << "resultTrapezoidalSum: " << resultTrapezoidalSum << "\n";
-
-    TestIntegrandParameters aux2("integrandRiemannCPV");
-    Integration1DimNewtonCotes trapezoidalSumCPV(-1.0, 2.0, 100, &aux2, integrandRiemannCPV, alternativeCompositeSimpson);
-    normalization = (-1.0/log(2.0));
-    double resultTrapezoidalSumCPV = normalization*trapezoidalSumCPV.evaluateAvoidingSingularPoint(1.0);
-    cout << "resultTrapezoidalSumCPV: " << resultTrapezoidalSumCPV << "\n";
-}
-
-
