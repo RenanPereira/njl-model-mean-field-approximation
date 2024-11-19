@@ -9,7 +9,7 @@ INCLUDE_DIRS = -Isrc -Isrc/ini_file_parser
 DEPS = src/OneVariableFunction.h \
        src/Integration1DimNewtonCotes.h \
        src/UnitaryGroup3Dimensions.h \
-       src/rootSolverGSL.h \
+       src/root_solver_gsl.h \
        src/Interpolation1DimGSL.h \
        src/Integration1DimGSL.h \
        src/ComplexSquareMatrixGSL.h \
@@ -34,7 +34,7 @@ OBJ = obj/main.o \
       obj/OneVariableFunction.o \
       obj/Integration1DimNewtonCotes.o \
       obj/UnitaryGroup3Dimensions.o \
-      obj/rootSolverGSL.o \
+      obj/root_solver_gsl.o \
       obj/Interpolation1DimGSL.o \
       obj/Integration1DimGSL.o \
       obj/ComplexSquareMatrixGSL.o \

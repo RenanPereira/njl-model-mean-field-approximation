@@ -4,7 +4,7 @@
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
 #include "ComplexSquareMatrixGSL.h"
-#include "rootSolverGSL.h"
+#include "root_solver_gsl.h"
 #include "SU3NJL3DCutoff.h"
 
 

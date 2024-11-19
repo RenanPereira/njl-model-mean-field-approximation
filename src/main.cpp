@@ -7,7 +7,7 @@
 #include <vector>
 #include <omp.h>
 #include <algorithm>
-#include "rootSolverGSL.h"
+#include "root_solver_gsl.h"
 #include "Integration1DimGSL.h"
 #include "generalPhysicsAndMath.h"
 #include "OneFermionLineIntegral.h"
@@ -73,7 +73,7 @@ int main(void)
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setB");
 */
-/*
+
     //parameter set C
     double cutoff = 0.586967971572559;
     double gs = 2.7596253718366/pow(cutoff, 2);
@@ -102,7 +102,7 @@ int main(void)
     cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
          << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
-*/
+
 /*
     double chemPot = 0.318434158842783;
     double minimumTemperature = 0.040;

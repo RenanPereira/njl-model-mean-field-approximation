@@ -1,7 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include "rootSolverGSL.h"
+#include "root_solver_gsl.h"
 #include "Interpolation1DimGSL.h"
 #include "OneFermionLineIntegral.h"
 #include "SU3NJL3DCutoff.h"

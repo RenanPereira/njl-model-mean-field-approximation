@@ -1,6 +1,6 @@
 #include <cmath>
 #include <iostream>
-#include "rootSolverGSL.h"
+#include "root_solver_gsl.h"
 #include "OneFermionLineIntegral.h"
 #include "SU3NJL3DCutoff.h"
 #include "SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h"

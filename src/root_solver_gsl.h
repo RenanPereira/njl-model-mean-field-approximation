@@ -1,5 +1,5 @@
-#ifndef ROOTSOLVERGSL_H
-#define ROOTSOLVERGSL_H
+#ifndef ROOT_SOLVER_GSL_H
+#define ROOT_SOLVER_GSL_H
 
 #include <vector>
 #include <gsl/gsl_vector.h>

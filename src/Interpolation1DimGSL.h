@@ -5,7 +5,7 @@
 #include <iostream>
 #include <gsl/gsl_spline.h>
 #include "OneVariableFunction.h"
-#include "rootSolverGSL.h"
+#include "root_solver_gsl.h"
 
 using namespace std;
 

@@ -5,7 +5,7 @@
 #include <gsl/gsl_roots.h>
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
-#include "rootSolverGSL.h"
+#include "root_solver_gsl.h"
 
 using namespace std;
 
@@ -36,6 +36,7 @@ void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void*
 	{
 		T = gsl_multiroot_fsolver_broyden;
 	}
+	else{ T = gsl_multiroot_fsolver_dnewton; }//standart method if no other is selected
 
 	//allocate memory
 	s = gsl_multiroot_fsolver_alloc(T,dim);		
@@ -97,6 +98,7 @@ double OneDimensionalRootFind(double precision, double x_low, double x_high, voi
 	{
 		T = gsl_root_fsolver_falsepos;
 	}
+	else{ T = gsl_root_fsolver_bisection; }//standart method if no other is selected
 
 	//allocate memory
 	s =  gsl_root_fsolver_alloc (T);		
