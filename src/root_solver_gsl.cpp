@@ -10,6 +10,10 @@
 using namespace std;
 
 
+// Maximum number of iterations in the root-finding loops
+const int MAX_ITERATIONS = 1000;
+
+
 //Multi-dimensional root-finding
 void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void* params, int placeholder_f(const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod method)
 {
@@ -56,7 +60,7 @@ void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void*
 	int counter = 0;
 	int status = GSL_CONTINUE;
 
-	while (status == GSL_CONTINUE && counter < 1000)
+	while (status == GSL_CONTINUE && counter < MAX_ITERATIONS)
 	{
 		++counter;
 		status = gsl_multiroot_fsolver_iterate(s);
@@ -75,7 +79,7 @@ void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void*
 }
 
 
-//One-dimensional root-finding
+// One-dimensional root-finding
 double OneDimensionalRootFind(double precision, double x_low, double x_high, void* params, double placeholder_f (double, void*), RootFindingMethod method)
 {	
 	gsl_function F;
@@ -110,7 +114,7 @@ double OneDimensionalRootFind(double precision, double x_low, double x_high, voi
 	int status = GSL_CONTINUE;
 
 	double root;
-	while (status == GSL_CONTINUE && counter < 1000){
+	while (status == GSL_CONTINUE && counter < MAX_ITERATIONS){
 
 		++counter;
 		status = gsl_root_fsolver_iterate(s);
@@ -339,16 +343,5 @@ vector<gsl_complex> calculateEigenvalues3By3ComplexMatrix(ComplexSquareMatrixGSL
     vector<gsl_complex> eigenvalues = solveCubicEquationCardano(a, b, c, d);
 
     return eigenvalues;
-}
-
-
-//linear interpolation and extrapolation
-double linearFit(double x, double x1, double y1, double x2, double y2)
-{
-    double m = ( y1 - y2 )/( x1 - x2 );
-    double b = 0.5*( ( y1 + y2 ) - m*( x1 + x2 ) );
-    double y = m*x + b;
-
-    return y;
 }
 

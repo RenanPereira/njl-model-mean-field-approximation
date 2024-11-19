@@ -9,6 +9,9 @@
 using namespace std;
 
 
+double linearFit(double , double , double , double , double );
+
+
 class SU3NJL3DCutoffFixedChemPotTemp
 {
 private:
