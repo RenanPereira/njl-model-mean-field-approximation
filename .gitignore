@@ -1,6 +1,7 @@
 .vscode/
 
-obj/
+obj/*.o
+obj/*/*.o
 
 bin/nambuJonaLasinioModel.out
 bin/grandPotential*
