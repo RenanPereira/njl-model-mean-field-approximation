@@ -1,8 +1,6 @@
 #ifndef ONEVARIABLEFUNCTION_H
 #define ONEVARIABLEFUNCTION_H
 
-using namespace std;
-
 class OneVariableFunction
 {
 private:

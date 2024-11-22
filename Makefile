@@ -4,15 +4,15 @@ SHELL := /bin/bash
 CXX = g++ -O3 -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++11 -fopenmp
 #CXX = g++ -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++11 -fopenmp
 
-INCLUDE_DIRS = -Isrc -Isrc/ini_file_parser
+INCLUDE_DIRS = -Isrc -Isrc/ini_file_parser -Isrc/math_utils -Isrc/gsl_wrapper
 
-DEPS = src/OneVariableFunction.h \
+DEPS = src/math_utils/OneVariableFunction.h \
        src/Integration1DimNewtonCotes.h \
        src/UnitaryGroup3Dimensions.h \
-       src/root_solver_gsl.h \
-       src/Interpolation1DimGSL.h \
-       src/Integration1DimGSL.h \
-       src/ComplexSquareMatrixGSL.h \
+       src/gsl_wrapper/root_solver_gsl.h \
+       src/gsl_wrapper/Interpolation1DimGSL.h \
+       src/gsl_wrapper/Integration1DimGSL.h \
+       src/gsl_wrapper/ComplexSquareMatrixGSL.h \
        src/generalPhysicsAndMath.h \
        src/ini_file_parser/IniFileParser.h \
        src/OneFermionLineIntegral.h \
@@ -31,13 +31,13 @@ DEPS = src/OneVariableFunction.h \
 
 
 OBJ = obj/main.o \
-      obj/OneVariableFunction.o \
+      obj/math_utils/OneVariableFunction.o \
       obj/Integration1DimNewtonCotes.o \
       obj/UnitaryGroup3Dimensions.o \
-      obj/root_solver_gsl.o \
-      obj/Interpolation1DimGSL.o \
-      obj/Integration1DimGSL.o \
-      obj/ComplexSquareMatrixGSL.o \
+      obj/gsl_wrapper/root_solver_gsl.o \
+      obj/gsl_wrapper/Interpolation1DimGSL.o \
+      obj/gsl_wrapper/Integration1DimGSL.o \
+      obj/gsl_wrapper/ComplexSquareMatrixGSL.o \
       obj/generalPhysicsAndMath.o \
       obj/ini_file_parser/IniFileParser.o \
       obj/OneFermionLineIntegral.o \
@@ -59,6 +59,14 @@ obj/%.o: src/%.cpp $(DEPS)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
 obj/ini_file_parser/%.o: src/ini_file_parser/%.cpp $(DEPS)
+	@mkdir -p $(dir $@)
+	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
+
+obj/math_utils/%.o: src/math_utils/%.cpp $(DEPS)
+	@mkdir -p $(dir $@)
+	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
+
+obj/gsl_wrapper/%.o: src/gsl_wrapper/%.cpp $(DEPS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
