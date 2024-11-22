@@ -14,7 +14,7 @@ create_directory() {
 
 
 # Define the list of directories~to be created. This must match the Makefile
-directories=("obj" "obj/ini_file_parser" "obj/math_utils" "obj/gsl_wrapper")
+directories=("obj" "obj/ini_file_parser" "obj/math_utils" "obj/gsl_wrapper" "obj/su3_njl_model_3d_cutoff")
 
 
 # Create necessary directories

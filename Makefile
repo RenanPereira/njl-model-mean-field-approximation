@@ -4,7 +4,7 @@ SHELL := /bin/bash
 CXX = g++ -O3 -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++11 -fopenmp
 #CXX = g++ -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++11 -fopenmp
 
-INCLUDE_DIRS = -Isrc -Isrc/ini_file_parser -Isrc/math_utils -Isrc/gsl_wrapper
+INCLUDE_DIRS = -Isrc -Isrc/ini_file_parser -Isrc/math_utils -Isrc/gsl_wrapper -Isrc/su3_njl_model_3d_cutoff
 
 DEPS = src/math_utils/OneVariableFunction.h \
        src/Integration1DimNewtonCotes.h \
@@ -18,16 +18,16 @@ DEPS = src/math_utils/OneVariableFunction.h \
        src/OneFermionLineIntegral.h \
        src/TwoFermionLineIntegral.h \
        src/NJLDimensionfulCouplings.h \
-       src/SU3NJL3DCutoff.h \
-       src/SU3NJL3DCutoffVacuum.h \
-       src/SU3NJL3DCutoffFixedChemPotTemp.h \
-       src/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h \
-       src/SU3NJL3DCutoffBetaEqFixedTempRhoB.h \
-       src/SU3NJL3DCutoffMesonProjectors.h \
-       src/SU3NJL3DCutoffMesonPropagators.h \
-       src/SU3NJL3DCutoffDifferentialCrossSections.h \
-       src/SU3NJL3DCutoffCrossSections.h \
-       src/SU3NJL3DCutoffIntegratedCrossSections.h 
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoff.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffVacuum.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffBetaEqFixedTempRhoB.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffMesonProjectors.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffMesonPropagators.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffCrossSections.h \
+       src/su3_njl_model_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h 
 
 
 OBJ = obj/main.o \
@@ -43,16 +43,16 @@ OBJ = obj/main.o \
       obj/OneFermionLineIntegral.o \
       obj/TwoFermionLineIntegral.o \
       obj/NJLDimensionfulCouplings.o \
-      obj/SU3NJL3DCutoff.o \
-      obj/SU3NJL3DCutoffVacuum.o \
-      obj/SU3NJL3DCutoffFixedChemPotTemp.o \
-      obj/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.o \
-      obj/SU3NJL3DCutoffBetaEqFixedTempRhoB.o \
-      obj/SU3NJL3DCutoffMesonProjectors.o \
-      obj/SU3NJL3DCutoffMesonPropagators.o \
-      obj/SU3NJL3DCutoffDifferentialCrossSections.o \
-      obj/SU3NJL3DCutoffCrossSections.o \
-      obj/SU3NJL3DCutoffIntegratedCrossSections.o
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoff.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffVacuum.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffBetaEqFixedTempRhoB.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffMesonProjectors.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffMesonPropagators.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffCrossSections.o \
+      obj/su3_njl_model_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.o
 
 
 obj/%.o: src/%.cpp $(DEPS)
@@ -67,6 +67,10 @@ obj/math_utils/%.o: src/math_utils/%.cpp $(DEPS)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
 obj/gsl_wrapper/%.o: src/gsl_wrapper/%.cpp $(DEPS)
+	@mkdir -p $(dir $@)
+	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
+
+obj/su3_njl_model_3d_cutoff/%.o: src/su3_njl_model_3d_cutoff/%.cpp $(DEPS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
