@@ -4,7 +4,7 @@
 #include <vector>
 #include "generalPhysicsAndMath.h"
 #include "NJLDimensionfulCouplings.h"
-#include "SU3NJL3DCutoffMesonPropagators.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonPropagators.h"
 using namespace std;
 
 

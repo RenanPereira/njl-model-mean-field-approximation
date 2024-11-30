@@ -2,7 +2,7 @@
 #define SU3NJL3DCUTOFFDIFFERENTIALCROSSSECTIONS_H
 
 #include <gsl/gsl_complex.h>
-#include "SU3NJL3DCutoff.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 
 using namespace std;
 

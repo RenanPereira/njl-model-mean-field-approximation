@@ -5,7 +5,7 @@
 #include <gsl/gsl_complex_math.h>
 #include "gsl_wrapper/ComplexSquareMatrixGSL.h"
 #include "gsl_wrapper/root_solver_gsl.h"
-#include "SU3NJL3DCutoff.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 
 
 gsl_complex pseudoscalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme , double , double , 

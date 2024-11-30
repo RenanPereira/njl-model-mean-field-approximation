@@ -4,7 +4,7 @@ SHELL := /bin/bash
 CXX = g++ -O3 -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++11 -fopenmp
 #CXX = g++ -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++11 -fopenmp
 
-INCLUDE_DIRS = -Isrc -Isrc/njl_model/su3_3d_cutoff
+INCLUDE_DIRS = -Isrc
 
 DEPS = src/math_utils/OneVariableFunction.h \
        src/Integration1DimNewtonCotes.h \

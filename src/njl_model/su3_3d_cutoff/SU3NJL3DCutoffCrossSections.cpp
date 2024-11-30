@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <omp.h>
 #include "generalPhysicsAndMath.h"
-#include "SU3NJL3DCutoffCrossSections.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
 
 
 //In this file we have functions to calculate quark-quark and quark-antiquark cross sections

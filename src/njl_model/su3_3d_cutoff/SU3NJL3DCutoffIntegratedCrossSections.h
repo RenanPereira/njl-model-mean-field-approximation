@@ -1,10 +1,10 @@
 #ifndef SU3NJL3DCUTOFFINTEGRATEDCROSSSECTIONS_H
 #define SU3NJL3DCUTOFFINTEGRATEDCROSSSECTIONS_H
 
-#include "SU3NJL3DCutoff.h"
-#include "SU3NJL3DCutoffDifferentialCrossSections.h"
-#include "SU3NJL3DCutoffCrossSections.h"
-#include "SU3NJL3DCutoffFixedChemPotTemp.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include "generalPhysicsAndMath.h"
-#include "SU3NJL3DCutoff.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "OneFermionLineIntegral.h"
 
 using namespace std;

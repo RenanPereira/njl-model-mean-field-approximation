@@ -3,7 +3,7 @@
 #include <fstream>
 #include <algorithm>
 #include <omp.h>
-#include "SU3NJL3DCutoffIntegratedCrossSections.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
 #include "OneFermionLineIntegral.h"
 #include "gsl_wrapper/root_solver_gsl.h"
 

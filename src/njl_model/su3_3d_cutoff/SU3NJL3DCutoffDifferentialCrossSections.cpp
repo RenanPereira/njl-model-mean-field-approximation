@@ -1,8 +1,8 @@
 #include <cmath>
 #include <iostream>
 #include <gsl/gsl_complex_math.h>
-#include "SU3NJL3DCutoffMesonPropagators.h"
-#include "SU3NJL3DCutoffDifferentialCrossSections.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonPropagators.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 
 
 

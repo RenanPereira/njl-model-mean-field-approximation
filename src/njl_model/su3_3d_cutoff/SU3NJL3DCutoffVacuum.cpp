@@ -2,8 +2,8 @@
 #include <iostream>
 #include "gsl_wrapper/root_solver_gsl.h"
 #include "OneFermionLineIntegral.h"
-#include "SU3NJL3DCutoff.h"
-#include "SU3NJL3DCutoffVacuum.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 
 using namespace std;
 

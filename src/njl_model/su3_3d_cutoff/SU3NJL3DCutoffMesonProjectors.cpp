@@ -1,7 +1,7 @@
 #include <cmath>
 #include <iostream>
 #include "OneFermionLineIntegral.h"
-#include "SU3NJL3DCutoffMesonProjectors.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonProjectors.h"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #ifndef SU3NJL3DCUTOFFMESONPROJECTORS_H
 #define SU3NJL3DCUTOFFMESONPROJECTORS_H
 
-#include "SU3NJL3DCutoff.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 
 
 class SU3NJL3DCutoffMesonProjector

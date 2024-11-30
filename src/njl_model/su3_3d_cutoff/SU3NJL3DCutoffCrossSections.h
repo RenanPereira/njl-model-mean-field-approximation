@@ -1,8 +1,8 @@
 #ifndef SU3NJL3DCUTOFFCROSSSECTIONS_H
 #define SU3NJL3DCUTOFFCROSSSECTIONS_H
 
-#include "SU3NJL3DCutoff.h"
-#include "SU3NJL3DCutoffDifferentialCrossSections.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 
 using namespace std;
 
