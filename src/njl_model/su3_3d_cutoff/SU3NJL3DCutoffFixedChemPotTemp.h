@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "generalPhysicsAndMath.h"
-#include "NJLDimensionfulCouplings.h"
+#include "njl_model/NJLDimensionfulCouplings.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 
 using namespace std;

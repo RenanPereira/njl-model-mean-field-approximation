@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-#include "Integration1DimNewtonCotes.h"
+#include "integration_methods/Integration1DimNewtonCotes.h"
 
 using namespace std;
 

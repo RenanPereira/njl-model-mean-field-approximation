@@ -1,6 +1,6 @@
 #include <cmath>
 #include <gsl/gsl_complex_math.h>
-#include "TwoFermionLineIntegral.h"
+#include "njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.h"
 
 
 //Zero variables necessary in this file: TFLI=TwoFermionLineIntegral

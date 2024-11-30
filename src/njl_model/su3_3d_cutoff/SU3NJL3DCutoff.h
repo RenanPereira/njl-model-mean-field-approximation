@@ -2,7 +2,7 @@
 #define SU3NJL3DCUTOFF_H
 
 #include "gsl_wrapper/Integration1DimGSL.h"
-#include "NJLDimensionfulCouplings.h"
+#include "njl_model/NJLDimensionfulCouplings.h"
 
 using namespace std;
 

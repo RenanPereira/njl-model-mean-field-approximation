@@ -21,6 +21,7 @@ directories=("obj" \
              "obj/group_theory" \
              "obj/gsl_wrapper" \
              "obj/njl_model" \
+             "obj/njl_model/line_integrals_3d_cutoff" \
              "obj/njl_model/su3_3d_cutoff")
 
 

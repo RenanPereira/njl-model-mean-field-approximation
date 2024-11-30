@@ -1,6 +1,6 @@
 #include <gsl/gsl_complex_math.h>
 #include <gsl/gsl_linalg.h>
-#include "UnitaryGroup3Dimensions.h"
+#include "group_theory/UnitaryGroup3Dimensions.h"
 
 
 //Gell-Mann Matrices, Identity and Group Structure constants

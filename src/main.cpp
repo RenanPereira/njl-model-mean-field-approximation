@@ -10,9 +10,9 @@
 #include "gsl_wrapper/root_solver_gsl.h"
 #include "gsl_wrapper/Integration1DimGSL.h"
 #include "generalPhysicsAndMath.h"
-#include "OneFermionLineIntegral.h"
-#include "TwoFermionLineIntegral.h"
-#include "NJLDimensionfulCouplings.h"
+#include "njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h"
+#include "njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.h"
+#include "njl_model/NJLDimensionfulCouplings.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
@@ -22,7 +22,7 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
-#include "UnitaryGroup3Dimensions.h"
+#include "group_theory/UnitaryGroup3Dimensions.h"
 #include <gsl/gsl_complex.h>
 
 

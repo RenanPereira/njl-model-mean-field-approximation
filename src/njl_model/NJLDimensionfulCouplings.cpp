@@ -1,6 +1,6 @@
 #include <cmath>
 #include <iostream>
-#include "NJLDimensionfulCouplings.h"
+#include "njl_model/NJLDimensionfulCouplings.h"
 
 using namespace std;
 

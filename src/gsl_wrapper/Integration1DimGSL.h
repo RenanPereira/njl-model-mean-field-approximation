@@ -2,7 +2,7 @@
 #define INTEGRATION1DIMGSL_H
 
 
-#include "Integration1DimNewtonCotes.h"
+#include "integration_methods/Integration1DimNewtonCotes.h"
 #include <gsl/gsl_integration.h>
 #include <vector>
 

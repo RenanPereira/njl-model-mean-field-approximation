@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "generalPhysicsAndMath.h"
-#include "NJLDimensionfulCouplings.h"
+#include "njl_model/NJLDimensionfulCouplings.h"
 using namespace std;
 
 

@@ -1,7 +1,7 @@
 #include <cmath>
 #include <gsl/gsl_complex_math.h>
-#include "OneFermionLineIntegral.h"
-#include "TwoFermionLineIntegral.h"
+#include "njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h"
+#include "njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.h"
 
 
 /*

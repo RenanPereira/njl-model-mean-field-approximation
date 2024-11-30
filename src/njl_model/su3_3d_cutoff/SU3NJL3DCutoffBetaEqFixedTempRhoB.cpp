@@ -3,7 +3,7 @@
 #include <fstream>
 #include "gsl_wrapper/root_solver_gsl.h"
 #include "gsl_wrapper/Interpolation1DimGSL.h"
-#include "OneFermionLineIntegral.h"
+#include "njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffBetaEqFixedTempRhoB.h"
