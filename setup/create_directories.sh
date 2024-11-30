@@ -2,7 +2,7 @@
 
 
 # Function to create a directory if it doesn't exist and add a .gitkeep file in order to allow git to tracking
-create_directory() {
+create_directory_with_gitkeep() {
     if [ ! -d "$1" ]; then
         mkdir -p "$1"
         touch "$1/.gitkeep"
@@ -14,7 +14,14 @@ create_directory() {
 
 
 # Define the list of directories~to be created. This must match the Makefile
-directories=("obj" "obj/ini_file_parser" "obj/math_utils" "obj/gsl_wrapper" "obj/su3_njl_model_3d_cutoff")
+directories=("obj" \
+             "obj/ini_file_parser" \
+             "obj/math_utils" \
+             "obj/integration_methods" \
+             "obj/group_theory" \
+             "obj/gsl_wrapper" \
+             "obj/njl_model" \
+             "obj/njl_model/su3_3d_cutoff")
 
 
 # Create necessary directories
@@ -22,7 +29,7 @@ echo "Setting up project directories..."
 
 # Loop through each element
 for dir in "${directories[@]}"; do
-  create_directory $dir
+  create_directory_with_gitkeep $dir
 done
 
 echo "Directories created successfully."

@@ -7,8 +7,8 @@
 #include <vector>
 #include <omp.h>
 #include <algorithm>
-#include "root_solver_gsl.h"
-#include "Integration1DimGSL.h"
+#include "gsl_wrapper/root_solver_gsl.h"
+#include "gsl_wrapper/Integration1DimGSL.h"
 #include "generalPhysicsAndMath.h"
 #include "OneFermionLineIntegral.h"
 #include "TwoFermionLineIntegral.h"

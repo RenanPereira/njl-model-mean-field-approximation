@@ -1,4 +1,4 @@
-#include "Interpolation1DimGSL.h"
+#include "gsl_wrapper/Interpolation1DimGSL.h"
 
 
 void Interpolation1DimGSL::setSpline()

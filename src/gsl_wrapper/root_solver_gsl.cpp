@@ -5,7 +5,7 @@
 #include <gsl/gsl_roots.h>
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
-#include "root_solver_gsl.h"
+#include "gsl_wrapper/root_solver_gsl.h"
 
 using namespace std;
 

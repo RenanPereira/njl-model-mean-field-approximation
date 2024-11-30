@@ -3,7 +3,7 @@
 
 #include <vector> 
 #include <iostream>
-#include "ComplexSquareMatrixGSL.h"
+#include "gsl_wrapper/ComplexSquareMatrixGSL.h"
 
 using namespace std;
 

@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <gsl/gsl_vector.h>
-#include "ComplexSquareMatrixGSL.h"
+#include "gsl_wrapper/ComplexSquareMatrixGSL.h"
 
 enum MultiRootFindingMethod { hybrids, hybrid, dnewton, broyden };
 

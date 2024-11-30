@@ -1,7 +1,7 @@
 #ifndef SU3NJL3DCUTOFF_H
 #define SU3NJL3DCUTOFF_H
 
-#include "Integration1DimGSL.h"
+#include "gsl_wrapper/Integration1DimGSL.h"
 #include "NJLDimensionfulCouplings.h"
 
 using namespace std;

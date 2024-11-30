@@ -177,7 +177,7 @@ This helper method removes leading and trailing whitespace characters from a str
 ### Include the Header
 
 ```cpp
-#include "IniFileParser.h"
+#include "ini_file_parser/IniFileParser.h"
 ```
 
 ### Create a `IniFileParser` Object

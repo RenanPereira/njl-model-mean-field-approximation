@@ -5,7 +5,7 @@
 #include <omp.h>
 #include "SU3NJL3DCutoffIntegratedCrossSections.h"
 #include "OneFermionLineIntegral.h"
-#include "root_solver_gsl.h"
+#include "gsl_wrapper/root_solver_gsl.h"
 
 
 //Zero variables necessary in this file: ICS=IntegratedCrossSections

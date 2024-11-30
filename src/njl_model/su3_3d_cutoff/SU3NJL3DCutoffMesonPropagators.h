@@ -3,8 +3,8 @@
 
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
-#include "ComplexSquareMatrixGSL.h"
-#include "root_solver_gsl.h"
+#include "gsl_wrapper/ComplexSquareMatrixGSL.h"
+#include "gsl_wrapper/root_solver_gsl.h"
 #include "SU3NJL3DCutoff.h"
 
 

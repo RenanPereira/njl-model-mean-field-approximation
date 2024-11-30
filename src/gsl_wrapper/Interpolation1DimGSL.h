@@ -4,8 +4,8 @@
 #include <vector> 
 #include <iostream>
 #include <gsl/gsl_spline.h>
-#include "OneVariableFunction.h"
-#include "root_solver_gsl.h"
+#include "math_utils/OneVariableFunction.h"
+#include "gsl_wrapper/root_solver_gsl.h"
 
 using namespace std;
 

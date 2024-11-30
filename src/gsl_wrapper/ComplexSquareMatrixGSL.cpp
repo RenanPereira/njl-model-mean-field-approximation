@@ -1,6 +1,6 @@
 #include <gsl/gsl_complex_math.h>
 #include <gsl/gsl_linalg.h>
-#include "ComplexSquareMatrixGSL.h"
+#include "gsl_wrapper/ComplexSquareMatrixGSL.h"
 
 
 void ComplexSquareMatrixGSL::setValue(int a, int b, gsl_complex value)

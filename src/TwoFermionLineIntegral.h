@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <gsl/gsl_complex.h>
-#include "Integration1DimGSL.h"
+#include "gsl_wrapper/Integration1DimGSL.h"
 #include "generalPhysicsAndMath.h"
 
 
