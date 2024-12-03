@@ -1,7 +1,8 @@
-#include "gsl_wrapper/Interpolation1DimGSL.h"
+#include "gsl_wrapper/InterpolationGSL1Dim.h"
 
+using namespace std;
 
-void Interpolation1DimGSL::setSpline()
+void InterpolationGSL1Dim::setSpline()
 {   
 	const int N = interpolationSize;
 
@@ -25,25 +26,25 @@ void Interpolation1DimGSL::setSpline()
 }
 
 
-void Interpolation1DimGSL::unsetSpline()
+void InterpolationGSL1Dim::unsetSpline()
 {   
 	gsl_spline_free(spline);//clean memory
 }
 
 
-void Interpolation1DimGSL::setAccelerator()
+void InterpolationGSL1Dim::setAccelerator()
 {   
 	accelerator = gsl_interp_accel_alloc();
 }
 
 
-void Interpolation1DimGSL::unsetAccelerator()
+void InterpolationGSL1Dim::unsetAccelerator()
 {   
 	gsl_interp_accel_free(accelerator);//clean memory
 }
 
 
-Interpolation1DimGSL::Interpolation1DimGSL(InterpolationMethod methodAux, vector<double> discretizedVariableAux, vector<double> discretizedFunctionAux)
+InterpolationGSL1Dim::InterpolationGSL1Dim(InterpolationGSL1DimMethod methodAux, vector<double> discretizedVariableAux, vector<double> discretizedFunctionAux)
 {   
     method = methodAux;
     discretizedVariable = discretizedVariableAux;
@@ -73,7 +74,7 @@ Interpolation1DimGSL::Interpolation1DimGSL(InterpolationMethod methodAux, vector
 }
 
 
-Interpolation1DimGSL::Interpolation1DimGSL(InterpolationMethod methodAux, double xMin, double xMax, int N, OneVariableFunction function)
+InterpolationGSL1Dim::InterpolationGSL1Dim(InterpolationGSL1DimMethod methodAux, double xMin, double xMax, int N, OneVariableFunction function)
 {   
 	vector<double> discretizedVariableAux(N,0.0);
 	vector<double> discretizedFunctionAux(N,0.0);
@@ -114,7 +115,7 @@ Interpolation1DimGSL::Interpolation1DimGSL(InterpolationMethod methodAux, double
 }
 
 
-bool Interpolation1DimGSL::valueInInterpolationInterval(double x)
+bool InterpolationGSL1Dim::valueInInterpolationInterval(double x)
 {   
     double xMin = getInterpolationLowerBound();
 	double xMax = getInterpolationUpperBound();
@@ -124,7 +125,7 @@ bool Interpolation1DimGSL::valueInInterpolationInterval(double x)
 }
 
 
-double Interpolation1DimGSL::evaluate(double x)
+double InterpolationGSL1Dim::evaluate(double x)
 {	
 	double fx = 0.0;
 	if ( valueInInterpolationInterval(x) )
@@ -142,7 +143,7 @@ double Interpolation1DimGSL::evaluate(double x)
 }
 
 
-double Interpolation1DimGSL::evaluate1stDerivative(double x)
+double InterpolationGSL1Dim::evaluate1stDerivative(double x)
 {
 	double fx = 0.0;
 	if ( valueInInterpolationInterval(x) )
@@ -160,7 +161,7 @@ double Interpolation1DimGSL::evaluate1stDerivative(double x)
 }
 
 
-double Interpolation1DimGSL::evaluate2ndDerivative(double x)
+double InterpolationGSL1Dim::evaluate2ndDerivative(double x)
 {
 	double fx = 0.0;
 	if ( valueInInterpolationInterval(x) )
@@ -178,7 +179,7 @@ double Interpolation1DimGSL::evaluate2ndDerivative(double x)
 }
 
 
-double Interpolation1DimGSL::evaluateIntegral(double a, double b)
+double InterpolationGSL1Dim::evaluateIntegral(double a, double b)
 {	
 	double integral = 0.0;
 	if ( valueInInterpolationInterval(a) && valueInInterpolationInterval(b) )
@@ -195,15 +196,15 @@ double Interpolation1DimGSL::evaluateIntegral(double a, double b)
 }
 
 
-vector<double> Interpolation1DimGSL::findRoots(RootFindingMethod methodAux, double precision)
+vector<double> InterpolationGSL1Dim::findRoots(RootFindingMethod methodAux, double precision)
 {	
 	const int N = interpolationSize;
 	
 	vector<int> guesses;
 	for (int i = 0; i < N-1; ++i)
 	{
-		if      ( discretizedFunction[i] < 0 && discretizedFunction[i+1]>0 ){ guesses.push_back(i); }
-		else if ( discretizedFunction[i] > 0 && discretizedFunction[i+1]<0 ){ guesses.push_back(i); }
+		if      ( discretizedFunction[i] <= 0 && discretizedFunction[i+1] > 0 ){ guesses.push_back(i); }
+		else if ( discretizedFunction[i] > 0 && discretizedFunction[i+1] <= 0 ){ guesses.push_back(i); }
 	}
 
 	vector<double> roots;
@@ -222,7 +223,7 @@ vector<double> Interpolation1DimGSL::findRoots(RootFindingMethod methodAux, doub
 }
 
 
-vector<double> Interpolation1DimGSL::findRoots1stDerivative(RootFindingMethod methodAux, double precision)
+vector<double> InterpolationGSL1Dim::findRoots1stDerivative(RootFindingMethod methodAux, double precision)
 {	
 	const int N = interpolationSize;
 	
@@ -233,8 +234,8 @@ vector<double> Interpolation1DimGSL::findRoots1stDerivative(RootFindingMethod me
 		double xiPlusOne = discretizedVariable[i+1];
 		double discretizedFunction1stDerivativeAtXi = evaluate1stDerivative(xi);
 		double discretizedFunction1stDerivativeAtPlusOne = evaluate1stDerivative(xiPlusOne);
-		if      ( discretizedFunction1stDerivativeAtXi < 0 && discretizedFunction1stDerivativeAtPlusOne>0 ){ guesses.push_back(i); }
-		else if ( discretizedFunction1stDerivativeAtXi > 0 && discretizedFunction1stDerivativeAtPlusOne<0 ){ guesses.push_back(i); }
+		if      ( discretizedFunction1stDerivativeAtXi <= 0 && discretizedFunction1stDerivativeAtPlusOne > 0 ){ guesses.push_back(i); }
+		else if ( discretizedFunction1stDerivativeAtXi > 0 && discretizedFunction1stDerivativeAtPlusOne <= 0 ){ guesses.push_back(i); }
 	}
 
 	vector<double> roots;
@@ -253,7 +254,7 @@ vector<double> Interpolation1DimGSL::findRoots1stDerivative(RootFindingMethod me
 }
 
 
-vector<double> Interpolation1DimGSL::findRoots2ndDerivative(RootFindingMethod methodAux, double precision)
+vector<double> InterpolationGSL1Dim::findRoots2ndDerivative(RootFindingMethod methodAux, double precision)
 {	
 	const int N = interpolationSize;
 	
@@ -264,8 +265,8 @@ vector<double> Interpolation1DimGSL::findRoots2ndDerivative(RootFindingMethod me
 		double xiPlusOne = discretizedVariable[i+1];
 		double discretizedFunction2ndDerivativeAtXi = evaluate2ndDerivative(xi);
 		double discretizedFunction2ndDerivativeAtPlusOne = evaluate2ndDerivative(xiPlusOne);
-		if      ( discretizedFunction2ndDerivativeAtXi < 0 && discretizedFunction2ndDerivativeAtPlusOne>0 ){ guesses.push_back(i); }
-		else if ( discretizedFunction2ndDerivativeAtXi > 0 && discretizedFunction2ndDerivativeAtPlusOne<0 ){ guesses.push_back(i); }
+		if      ( discretizedFunction2ndDerivativeAtXi <= 0 && discretizedFunction2ndDerivativeAtPlusOne > 0 ){ guesses.push_back(i); }
+		else if ( discretizedFunction2ndDerivativeAtXi > 0 && discretizedFunction2ndDerivativeAtPlusOne <= 0 ){ guesses.push_back(i); }
 	}
 
 	vector<double> roots;
@@ -284,7 +285,7 @@ vector<double> Interpolation1DimGSL::findRoots2ndDerivative(RootFindingMethod me
 }
 
 
-void Interpolation1DimGSL::tests(OneVariableFunction testFunction)
+void InterpolationGSL1Dim::tests(OneVariableFunction testFunction)
 {
 	vector<double> roots = findRoots(brent, 1E-8);
 
@@ -325,7 +326,7 @@ double polynomialTest(double x, void* parameters)
 double equationToFindRootsOfInterpolation(double x, void *interpolationAux)
 {
 	//InterpolationOfDiscreteFunction1D *interpolation = static_cast<InterpolationOfDiscreteFunction1D *>(interpolationAux);
-	Interpolation1DimGSL* interpolation = ((class Interpolation1DimGSL *)(interpolationAux));
+	InterpolationGSL1Dim* interpolation = ((class InterpolationGSL1Dim *)(interpolationAux));
 
 	double fx = interpolation->evaluate(x);
 
@@ -335,7 +336,7 @@ double equationToFindRootsOfInterpolation(double x, void *interpolationAux)
 
 double equationToFindRootsOfInterpolation1stDerivative(double x, void *interpolationAux)
 {
-	Interpolation1DimGSL* interpolation = ((class Interpolation1DimGSL *)(interpolationAux));
+	InterpolationGSL1Dim* interpolation = ((class InterpolationGSL1Dim *)(interpolationAux));
 
 	double fx = interpolation->evaluate1stDerivative(x);
 
@@ -345,7 +346,7 @@ double equationToFindRootsOfInterpolation1stDerivative(double x, void *interpola
 
 double equationToFindRootsOfInterpolation2ndDerivative(double x, void *interpolationAux)
 {
-	Interpolation1DimGSL* interpolation = ((class Interpolation1DimGSL *)(interpolationAux));
+	InterpolationGSL1Dim* interpolation = ((class InterpolationGSL1Dim *)(interpolationAux));
 
 	double fx = interpolation->evaluate2ndDerivative(x);
 

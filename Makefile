@@ -12,7 +12,7 @@ DEPS = src/math_utils/OneVariableFunction.h \
        src/integration_methods/Integration1DimNewtonCotes.h \
        src/group_theory/UnitaryGroup3Dimensions.h \
        src/gsl_wrapper/root_solver_gsl.h \
-       src/gsl_wrapper/Interpolation1DimGSL.h \
+       src/gsl_wrapper/InterpolationGSL1Dim.h \
        src/gsl_wrapper/Integration1DimGSL.h \
        src/gsl_wrapper/ComplexSquareMatrixGSL.h \
        src/generalPhysicsAndMath.h \
@@ -37,7 +37,7 @@ OBJ = obj/main.o \
       obj/integration_methods/Integration1DimNewtonCotes.o \
       obj/group_theory/UnitaryGroup3Dimensions.o \
       obj/gsl_wrapper/root_solver_gsl.o \
-      obj/gsl_wrapper/Interpolation1DimGSL.o \
+      obj/gsl_wrapper/InterpolationGSL1Dim.o \
       obj/gsl_wrapper/Integration1DimGSL.o \
       obj/gsl_wrapper/ComplexSquareMatrixGSL.o \
       obj/generalPhysicsAndMath.o \

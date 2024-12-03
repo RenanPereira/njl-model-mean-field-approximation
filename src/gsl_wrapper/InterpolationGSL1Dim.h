@@ -1,5 +1,5 @@
-#ifndef INTERPOLATION1DIMGSL_H
-#define INTERPOLATION1DIMGSL_H
+#ifndef INTERPOLATIONGSL1DIM_H
+#define INTERPOLATIONGSL1DIM_H
 
 #include <vector> 
 #include <iostream>
@@ -7,17 +7,15 @@
 #include "math_utils/OneVariableFunction.h"
 #include "gsl_wrapper/root_solver_gsl.h"
 
-using namespace std;
 
+enum InterpolationGSL1DimMethod { linear, steffen, cubic, akima, polynomial };
 
-enum InterpolationMethod { linear, steffen, cubic, akima, polynomial };
-
-class Interpolation1DimGSL
+class InterpolationGSL1Dim
 {
 private:
-	InterpolationMethod method;
-    vector<double> discretizedVariable;
-    vector<double> discretizedFunction;
+	InterpolationGSL1DimMethod method;
+    std::vector<double> discretizedVariable;
+    std::vector<double> discretizedFunction;
     int interpolationSize;
     double interpolationLowerBound;
     double interpolationUpperBound;
@@ -31,16 +29,16 @@ private:
     void unsetAccelerator();
     
 public:
-    Interpolation1DimGSL(InterpolationMethod , vector<double> , vector<double> );//constructor
-    Interpolation1DimGSL(InterpolationMethod, double , double , int , OneVariableFunction );
+    InterpolationGSL1Dim(InterpolationGSL1DimMethod , std::vector<double> , std::vector<double> );//constructor
+    InterpolationGSL1Dim(InterpolationGSL1DimMethod, double , double , int , OneVariableFunction );
     
-    ~Interpolation1DimGSL()//destructor
+    ~InterpolationGSL1Dim()//destructor
     {   
         unsetSpline();
         unsetAccelerator();
     }
 
-    Interpolation1DimGSL(const Interpolation1DimGSL &interpolation)//copy constructor
+    InterpolationGSL1Dim(const InterpolationGSL1Dim &interpolation)//copy constructor
     {   
         method = interpolation.method;
         discretizedVariable = interpolation.discretizedVariable;
@@ -52,7 +50,7 @@ public:
         setAccelerator();
     }    
 
-    Interpolation1DimGSL& operator=(const Interpolation1DimGSL& interpolation)//copy assignment
+    InterpolationGSL1Dim& operator=(const InterpolationGSL1Dim& interpolation)//copy assignment
     {   
         if (this == &interpolation){ return *this; }
  
@@ -79,9 +77,9 @@ public:
     double evaluate2ndDerivative(double );
     double evaluateIntegral(double , double );
     
-    vector<double> findRoots(RootFindingMethod, double );
-    vector<double> findRoots1stDerivative(RootFindingMethod , double );
-    vector<double> findRoots2ndDerivative(RootFindingMethod , double );
+    std::vector<double> findRoots(RootFindingMethod, double );
+    std::vector<double> findRoots1stDerivative(RootFindingMethod , double );
+    std::vector<double> findRoots2ndDerivative(RootFindingMethod , double );
     
     void tests(OneVariableFunction );
 };
