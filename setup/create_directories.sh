@@ -17,6 +17,7 @@ create_directory_with_gitkeep() {
 directories=("obj" \
              "obj/ini_file_parser" \
              "obj/math_utils" \
+             "obj/physics_utils" \
              "obj/integration_methods" \
              "obj/group_theory" \
              "obj/gsl_wrapper" \

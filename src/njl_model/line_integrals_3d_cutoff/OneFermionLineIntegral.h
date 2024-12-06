@@ -4,7 +4,7 @@
 #include <iostream>
 #include <gsl/gsl_complex.h>
 #include "gsl_wrapper/Integration1DimGSL.h"
-#include "generalPhysicsAndMath.h"
+#include "njl_model/njl_regularization_schemes.h"
 
 
 class OneFermionLine3DCutoffIntegrand : public GeneralIntegrandParameters

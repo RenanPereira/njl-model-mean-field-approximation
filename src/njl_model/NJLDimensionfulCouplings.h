@@ -2,7 +2,7 @@
 #define NJLDIMENSIONFULCOUPLINGS_H
 
 #include <vector>
-#include "generalPhysicsAndMath.h"
+#include "physics_utils/distribution_functions.h"
 
 using namespace std;
 

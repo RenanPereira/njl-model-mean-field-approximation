@@ -1,5 +1,7 @@
 #include <cmath>
 #include <gsl/gsl_complex_math.h>
+#include "math_utils/useful_functions.h"
+#include "physics_utils/distribution_functions.h"
 #include "njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.h"
 
 

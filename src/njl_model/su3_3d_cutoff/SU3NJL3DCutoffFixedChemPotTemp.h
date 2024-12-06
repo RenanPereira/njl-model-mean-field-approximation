@@ -2,7 +2,7 @@
 #define SU3NJL3DCUTOFFFIXEDCHEMPOTTEMP_H
 
 #include <vector>
-#include "generalPhysicsAndMath.h"
+#include "physics_utils/distribution_functions.h"
 #include "njl_model/NJLDimensionfulCouplings.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 

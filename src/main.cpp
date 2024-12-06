@@ -6,10 +6,8 @@
 #include <sstream>
 #include <vector>
 #include <omp.h>
-#include <algorithm>
-#include "gsl_wrapper/root_solver_gsl.h"
 #include "gsl_wrapper/Integration1DimGSL.h"
-#include "generalPhysicsAndMath.h"
+#include "physics_utils/distribution_functions.h"
 #include "njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h"
 #include "njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.h"
 #include "njl_model/NJLDimensionfulCouplings.h"

@@ -3,6 +3,7 @@
 
 #include "gsl_wrapper/Integration1DimGSL.h"
 #include "njl_model/NJLDimensionfulCouplings.h"
+#include "njl_model/njl_regularization_schemes.h"
 
 using namespace std;
 

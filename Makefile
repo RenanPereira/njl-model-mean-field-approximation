@@ -9,15 +9,18 @@ INCLUDE_DIRS = -Isrc
 
 
 DEPS = src/math_utils/OneVariableFunction.h \
+       src/math_utils/useful_functions.h \
        src/integration_methods/Integration1DimNewtonCotes.h \
        src/group_theory/UnitaryGroup3Dimensions.h \
        src/gsl_wrapper/root_solver_gsl.h \
        src/gsl_wrapper/InterpolationGSL1Dim.h \
        src/gsl_wrapper/Integration1DimGSL.h \
        src/gsl_wrapper/ComplexSquareMatrixGSL.h \
-       src/generalPhysicsAndMath.h \
+       src/physics_utils/distribution_functions.h \
+       src/physics_utils/physical_constants.h \
        src/ini_file_parser/IniFileParser.h \
        src/njl_model/NJLDimensionfulCouplings.h \
+       src/njl_model/njl_regularization_schemes.h \
        src/njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h \
        src/njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h \
@@ -34,13 +37,14 @@ DEPS = src/math_utils/OneVariableFunction.h \
 
 OBJ = obj/main.o \
       obj/math_utils/OneVariableFunction.o \
+      obj/math_utils/useful_functions.o \
       obj/integration_methods/Integration1DimNewtonCotes.o \
       obj/group_theory/UnitaryGroup3Dimensions.o \
       obj/gsl_wrapper/root_solver_gsl.o \
       obj/gsl_wrapper/InterpolationGSL1Dim.o \
       obj/gsl_wrapper/Integration1DimGSL.o \
       obj/gsl_wrapper/ComplexSquareMatrixGSL.o \
-      obj/generalPhysicsAndMath.o \
+      obj/physics_utils/distribution_functions.o \
       obj/ini_file_parser/IniFileParser.o \
       obj/njl_model/NJLDimensionfulCouplings.o \
       obj/njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.o \
@@ -73,6 +77,10 @@ obj/group_theory/%.o: src/group_theory/%.cpp $(DEPS)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
 obj/gsl_wrapper/%.o: src/gsl_wrapper/%.cpp $(DEPS)
+	@mkdir -p $(dir $@)
+	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
+
+obj/physics_utils/%.o: src/physics_utils/%.cpp $(DEPS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 

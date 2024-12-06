@@ -2,7 +2,7 @@
 #define SU3NJL3DCUTOFFEQUALCHEMPOTFIXEDTEMPRHOB_H
 
 #include <vector>
-#include "generalPhysicsAndMath.h"
+#include "physics_utils/distribution_functions.h"
 #include "njl_model/NJLDimensionfulCouplings.h"
 using namespace std;
 

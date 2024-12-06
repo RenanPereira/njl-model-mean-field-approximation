@@ -1,6 +1,6 @@
 #include <cmath>
 #include <iostream>
-#include "generalPhysicsAndMath.h"
+#include "physics_utils/distribution_functions.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h"
 

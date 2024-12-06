@@ -1,6 +1,6 @@
 #include <cmath>
 #include <iostream>
-#include "generalPhysicsAndMath.h"
+#include "physics_utils/distribution_functions.h"
 
 using namespace std;
 
@@ -53,16 +53,4 @@ double puiseuxExpansionTln1plusExpArgOverT(double T, double arg)
     double expansion = arg + T*( exp(-arg/T) - exp(-2.0*arg/T)/2.0 + exp(-3.0*arg/T)/3.0 - exp(-4.0*arg/T)/4.0 );
 
     return expansion;
-}
-
-
-//Function that returns the sign of x
-double sign(double x)
-{   
-    if ( x>0 ){ return +1.0; }
-    else
-    {
-        if ( x<0 ){ return -1.0; }
-        else{ return 0.0; }
-    }
 }

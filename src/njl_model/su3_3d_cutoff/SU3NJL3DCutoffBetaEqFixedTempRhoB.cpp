@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "gsl_wrapper/root_solver_gsl.h"
+#include "physics_utils/physical_constants.h"
 #include "njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"

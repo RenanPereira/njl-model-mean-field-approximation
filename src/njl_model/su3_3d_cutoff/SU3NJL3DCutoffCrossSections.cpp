@@ -3,7 +3,8 @@
 #include <fstream>
 #include <algorithm>
 #include <omp.h>
-#include "generalPhysicsAndMath.h"
+#include "physics_utils/distribution_functions.h"
+#include "physics_utils/physical_constants.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
 
 

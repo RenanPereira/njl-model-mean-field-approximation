@@ -2,7 +2,7 @@
 #define SU3NJL3DCUTOFFVACUUM_H
 
 #include <vector>
-#include "generalPhysicsAndMath.h"
+#include "physics_utils/distribution_functions.h"
 #include "njl_model/NJLDimensionfulCouplings.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonPropagators.h"
 using namespace std;
