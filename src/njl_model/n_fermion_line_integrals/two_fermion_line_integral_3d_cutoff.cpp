@@ -2,7 +2,7 @@
 #include <gsl/gsl_complex_math.h>
 #include "math_utils/useful_functions.h"
 #include "physics_utils/distribution_functions.h"
-#include "njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.h"
+#include "njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h"
 
 
 //Zero variables necessary in this file: TFLI=TwoFermionLineIntegral

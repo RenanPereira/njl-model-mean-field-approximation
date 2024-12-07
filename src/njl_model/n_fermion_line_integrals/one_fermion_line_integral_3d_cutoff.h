@@ -1,5 +1,5 @@
-#ifndef ONEFERMIONLINEINTEGRAL_H
-#define ONEFERMIONLINEINTEGRAL_H
+#ifndef ONE_FERMION_LINE_INTEGRAL_3D_CUTOFF_H
+#define ONE_FERMION_LINE_INTEGRAL_3D_CUTOFF_H
 
 #include <iostream>
 #include <gsl/gsl_complex.h>

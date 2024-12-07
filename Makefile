@@ -21,8 +21,8 @@ DEPS = src/math_utils/OneVariableFunction.h \
        src/ini_file_parser/IniFileParser.h \
        src/njl_model/NJLDimensionfulCouplings.h \
        src/njl_model/njl_regularization_schemes.h \
-       src/njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h \
-       src/njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.h \
+       src/njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h \
+       src/njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h \
@@ -47,8 +47,8 @@ OBJ = obj/main.o \
       obj/physics_utils/distribution_functions.o \
       obj/ini_file_parser/IniFileParser.o \
       obj/njl_model/NJLDimensionfulCouplings.o \
-      obj/njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.o \
-      obj/njl_model/line_integrals_3d_cutoff/TwoFermionLineIntegral.o \
+      obj/njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.o \
+      obj/njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.o \
@@ -88,7 +88,7 @@ obj/ini_file_parser/%.o: src/ini_file_parser/%.cpp $(DEPS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
-obj/njl_model/line_integrals_3d_cutoff/%.o: src/njl_model/line_integrals_3d_cutoff/%.cpp $(DEPS)
+obj/njl_model/n_fermion_line_integrals/%.o: src/njl_model/n_fermion_line_integrals/%.cpp $(DEPS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 

@@ -1,6 +1,6 @@
 #include <cmath>
 #include <iostream>
-#include "njl_model/line_integrals_3d_cutoff/OneFermionLineIntegral.h"
+#include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonProjectors.h"
 
 using namespace std;
