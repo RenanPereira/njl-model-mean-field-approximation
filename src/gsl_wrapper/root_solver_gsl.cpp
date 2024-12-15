@@ -14,6 +14,48 @@ using namespace std;
 const int MAX_ITERATIONS = 1000;
 
 
+string toStringMultiRootFindingMethod(MultiRootFindingMethod method) 
+{
+    switch (method) 
+    {
+        case hybrids:
+            return "hybrids";
+        case hybrid:
+            return "hybrid";
+        case dnewton:
+            return "dnewton";
+        case broyden:
+            return "broyden";
+        default:
+            cout << "Invalid MultiRootFindingMethod value, returning Unknown" << endl;
+            return "Unknown";
+    }
+}
+
+
+MultiRootFindingMethod stringToMultiRootFindingMethod(const string& methodStr) 
+{
+    if (methodStr == "hybrids") 
+    {
+        return hybrids;
+    } else if (methodStr == "hybrid") 
+    {
+        return hybrid;
+    } else if (methodStr == "dnewton") 
+    {
+        return dnewton;
+    } else if (methodStr == "broyden") 
+    {
+        return broyden;
+    } 
+    else 
+    {
+        cout << "Invalid stringToMultiRootFindingMethod string: " + methodStr + ". Aborting!\n";
+        abort();
+    }
+}
+
+
 //Multi-dimensional root-finding
 void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void* params, int placeholder_f(const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod method)
 {

@@ -41,6 +41,7 @@ public:
 
 	//meson properties
 	SU3NJL3DCutoffMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
+	void logVacuumSolutionToFile(string );
 
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };

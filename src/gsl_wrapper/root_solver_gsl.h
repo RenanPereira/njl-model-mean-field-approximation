@@ -7,6 +7,10 @@
 
 enum MultiRootFindingMethod { hybrids, hybrid, dnewton, broyden };
 
+string toStringMultiRootFindingMethod(MultiRootFindingMethod );
+
+MultiRootFindingMethod stringToMultiRootFindingMethod(const string& );
+
 void multiDimensionalRootFind(int , double , double* , void* , int (const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod );
 
 enum RootFindingMethod { brent, bisection, falsepos };

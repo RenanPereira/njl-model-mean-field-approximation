@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <fstream>
 #include "gsl_wrapper/root_solver_gsl.h"
 #include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
@@ -141,4 +142,24 @@ SU3NJL3DCutoffMeson SU3NJL3DCutoffVacuum::calculateMesonMassAndWidth(mesonState 
 }
 
 
+void SU3NJL3DCutoffVacuum::logVacuumSolutionToFile(string fileName)
+{	
+	int dataPrecision = 15;
+	int colW = 25;
 
+    std::ofstream fileVacuumSolution;
+    fileVacuumSolution.open(fileName, std::fstream::in | std::ofstream::out | std::ios::trunc);
+    fileVacuumSolution.precision(dataPrecision);
+
+	fileVacuumSolution.width(colW); fileVacuumSolution << "Mu[GeV]";
+    fileVacuumSolution.width(colW); fileVacuumSolution << "Md[GeV]";
+	fileVacuumSolution.width(colW); fileVacuumSolution << "Ms[GeV]";
+	fileVacuumSolution << "\n";
+
+    fileVacuumSolution.width(colW); fileVacuumSolution << getUpQuarkEffectiveMass();
+    fileVacuumSolution.width(colW); fileVacuumSolution << getDownQuarkEffectiveMass();
+	fileVacuumSolution.width(colW); fileVacuumSolution << getStrangeQuarkEffectiveMass();
+    fileVacuumSolution << "\n";
+
+	fileVacuumSolution.close();
+}

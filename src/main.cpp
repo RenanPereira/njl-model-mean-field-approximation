@@ -6,6 +6,7 @@
 #include <sstream>
 #include <vector>
 #include <omp.h>
+#include "command_line_processor.h"
 #include "gsl_wrapper/Integration1DimGSL.h"
 #include "physics_utils/distribution_functions.h"
 #include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
@@ -27,10 +28,23 @@
 using namespace std;
 
 
-int main(void)
-{	
+int main(int argc, char* argv[])
+{
 	//START COUNTING TIME
     double start_s = omp_get_wtime();
+
+    // Call the function and check its return value
+	int processorResult = commandLineArgsProcessor(argc, argv);
+    if ( processorResult==1 ) 
+	{
+        // If it returns 1, exit with failure code
+        return 1;
+    }
+	else
+	{
+    	// Continue the main program execution if the function returns 0
+    	std::cout << "\nCommands processed successfully, continuing execution..." << std::endl;
+	}
 
 
     testIntegration1DimGSL();
@@ -72,6 +86,7 @@ int main(void)
     parameters.setParameterSetName("setB");
 */
 
+/*
     //parameter set C
     double cutoff = 0.586967971572559;
     double gs = 2.7596253718366/pow(cutoff, 2);
@@ -100,6 +115,7 @@ int main(void)
     cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
          << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+*/
 
 /*
     double chemPot = 0.318434158842783;

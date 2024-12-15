@@ -10,4 +10,8 @@ enum NJL3DCutoffRegularizationScheme {
 };
 
 
+std::string toStringNJL3DCutoffRegularizationScheme(NJL3DCutoffRegularizationScheme );
+
+NJL3DCutoffRegularizationScheme stringToNJL3DCutoffRegularizationScheme(const std::string& );
+
 #endif

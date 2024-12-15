@@ -24,6 +24,11 @@ enum lagrangianInteractions { interactions_4SP_det,
 							  interactions_4SP_det_multiVP };
 
 
+string toStringLagrangianInteractions(lagrangianInteractions );
+
+lagrangianInteractions fromStringLagrangianInteractions(const string& );
+
+
 class NJLDimensionfulCouplings
 {
 //quark interactions: SP=ScalarPseudoscalar , VP=VectorPseudovector , VIPI=VectorIsovectorPseudovectorIsovector
