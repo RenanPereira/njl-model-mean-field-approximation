@@ -343,3 +343,53 @@ vector<double> multiQuarkVPCouplingWithDimensions(vector<double> multiQuarkVPCou
     return multiQuarkVPDimensionfullCouplings;
 }
 
+
+NJLDimensionfulCouplings extractSU3NJL3DCutoffDimensionfulCouplings(const IniFileParser& config)
+{	
+	double cutoff_GeV = config.getDouble("SU3NJL3DCutoffModelParameters", "cutoff_GeV");
+
+    lagrangianInteractions interactionTerms = fromStringLagrangianInteractions(config.getValue("NJLDimensionfulCouplings", "lagrangianInteractions"));
+	cout << "interactionTerms = " << toStringLagrangianInteractions(interactionTerms) << endl;
+
+	if ( interactionTerms==interactions_4SP_det )
+	{
+		double fourQuarkSPCouplingCutoff2 = config.getDouble("NJLDimensionfulCouplings", "fourQuarkSPCouplingCutoff2");
+		double determinantCouplingCutoff5 = config.getDouble("NJLDimensionfulCouplings", "determinantCouplingCutoff5");
+		
+		cout << "fourQuarkSPCouplingCutoff2 = " << fourQuarkSPCouplingCutoff2 << endl;
+		cout << "determinantCouplingCutoff5 = " << determinantCouplingCutoff5 << endl;
+		
+		double gs = fourQuarkSPCouplingCutoff2/pow(cutoff_GeV, 2);
+		double kappa = determinantCouplingCutoff5/pow(cutoff_GeV, 5);
+		
+		NJLDimensionfulCouplings couplingsSU3NJL3DCutoff(interactionTerms, gs, kappa);
+
+		return couplingsSU3NJL3DCutoff;
+	}
+	else if( interactionTerms==interactions_4SP_det_8SP )
+	{
+		double fourQuarkSPCouplingCutoff2 = config.getDouble("NJLDimensionfulCouplings", "fourQuarkSPCouplingCutoff2");
+		double determinantCouplingCutoff5 = config.getDouble("NJLDimensionfulCouplings", "determinantCouplingCutoff5");
+		double eightQuarkSPOziViolatingCouplingCutoff8 = config.getDouble("NJLDimensionfulCouplings", "eightQuarkSPOziViolatingCouplingCutoff8");
+		double eightQuarkSPNonOziViolatingCouplingCutoff8 = config.getDouble("NJLDimensionfulCouplings", "eightQuarkSPNonOziViolatingCouplingCutoff8");
+		
+		cout << "fourQuarkSPCouplingCutoff2 = " << fourQuarkSPCouplingCutoff2 << endl;
+		cout << "determinantCouplingCutoff5 = " << determinantCouplingCutoff5 << endl;
+		cout << "eightQuarkSPOziViolatingCouplingCutoff8 = " << eightQuarkSPOziViolatingCouplingCutoff8 << endl;
+		cout << "eightQuarkSPNonOziViolatingCouplingCutoff8 = " << eightQuarkSPNonOziViolatingCouplingCutoff8 << endl;
+		
+		double gs = fourQuarkSPCouplingCutoff2/pow(cutoff_GeV, 2);
+		double kappa = determinantCouplingCutoff5/pow(cutoff_GeV, 5);
+		double g1 = eightQuarkSPOziViolatingCouplingCutoff8/pow(cutoff_GeV, 8);
+		double g2 = eightQuarkSPNonOziViolatingCouplingCutoff8/pow(cutoff_GeV, 8);    
+		
+		NJLDimensionfulCouplings couplingsSU3NJL3DCutoff(interactionTerms, gs, kappa, g1, g2);
+
+		return couplingsSU3NJL3DCutoff;
+	}
+	else
+	{
+		cout << "Setting vector lagrangian interactions via ini file feeding is not yet supported. Aborting...";
+		abort();
+	}
+}

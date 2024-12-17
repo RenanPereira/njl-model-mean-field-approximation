@@ -51,6 +51,11 @@ int main(int argc, char* argv[])
     testIntegration1DimNewtonCotes();
 
 
+    cout << "\nTests\n";
+    IniFileParser configFile("test2.ini");
+    extractSU3NJL3DCutoffDimensionfulCouplings(configFile);
+
+
 /*
     //parameter set A (Klevansky parameter set)
     double cutoff = 0.6023;

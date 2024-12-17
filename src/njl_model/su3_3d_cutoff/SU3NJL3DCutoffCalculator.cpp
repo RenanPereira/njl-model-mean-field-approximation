@@ -8,7 +8,7 @@ using namespace std;
 
 void evaluateSU3NJL3DCutoffVacuumMasses(const IniFileParser& config)
 {   
-    // SU3NJL3DCutoffModelParameters
+    // Get SU3 NJL 3D Cutoff Model Parameters
     cout << "\nSU3NJL3DCutoffModelParameters:" << endl;
 
     string parameterSetName = config.getValue("SU3NJL3DCutoffModelParameters", "parameterSetName");
@@ -26,45 +26,18 @@ void evaluateSU3NJL3DCutoffVacuumMasses(const IniFileParser& config)
     cout << "strangeCurrentQuarkMass_GeV = " << strangeCurrentQuarkMass_GeV << endl;
 
 
-    //////////////////////////////////////////
-
-    // NJLDimensionfulCouplings
-    cout << "\nNJLDimensionfulCouplings: " << endl;
-
-    string interactionTerms = config.getValue("NJLDimensionfulCouplings", "lagrangianInteractions");
-    cout << "interactionTerms = " << toStringLagrangianInteractions(fromStringLagrangianInteractions(interactionTerms)) << endl;
-
-    double fourQuarkSPCouplingCutoff2 = config.getDouble("NJLDimensionfulCouplings", "fourQuarkSPCouplingCutoff2");
-    cout << "fourQuarkSPCouplingCutoff2 = " << fourQuarkSPCouplingCutoff2 << endl;
-
-    double determinantCouplingCutoff5 = config.getDouble("NJLDimensionfulCouplings", "determinantCouplingCutoff5");
-    cout << "determinantCouplingCutoff5 = " << determinantCouplingCutoff5 << endl;
-
-    double eightQuarkSPOziViolatingCouplingCutoff8 = config.getDouble("NJLDimensionfulCouplings", "eightQuarkSPOziViolatingCouplingCutoff8");
-    cout << "eightQuarkSPOziViolatingCouplingCutoff8 = " << eightQuarkSPOziViolatingCouplingCutoff8 << endl;
-
-    double eightQuarkSPNonOziViolatingCouplingCutoff8 = config.getDouble("NJLDimensionfulCouplings", "eightQuarkSPNonOziViolatingCouplingCutoff8");
-    cout << "eightQuarkSPNonOziViolatingCouplingCutoff8 = " << eightQuarkSPNonOziViolatingCouplingCutoff8 << endl;
-
-    //Fix Lagrangian couplings
-    double gs = fourQuarkSPCouplingCutoff2/pow(cutoff_GeV, 2);
-    double kappa = determinantCouplingCutoff5/pow(cutoff_GeV, 5);
-    double g1 = eightQuarkSPOziViolatingCouplingCutoff8/pow(cutoff_GeV, 8);
-    double g2 = eightQuarkSPNonOziViolatingCouplingCutoff8/pow(cutoff_GeV, 8);
-
-    NJLDimensionfulCouplings couplings(fromStringLagrangianInteractions(interactionTerms), gs, kappa, g1, g2);
-    
-    //////////////////////////////////////////
+    // Get SU3 NJL 3D Cutoff Dimensionful Couplings
+    NJLDimensionfulCouplings couplings = extractSU3NJL3DCutoffDimensionfulCouplings(config);
 
 
-    // NJLDimensionfulCouplings
-    cout << "\nNJLDimensionfulCouplings: " << endl;
+    // SU3 NJL 3D Cutoff Gap Equations Vacuum Parameters
+    cout << "\nSU3NJL3DCutoffGapEquationsVacuumParameters: " << endl;
 
-    double gapPrecision = config.getDouble("SU3NJL3DCutoffGapEquationsVacuum", "gapPrecision");
-    string rootFindingMethod = config.getValue("SU3NJL3DCutoffGapEquationsVacuum", "rootFindingMethod");
-    double upQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuum", "upQuarkMassGuess");
-    double downQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuum", "downQuarkMassGuess");
-    double strangeQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuum", "strangeQuarkMassGuess");
+    double gapPrecision = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "gapPrecision");
+    string rootFindingMethod = config.getValue("SU3NJL3DCutoffGapEquationsVacuumParameters", "rootFindingMethod");
+    double upQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "upQuarkMassGuess");
+    double downQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "downQuarkMassGuess");
+    double strangeQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "strangeQuarkMassGuess");
 
     cout << "gapPrecision = " << gapPrecision << endl;
     cout << "rootFindingMethod = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(rootFindingMethod)) << endl;
@@ -83,7 +56,9 @@ void evaluateSU3NJL3DCutoffVacuumMasses(const IniFileParser& config)
     parameters.setParameterSetName(parameterSetName);
 
 
-    //solve model in the vacuum
+    // Solve model in the vacuum
+    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in vacuum...\n";
+
     SU3NJL3DCutoffVacuum vacuum(parameters);
     vacuum.solve(gapPrecision, 
                  stringToMultiRootFindingMethod(rootFindingMethod), 
@@ -95,7 +70,7 @@ void evaluateSU3NJL3DCutoffVacuumMasses(const IniFileParser& config)
     double Md = vacuum.getDownQuarkEffectiveMass();
     double Ms = vacuum.getStrangeQuarkEffectiveMass();
 
-    cout << "\nVacuum effective masses: \n";
+    cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(gapPrecision) << "\n";
     cout << "Mu[GeV] = " << Mu << "\n" 
          << "Md[GeV] = " << Md << "\n" 

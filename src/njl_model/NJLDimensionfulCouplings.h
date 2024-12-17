@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "physics_utils/distribution_functions.h"
+#include "ini_file_parser/IniFileParser.h"
 
 using namespace std;
 
@@ -105,5 +106,6 @@ public:
 
 vector<double> multiQuarkVPCouplingWithDimensions(vector<double> , double );
 
+NJLDimensionfulCouplings extractSU3NJL3DCutoffDimensionfulCouplings(const IniFileParser& );
 
 #endif
