@@ -17,7 +17,6 @@ private:
 public:
     IniFileParser(const std::string& );
 
-public:
     std::string getFilename() const{ return filename; };
 
     // Method for getting a specific value from a given section
@@ -40,6 +39,11 @@ public:
     double getDouble(const std::map<std::string, std::string>& , const std::string& , double ) const;
 
     static std::string trim(const std::string& );
+
+    bool isKeyPresent(const std::string& section, const std::string& key) const;
+    bool validatePositiveDouble(const std::string& section, const std::string& key, 
+                                const std::string& invalidFileMessage, const std::string& conditionMessage) const;
+    std::string sectionConditionMustBeSatisfiedMessage(const std::string section, const std::string condition) const;
 };
 
 

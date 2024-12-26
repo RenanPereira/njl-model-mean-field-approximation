@@ -2,32 +2,37 @@
 #define NJLDIMENSIONFULCOUPLINGS_H
 
 #include <vector>
-#include "physics_utils/distribution_functions.h"
+#include <string>
 #include "ini_file_parser/IniFileParser.h"
 
 using namespace std;
 
 
-enum lagrangianInteractions { interactions_4SP_det,
-							  interactions_4SP_det_4VP,
-							  interactions_4SP_det_4VP_8VP,
-							  interactions_4SP_det_4VP_8VP_12VP,
-							  interactions_4SP_det_4VP_8VP_12VP_16VP,
-							  interactions_4SP_det_4VP_4VIPI,
-							  interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI,
-							  interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI,
-							  interactions_4SP_det_4VP_8VP_8SPVP,
-							  interactions_4SP_det_8SP,
-							  interactions_4SP_det_8SP_4VP_8VP,
-							  interactions_4SP_det_8SP_4VP_8VP_8SPVP,
-							  interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI,
-							  interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI,
-							  interactions_4SP_det_multiVP };
+enum lagrangianInteractions { 
+	interactions_4SP_det,
+	interactions_4SP_det_4VP,
+	interactions_4SP_det_4VP_8VP,
+	interactions_4SP_det_4VP_8VP_12VP,
+	interactions_4SP_det_4VP_8VP_12VP_16VP,
+	interactions_4SP_det_4VP_4VIPI,
+	interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI,
+	interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI,
+	interactions_4SP_det_4VP_8VP_8SPVP,
+	interactions_4SP_det_8SP,
+	interactions_4SP_det_8SP_4VP_8VP,
+	interactions_4SP_det_8SP_4VP_8VP_8SPVP,
+	interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI,
+	interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI,
+	interactions_4SP_det_multiVP,
+	lagrangianInteractionsCount // Used as the boundary, add new methods above this value! 
+};
 
 
 string toStringLagrangianInteractions(lagrangianInteractions );
 
 lagrangianInteractions fromStringLagrangianInteractions(const string& );
+
+bool isValidLagrangianInteractions(const std::string& );
 
 
 class NJLDimensionfulCouplings
@@ -106,6 +111,6 @@ public:
 
 vector<double> multiQuarkVPCouplingWithDimensions(vector<double> , double );
 
-NJLDimensionfulCouplings extractSU3NJL3DCutoffDimensionfulCouplings(const IniFileParser& );
+bool validateNJLDimensionfulCouplings(const IniFileParser& );
 
 #endif

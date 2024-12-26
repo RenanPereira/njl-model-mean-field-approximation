@@ -21,6 +21,7 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
 #include "group_theory/UnitaryGroup3Dimensions.h"
 #include <gsl/gsl_complex.h>
 
@@ -49,11 +50,6 @@ int main(int argc, char* argv[])
 
     testIntegration1DimGSL();
     testIntegration1DimNewtonCotes();
-
-
-    cout << "\nTests\n";
-    IniFileParser configFile("test2.ini");
-    extractSU3NJL3DCutoffDimensionfulCouplings(configFile);
 
 
 /*

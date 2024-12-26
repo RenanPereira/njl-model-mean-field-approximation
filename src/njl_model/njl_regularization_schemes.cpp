@@ -41,3 +41,24 @@ NJL3DCutoffRegularizationScheme stringToNJL3DCutoffRegularizationScheme(const st
         abort();
     }
 }
+
+bool isValidNJL3DCutoffRegularizationScheme(const string& regularizationSchemeString)
+{
+    bool isRegularizationSchemeValid = false;
+    int numberOfMethods = static_cast<int>(NJL3DCutoffRegularizationScheme(NJL3DCutoffRegularizationSchemeCount));
+    for (int i = 0; i < numberOfMethods; ++i) 
+    {   
+        if ( regularizationSchemeString==toStringNJL3DCutoffRegularizationScheme(static_cast<NJL3DCutoffRegularizationScheme>(i)) )
+        {
+            isRegularizationSchemeValid = true;
+            break;
+        }
+    }
+
+    if( isRegularizationSchemeValid==false )
+    {
+        cout << "The value " + regularizationSchemeString + " is not a NJL3DCutoffRegularizationScheme!\n";
+    }
+    
+    return isRegularizationSchemeValid;
+}

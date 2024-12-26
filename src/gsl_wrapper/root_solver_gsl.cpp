@@ -38,13 +38,16 @@ MultiRootFindingMethod stringToMultiRootFindingMethod(const string& methodStr)
     if (methodStr == "hybrids") 
     {
         return hybrids;
-    } else if (methodStr == "hybrid") 
+    } 
+    else if (methodStr == "hybrid") 
     {
         return hybrid;
-    } else if (methodStr == "dnewton") 
+    } 
+    else if (methodStr == "dnewton") 
     {
         return dnewton;
-    } else if (methodStr == "broyden") 
+    } 
+    else if (methodStr == "broyden") 
     {
         return broyden;
     } 
@@ -53,6 +56,28 @@ MultiRootFindingMethod stringToMultiRootFindingMethod(const string& methodStr)
         cout << "Invalid stringToMultiRootFindingMethod string: " + methodStr + ". Aborting!\n";
         abort();
     }
+}
+
+
+bool isValidMultiRootFindingMethod(const string& methodString)
+{
+    bool isMultiRootFindingMethodValid = false;
+    int numberOfMethods = static_cast<int>(MultiRootFindingMethod(MultiRootFindingMethodCount));
+    for (int i = 0; i < numberOfMethods; ++i) 
+    {   
+        if ( methodString==toStringMultiRootFindingMethod(static_cast<MultiRootFindingMethod>(i)) )
+        {
+            isMultiRootFindingMethodValid = true;
+            break;
+        }
+    }
+    
+    if( isMultiRootFindingMethodValid==false )
+    {
+        cout << "The value " + methodString + " is not a MultiRootFindingMethod!\n";
+    }
+
+    return isMultiRootFindingMethodValid;
 }
 
 

@@ -20,6 +20,7 @@ DEPS = src/command_line_processor.h \
        src/physics_utils/distribution_functions.h \
        src/physics_utils/physical_constants.h \
        src/ini_file_parser/IniFileParser.h \
+       src/njl_model/NJLDimensionlessCouplings.h \
        src/njl_model/NJLDimensionfulCouplings.h \
        src/njl_model/njl_regularization_schemes.h \
        src/njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h \

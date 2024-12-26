@@ -5,11 +5,20 @@
 #include <gsl/gsl_vector.h>
 #include "gsl_wrapper/ComplexSquareMatrixGSL.h"
 
-enum MultiRootFindingMethod { hybrids, hybrid, dnewton, broyden };
+enum MultiRootFindingMethod 
+{ 
+    hybrids, 
+    hybrid, 
+    dnewton, 
+    broyden,
+    MultiRootFindingMethodCount // Used as the boundary, add new methods above this value! 
+};
 
 string toStringMultiRootFindingMethod(MultiRootFindingMethod );
 
 MultiRootFindingMethod stringToMultiRootFindingMethod(const string& );
+
+bool isValidMultiRootFindingMethod(const string& );
 
 void multiDimensionalRootFind(int , double , double* , void* , int (const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod );
 

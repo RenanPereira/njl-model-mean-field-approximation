@@ -242,3 +242,44 @@ std::string IniFileParser::trim(const std::string& str)
 		return str.substr(start, end - start + 1);
 	}
 }
+
+bool IniFileParser::isKeyPresent(const std::string& section, const std::string& key) const 
+{
+    if ( getValue(section, key).empty() ) 
+    {
+        std::cout << "Error: Missing key '" << key << "' in section '" << section << "'.\n";
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+bool IniFileParser::validatePositiveDouble(const std::string& section, const std::string& key, 
+                                           const std::string& invalidFileMessage, const std::string& conditionMessage) const 
+{
+    if ( isKeyPresent(section, key)==true )
+    {
+        double value = getDouble(section, key, -1.0);
+        if (value <= 0) 
+        {
+            std::cout << invalidFileMessage << "\n" << conditionMessage << std::endl;
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+std::string IniFileParser::sectionConditionMustBeSatisfiedMessage(const std::string section, const std::string condition) const
+{   
+    std::string message = "In the section '" + section + "', the following condition must be satisfied: " + condition + " .";
+    return message;
+}

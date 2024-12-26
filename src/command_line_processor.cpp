@@ -55,11 +55,12 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	if(fileTypeStr=="evaluateSU3NJL3DCutoffVacuumMasses")
 	{	
 		//Check if file is written conrrectly
-		const SU3NJL3DCutoffVacuumFileParser checker(configFile);
-		bool fileIsNice = checker.validateFileQuality();
+		const SU3NJL3DCutoffVacuumFileParser config(configFile);
+		bool fileIsNice = config.validateFileQuality();
 		if( fileIsNice==true )
 		{	
-			evaluateSU3NJL3DCutoffVacuumMasses(configFile);
+			//evaluateSU3NJL3DCutoffVacuumMasses(configFile);
+			config.evaluateVacuumMasses();
 		}
 		else
 		{
