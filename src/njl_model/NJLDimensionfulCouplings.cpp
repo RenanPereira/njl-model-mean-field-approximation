@@ -6,7 +6,7 @@
 using namespace std;
 
 
-string toStringLagrangianInteractions(lagrangianInteractions interaction) 
+string toStringLagrangianInteractions(LagrangianInteractions interaction) 
 {
     switch (interaction) 
 	{
@@ -41,13 +41,13 @@ string toStringLagrangianInteractions(lagrangianInteractions interaction)
         case interactions_4SP_det_multiVP:
             return "interactions_4SP_det_multiVP";
         default:
-			cout << "Invalid lagrangianInteractions value, returning Unknown" << endl;
+			cout << "Invalid LagrangianInteractions value, returning Unknown" << endl;
             return "Unknown";
     }
 }
 
 
-lagrangianInteractions fromStringLagrangianInteractions(const string& interactionStr) 
+LagrangianInteractions fromStringLagrangianInteractions(const string& interactionStr) 
 {
     if (interactionStr == "interactions_4SP_det") 
 	{
@@ -111,7 +111,7 @@ lagrangianInteractions fromStringLagrangianInteractions(const string& interactio
     } 
 	else 
 	{
-        cout << "Invalid lagrangianInteractions string: " + interactionStr + ". Aborting!\n";
+        cout << "Invalid LagrangianInteractions string: " + interactionStr + ". Aborting!\n";
         abort();
     }
 }
@@ -120,10 +120,10 @@ lagrangianInteractions fromStringLagrangianInteractions(const string& interactio
 bool isValidLagrangianInteractions(const string& interactionString)
 {
     bool isLagrangianInteractionsValid = false;
-    int numberOfMethods = static_cast<int>(lagrangianInteractions(lagrangianInteractionsCount));
+    int numberOfMethods = static_cast<int>(LagrangianInteractions(lagrangianInteractionsCount));
     for (int i = 0; i < numberOfMethods; ++i) 
     {   
-        if ( interactionString==toStringLagrangianInteractions(static_cast<lagrangianInteractions>(i)) )
+        if ( interactionString==toStringLagrangianInteractions(static_cast<LagrangianInteractions>(i)) )
         {
             isLagrangianInteractionsValid = true;
             break;
@@ -132,7 +132,7 @@ bool isValidLagrangianInteractions(const string& interactionString)
 
     if( isLagrangianInteractionsValid==false )
     {
-        cout << "The value " + interactionString + " is not a lagrangianInteractions!\n";
+        cout << "The value " + interactionString + " is not a LagrangianInteractions!\n";
     }
 
     return isLagrangianInteractionsValid;
@@ -145,7 +145,7 @@ void NJLDimensionfulCouplings::errorWrongConstructor()
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2)
 {	
 	interactions = interactionsAux;
 
@@ -158,7 +158,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2, double c3)
 {
 	interactions = interactionsAux;
 
@@ -172,7 +172,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4)
 {	
 	interactions = interactionsAux;
 
@@ -201,7 +201,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5)
 {
 	interactions = interactionsAux;
 
@@ -225,7 +225,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6)
 {
 	interactions = interactionsAux;
 
@@ -251,7 +251,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7)
 {
 	interactions = interactionsAux;
 
@@ -279,7 +279,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7, double c8, double c9)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7, double c8, double c9)
 {	
 	interactions = interactionsAux;
 
@@ -311,7 +311,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7, double c8, double c9, double c10, double c11)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2, double c3, double c4, double c5, double c6, double c7, double c8, double c9, double c10, double c11)
 {
 	interactions = interactionsAux;
 
@@ -333,7 +333,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions intera
 }
 
 
-NJLDimensionfulCouplings::NJLDimensionfulCouplings(lagrangianInteractions interactionsAux, double c1, double c2, vector<double> v)
+NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions interactionsAux, double c1, double c2, vector<double> v)
 {	
 	interactions = interactionsAux;
 
@@ -370,7 +370,7 @@ vector<double> multiQuarkVPCouplingWithDimensions(vector<double> multiQuarkVPCou
 bool validateNJLDimensionfulCouplings(const IniFileParser& config)
 {    
     string sectionNJLDimensionfulCouplings = "NJLDimensionfulCouplings";
-    lagrangianInteractions interaction = fromStringLagrangianInteractions(config.getValue(sectionNJLDimensionfulCouplings, "lagrangianInteractions"));
+    LagrangianInteractions interaction = fromStringLagrangianInteractions(config.getValue(sectionNJLDimensionfulCouplings, "lagrangianInteractions"));
 	
     if ( interaction==interactions_4SP_det )
 	{   

@@ -112,7 +112,7 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
     double cPS = solution.getStrangeQuarkChemicalPotential();
 
     //This solution does not take into account vector degrees of freedom
-    lagrangianInteractions lagrangianInteractionsAux = solution.getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
+    LagrangianInteractions lagrangianInteractionsAux = solution.getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
     if ( lagrangianInteractionsAux!=interactions_4SP_det && lagrangianInteractionsAux!=interactions_4SP_det_8SP  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";

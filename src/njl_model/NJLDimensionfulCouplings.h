@@ -8,7 +8,7 @@
 using namespace std;
 
 
-enum lagrangianInteractions { 
+enum LagrangianInteractions { 
 	interactions_4SP_det,
 	interactions_4SP_det_4VP,
 	interactions_4SP_det_4VP_8VP,
@@ -28,9 +28,9 @@ enum lagrangianInteractions {
 };
 
 
-string toStringLagrangianInteractions(lagrangianInteractions );
+string toStringLagrangianInteractions(LagrangianInteractions );
 
-lagrangianInteractions fromStringLagrangianInteractions(const string& );
+LagrangianInteractions fromStringLagrangianInteractions(const string& );
 
 bool isValidLagrangianInteractions(const std::string& );
 
@@ -39,7 +39,7 @@ class NJLDimensionfulCouplings
 {
 //quark interactions: SP=ScalarPseudoscalar , VP=VectorPseudovector , VIPI=VectorIsovectorPseudovectorIsovector
 private:
-	lagrangianInteractions interactions;
+	LagrangianInteractions interactions;
 
 	//4 quark interaction couplings[GeV-2]
 	double fourQuarkSPCoupling = 0.0;//g
@@ -70,17 +70,17 @@ private:
 
 public:
 	NJLDimensionfulCouplings(){};
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double );
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double );
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double );
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double );
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double , double );
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double , double , double );
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double , double , double , double , double );
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double , double , double , double , double , double , double , double , double , double );
-	NJLDimensionfulCouplings(lagrangianInteractions , double , double , vector<double> );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double , double );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double , double , double );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double , double , double , double );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double , double , double , double , double , double );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double , double , double , double , double , double , double , double );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , vector<double> );
 
-	lagrangianInteractions getLagrangianInteractions(){ return interactions; };
+	LagrangianInteractions getLagrangianInteractions(){ return interactions; };
 	
 	double getFourQuarkSPCoupling(){ return fourQuarkSPCoupling; };
 	double getFourQuarkVPCoupling(){ return fourQuarkVPCoupling; };
