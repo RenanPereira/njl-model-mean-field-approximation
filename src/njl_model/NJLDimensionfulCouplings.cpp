@@ -367,10 +367,9 @@ vector<double> multiQuarkVPCouplingWithDimensions(vector<double> multiQuarkVPCou
 }
 
 
-bool validateNJLDimensionfulCouplings(const IniFileParser& config)
+bool validateNJLDimensionfulCouplings(const IniFileParser& config, string sectionNJLDimensionfulCouplings, string keyLagrangianInteractions)
 {    
-    string sectionNJLDimensionfulCouplings = "NJLDimensionfulCouplings";
-    LagrangianInteractions interaction = fromStringLagrangianInteractions(config.getValue(sectionNJLDimensionfulCouplings, "lagrangianInteractions"));
+    LagrangianInteractions interaction = fromStringLagrangianInteractions(config.getValue(sectionNJLDimensionfulCouplings, keyLagrangianInteractions));
 	
     if ( interaction==interactions_4SP_det )
 	{   

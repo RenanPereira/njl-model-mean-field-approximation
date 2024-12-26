@@ -174,7 +174,9 @@ bool SU3NJL3DCutoffVacuumFileParser::validateDimensionfulCouplings() const
     bool areCouplingsValid = false;
     if ( isLagrangianInteractionsValid )
     {
-        areCouplingsValid = validateNJLDimensionfulCouplings(config);
+        areCouplingsValid = validateNJLDimensionfulCouplings(config,
+                                                             SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section,
+                                                             SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::lagrangianInteractions);
     }
 
     return areCouplingsValid;

@@ -111,6 +111,6 @@ public:
 
 vector<double> multiQuarkVPCouplingWithDimensions(vector<double> , double );
 
-bool validateNJLDimensionfulCouplings(const IniFileParser& );
+bool validateNJLDimensionfulCouplings(const IniFileParser& , string , string );
 
 #endif
