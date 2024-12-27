@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
     double m0s = 0.1407;
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det, gs, kappa);
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
     double m0s = 0.138868437136382;
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det_8SP, gs, kappa, g1, g2);
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_SP8Q, gs, kappa, g1, g2);
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
     double m0s = 0.138868437136382;
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det_8SP, gs, kappa, g1, g2);
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_SP8Q, gs, kappa, g1, g2);
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
@@ -223,13 +223,13 @@ int main(int argc, char* argv[])
     //double gOmega4 = 7.0*pow(0.5*gs, 10);
 
     //Fix Lagrangian dimensionful couplings
-    //NJLDimensionfulCouplings couplings(interactions_4SP_det_4VP_8VP_12VP_16VP, gs, kappa, gOmega1, gOmega2, gOmega3, gOmega4);
+    //NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q, gs, kappa, gOmega1, gOmega2, gOmega3, gOmega4);
 
     vector<double> gOmegaAdimensional = {0.8, 1.0, -3.0, 3.0, -1.0};
     vector<double> gOmegaDimensionful = multiQuarkVPCouplingWithDimensions(gOmegaAdimensional, 0.5*gs);
     
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det_multiVP, gs, kappa, gOmegaDimensionful);
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_VPMULTIQ, gs, kappa, gOmegaDimensionful);
 
 
     //Create NJL parameter set

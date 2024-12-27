@@ -113,7 +113,7 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
 
     //This solution does not take into account vector degrees of freedom
     LagrangianInteractions lagrangianInteractionsAux = solution.getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractionsAux!=interactions_4SP_det && lagrangianInteractionsAux!=interactions_4SP_det_8SP  )
+    if ( lagrangianInteractionsAux!=SP4Q_DET2NFQ && lagrangianInteractionsAux!=SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
         abort();
@@ -471,7 +471,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
     double m0s = 0.1407;
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det, gs, kappa);
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
@@ -544,7 +544,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
 
     
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det, gs, kappa);
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);

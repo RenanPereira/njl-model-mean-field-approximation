@@ -183,7 +183,7 @@
 
     
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI, 
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q, 
                                        gs, kappa, gOmega1, gRho1, gOmega2, gRho2, gOmegaRho, gSigmaOmega, gSigmaRho);
 
     //Create NJL parameter set
