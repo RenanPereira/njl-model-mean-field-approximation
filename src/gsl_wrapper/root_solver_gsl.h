@@ -2,16 +2,28 @@
 #define ROOT_SOLVER_GSL_H
 
 #include <vector>
+#include <map>
 #include <gsl/gsl_vector.h>
 #include "gsl_wrapper/ComplexSquareMatrixGSL.h"
+
+
+// Maximum number of iterations in the root-finding loops
+const int MAX_ITERATIONS = 1000;
 
 enum MultiRootFindingMethod 
 { 
     hybrids, 
     hybrid, 
     dnewton, 
-    broyden,
-    MultiRootFindingMethodCount // Used as the boundary, add new methods above this value! 
+    broyden
+};
+
+static const std::map<MultiRootFindingMethod, std::string> MultiRootFindingMethodMap = 
+{
+    {MultiRootFindingMethod::hybrids, "hybrids"},
+    {MultiRootFindingMethod::hybrid, "hybrid"},
+    {MultiRootFindingMethod::dnewton, "dnewton"},
+    {MultiRootFindingMethod::broyden, "broyden"}
 };
 
 string toStringMultiRootFindingMethod(MultiRootFindingMethod );

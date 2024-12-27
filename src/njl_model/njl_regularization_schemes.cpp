@@ -4,51 +4,45 @@
 
 using namespace std;
 
+
 string toStringNJL3DCutoffRegularizationScheme(NJL3DCutoffRegularizationScheme scheme) 
 {
-    switch (scheme) 
+    // Check if the method exists in the map using count
+    if (NJL3DCutoffRegularizationSchemeMap.count(scheme))
     {
-        case cutoffEverywhere:
-            return "cutoffEverywhere";
-        case cutoffEverywhereWithCTmu:
-            return "cutoffEverywhereWithCTmu";
-        case cutoffOnDivergentIntegralsOnly:
-            return "cutoffOnDivergentIntegralsOnly";
-        default:
-            cout << "Invalid NJL3DCutoffRegularizationScheme value, returning Unknown" << endl;
-            return "Unknown";
-    }
-}
-
-
-NJL3DCutoffRegularizationScheme stringToNJL3DCutoffRegularizationScheme(const string& schemeStr) 
-{
-    if (schemeStr == "cutoffEverywhere") 
-    {
-        return cutoffEverywhere;
-    } 
-    else if (schemeStr == "cutoffEverywhereWithCTmu") 
-    {
-        return cutoffEverywhereWithCTmu;
-    } 
-    else if (schemeStr == "cutoffOnDivergentIntegralsOnly") 
-    {
-        return cutoffOnDivergentIntegralsOnly;
+        return NJL3DCutoffRegularizationSchemeMap.at(scheme);
     } 
     else 
     {
-        cout << "Invalid NJL3DCutoffRegularizationScheme string: " + schemeStr + ". Aborting!\n";
-        abort();
+        cout << "Error: NJL3DCutoffRegularizationScheme not found in map! Returning UNKNOWN." << endl;
+        return "UNKNOWN";
     }
 }
 
-bool isValidNJL3DCutoffRegularizationScheme(const string& regularizationSchemeString)
+
+NJL3DCutoffRegularizationScheme stringToNJL3DCutoffRegularizationScheme(const string& schemeString) 
+{
+    // Iterate over the map with explicit type
+    for (map<NJL3DCutoffRegularizationScheme, string>::const_iterator it = NJL3DCutoffRegularizationSchemeMap.begin(); it != NJL3DCutoffRegularizationSchemeMap.end(); ++it) 
+    {
+        if (it->second == schemeString) 
+        {
+            return it->first;
+        }
+    }
+
+    cout << "Invalid NJL3DCutoffRegularizationScheme string: " + schemeString + ". Aborting!\n";
+    abort();
+}
+
+
+bool isValidNJL3DCutoffRegularizationScheme(const string& schemeString)
 {
     bool isRegularizationSchemeValid = false;
-    int numberOfMethods = static_cast<int>(NJL3DCutoffRegularizationScheme(NJL3DCutoffRegularizationSchemeCount));
-    for (int i = 0; i < numberOfMethods; ++i) 
-    {   
-        if ( regularizationSchemeString==toStringNJL3DCutoffRegularizationScheme(static_cast<NJL3DCutoffRegularizationScheme>(i)) )
+    // Iterate over the map with explicit type
+    for (map<NJL3DCutoffRegularizationScheme, string>::const_iterator it = NJL3DCutoffRegularizationSchemeMap.begin(); it != NJL3DCutoffRegularizationSchemeMap.end(); ++it) 
+    {
+        if (it->second == schemeString) 
         {
             isRegularizationSchemeValid = true;
             break;
@@ -57,7 +51,7 @@ bool isValidNJL3DCutoffRegularizationScheme(const string& regularizationSchemeSt
 
     if( isRegularizationSchemeValid==false )
     {
-        cout << "The value " + regularizationSchemeString + " is not a NJL3DCutoffRegularizationScheme!\n";
+        cout << "The value " + schemeString + " is not a NJL3DCutoffRegularizationScheme!\n";
     }
     
     return isRegularizationSchemeValid;

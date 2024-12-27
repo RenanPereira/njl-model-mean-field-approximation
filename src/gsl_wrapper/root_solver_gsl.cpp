@@ -10,68 +10,50 @@
 using namespace std;
 
 
-// Maximum number of iterations in the root-finding loops
-const int MAX_ITERATIONS = 1000;
-
-
 string toStringMultiRootFindingMethod(MultiRootFindingMethod method) 
 {
-    switch (method) 
+    // Check if the method exists in the map using count
+    if (MultiRootFindingMethodMap.count(method))
     {
-        case hybrids:
-            return "hybrids";
-        case hybrid:
-            return "hybrid";
-        case dnewton:
-            return "dnewton";
-        case broyden:
-            return "broyden";
-        default:
-            cout << "Invalid MultiRootFindingMethod value, returning Unknown" << endl;
-            return "Unknown";
+        return MultiRootFindingMethodMap.at(method);
+    } 
+    else 
+    {
+        cout << "Error: MultiRootFindingMethod not found in map! Returning UNKNOWN." << endl;
+        return "UNKNOWN";
     }
 }
 
 
-MultiRootFindingMethod stringToMultiRootFindingMethod(const string& methodStr) 
+MultiRootFindingMethod stringToMultiRootFindingMethod(const std::string& methodString) 
 {
-    if (methodStr == "hybrids") 
+    // Iterate over the map with explicit type
+    for (map<MultiRootFindingMethod, string>::const_iterator it = MultiRootFindingMethodMap.begin(); it != MultiRootFindingMethodMap.end(); ++it) 
     {
-        return hybrids;
-    } 
-    else if (methodStr == "hybrid") 
-    {
-        return hybrid;
-    } 
-    else if (methodStr == "dnewton") 
-    {
-        return dnewton;
-    } 
-    else if (methodStr == "broyden") 
-    {
-        return broyden;
-    } 
-    else 
-    {
-        cout << "Invalid stringToMultiRootFindingMethod string: " + methodStr + ". Aborting!\n";
-        abort();
+        if (it->second == methodString) 
+        {
+            return it->first;
+        }
     }
+
+    std::cout << "Invalid stringToMultiRootFindingMethod string: " << methodString << ". Aborting!" << std::endl;
+    abort();
 }
 
 
 bool isValidMultiRootFindingMethod(const string& methodString)
 {
     bool isMultiRootFindingMethodValid = false;
-    int numberOfMethods = static_cast<int>(MultiRootFindingMethod(MultiRootFindingMethodCount));
-    for (int i = 0; i < numberOfMethods; ++i) 
-    {   
-        if ( methodString==toStringMultiRootFindingMethod(static_cast<MultiRootFindingMethod>(i)) )
+    // Iterate over the map with explicit type
+    for (map<MultiRootFindingMethod, string>::const_iterator it = MultiRootFindingMethodMap.begin(); it != MultiRootFindingMethodMap.end(); ++it) 
+    {
+        if (it->second == methodString) 
         {
             isMultiRootFindingMethodValid = true;
             break;
         }
     }
-    
+
     if( isMultiRootFindingMethodValid==false )
     {
         cout << "The value " + methodString + " is not a MultiRootFindingMethod!\n";

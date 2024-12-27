@@ -16,7 +16,7 @@ NJLDimensionfulCouplings SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCoup
                                           SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV);
 
     LagrangianInteractions interaction = 
-        fromStringLagrangianInteractions(
+        stringToLagrangianInteractions(
             config.getValue(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
                             SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::lagrangianInteractions)
         );

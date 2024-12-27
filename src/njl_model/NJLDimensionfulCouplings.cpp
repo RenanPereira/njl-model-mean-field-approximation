@@ -8,122 +8,42 @@ using namespace std;
 
 string toStringLagrangianInteractions(LagrangianInteractions interaction) 
 {
-    switch (interaction) 
-	{
-        case interactions_4SP_det:
-            return "interactions_4SP_det";
-        case interactions_4SP_det_4VP:
-            return "interactions_4SP_det_4VP";
-        case interactions_4SP_det_4VP_8VP:
-            return "interactions_4SP_det_4VP_8VP";
-        case interactions_4SP_det_4VP_8VP_12VP:
-            return "interactions_4SP_det_4VP_8VP_12VP";
-        case interactions_4SP_det_4VP_8VP_12VP_16VP:
-            return "interactions_4SP_det_4VP_8VP_12VP_16VP";
-        case interactions_4SP_det_4VP_4VIPI:
-            return "interactions_4SP_det_4VP_4VIPI";
-        case interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI:
-            return "interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI";
-        case interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI:
-            return "interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI";
-        case interactions_4SP_det_4VP_8VP_8SPVP:
-            return "interactions_4SP_det_4VP_8VP_8SPVP";
-        case interactions_4SP_det_8SP:
-            return "interactions_4SP_det_8SP";
-        case interactions_4SP_det_8SP_4VP_8VP:
-            return "interactions_4SP_det_8SP_4VP_8VP";
-        case interactions_4SP_det_8SP_4VP_8VP_8SPVP:
-            return "interactions_4SP_det_8SP_4VP_8VP_8SPVP";
-        case interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI:
-            return "interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI";
-        case interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI:
-            return "interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI";
-        case interactions_4SP_det_multiVP:
-            return "interactions_4SP_det_multiVP";
-        default:
-			cout << "Invalid LagrangianInteractions value, returning Unknown" << endl;
-            return "Unknown";
+	// Check if the method exists in the map using count
+    if (LagrangianInteractionsMap.count(interaction))
+    {
+        return LagrangianInteractionsMap.at(interaction);
+    } 
+    else 
+    {
+        cout << "Error: LagrangianInteractions not found in map! Returning UNKNOWN." << endl;
+        return "UNKNOWN";
     }
 }
 
 
-LagrangianInteractions fromStringLagrangianInteractions(const string& interactionStr) 
+LagrangianInteractions stringToLagrangianInteractions(const string& interactionString) 
 {
-    if (interactionStr == "interactions_4SP_det") 
-	{
-        return interactions_4SP_det;
-    } 
-	else if (interactionStr == "interactions_4SP_det_4VP") 
-	{
-        return interactions_4SP_det_4VP;
-    } 
-	else if (interactionStr == "interactions_4SP_det_4VP_8VP") 
-	{
-        return interactions_4SP_det_4VP_8VP;
-    } 
-	else if (interactionStr == "interactions_4SP_det_4VP_8VP_12VP") 
-	{
-        return interactions_4SP_det_4VP_8VP_12VP;
-    } 
-	else if (interactionStr == "interactions_4SP_det_4VP_8VP_12VP_16VP") 
-	{
-        return interactions_4SP_det_4VP_8VP_12VP_16VP;
-    } 
-	else if (interactionStr == "interactions_4SP_det_4VP_4VIPI") 
-	{
-        return interactions_4SP_det_4VP_4VIPI;
-    } 
-	else if (interactionStr == "interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI") 
-	{
-        return interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI;
-    } 
-	else if (interactionStr == "interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI") 
-	{
-        return interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI;
-    } 
-	else if (interactionStr == "interactions_4SP_det_4VP_8VP_8SPVP") 
-	{
-        return interactions_4SP_det_4VP_8VP_8SPVP;
-    } 
-	else if (interactionStr == "interactions_4SP_det_8SP") 
-	{
-        return interactions_4SP_det_8SP;
-    } 
-	else if (interactionStr == "interactions_4SP_det_8SP_4VP_8VP") 
-	{
-        return interactions_4SP_det_8SP_4VP_8VP;
-    } 
-	else if (interactionStr == "interactions_4SP_det_8SP_4VP_8VP_8SPVP") 
-	{
-        return interactions_4SP_det_8SP_4VP_8VP_8SPVP;
-    } 
-	else if (interactionStr == "interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI") 
-	{
-        return interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI;
-    } 
-	else if (interactionStr == "interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI") 
-	{
-        return interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI;
-    } 
-	else if (interactionStr == "interactions_4SP_det_multiVP") 
-	{
-        return interactions_4SP_det_multiVP;
-    } 
-	else 
-	{
-        cout << "Invalid LagrangianInteractions string: " + interactionStr + ". Aborting!\n";
-        abort();
+	// Iterate over the map with explicit type
+    for (map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
+    {
+        if (it->second == interactionString) 
+        {
+            return it->first;
+        }
     }
+
+    cout << "Invalid LagrangianInteractions string: " + interactionString + ". Aborting!\n";
+    abort();
 }
 
 
 bool isValidLagrangianInteractions(const string& interactionString)
 {
-    bool isLagrangianInteractionsValid = false;
-    int numberOfMethods = static_cast<int>(LagrangianInteractions(lagrangianInteractionsCount));
-    for (int i = 0; i < numberOfMethods; ++i) 
-    {   
-        if ( interactionString==toStringLagrangianInteractions(static_cast<LagrangianInteractions>(i)) )
+	bool isLagrangianInteractionsValid = false;
+    // Iterate over the map with explicit type
+    for (map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
+    {
+        if (it->second == interactionString) 
         {
             isLagrangianInteractionsValid = true;
             break;
@@ -369,7 +289,7 @@ vector<double> multiQuarkVPCouplingWithDimensions(vector<double> multiQuarkVPCou
 
 bool validateNJLDimensionfulCouplings(const IniFileParser& config, string sectionNJLDimensionfulCouplings, string keyLagrangianInteractions)
 {    
-    LagrangianInteractions interaction = fromStringLagrangianInteractions(config.getValue(sectionNJLDimensionfulCouplings, keyLagrangianInteractions));
+    LagrangianInteractions interaction = stringToLagrangianInteractions(config.getValue(sectionNJLDimensionfulCouplings, keyLagrangianInteractions));
 	
     if ( interaction==interactions_4SP_det )
 	{   

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include "ini_file_parser/IniFileParser.h"
 
 using namespace std;
@@ -23,14 +24,32 @@ enum LagrangianInteractions {
 	interactions_4SP_det_8SP_4VP_8VP_8SPVP,
 	interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI,
 	interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI,
-	interactions_4SP_det_multiVP,
-	lagrangianInteractionsCount // Used as the boundary, add new methods above this value! 
+	interactions_4SP_det_multiVP
 };
 
+// Create the mapping between the enum and its string representation
+static const map<LagrangianInteractions, string> LagrangianInteractionsMap = 
+{
+    {interactions_4SP_det, "interactions_4SP_det"},
+    {interactions_4SP_det_4VP, "interactions_4SP_det_4VP"},
+    {interactions_4SP_det_4VP_8VP, "interactions_4SP_det_4VP_8VP"},
+    {interactions_4SP_det_4VP_8VP_12VP, "interactions_4SP_det_4VP_8VP_12VP"},
+    {interactions_4SP_det_4VP_8VP_12VP_16VP, "interactions_4SP_det_4VP_8VP_12VP_16VP"},
+    {interactions_4SP_det_4VP_4VIPI, "interactions_4SP_det_4VP_4VIPI"},
+    {interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI, "interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI"},
+    {interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI, "interactions_4SP_det_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI"},
+    {interactions_4SP_det_4VP_8VP_8SPVP, "interactions_4SP_det_4VP_8VP_8SPVP"},
+    {interactions_4SP_det_8SP, "interactions_4SP_det_8SP"},
+    {interactions_4SP_det_8SP_4VP_8VP, "interactions_4SP_det_8SP_4VP_8VP"},
+    {interactions_4SP_det_8SP_4VP_8VP_8SPVP, "interactions_4SP_det_8SP_4VP_8VP_8SPVP"},
+    {interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI, "interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI"},
+    {interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI, "interactions_4SP_det_8SP_4VP_4VIPI_8VP_8VIPI_8VPVIPI_8SPVP_8SPVIPI"},
+    {interactions_4SP_det_multiVP, "interactions_4SP_det_multiVP"}
+};
 
 string toStringLagrangianInteractions(LagrangianInteractions );
 
-LagrangianInteractions fromStringLagrangianInteractions(const string& );
+LagrangianInteractions stringToLagrangianInteractions(const string& );
 
 bool isValidLagrangianInteractions(const std::string& );
 
