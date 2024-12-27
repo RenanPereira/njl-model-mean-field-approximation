@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
@@ -240,7 +240,7 @@ int main(int argc, char* argv[])
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(gapPrecision) << "\n";
@@ -252,7 +252,7 @@ int main(int argc, char* argv[])
     double rhoi = 1E-5*pow(hc_GeVfm, 3);
     double rhof = 3.80*pow(hc_GeVfm, 3);
     int NrhoB = 8000;
-    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, hybrids, "eos.dat");
+    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, HYBRIDS, "eos.dat");
 
 
     std::ofstream file;

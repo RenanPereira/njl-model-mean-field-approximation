@@ -12,18 +12,25 @@ const int MAX_ITERATIONS = 1000;
 
 enum MultiRootFindingMethod 
 { 
-    hybrids, 
-    hybrid, 
-    dnewton, 
-    broyden
+    HYBRIDS, 
+    HYBRID, 
+    DNEWTON, 
+    BROYDEN
 };
 
 static const std::map<MultiRootFindingMethod, std::string> MultiRootFindingMethodMap = 
 {
-    {MultiRootFindingMethod::hybrids, "hybrids"},
-    {MultiRootFindingMethod::hybrid, "hybrid"},
-    {MultiRootFindingMethod::dnewton, "dnewton"},
-    {MultiRootFindingMethod::broyden, "broyden"}
+    {MultiRootFindingMethod::HYBRIDS, "HYBRIDS"},
+    {MultiRootFindingMethod::HYBRID, "HYBRID"},
+    {MultiRootFindingMethod::DNEWTON, "DNEWTON"},
+    {MultiRootFindingMethod::BROYDEN, "BROYDEN"}
+};
+
+enum RootFindingMethod 
+{ 
+    brent, 
+    bisection, 
+    falsepos 
 };
 
 string toStringMultiRootFindingMethod(MultiRootFindingMethod );
@@ -33,8 +40,6 @@ MultiRootFindingMethod stringToMultiRootFindingMethod(const string& );
 bool isValidMultiRootFindingMethod(const string& );
 
 void multiDimensionalRootFind(int , double , double* , void* , int (const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod );
-
-enum RootFindingMethod { brent, bisection, falsepos };
 
 double OneDimensionalRootFind(double , double , double , void* , double placeholder_f (double, void*), RootFindingMethod );
 

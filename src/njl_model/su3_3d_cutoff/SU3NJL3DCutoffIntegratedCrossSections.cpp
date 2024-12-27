@@ -1707,7 +1707,7 @@ void evaluateIntegratedCrossSectionsWithZeroChemicalPotential(SU3NJL3DCutoffVacu
 {
     //solve model at zero chemical potential up to some finite temperature
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, minimumTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, hybrids);
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, minimumTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, HYBRIDS);
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
     {
         cout << finiteTSolution[i].getTemperature() << "\t" 
@@ -1717,7 +1717,7 @@ void evaluateIntegratedCrossSectionsWithZeroChemicalPotential(SU3NJL3DCutoffVacu
     }
 
     finiteTSolution = 
-    solveFromLowToHighTemperatureAtZeroChemicalPotential(finiteTSolution[finiteTSolution.size()-1], maximumTemperature, numberOfPointsFromMinToMaxTemp, gapPrecision, hybrids);
+    solveFromLowToHighTemperatureAtZeroChemicalPotential(finiteTSolution[finiteTSolution.size()-1], maximumTemperature, numberOfPointsFromMinToMaxTemp, gapPrecision, HYBRIDS);
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
     {
         cout << finiteTSolution[i].getTemperature() << "\t" 
@@ -1754,7 +1754,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum va
 {
     //solve model at zero chemical potential up to some finite temperature
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, fixedTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, hybrids);
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, fixedTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, HYBRIDS);
 
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
     {
@@ -1771,7 +1771,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum va
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution;
     if ( minChemPot>0 )
     {
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], minChemPot, numberOfPointsFromMinTempToMinChemPot, gapPrecision, hybrids);
+    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], minChemPot, numberOfPointsFromMinTempToMinChemPot, gapPrecision, HYBRIDS);
         for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
 	    {   
 	        cout << finiteChemPotSolution[i].getTemperature() << "\t"
@@ -1783,7 +1783,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum va
 	             << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
 	    }
 
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteChemPotSolution[finiteChemPotSolution.size()-1], maxChemPot, numberOfPointsFromMinToMaxChemPot, gapPrecision, hybrids);
+    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteChemPotSolution[finiteChemPotSolution.size()-1], maxChemPot, numberOfPointsFromMinToMaxChemPot, gapPrecision, HYBRIDS);
 	    for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
 	    {   
 	        cout << finiteChemPotSolution[i].getTemperature() << "\t"
@@ -1797,7 +1797,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum va
     }
     else
     {
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], maxChemPot, numberOfPointsFromMinTempToMinChemPot, gapPrecision, hybrids);
+    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], maxChemPot, numberOfPointsFromMinTempToMinChemPot, gapPrecision, HYBRIDS);
 	    for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
 	    {   
 	        cout << finiteChemPotSolution[i].getTemperature() << "\t"
@@ -1838,7 +1838,7 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(SU3NJL3DCutoffVac
 {
     //solve model at zero chemical potential up to some finite temperature
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, minimumTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, hybrids);
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, minimumTemperature, numberOfPointsFromVacToMinTemp, gapPrecision, HYBRIDS);
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
     {
         cout << finiteTSolution[i].getTemperature() << "\t" 
@@ -1848,7 +1848,7 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(SU3NJL3DCutoffVac
     }
 
 
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], chemPot, numberOfPointsMinTempToChemPot, gapPrecision, hybrids);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], chemPot, numberOfPointsMinTempToChemPot, gapPrecision, HYBRIDS);
     for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
     {   
         cout << finiteChemPotSolution[i].getTemperature() << "\t"
@@ -1862,7 +1862,7 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(SU3NJL3DCutoffVac
 
 
     finiteTSolution = 
-    solveFromLowToHighTemperature(finiteChemPotSolution[finiteChemPotSolution.size()-1], maximumTemperature, numberOfPointsFromMinToMaxTemp, gapPrecision, hybrids);
+    solveFromLowToHighTemperature(finiteChemPotSolution[finiteChemPotSolution.size()-1], maximumTemperature, numberOfPointsFromMinToMaxTemp, gapPrecision, HYBRIDS);
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
     {
         cout << finiteTSolution[i].getTemperature() << "\t" 

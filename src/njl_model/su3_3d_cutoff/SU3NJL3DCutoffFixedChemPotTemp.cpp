@@ -446,7 +446,7 @@ SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum
     if ( meltTest>0 )
     {
         mottSolution = SU3NJL3DCutoffFixedChemPotTemp(vacuumSolution.getParametersNJL(), 0.0, 0.0, 0.0);
-        mottSolution.findNondiagonalMesonMottTemperature(mesonID, mesonPropertiesPrecision, hybrids, 
+        mottSolution.findNondiagonalMesonMottTemperature(mesonID, mesonPropertiesPrecision, HYBRIDS, 
                                                          mesonFiniteT[meltingPointGuess].getUpQuarkEffectiveMass(), 
                                                          mesonFiniteT[meltingPointGuess].getDownQuarkEffectiveMass(), 
                                                          mesonFiniteT[meltingPointGuess].getStrangeQuarkEffectiveMass(), 
@@ -485,7 +485,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
 
     //find solution in the vacuum for the Klevansky parameter set
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
     cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
@@ -494,7 +494,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
 
 
     //solve gap equation from the vacuum up to finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, gapPrecision, hybrids);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, gapPrecision, HYBRIDS);
 
     double effMassU, effMassD, effMassS;
     effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
@@ -509,7 +509,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
     //solve gap equation from the finite temperature up to finite chemical potential
     if( chemPot>0.0 )
     {
-        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, gapPrecision, hybrids);
+        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, gapPrecision, HYBRIDS);
 
         effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
         effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();
@@ -554,7 +554,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
@@ -565,22 +565,22 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
 
     cout << "Pseudoscalar meson masses:\n";
 
-    SU3NJL3DCutoffMeson pionPlusMassSolution = vacuum.calculateMesonMassAndWidth(pionPlus, 1E-7, hybrids, 0.2, 0.2);
+    SU3NJL3DCutoffMeson pionPlusMassSolution = vacuum.calculateMesonMassAndWidth(pionPlus, 1E-7, HYBRIDS, 0.2, 0.2);
     cout << pionPlusMassSolution.getMesonMass() << "\t" << pionPlusMassSolution.getMesonWidth() << "\n";
 
-    SU3NJL3DCutoffMeson kaonPlusMassSolution = vacuum.calculateMesonMassAndWidth(kaonPlus, 1E-7, hybrids, 0.4, 0.2);
+    SU3NJL3DCutoffMeson kaonPlusMassSolution = vacuum.calculateMesonMassAndWidth(kaonPlus, 1E-7, HYBRIDS, 0.4, 0.2);
     cout << kaonPlusMassSolution.getMesonMass() << "\t" << kaonPlusMassSolution.getMesonWidth() << "\n";
 
     SU3NJL3DCutoffMeson diagonalMassSolution;
-    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(diagonalPseudoscalars, 1E-7, hybrids, 0.5, 0.2);
+    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(diagonalPseudoscalars, 1E-7, HYBRIDS, 0.5, 0.2);
     cout << diagonalMassSolution.getMesonMass() << "\t" << diagonalMassSolution.getMesonWidth() << "\n";
 
-    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(diagonalPseudoscalars, 1E-7, hybrids, 1.0, 0.2);
+    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(diagonalPseudoscalars, 1E-7, HYBRIDS, 1.0, 0.2);
     cout << diagonalMassSolution.getMesonMass() << "\t" << diagonalMassSolution.getMesonWidth() << "\n";
 
      cout << "Scalar meson masses:\n";
 
-    SU3NJL3DCutoffMeson sigmaPionPlusMassSolution = vacuum.calculateMesonMassAndWidth(sigmaPionPlus, 1E-7, hybrids, 0.2, 0.2);
+    SU3NJL3DCutoffMeson sigmaPionPlusMassSolution = vacuum.calculateMesonMassAndWidth(sigmaPionPlus, 1E-7, HYBRIDS, 0.2, 0.2);
     cout << sigmaPionPlusMassSolution.getMesonMass() << "\t" << sigmaPionPlusMassSolution.getMesonWidth() << "\n";
 
 
@@ -588,7 +588,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     double maximumTemperature = 0.400;
     int numberOfPoints = 400;
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, maximumTemperature, numberOfPoints, gapPrecision, hybrids);
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, maximumTemperature, numberOfPoints, gapPrecision, HYBRIDS);
 
 
     //Search for meson melting points in the range of temperatures considered above
@@ -600,13 +600,13 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     mesonMassVacuumGuess = 0.2;
     mesonWidthVacuumGuess = 0.2;
     mesonID = pionPlus;
-    SU3NJL3DCutoffFixedChemPotTemp meltingPointPionPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, hybrids, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    SU3NJL3DCutoffFixedChemPotTemp meltingPointPionPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, HYBRIDS, mesonMassVacuumGuess, mesonWidthVacuumGuess);
     cout << "pionPlus TMott: " << meltingPointPionPlus.getTemperature() << "\n";
 
     mesonMassVacuumGuess = 0.5;
     mesonWidthVacuumGuess = 0.2;
     mesonID = kaonPlus;
-    SU3NJL3DCutoffFixedChemPotTemp meltingPointKaonPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, hybrids, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    SU3NJL3DCutoffFixedChemPotTemp meltingPointKaonPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, HYBRIDS, mesonMassVacuumGuess, mesonWidthVacuumGuess);
     cout << "kaonPlus TMott: " << meltingPointKaonPlus.getTemperature() << "\n";
 }
 

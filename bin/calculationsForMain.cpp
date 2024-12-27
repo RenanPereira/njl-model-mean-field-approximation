@@ -31,7 +31,7 @@
         inMedium.setBaryonDensity(rho_B);
 
         //find quark masses and effective chemical potential
-        inMedium.solve(1E-8, hybrids, MuGuess, MdGuess, MsGuess, effectiveCPGuess);
+        inMedium.solve(1E-8, HYBRIDS, MuGuess, MdGuess, MsGuess, effectiveCPGuess);
 
         //guesses for next step
         MuGuess = inMedium.getUpQuarkEffectiveMass();
@@ -84,7 +84,7 @@
         SU3NJL3DCutoffBetaEqFixedTempRhoB betaEq(parameters, electronMass_GeV, temperature, rhoB);
 
         //find quark masses and effective chemical potential
-        betaEq.solve(1E-8, hybrids, mUGuess, mDGuess, mSGuess, effCPUGuess, effCPDGuess, effCPSGuess);
+        betaEq.solve(1E-8, HYBRIDS, mUGuess, mDGuess, mSGuess, effCPUGuess, effCPDGuess, effCPSGuess);
 
         //guesses for next step
         mUGuess = betaEq.getUpQuarkEffectiveMass();
@@ -118,7 +118,7 @@
 
 
     //find chiral transition
-    vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> transitionPoints = findChiralTransitionPointsFixedTemperature(betaEqSolutions, 1E-8, dnewton);
+    vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> transitionPoints = findChiralTransitionPointsFixedTemperature(betaEqSolutions, 1E-8, DNEWTON);
 
 
     //save EOS to file: if it has first order phase transition, save only after restoration 
@@ -194,7 +194,7 @@
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, hybrids, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(gapPrecision) << "\n";
@@ -206,7 +206,7 @@
     double rhoi = 1E-5*pow(hc_GeVfm, 3);
     double rhof = 2.50*pow(hc_GeVfm, 3);
     int NrhoB = 5000;
-    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, hybrids);
+    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, HYBRIDS);
 
 
 
