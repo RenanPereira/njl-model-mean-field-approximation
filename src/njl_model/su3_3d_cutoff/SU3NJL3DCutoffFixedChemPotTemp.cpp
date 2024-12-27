@@ -474,7 +474,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
     NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
 
 
     //numerical precisions
@@ -547,7 +547,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setA");
 
 

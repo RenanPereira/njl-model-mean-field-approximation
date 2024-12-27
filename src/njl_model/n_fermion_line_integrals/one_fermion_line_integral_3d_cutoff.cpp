@@ -46,12 +46,12 @@ double f03DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, dou
         //finite T
         f0 = ( 1.0/(4.0*M_PI*M_PI) )*( f0Primitive(cutoff, M) - f0Primitive(0, M) );
 
-        if ( reguScheme==cutoffEverywhere || reguScheme==cutoffEverywhereWithCTmu )
+        if ( reguScheme==CUTOFF_EVERYWHERE || reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
         {   
             Integration1DimGSLQAGS f0Convergent(0.0, cutoff, &params, f0ConvergentIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
             f0 = f0 + ( 1.0/(4.0*M_PI*M_PI) )*f0Convergent.evaluate();
         }
-        else if ( reguScheme==cutoffOnDivergentIntegralsOnly )
+        else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
         {   
             Integration1DimGSLQAGIU f0Convergent(0.0, &params, f0ConvergentIntegrand, integralPrecision, integralPrecision, integrationWorkspace);
             f0 = f0 + ( 1.0/(4.0*M_PI*M_PI) )*f0Convergent.evaluate();

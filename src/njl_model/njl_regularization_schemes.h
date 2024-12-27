@@ -7,16 +7,16 @@
 // Enum representing various 3D cutoff regularization schemes for the NJL model
 enum NJL3DCutoffRegularizationScheme 
 {
-    cutoffEverywhere,                         // Apply cutoff everywhere
-    cutoffEverywhereWithCTmu,                 // Apply cutoff everywhere with CTmu
-    cutoffOnDivergentIntegralsOnly            // Apply cutoff only on divergent integrals
+    CUTOFF_EVERYWHERE,                    // Apply cutoff everywhere
+    CUTOFF_EVERYWHERE_WITH_CTMU,          // Apply cutoff everywhere with CTmu
+    CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY    // Apply cutoff only on divergent integrals
 };
 
 static const std::map<NJL3DCutoffRegularizationScheme, std::string> NJL3DCutoffRegularizationSchemeMap = 
 {
-    {cutoffEverywhere, "cutoffEverywhere"},
-    {cutoffEverywhereWithCTmu, "cutoffEverywhereWithCTmu"},
-    {cutoffOnDivergentIntegralsOnly, "cutoffOnDivergentIntegralsOnly"}
+    {CUTOFF_EVERYWHERE, "CUTOFF_EVERYWHERE"},
+    {CUTOFF_EVERYWHERE_WITH_CTMU, "CUTOFF_EVERYWHERE_WITH_CTMU"},
+    {CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY, "CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY"}
 };
 
 std::string toStringNJL3DCutoffRegularizationScheme(NJL3DCutoffRegularizationScheme );

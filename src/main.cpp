@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setA");
 */
 /*
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
     NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_SP8Q, gs, kappa, g1, g2);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setB");
 */
 
@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
     NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_SP8Q, gs, kappa, g1, g2);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setC");
 
 
@@ -233,7 +233,7 @@ int main(int argc, char* argv[])
 
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("renanMasterThesis");
 
 

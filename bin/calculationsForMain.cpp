@@ -187,7 +187,7 @@
                                        gs, kappa, gOmega1, gRho1, gOmega2, gRho2, gOmegaRho, gSigmaOmega, gSigmaRho);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(cutoffEverywhere, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("renanMasterThesis");
 
 
