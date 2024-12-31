@@ -162,43 +162,6 @@ double Integration1DimNewtonCotes::evaluateAvoidingSingularPoint(double singular
 }
 
 
-double integrandTestNewtonCotes(double x, void *parameters)
-{   
-    (void)(parameters); /* avoid unused parameter warning */
-    double integrand = pow(x,2);
 
-    return integrand;
-}
-
-
-double integrandTestNewtonCotesCPV(double x, void *parameters)
-{   
-    (void)(parameters); /* avoid unused parameter warning */
-
-    double integrand = ( 1.0 )/( x-1.0 );
-
-    return integrand;
-}
-
-
-void testIntegration1DimNewtonCotes()
-{   
-    cout << "Testing several Composite Trapezoidal Sum integration methods with different integrands.\n";
-    cout << "All the integrals are normalized to 1.\n";
-
-    double normalization = 0.0;
-
-    TestIntegrandParameters aux1("integrandTestNewtonCotes");
-    Integration1DimNewtonCotes newtonCotesSum(-1.0, +2.0, 100, &aux1, integrandTestNewtonCotes);
-    normalization = (1.0/3.0);
-    double resultNewtonCotesSum = normalization*newtonCotesSum.evaluate();
-    cout << "resultNewtonCotesSum: " << resultNewtonCotesSum << "\n";
-
-    TestIntegrandParameters aux2("integrandTestNewtonCotesCPV");
-    Integration1DimNewtonCotes newtonCotesSumCPV(-1.0, 2.0, 100, &aux2, integrandTestNewtonCotesCPV, alternativeCompositeSimpson);
-    normalization = (-1.0/log(2.0));
-    double resultNewtonCotesSumCPV = normalization*newtonCotesSumCPV.evaluateAvoidingSingularPoint(1.0);
-    cout << "resultNewtonCotesSumCPV: " << resultNewtonCotesSumCPV << "\n";
-}
 
 

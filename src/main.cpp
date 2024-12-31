@@ -48,10 +48,6 @@ int main(int argc, char* argv[])
 	}
 
 
-    testIntegration1DimGSL();
-    testIntegration1DimNewtonCotes();
-
-
 /*
     //parameter set A (Klevansky parameter set)
     double cutoff = 0.6023;

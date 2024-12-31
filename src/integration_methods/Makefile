@@ -3,10 +3,10 @@ CXX = g++ -O3 -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declara
 
 INCLUDE_DIRS = -Isrc
 
-DEPS = IniFileParser.h
+DEPS = Integration1DimNewtonCotes.h
 
 OBJ =  tests.o \
-	   IniFileParser.o
+	   Integration1DimNewtonCotes.o
 
 
 %.o: %.cpp $(DEPS)
