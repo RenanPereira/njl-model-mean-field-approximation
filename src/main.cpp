@@ -1,30 +1,7 @@
-//Renan Câmara Pereira 2022-2023
+//Renan Câmara Pereira 2022-20??
 
-#include <cmath>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
 #include <omp.h>
 #include "command_line_processor.h"
-#include "gsl_wrapper/Integration1DimGSL.h"
-#include "physics_utils/distribution_functions.h"
-#include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
-#include "njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h"
-#include "njl_model/NJLDimensionfulCouplings.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffBetaEqFixedTempRhoB.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonPropagators.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
-#include "group_theory/UnitaryGroup3Dimensions.h"
-#include <gsl/gsl_complex.h>
-
 
 using namespace std;
 
@@ -33,6 +10,7 @@ int main(int argc, char* argv[])
 {
 	//START COUNTING TIME
     double start_s = omp_get_wtime();
+
 
     // Call the function and check its return value
 	int processorResult = commandLineArgsProcessor(argc, argv);
