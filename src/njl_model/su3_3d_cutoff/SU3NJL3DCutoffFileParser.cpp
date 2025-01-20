@@ -82,7 +82,8 @@ bool SU3NJL3DCutoffVacuumFileParser::validateFileQuality() const
 {
     // Check for missing sections
     bool allRequiredSectionsPresent = true;
-    vector<string> requiredSections = {
+    vector<string> requiredSections = 
+    {
         SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
         SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
         SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section
@@ -111,7 +112,6 @@ bool SU3NJL3DCutoffVacuumFileParser::validateFileQuality() const
         return true; 
     }
     else{ return false; }
-    
 }
 
 bool SU3NJL3DCutoffVacuumFileParser::validateModelParameters() const 

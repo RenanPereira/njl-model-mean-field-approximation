@@ -41,9 +41,16 @@ public:
     static std::string trim(const std::string& );
 
     bool isKeyPresent(const std::string& section, const std::string& key) const;
+    bool validatePositiveInteger(const std::string& section, const std::string& key, 
+                                 const std::string& invalidFileMessage, const std::string& conditionMessage) const;
     bool validatePositiveDouble(const std::string& section, const std::string& key, 
                                 const std::string& invalidFileMessage, const std::string& conditionMessage) const;
-    std::string sectionConditionMustBeSatisfiedMessage(const std::string section, const std::string condition) const;
+    bool validateNonNegativeDouble(const std::string& section, const std::string& key, 
+                                   const std::string& invalidFileMessage, const std::string& conditionMessage) const;
+                                
+
+    bool validateRequiredSections(const std::vector<std::string>& ) const;
+    bool validateRequiredKeys(const std::string& , const std::vector<std::string>& ) const;
 };
 
 

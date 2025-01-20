@@ -25,6 +25,7 @@ DEPS = src/command_line_processor.h \
        src/njl_model/njl_regularization_schemes.h \
        src/njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h \
        src/njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h \
+       src/njl_model/n_fermion_line_integrals/KlevanskyB0Integral3DCutoffFileParser.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h \
@@ -55,6 +56,7 @@ OBJ = obj/main.o \
       obj/njl_model/njl_regularization_schemes.o \
       obj/njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.o \
       obj/njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.o \
+      obj/njl_model/n_fermion_line_integrals/KlevanskyB0Integral3DCutoffFileParser.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.o \

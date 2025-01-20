@@ -11,18 +11,18 @@ using namespace std;
 #include "njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h"
 
 std::string trim0ToDot0(const double );
-void computeAndWriteB0Integral(const int , 
-                               const double , 
-                               const double ,
-                               const NJL3DCutoffRegularizationScheme , 
-                               const double ,
-                               const double ,
-                               const double ,
-                               const double ,
-                               const double ,
-                               const double ,
-                               const double ,
-                               const double );
+void evaluateB0VSK0ToFile(const int , 
+                          const double , 
+                          const double ,
+                          const NJL3DCutoffRegularizationScheme , 
+                          const double ,
+                          const double ,
+                          const double ,
+                          const double ,
+                          const double ,
+                          const double ,
+                          const double ,
+                          const double );
 
 string trim0ToDot0(const double value) 
 {
@@ -40,22 +40,22 @@ string trim0ToDot0(const double value)
     return result;
 }
 
-void computeAndWriteB0Integral(const int Npoints, 
-                               const double k0LambdaRatioMin, 
-                               const double k0LambdaRatioMax,
-                               const NJL3DCutoffRegularizationScheme reguScheme, 
-                               const double temperature,
-                               const double effectiveChemicalPotential1,
-                               const double effectiveChemicalPotential2,
-                               const double threeMomentumCutoff,
-                               const double effectiveMass1,
-                               const double effectiveMass2,
-                               const double threeMomentum,
-                               const double integralPrecision)
+void evaluateB0VSK0ToFile(const int Npoints, 
+                          const double k0LambdaRatioMin, 
+                          const double k0LambdaRatioMax,
+                          const NJL3DCutoffRegularizationScheme reguScheme, 
+                          const double temperature,
+                          const double effectiveChemicalPotential1,
+                          const double effectiveChemicalPotential2,
+                          const double threeMomentumCutoff,
+                          const double effectiveMass1,
+                          const double effectiveMass2,
+                          const double threeMomentum,
+                          const double integralPrecision)
 {
     if (Npoints < 2 || k0LambdaRatioMax <= k0LambdaRatioMin) 
     {
-        cout << "Error in computeAndWriteB0Integral: Npoints must be > 1 and k0LambdaRatioMax > k0LambdaRatioMin. Aborting.\n";
+        cout << "Error in evaluateB0VSK0ToFile: Npoints must be > 1 and k0LambdaRatioMax > k0LambdaRatioMin. Aborting.\n";
         abort();
     }
 
@@ -141,6 +141,7 @@ int main(int argc, char* argv[])
     	std::cout << "\nCommands processed successfully, continuing execution..." << std::endl;
 	}
 
+/*
     NJL3DCutoffRegularizationScheme reguScheme = stringToNJL3DCutoffRegularizationScheme("CUTOFF_EVERYWHERE");
     double temperature = 0.0;
     double effectiveChemicalPotential1 = 0.0;
@@ -150,60 +151,62 @@ int main(int argc, char* argv[])
     double effectiveMass2 = 0.4;
     double threeMomentum = 0.0;
     double integralPrecision = 1E-8;
-    computeAndWriteB0Integral(3000, 
-                              -2.5, 
-                              2.5,
-                              reguScheme, 
-                              temperature,
-                              effectiveChemicalPotential1,
-                              effectiveChemicalPotential2,
-                              threeMomentumCutoff,
-                              effectiveMass1,
-                              effectiveMass2,
-                              threeMomentum,
-                              integralPrecision);
+    evaluateB0VSK0ToFile(3000, 
+                         -2.5, 
+                         2.5,
+                         reguScheme, 
+                         temperature,
+                         effectiveChemicalPotential1,
+                         effectiveChemicalPotential2,
+                         threeMomentumCutoff,
+                         effectiveMass1,
+                         effectiveMass2,
+                         threeMomentum,
+                         integralPrecision);
     
     threeMomentum = 0.5;
-    computeAndWriteB0Integral(3000, 
-                              -2.5, 
-                              2.5,
-                              reguScheme, 
-                              temperature,
-                              effectiveChemicalPotential1,
-                              effectiveChemicalPotential2,
-                              threeMomentumCutoff,
-                              effectiveMass1,
-                              effectiveMass2,
-                              threeMomentum,
-                              integralPrecision);
+    evaluateB0VSK0ToFile(3000, 
+                         -2.5, 
+                         2.5,
+                         reguScheme, 
+                         temperature,
+                         effectiveChemicalPotential1,
+                         effectiveChemicalPotential2,
+                         threeMomentumCutoff,
+                         effectiveMass1,
+                         effectiveMass2,
+                         threeMomentum,
+                         integralPrecision);
 
     threeMomentum = 1.0;
-    computeAndWriteB0Integral(3000, 
-                              -2.5, 
-                              2.5,
-                              reguScheme, 
-                              temperature,
-                              effectiveChemicalPotential1,
-                              effectiveChemicalPotential2,
-                              threeMomentumCutoff,
-                              effectiveMass1,
-                              effectiveMass2,
-                              threeMomentum,
-                              integralPrecision);
+    evaluateB0VSK0ToFile(3000, 
+                         -2.5, 
+                         2.5,
+                         reguScheme, 
+                         temperature,
+                         effectiveChemicalPotential1,
+                         effectiveChemicalPotential2,
+                         threeMomentumCutoff,
+                         effectiveMass1,
+                         effectiveMass2,
+                         threeMomentum,
+                         integralPrecision);
 
     threeMomentum = 1.5;
-    computeAndWriteB0Integral(3000, 
-                              -2.5, 
-                              2.5,
-                              reguScheme, 
-                              temperature,
-                              effectiveChemicalPotential1,
-                              effectiveChemicalPotential2,
-                              threeMomentumCutoff,
-                              effectiveMass1,
-                              effectiveMass2,
-                              threeMomentum,
-                              integralPrecision);
+    evaluateB0VSK0ToFile(3000, 
+                         -2.5, 
+                         2.5,
+                         reguScheme, 
+                         temperature,
+                         effectiveChemicalPotential1,
+                         effectiveChemicalPotential2,
+                         threeMomentumCutoff,
+                         effectiveMass1,
+                         effectiveMass2,
+                         threeMomentum,
+                         integralPrecision);
+*/
+
 /*
     //parameter set A (Klevansky parameter set)
     double cutoff = 0.6023;
