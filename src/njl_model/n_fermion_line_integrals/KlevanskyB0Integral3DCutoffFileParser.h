@@ -9,7 +9,7 @@ namespace KlevanskyB0Integral3DCutoffConfigKeys
 {
     namespace VsK0Parameters 
     {
-        const std::string section = "VsK0Parameters";
+        const std::string vsK0section = "VsK0Parameters";
         const std::string numberOfPoints = "numberOfPoints";
         const std::string k0LambdaRatioMin = "k0LambdaRatioMin";
         const std::string k0LambdaRatioMax = "k0LambdaRatioMax";
@@ -22,6 +22,22 @@ namespace KlevanskyB0Integral3DCutoffConfigKeys
         const std::string threeMomentum = "threeMomentum";
         const std::string integralPrecision = "integralPrecision";
     }
+
+    namespace VsAbsKParameters 
+    {
+        const std::string vsAbsKsection = "VsAbsKParameters";
+        const std::string numberOfPoints = "numberOfPoints";
+        const std::string absKLambdaRatioMin = "absKLambdaRatioMin";
+        const std::string absKLambdaRatioMax = "absKLambdaRatioMax";
+        const std::string regularizationScheme = "regularizationScheme";
+        const std::string temperature = "temperature";
+        const std::string effectiveChemicalPotential1 = "effectiveChemicalPotential1";
+        const std::string effectiveChemicalPotential2 = "effectiveChemicalPotential2";
+        const std::string effectiveMass1 = "effectiveMass1";
+        const std::string effectiveMass2 = "effectiveMass2";
+        const std::string zeroMomentum = "zeroMomentum";
+        const std::string integralPrecision = "integralPrecision";
+    }
 }
 
 
@@ -32,18 +48,13 @@ public:
     std::string invalidFileMessage = "Error: Invalid configuration found in the " + config.getFilename() + " file.";
 
 public:
-    // Constructor
     KlevanskyB0Integral3DCutoffFileParser(const IniFileParser& p) : config(p) {};
 
-    // Validations
     bool validateFileQuality() const;
-    bool validateSectionVsK0Parameters() const;
+    bool validateSectionVsK0Parameters(std::string ) const;
+    bool validateSectionVsAbsKParameters(std::string ) const;
 
-    // Parameter extraction
-    //KlevanskyB0Integral3DCutoffParameters extractParameters() const;
-
-    // Debug/Display
-    //void displayParsedParameters() const;
+    void evaluateB0VSK0OrAbsK() const;
 };
 
 #endif

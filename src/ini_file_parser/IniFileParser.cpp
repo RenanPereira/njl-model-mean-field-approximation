@@ -93,6 +93,20 @@ std::string IniFileParser::getValue(const std::string& section, const std::strin
     return "";
 }
 
+std::string IniFileParser::getValue(const std::map<std::string, std::string>& section, const std::string& key) const
+{
+    auto it = section.find(key);
+    if (it != section.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        return "";
+    }
+}
+
+
 std::vector<std::map<std::string, std::string>> IniFileParser::getSectionsData(const std::string& sectionPrefix) const 
 {
     std::vector<std::map<std::string, std::string>> results;
@@ -347,6 +361,22 @@ bool IniFileParser::validateRequiredKeys(const std::string& section, const std::
         bool isPresent = isKeyPresent(section, key);
         if (!isPresent) 
         {   
+            allPresent = false;
+        }
+    }
+
+    return allPresent;
+}
+
+bool IniFileParser::validateRequiredKeys(const std::map<std::string, std::string>& section, const std::vector<std::string>& requiredKeys) const 
+{
+    bool allPresent = true;
+
+    for (int i = 0; i < int(requiredKeys.size()); ++i) 
+    {
+        const std::string& key = requiredKeys[i];
+        if (section.find(key) == section.end()) 
+        {
             allPresent = false;
         }
     }

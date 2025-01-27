@@ -56,8 +56,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	{	
 		//Check if file is written conrrectly
 		const SU3NJL3DCutoffVacuumFileParser config(configFile);
-		bool fileIsNice = config.validateFileQuality();
-		if( fileIsNice==true )
+		if(config.validateFileQuality())
 		{	
 			//evaluateSU3NJL3DCutoffVacuumMasses(configFile);
 			config.evaluateVacuumMasses();
@@ -71,11 +70,9 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	{	
 		//Check if file is written conrrectly
 		const KlevanskyB0Integral3DCutoffFileParser config(configFile);
-		bool fileIsNice = config.validateFileQuality();
-		if( fileIsNice==true )
+		if(config.validateFileQuality())
 		{	
-			//config.evaluateVacuumMasses();
-			cout << "Hello World!\n";
+			config.evaluateB0VSK0OrAbsK();
 		}
 		else
 		{
