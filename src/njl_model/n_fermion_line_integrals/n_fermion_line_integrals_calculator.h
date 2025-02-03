@@ -1,10 +1,7 @@
 #ifndef N_FERMION_LINE_INTEGRALS_CALCULATOR_H
 #define N_FERMION_LINE_INTEGRALS_CALCULATOR_H
 
-#include <string>
 #include "njl_model/njl_regularization_schemes.h"
-
-std::string trim0ToDot0(const double );
 
 void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(
     const int , 

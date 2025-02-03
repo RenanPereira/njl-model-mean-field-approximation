@@ -17,6 +17,7 @@ DEPS = src/command_line_processor.h \
        src/gsl_wrapper/InterpolationGSL1Dim.h \
        src/gsl_wrapper/Integration1DimGSL.h \
        src/gsl_wrapper/ComplexSquareMatrixGSL.h \
+       src/utils/format_utils.h \
        src/physics_utils/distribution_functions.h \
        src/physics_utils/physical_constants.h \
        src/ini_file_parser/IniFileParser.h \
@@ -51,6 +52,7 @@ OBJ = obj/main.o \
       obj/gsl_wrapper/InterpolationGSL1Dim.o \
       obj/gsl_wrapper/Integration1DimGSL.o \
       obj/gsl_wrapper/ComplexSquareMatrixGSL.o \
+      obj/utils/format_utils.o \
       obj/physics_utils/distribution_functions.o \
       obj/ini_file_parser/IniFileParser.o \
       obj/njl_model/NJLDimensionfulCouplings.o \
@@ -89,6 +91,10 @@ obj/group_theory/%.o: src/group_theory/%.cpp $(DEPS)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
 obj/gsl_wrapper/%.o: src/gsl_wrapper/%.cpp $(DEPS)
+	@mkdir -p $(dir $@)
+	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
+
+obj/utils/%.o: src/utils/%.cpp $(DEPS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 

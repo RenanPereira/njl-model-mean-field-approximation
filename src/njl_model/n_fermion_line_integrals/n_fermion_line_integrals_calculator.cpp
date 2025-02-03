@@ -1,25 +1,9 @@
 #include "njl_model/n_fermion_line_integrals/n_fermion_line_integrals_calculator.h"
 #include "njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h"
+#include "utils/format_utils.h"
 #include <fstream>
 
 using namespace std;
-
-
-string trim0ToDot0(const double value) 
-{
-    string result = to_string(value);
-
-    // Remove unnecessary trailing zeroes
-    result.erase(result.find_last_not_of('0') + 1);
-
-    // Ensure at least one digit remains after the decimal point (e.g., 0. -> 0.0)
-    if (result.back() == '.') 
-    {
-        result += '0';
-    }
-
-    return result;
-}
 
 
 void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(

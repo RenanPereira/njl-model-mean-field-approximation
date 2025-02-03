@@ -23,7 +23,8 @@ directories=("obj" \
              "obj/gsl_wrapper" \
              "obj/njl_model" \
              "obj/njl_model/n_fermion_line_integrals" \
-             "obj/njl_model/su3_3d_cutoff")
+             "obj/njl_model/su3_3d_cutoff" \
+             "obj/utils")
 
 
 # Create necessary directories
