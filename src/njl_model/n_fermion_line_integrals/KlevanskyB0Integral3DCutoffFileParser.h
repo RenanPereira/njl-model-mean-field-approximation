@@ -17,15 +17,16 @@ namespace KlevanskyB0Integral3DCutoffConfigKeys
         const std::string temperature = "temperature";
         const std::string effectiveChemicalPotential1 = "effectiveChemicalPotential1";
         const std::string effectiveChemicalPotential2 = "effectiveChemicalPotential2";
+        const std::string threeMomentumCutoff = "threeMomentumCutoff";
         const std::string effectiveMass1 = "effectiveMass1";
         const std::string effectiveMass2 = "effectiveMass2";
         const std::string threeMomentum = "threeMomentum";
         const std::string integralPrecision = "integralPrecision";
     }
 
-    namespace VsAbsKParameters 
+    namespace VsKParameters 
     {
-        const std::string vsAbsKsection = "VsAbsKParameters";
+        const std::string vsKsection = "VsKParameters";
         const std::string numberOfPoints = "numberOfPoints";
         const std::string absKLambdaRatioMin = "absKLambdaRatioMin";
         const std::string absKLambdaRatioMax = "absKLambdaRatioMax";
@@ -33,6 +34,7 @@ namespace KlevanskyB0Integral3DCutoffConfigKeys
         const std::string temperature = "temperature";
         const std::string effectiveChemicalPotential1 = "effectiveChemicalPotential1";
         const std::string effectiveChemicalPotential2 = "effectiveChemicalPotential2";
+        const std::string threeMomentumCutoff = "threeMomentumCutoff";
         const std::string effectiveMass1 = "effectiveMass1";
         const std::string effectiveMass2 = "effectiveMass2";
         const std::string zeroMomentum = "zeroMomentum";
@@ -52,9 +54,9 @@ public:
 
     bool validateFileQuality() const;
     bool validateSectionVsK0Parameters(std::string ) const;
-    bool validateSectionVsAbsKParameters(std::string ) const;
+    bool validateSectionVsKParameters(std::string ) const;
 
-    void evaluateB0VSK0OrAbsK() const;
+    void evaluateKlevanskyB0Integral3DCutoff() const;
 };
 
 #endif

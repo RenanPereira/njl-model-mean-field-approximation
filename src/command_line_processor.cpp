@@ -72,7 +72,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		const KlevanskyB0Integral3DCutoffFileParser config(configFile);
 		if(config.validateFileQuality())
 		{	
-			config.evaluateB0VSK0OrAbsK();
+			config.evaluateKlevanskyB0Integral3DCutoff();
 		}
 		else
 		{
