@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.transforms as mtransforms
 
 
-class B0VSK0Data:
+class B03DCutoffVsMomentumData:
     def __init__(self, filepath):
         """
         Initialize the class by loading data from the specified file.
@@ -13,7 +13,7 @@ class B0VSK0Data:
         """
         self.filepath = filepath
         self.data = None
-        self.k0_Lambda = None
+        self.momentum_to_Lambda_ratio = None
         self.Re_B0 = None
         self.Im_B0 = None
         self._load_data()
@@ -22,15 +22,15 @@ class B0VSK0Data:
         """Private method to load data from the file."""
         try:
             self.data = np.loadtxt(self.filepath, skiprows=1)
-            self.k0_Lambda = self.data[:, 0]
+            self.momentum_to_Lambda_ratio = self.data[:, 0]
             self.Re_B0 = self.data[:, 1]
             self.Im_B0 = self.data[:, 2]
         except Exception as e:
             raise ValueError(f"Error loading data from {self.filepath}: {e}")
 
-    def get_k0_3D_cutoff_ratio(self):
-        """Return the k0/Lambda values."""
-        return self.k0_Lambda
+    def get_momentum_to_Lambda_ratio(self):
+        """Return the momentum/Lambda values."""
+        return self.momentum_to_Lambda_ratio
 
     def get_Re_B0(self):
         """Return the Re[B0] values."""
@@ -43,8 +43,8 @@ class B0VSK0Data:
     def summary(self):
         """Print a summary of the loaded data."""
         print(f"Data loaded from: {self.filepath}")
-        print(f"Number of data points: {len(self.k0_Lambda)}")
-        print(f"k0/Lambda range: {self.k0_Lambda.min()} to {self.k0_Lambda.max()}")
+        print(f"Number of data points: {len(self.momentum_to_Lambda_ratio)}")
+        print(f"momentum/Lambda range: {self.momentum_to_Lambda_ratio.min()} to {self.momentum_to_Lambda_ratio.max()}")
         print(f"Re[B0] range: {self.Re_B0.min()} to {self.Re_B0.max()}")
         print(f"Im[B0] range: {self.Im_B0.min()} to {self.Im_B0.max()}")
 
@@ -142,8 +142,8 @@ def add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX1, auxY1, auxH, texts, 
         add_annotation(ax, xmin, xmax, ymin, ymax, auxX1, auxY, text, fontsize)
 
 
-def annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, text, x_start_factor=0.05, y_factor=0.93,
-                          length_line_fraction_of_box=0.4, fontsize=16, color1="black",
+def annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, label_line_dist, text, x_start_factor, y_factor,
+                          length_line_fraction_of_box, fontsize=16, color1="black",
                           color2="black", width1=2, width2=2, style1="-", style2="--"):
     """
     Adds a custom annotation to a plot and two lines extending from the annotation box.
@@ -159,6 +159,7 @@ def annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, text, x_start_factor=0.05,
         color1, color2 (str): Colors for the two lines.
         width1, width2 (float): Line widths for the two lines.
         style1, style2 (str): Line styles for the two lines.
+        label_line_dist: Distance between the label and the start of the lines.
 
     Returns:
         None
@@ -168,8 +169,8 @@ def annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, text, x_start_factor=0.05,
 
     # Box properties
     box_height=(rectangle_coords[3]-rectangle_coords[1])
-    box_start = 0.96*rectangle_coords[0]
-    box_end = 1.04*rectangle_coords[2]
+    box_start = -label_line_dist + rectangle_coords[0]
+    box_end = label_line_dist + rectangle_coords[2]
 
     # Adding the first line
     y_pos = rectangle_coords[1] + box_height*(2./3.)

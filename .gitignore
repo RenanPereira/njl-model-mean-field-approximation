@@ -8,3 +8,5 @@ bin/nambuJonaLasinioModel.out
 bin/*.dat
 
 src/*/*.o*
+
+calculations/two_fermion_line_integral_3d_cutoff/plot_scripts/__pycache__/
