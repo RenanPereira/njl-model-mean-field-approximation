@@ -93,6 +93,20 @@ std::string IniFileParser::getValue(const std::string& section, const std::strin
     return "";
 }
 
+std::string IniFileParser::getValue(const std::map<std::string, std::string>& section, const std::string& key) const
+{
+    auto it = section.find(key);
+    if (it != section.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        return "";
+    }
+}
+
+
 std::vector<std::map<std::string, std::string>> IniFileParser::getSectionsData(const std::string& sectionPrefix) const 
 {
     std::vector<std::map<std::string, std::string>> results;
@@ -256,6 +270,28 @@ bool IniFileParser::isKeyPresent(const std::string& section, const std::string& 
     }
 }
 
+bool IniFileParser::validatePositiveInteger(const std::string& section, const std::string& key, 
+                                            const std::string& invalidFileMessage, const std::string& conditionMessage) const 
+{
+    if ( isKeyPresent(section, key)==true )
+    {
+        int value = getInt(section, key, -1.0);
+        if (value <= 0) 
+        {
+            std::cout << invalidFileMessage << "\n" << conditionMessage << std::endl;
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
 bool IniFileParser::validatePositiveDouble(const std::string& section, const std::string& key, 
                                            const std::string& invalidFileMessage, const std::string& conditionMessage) const 
 {
@@ -278,8 +314,72 @@ bool IniFileParser::validatePositiveDouble(const std::string& section, const std
     }
 }
 
-std::string IniFileParser::sectionConditionMustBeSatisfiedMessage(const std::string section, const std::string condition) const
-{   
-    std::string message = "In the section '" + section + "', the following condition must be satisfied: " + condition + " .";
-    return message;
+bool IniFileParser::validateNonNegativeDouble(const std::string& section, const std::string& key, 
+                                              const std::string& invalidFileMessage, const std::string& conditionMessage) const 
+{
+    if (isKeyPresent(section, key) == true) 
+    {
+        double value = getDouble(section, key, -1.0);
+        if (value < 0) 
+        {
+            std::cout << invalidFileMessage << "\n" << conditionMessage << std::endl;
+            return false;
+        } 
+        else 
+        {
+            return true;
+        }
+    } 
+    else 
+    {
+        return false;
+    }
+}
+
+bool IniFileParser::validateRequiredSections(const std::vector<std::string>& requiredSections) const 
+{
+    bool allPresent = true;
+    for (int i = 0; i < int(requiredSections.size()); ++i) 
+    {
+        std::string section = requiredSections[i];
+        if ( getSectionsData(section).empty() ) 
+        {   
+            allPresent = false;
+            std::cout << "Missing required section: " << section << std::endl;
+        }
+    }
+    return allPresent;
+}
+
+bool IniFileParser::validateRequiredKeys(const std::string& section, const std::vector<std::string>& requiredKeys) const 
+{
+    bool allPresent = true;
+
+    for (int i = 0; i < int(requiredKeys.size()); ++i) 
+    {
+        std::string key = requiredKeys[i];
+        bool isPresent = isKeyPresent(section, key);
+        if (!isPresent) 
+        {   
+            allPresent = false;
+        }
+    }
+
+    return allPresent;
+}
+
+bool IniFileParser::validateRequiredKeys(const std::map<std::string, std::string>& section, const std::vector<std::string>& requiredKeys) const 
+{
+    bool allPresent = true;
+
+    for (int i = 0; i < int(requiredKeys.size()); ++i) 
+    {
+        const std::string& key = requiredKeys[i];
+        if (section.find(key) == section.end()) 
+        {
+            allPresent = false;
+        }
+    }
+
+    return allPresent;
 }

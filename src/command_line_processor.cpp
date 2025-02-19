@@ -1,6 +1,7 @@
 #include "command_line_processor.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCalculator.h"
+#include "njl_model/n_fermion_line_integrals/KlevanskyB0Integral3DCutoffFileParser.h"
 
 using namespace std;
 
@@ -51,16 +52,27 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	cout << "\nFileDetails:" << endl;
 	cout << "type = " << fileTypeStr << endl;
 
-
 	if(fileTypeStr=="evaluateSU3NJL3DCutoffVacuumMasses")
 	{	
 		//Check if file is written conrrectly
 		const SU3NJL3DCutoffVacuumFileParser config(configFile);
-		bool fileIsNice = config.validateFileQuality();
-		if( fileIsNice==true )
+		if(config.validateFileQuality())
 		{	
 			//evaluateSU3NJL3DCutoffVacuumMasses(configFile);
 			config.evaluateVacuumMasses();
+		}
+		else
+		{
+			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+		}
+	}
+	else if(fileTypeStr=="evaluateKlevanskyB0Integral3DCutoff")
+	{	
+		//Check if file is written conrrectly
+		const KlevanskyB0Integral3DCutoffFileParser config(configFile);
+		if(config.validateFileQuality())
+		{	
+			config.evaluateKlevanskyB0Integral3DCutoff();
 		}
 		else
 		{

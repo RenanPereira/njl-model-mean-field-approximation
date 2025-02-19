@@ -17,6 +17,7 @@ DEPS = src/command_line_processor.h \
        src/gsl_wrapper/InterpolationGSL1Dim.h \
        src/gsl_wrapper/Integration1DimGSL.h \
        src/gsl_wrapper/ComplexSquareMatrixGSL.h \
+       src/utils/format_utils.h \
        src/physics_utils/distribution_functions.h \
        src/physics_utils/physical_constants.h \
        src/ini_file_parser/IniFileParser.h \
@@ -25,6 +26,8 @@ DEPS = src/command_line_processor.h \
        src/njl_model/njl_regularization_schemes.h \
        src/njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h \
        src/njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h \
+       src/njl_model/n_fermion_line_integrals/KlevanskyB0Integral3DCutoffFileParser.h \
+       src/njl_model/n_fermion_line_integrals/n_fermion_line_integrals_calculator.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h \
@@ -49,12 +52,15 @@ OBJ = obj/main.o \
       obj/gsl_wrapper/InterpolationGSL1Dim.o \
       obj/gsl_wrapper/Integration1DimGSL.o \
       obj/gsl_wrapper/ComplexSquareMatrixGSL.o \
+      obj/utils/format_utils.o \
       obj/physics_utils/distribution_functions.o \
       obj/ini_file_parser/IniFileParser.o \
       obj/njl_model/NJLDimensionfulCouplings.o \
       obj/njl_model/njl_regularization_schemes.o \
       obj/njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.o \
       obj/njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.o \
+      obj/njl_model/n_fermion_line_integrals/KlevanskyB0Integral3DCutoffFileParser.o \
+      obj/njl_model/n_fermion_line_integrals/n_fermion_line_integrals_calculator.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.o \
@@ -85,6 +91,10 @@ obj/group_theory/%.o: src/group_theory/%.cpp $(DEPS)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
 obj/gsl_wrapper/%.o: src/gsl_wrapper/%.cpp $(DEPS)
+	@mkdir -p $(dir $@)
+	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
+
+obj/utils/%.o: src/utils/%.cpp $(DEPS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 

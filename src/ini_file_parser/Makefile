@@ -5,7 +5,7 @@ INCLUDE_DIRS = -Isrc
 
 DEPS = IniFileParser.h
 
-OBJ =  main_tests.o \
+OBJ =  tests.o \
 	   IniFileParser.o
 
 
@@ -13,7 +13,7 @@ OBJ =  main_tests.o \
 	$(CXX) $(INCLUDE_DIRS) -c $< -o $@
 
 run: $(OBJ) 
-	$(CXX) $(OBJ) $(INCLUDE_DIRS)  -o run_tests.out
+	$(CXX) $(OBJ) $(INCLUDE_DIRS)  -o tests.out
 
 clean: 
-	rm -f run_tests.out $(OBJ)
+	rm -f tests.out $(OBJ)

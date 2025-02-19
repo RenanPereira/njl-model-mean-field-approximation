@@ -5,6 +5,9 @@
 using namespace std;
 
 
+enum NewtonCotesRule { trapezoidal, alternativeCompositeSimpson };
+
+
 class GeneralIntegrandParameters
 {
 public:
@@ -19,9 +22,6 @@ public:
     	abort(); 
     };
 };
-
-
-enum NewtonCotesRule { trapezoidal, alternativeCompositeSimpson };
 
 
 class Integration1DimNewtonCotes
@@ -67,12 +67,6 @@ public:
     }
     
 };
-
-double integrandTestNewtonCotes(double , void *);
-
-double integrandTestNewtonCotesCPV(double , void *);
-
-void testIntegration1DimNewtonCotes();
 
 
 #endif

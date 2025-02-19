@@ -288,17 +288,5 @@ public:
 	double evaluateIntegration1DimNewtonCotes(int , NewtonCotesRule );
 };
 
-double integrandTestGSL(double , void *);
-
-double integrandTestGSLCauchy(double , void *);
-
-double integrandTestGSLQAGP(double , void *);
-
-double integrandTestGSLQAGI(double , void *);
-
-double integrandTestGSLQAWS(double , void *);
-
-void testIntegration1DimGSL();
-
 
 #endif

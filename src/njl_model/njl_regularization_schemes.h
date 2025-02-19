@@ -2,6 +2,7 @@
 #define NJL_REGULARIZATION_SCHEMES_H
 
 #include <map>
+#include <string>
 
 
 // Enum representing various 3D cutoff regularization schemes for the NJL model
