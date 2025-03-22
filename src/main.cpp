@@ -2,6 +2,8 @@
 
 #include <omp.h>
 #include "command_line_processor.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h"
+#include "physics_utils/physical_constants.h"
 
 using namespace std;
 
@@ -26,6 +28,123 @@ int main(int argc, char* argv[])
 	}
 
 
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //parameter set A (Klevansky parameter set)
+    double cutoff = 0.6023;
+    double gs = 10.116734156126128;
+    double kappa = -155.93878816540243;
+    double m0u = 0.0055;
+    double m0d = 0.0055;
+    double m0s = 0.1407;
+
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    parameters.setParameterSetName("setA");
+
+    //solve model in the vacuum
+    double gapPrecision = 1E-8;
+    SU3NJL3DCutoffVacuum vacuum(parameters);
+    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
+    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+
+    double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
+    double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
+    int numberOfPoints = 2000;
+    vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> test =
+    solveFromVacuumToFiniteBaryonDensity(vacuum, 
+                                         minimumBaryonDensity, 
+                                         maximumBaryonDensity, 
+                                         numberOfPoints, 
+                                         1E-8, HYBRIDS);
+
+
+/*
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //parameter set B
+    double cutoff = 0.586967971572559;
+    double gs = 3.0257845537123/pow(cutoff, 2);
+    double kappa = -11.7520217701553/pow(cutoff, 5);
+    double g1 = 36.5091272818204/pow(cutoff, 8);
+    double g2 = -24.3337469126998/pow(cutoff, 8);
+    double m0u = 0.00600659282357854;
+    double m0d = 0.00600659282357854;
+    double m0s = 0.138868437136382;
+
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_SP8Q, gs, kappa, g1, g2);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s, "setB");
+
+    //solve model in the vacuum
+    double gapPrecision = 1E-8;
+    SU3NJL3DCutoffVacuum vacuum(parameters);
+    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
+    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+
+    double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
+    double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
+    int numberOfPoints = 2000;
+    vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> test =
+    solveFromVacuumToFiniteBaryonDensity(vacuum, 
+                                         minimumBaryonDensity, 
+                                         maximumBaryonDensity, 
+                                         numberOfPoints, 
+                                         1E-8, HYBRIDS);
+*/
+
+/*
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //parameter set C
+    double cutoff = 0.586967971572559;
+    double gs = 2.7596253718366/pow(cutoff, 2);
+    double kappa = -11.7520217701553/pow(cutoff, 5);
+    double g1 = 44.861215303826/pow(cutoff, 8);
+    double g2 = -24.3337469126998/pow(cutoff, 8);
+    double m0u = 0.00600659282357854;
+    double m0d = 0.00600659282357854;
+    double m0s = 0.138868437136382;
+
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_SP8Q, gs, kappa, g1, g2);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s, "setC");
+
+    //solve model in the vacuum
+    double gapPrecision = 1E-8;
+    SU3NJL3DCutoffVacuum vacuum(parameters);
+    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
+    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+
+    double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
+    double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
+    int numberOfPoints = 2000;
+    vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> test =
+    solveFromVacuumToFiniteBaryonDensity(vacuum, 
+                                         minimumBaryonDensity, 
+                                         maximumBaryonDensity, 
+                                         numberOfPoints, 
+                                         1E-8, HYBRIDS);
+*/
 
 /*
     //parameter set A (Klevansky parameter set)

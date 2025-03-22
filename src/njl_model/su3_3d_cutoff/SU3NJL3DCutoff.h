@@ -39,6 +39,16 @@ public:
         downQuarkCurrentMass = m0d;
         strangeQuarkCurrentMass = m0s;
     }
+    SU3NJL3DCutoffParameters(NJL3DCutoffRegularizationScheme reguSchemeAux, double threeMomentumCutoffAux, NJLDimensionfulCouplings couplingsAux, double m0u, double m0d, double m0s, string parameterSetNameAux)
+    {
+        reguScheme = reguSchemeAux;
+        threeMomentumCutoff = threeMomentumCutoffAux;
+        couplings = couplingsAux;
+        upQuarkCurrentMass = m0u;
+        downQuarkCurrentMass = m0d;
+        strangeQuarkCurrentMass = m0s;
+        parameterSetName = parameterSetNameAux;
+    }
     SU3NJL3DCutoffParameters(double threeMomentumCutoffAux)
     {
         threeMomentumCutoff = threeMomentumCutoffAux;
