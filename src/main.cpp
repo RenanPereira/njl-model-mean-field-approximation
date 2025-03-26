@@ -64,7 +64,9 @@ int main(int argc, char* argv[])
                                          maximumBaryonDensity, 
                                          numberOfPoints, 
                                          1E-8, HYBRIDS);
-
+    
+    vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> transition = 
+    findChiralTransitionPointsFixedTemperature(test, 1E-8, HYBRIDS);
 
 /*
     //////////////////////////////////////////////////////////////////////////////////////////

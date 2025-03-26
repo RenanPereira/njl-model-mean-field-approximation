@@ -747,91 +747,91 @@ vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTempera
     if ( first>0 && second>0 )
     {
 
-    //estimate guesses
-    double mU_broken = solutions[first].getUpQuarkEffectiveMass();
-    double mD_broken = solutions[first].getDownQuarkEffectiveMass();
-    double mS_broken = solutions[first].getStrangeQuarkEffectiveMass();
-    double effCPU_broken = solutions[first].getUpQuarkEffectiveChemicalPotential();
-    double effCPD_broken = solutions[first].getDownQuarkEffectiveChemicalPotential();
-    double effCPS_broken = solutions[first].getStrangeQuarkEffectiveChemicalPotential();
-    double mU_restored = solutions[second].getUpQuarkEffectiveMass();
-    double mD_restored = solutions[second].getDownQuarkEffectiveMass();
-    double mS_restored = solutions[second].getStrangeQuarkEffectiveMass();
-    double effCPU_restored = solutions[second].getUpQuarkEffectiveChemicalPotential();
-    double effCPD_restored = solutions[second].getDownQuarkEffectiveChemicalPotential();
-    double effCPS_restored = solutions[second].getStrangeQuarkEffectiveChemicalPotential();
+        //estimate guesses
+        double mU_broken = solutions[first].getUpQuarkEffectiveMass();
+        double mD_broken = solutions[first].getDownQuarkEffectiveMass();
+        double mS_broken = solutions[first].getStrangeQuarkEffectiveMass();
+        double effCPU_broken = solutions[first].getUpQuarkEffectiveChemicalPotential();
+        double effCPD_broken = solutions[first].getDownQuarkEffectiveChemicalPotential();
+        double effCPS_broken = solutions[first].getStrangeQuarkEffectiveChemicalPotential();
+        double mU_restored = solutions[second].getUpQuarkEffectiveMass();
+        double mD_restored = solutions[second].getDownQuarkEffectiveMass();
+        double mS_restored = solutions[second].getStrangeQuarkEffectiveMass();
+        double effCPU_restored = solutions[second].getUpQuarkEffectiveChemicalPotential();
+        double effCPD_restored = solutions[second].getDownQuarkEffectiveChemicalPotential();
+        double effCPS_restored = solutions[second].getStrangeQuarkEffectiveChemicalPotential();
 
 
-    //solve system
-    double x[12];
-    x[0] = mU_broken; 
-    x[1] = mD_broken;  
-    x[2] = mS_broken;  
-    x[3] = 0.5*effCPU_broken + 0.5*effCPU_restored;
-    x[4] = 0.5*effCPD_broken + 0.5*effCPD_restored;
-    x[5] = 0.5*effCPS_broken + 0.5*effCPS_restored;
-    x[6] = mU_restored; 
-    x[7] = mD_restored;  
-    x[8] = mS_restored;  
-    x[9] = 0.5*effCPU_broken + 0.5*effCPU_restored;
-    x[10] = 0.5*effCPD_broken + 0.5*effCPD_restored;
-    x[11] = 0.5*effCPS_broken + 0.5*effCPS_restored;
-    
-    SU3NJL3DCutoffBetaEqFixedTempRhoB aux(solutions[0].getParametersNJL(), solutions[0].getElectronMass(), solutions[0].getTemperature(), 0.0);
-    multiDimensionalRootFind(12, precision, &x[0], &aux, &SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature, method);
+        //solve system
+        double x[12];
+        x[0] = mU_broken; 
+        x[1] = mD_broken;  
+        x[2] = mS_broken;  
+        x[3] = 0.5*effCPU_broken + 0.5*effCPU_restored;
+        x[4] = 0.5*effCPD_broken + 0.5*effCPD_restored;
+        x[5] = 0.5*effCPS_broken + 0.5*effCPS_restored;
+        x[6] = mU_restored; 
+        x[7] = mD_restored;  
+        x[8] = mS_restored;  
+        x[9] = 0.5*effCPU_broken + 0.5*effCPU_restored;
+        x[10] = 0.5*effCPD_broken + 0.5*effCPD_restored;
+        x[11] = 0.5*effCPS_broken + 0.5*effCPS_restored;
+        
+        SU3NJL3DCutoffBetaEqFixedTempRhoB aux(solutions[0].getParametersNJL(), solutions[0].getElectronMass(), solutions[0].getTemperature(), 0.0);
+        multiDimensionalRootFind(12, precision, &x[0], &aux, &SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature, method);
 
-    mU_broken = x[0]; 
-    mD_broken = x[1];
-    mS_broken = x[2]; 
-    effCPU_broken = x[3];
-    effCPD_broken = x[4];
-    effCPS_broken = x[5];
-    mU_restored = x[6]; 
-    mD_restored = x[7];  
-    mS_restored = x[8];  
-    effCPU_restored = x[9]; 
-    effCPD_restored = x[10]; 
-    effCPS_restored = x[11];
+        mU_broken = x[0]; 
+        mD_broken = x[1];
+        mS_broken = x[2]; 
+        effCPU_broken = x[3];
+        effCPD_broken = x[4];
+        effCPS_broken = x[5];
+        mU_restored = x[6]; 
+        mD_restored = x[7];  
+        mS_restored = x[8];  
+        effCPU_restored = x[9]; 
+        effCPD_restored = x[10]; 
+        effCPS_restored = x[11];
 
-/*
-    cout << "Broken phase:\n";
-    cout << mU_broken << "\t" << mD_broken << "\t" << mS_broken << "\n";
-    cout << effCPU_broken << "\t" << effCPD_broken << "\t" << effCPS_broken << "\n";
-    cout << "Restored phase:\n";
-    cout << mU_restored << "\t" << mD_restored << "\t" << mS_restored << "\n";
-    cout << effCPU_restored << "\t" << effCPD_restored << "\t" << effCPS_restored << "\n";
-*/
+        /*
+        cout << "Broken phase:\n";
+        cout << mU_broken << "\t" << mD_broken << "\t" << mS_broken << "\n";
+        cout << effCPU_broken << "\t" << effCPD_broken << "\t" << effCPS_broken << "\n";
+        cout << "Restored phase:\n";
+        cout << mU_restored << "\t" << mD_restored << "\t" << mS_restored << "\n";
+        cout << effCPU_restored << "\t" << effCPD_restored << "\t" << effCPS_restored << "\n";
+        */
 
-    SU3NJL3DCutoffBetaEqFixedTempRhoB broken(solutions[0].getParametersNJL(), 
-                                             solutions[0].getElectronMass(), 
-                                             solutions[0].getTemperature(), 
-                                             mU_broken, 
-                                             mD_broken, 
-                                             mS_broken, 
-                                             effCPU_broken, 
-                                             effCPD_broken, 
-                                             effCPS_broken);   
-    broken.setSigmasAndDensitiesAndChemicalPotentials();
-    double baryonDensity_broken = SU3BaryonDensity(broken.getUpQuarkDensity(), broken.getDownQuarkDensity(), broken.getStrangeQuarkDensity());
-    broken.setBaryonDensity(baryonDensity_broken);
-
-
-    SU3NJL3DCutoffBetaEqFixedTempRhoB restored(solutions[0].getParametersNJL(), 
-                                               solutions[0].getElectronMass(), 
-                                               solutions[0].getTemperature(), 
-                                               mU_restored, 
-                                               mD_restored, 
-                                               mS_restored, 
-                                               effCPU_restored, 
-                                               effCPD_restored, 
-                                               effCPS_restored);
-    restored.setSigmasAndDensitiesAndChemicalPotentials();
-    double baryonDensity_restored = SU3BaryonDensity(restored.getUpQuarkDensity(), restored.getDownQuarkDensity(), restored.getStrangeQuarkDensity());
-    restored.setBaryonDensity(baryonDensity_restored);
+        SU3NJL3DCutoffBetaEqFixedTempRhoB broken(solutions[0].getParametersNJL(), 
+                                                 solutions[0].getElectronMass(), 
+                                                 solutions[0].getTemperature(), 
+                                                 mU_broken, 
+                                                 mD_broken, 
+                                                 mS_broken, 
+                                                 effCPU_broken, 
+                                                 effCPD_broken, 
+                                                 effCPS_broken);   
+        broken.setSigmasAndDensitiesAndChemicalPotentials();
+        double baryonDensity_broken = SU3BaryonDensity(broken.getUpQuarkDensity(), broken.getDownQuarkDensity(), broken.getStrangeQuarkDensity());
+        broken.setBaryonDensity(baryonDensity_broken);
 
 
-    transitionPoints.push_back(broken);
-    transitionPoints.push_back(restored);
+        SU3NJL3DCutoffBetaEqFixedTempRhoB restored(solutions[0].getParametersNJL(), 
+                                                   solutions[0].getElectronMass(), 
+                                                   solutions[0].getTemperature(), 
+                                                   mU_restored, 
+                                                   mD_restored, 
+                                                   mS_restored, 
+                                                   effCPU_restored, 
+                                                   effCPD_restored, 
+                                                   effCPS_restored);
+        restored.setSigmasAndDensitiesAndChemicalPotentials();
+        double baryonDensity_restored = SU3BaryonDensity(restored.getUpQuarkDensity(), restored.getDownQuarkDensity(), restored.getStrangeQuarkDensity());
+        restored.setBaryonDensity(baryonDensity_restored);
+
+
+        transitionPoints.push_back(broken);
+        transitionPoints.push_back(restored);
 
     }
 

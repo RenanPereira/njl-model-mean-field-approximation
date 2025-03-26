@@ -17,8 +17,24 @@ private:
 	double upQuarkEffectiveMass = 0.0/0.0;
 	double downQuarkEffectiveMass = 0.0/0.0;
 	double strangeQuarkEffectiveMass = 0.0/0.0;
+	
 	double quarkEffectiveChemicalPotential = 0.0/0.0;
 
+	//Outputs
+	double upQuarkSigma = 0.0/0.0;
+	double downQuarkSigma = 0.0/0.0;
+	double strangeQuarkSigma = 0.0/0.0;
+	
+	double upQuarkDensity = 0.0/0.0;
+	double downQuarkDensity = 0.0;
+	double strangeQuarkDensity = 0.0/0.0;
+
+	double upQuarkChemicalPotential = 0.0/0.0;
+	double downQuarkChemicalPotential = 0.0/0.0;
+	double strangeQuarkChemicalPotential = 0.0/0.0;
+	double baryonChemicalPotential = 0.0/0.0;
+
+	//Thermodynamics
 	double pressure = 0.0/0.0;
 	double energyDensity = 0.0/0.0;
 	double entropyDensity = 0.0/0.0;
@@ -27,6 +43,8 @@ public:
 	SU3NJL3DCutoffEqualChemPotFixedTempRhoB(){};
 	SU3NJL3DCutoffEqualChemPotFixedTempRhoB(void* );
 	SU3NJL3DCutoffEqualChemPotFixedTempRhoB(SU3NJL3DCutoffParameters );
+	SU3NJL3DCutoffEqualChemPotFixedTempRhoB(SU3NJL3DCutoffParameters , double );
+	SU3NJL3DCutoffEqualChemPotFixedTempRhoB(SU3NJL3DCutoffParameters , double , double , double , double , double , double );
 	SU3NJL3DCutoffEqualChemPotFixedTempRhoB(SU3NJL3DCutoffVacuum );
 
 	SU3NJL3DCutoffParameters getParametersNJL(){ return parametersNJL; };
@@ -56,11 +74,42 @@ public:
 	double calculateEnergyDensity(double );
 	double calculateEntropyDensity();
 
+	//get other quantities
+	double getUpQuarkSigma(){ return upQuarkSigma; };
+	double getDownQuarkSigma(){ return downQuarkSigma; };
+	double getStrangeQuarkSigma(){ return strangeQuarkSigma; };
+
+	double getUpQuarkDensity(){ return upQuarkDensity; };
+	double getDownQuarkDensity(){ return downQuarkDensity; };
+	double getStrangeQuarkDensity(){ return strangeQuarkDensity; };
+
+	double getUpQuarkChemicalPotential(){ return upQuarkChemicalPotential; };
+	double getDownQuarkChemicalPotential(){ return downQuarkChemicalPotential; };
+	double getStrangeQuarkChemicalPotential(){ return strangeQuarkChemicalPotential; };
+
+	//baryon chemical potential
+	void setBaryonChemicalPotential(){ baryonChemicalPotential = getUpQuarkChemicalPotential() + 2.0*getDownQuarkChemicalPotential(); };
+	double getBaryonChemicalPotential(){ return baryonChemicalPotential; }
+	
+	void setSigmasAndDensitiesAndChemicalPotentials();
+
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };
 	void setDownQuarkEffectiveMass(double downQuarkEffectiveMassAux){ downQuarkEffectiveMass = downQuarkEffectiveMassAux; };
 	void setStrangeQuarkEffectiveMass(double strangeQuarkEffectiveMassAux){ strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux; };
 	void setQuarkEffectiveChemicalPotential(double quarkEffectiveChemicalPotentialAux){ quarkEffectiveChemicalPotential = quarkEffectiveChemicalPotentialAux; };
+
+	void setUpQuarkSigma(double upQuarkSigmaAux){ upQuarkSigma = upQuarkSigmaAux; };
+	void setDownQuarkSigma(double downQuarkSigmaAux){ downQuarkSigma = downQuarkSigmaAux; };
+	void setStrangeQuarkSigma(double strangeQuarkSigmaAux){ strangeQuarkSigma = strangeQuarkSigmaAux; };
+
+	void setUpQuarkDensity(double upQuarkDensityAux){ upQuarkDensity = upQuarkDensityAux; };
+	void setDownQuarkDensity(double downQuarkDensityAux){ downQuarkDensity = downQuarkDensityAux; };
+	void setStrangeQuarkDensity(double strangeQuarkDensityAux){ strangeQuarkDensity = strangeQuarkDensityAux; };
+
+	void setUpQuarkChemicalPotential(double upQuarkChemicalPotentialAux){ upQuarkChemicalPotential = upQuarkChemicalPotentialAux; };
+	void setDownQuarkChemicalPotential(double downQuarkChemicalPotentialAux){ downQuarkChemicalPotential = downQuarkChemicalPotentialAux; };
+	void setStrangeQuarkChemicalPotential(double strangeQuarkChemicalPotentialAux){ strangeQuarkChemicalPotential = strangeQuarkChemicalPotentialAux; };
 };
 
 
@@ -73,5 +122,9 @@ solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum ,
                                      double , MultiRootFindingMethod );
 
 void writeSolutionsToFile(vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> , string , bool );
+
+int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *, void *, gsl_vector *);
+
+vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> findChiralTransitionPointsFixedTemperature(vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> , double , MultiRootFindingMethod );
 
 #endif
