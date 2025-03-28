@@ -10,7 +10,7 @@
 */
 
 /*
-    SU3NJL3DCutoffEqualChemPotFixedTempRhoB inMedium(parameters);
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot inMedium(parameters);
     inMedium.setTemperature(0.0);
     inMedium.setBaryonDensity(0.0);
 

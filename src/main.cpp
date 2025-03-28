@@ -2,7 +2,7 @@
 
 #include <omp.h>
 #include "command_line_processor.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.h"
 #include "physics_utils/physical_constants.h"
 
 using namespace std;
@@ -58,14 +58,14 @@ int main(int argc, char* argv[])
     double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
     double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
     int numberOfPoints = 2000;
-    vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> test =
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> test =
     solveFromVacuumToFiniteBaryonDensity(vacuum, 
                                          minimumBaryonDensity, 
                                          maximumBaryonDensity, 
                                          numberOfPoints, 
                                          1E-8, HYBRIDS);
     
-    vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> transition = 
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> transition = 
     findChiralTransitionPointsFixedTemperature(test, 1E-8, HYBRIDS);
 
 /*
@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
     double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
     double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
     int numberOfPoints = 2000;
-    vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> test =
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> test =
     solveFromVacuumToFiniteBaryonDensity(vacuum, 
                                          minimumBaryonDensity, 
                                          maximumBaryonDensity, 
@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
     double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
     double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
     int numberOfPoints = 2000;
-    vector<SU3NJL3DCutoffEqualChemPotFixedTempRhoB> test =
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> test =
     solveFromVacuumToFiniteBaryonDensity(vacuum, 
                                          minimumBaryonDensity, 
                                          maximumBaryonDensity, 

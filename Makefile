@@ -31,7 +31,7 @@ DEPS = src/command_line_processor.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h \
-       src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.h \
+       src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffBetaEqFixedTempRhoB.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonProjectors.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonPropagators.h \
@@ -64,7 +64,7 @@ OBJ = obj/main.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoff.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.o \
-      obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffEqualChemPotFixedTempRhoB.o \
+      obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffBetaEqFixedTempRhoB.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonProjectors.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonPropagators.o \
