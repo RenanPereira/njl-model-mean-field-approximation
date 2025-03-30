@@ -27,12 +27,26 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::SU3NJL3DCutoffFixedTempRhoBEqualChemPot
 	parametersNJL = parametersNJLAux;
 }
 
+
 SU3NJL3DCutoffFixedTempRhoBEqualChemPot::SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffParameters parametersNJLAux,
                                                                                  double temperatureAux)
 {
 	parametersNJL = parametersNJLAux;
+
     temperature = temperatureAux;
 }
+
+
+SU3NJL3DCutoffFixedTempRhoBEqualChemPot::SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffParameters parametersNJLAux,
+                                                                                 double temperatureAux,
+                                                                                 double baryonDensityAux)
+{
+	parametersNJL = parametersNJLAux;
+
+    temperature = temperatureAux;
+    baryonDensity = baryonDensityAux;
+}
+
 
 SU3NJL3DCutoffFixedTempRhoBEqualChemPot::SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffParameters parametersNJLAux,
                                                                                  double temperatureAux,
@@ -54,17 +68,22 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::SU3NJL3DCutoffFixedTempRhoBEqualChemPot
 
 }
 
+
 SU3NJL3DCutoffFixedTempRhoBEqualChemPot::SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffVacuum vacuum)
 {   
     parametersNJL = vacuum.getParametersNJL();
 
-    setTemperature(0.0); 
-    setBaryonDensity(0.0);
+    temperature = 0.0;
+    baryonDensity = 0.0;
 
-    setUpQuarkEffectiveMass( vacuum.getUpQuarkEffectiveMass() );
-	setDownQuarkEffectiveMass( vacuum.getDownQuarkEffectiveMass() );
-	setStrangeQuarkEffectiveMass( vacuum.getStrangeQuarkEffectiveMass() );
-    setQuarkEffectiveChemicalPotential(0.0);
+    pressure = 0.0;
+    energyDensity = 0.0;
+    entropyDensity = 0.0;
+
+    upQuarkEffectiveMass = vacuum.getUpQuarkEffectiveMass();
+    downQuarkEffectiveMass = vacuum.getDownQuarkEffectiveMass();
+    strangeQuarkEffectiveMass = vacuum.getStrangeQuarkEffectiveMass();
+    quarkEffectiveChemicalPotential = 0.0;
 }
 
 
@@ -91,44 +110,38 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::solve(double precision, MultiRootF
 
 int SU3NJL3DCutoffGapEquationsEqualChemicalPotentialFixedTemperatureBaryonDensity(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
-	//define variables
+    if (x->size != 4) 
+    {   
+        string functionName = "SU3NJL3DCutoffGapEquationsEqualChemicalPotentialFixedTemperatureBaryonDensity";
+        cout << "Error: gsl_vector 'x' has insufficient size in " << functionName << "\n";
+        cout << "(expected 4, got " << x->size << ").\n";
+        return GSL_FAILURE;
+    }
+
+	//Define variables
     double mU = gsl_vector_get(x,0);
     double mD = gsl_vector_get(x,1);
     double mS = gsl_vector_get(x,2);
     double effCP = gsl_vector_get(x,3);
 
-
-    //define parameters
+    //Get parameters
     SU3NJL3DCutoffFixedTempRhoBEqualChemPot solution(auxiliar);
-
     NJLDimensionfulCouplings couplings = solution.getParametersNJL().getDimensionfulCouplings();
-
-    NJL3DCutoffRegularizationScheme reguScheme = solution.getParametersNJL().getNJL3DCutoffRegularizationScheme();
-    double cutoff = solution.getParametersNJL().getThreeMomentumCutoff();
-
-    double Nc = solution.getParametersNJL().getNumberOfColours();
-
-    double sigmaIntegralPrecision = solution.getParametersNJL().getSigmaIntegralPrecision();
-    double thermoIntegralPrecision = solution.getParametersNJL().getThermoIntegralPrecision();
-
     double m0U = solution.getParametersNJL().getUpQuarkCurrentMass();
     double m0D = solution.getParametersNJL().getDownQuarkCurrentMass();
     double m0S = solution.getParametersNJL().getStrangeQuarkCurrentMass();
-
-    double T = solution.getTemperature();
     double rhoB = solution.getBaryonDensity();
 
-
     //Calculate the sigma field and density for each quark flavour
-    double sigmaU = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCP, mU, sigmaIntegralPrecision);
-    double sigmaD = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCP, mD, sigmaIntegralPrecision);
-    double sigmaS = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCP, mS, sigmaIntegralPrecision);
+    solution.setSigmasDensitiesChemicalPotentials(mU, mD, mS, effCP, effCP, effCP);
+    double sigmaU = solution.getUpQuarkSigma();
+    double sigmaD = solution.getDownQuarkSigma();
+    double sigmaS = solution.getStrangeQuarkSigma();
+    double rhoU = solution.getUpQuarkDensity();
+    double rhoD = solution.getDownQuarkDensity();
+    double rhoS = solution.getStrangeQuarkDensity();
 
-    double rhoU = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCP, mU, thermoIntegralPrecision);
-    double rhoD = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCP, mD, thermoIntegralPrecision);
-    double rhoS = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCP, mS, thermoIntegralPrecision);
-
-	//system of equations
+	//System of equations
     double f0 = SU3NJLNulledGapEquation(couplings, mU-m0U, sigmaU, sigmaD, sigmaS, rhoU, rhoD, rhoS);
     double f1 = SU3NJLNulledGapEquation(couplings, mD-m0D, sigmaD, sigmaS, sigmaU, rhoD, rhoS, rhoU);
     double f2 = SU3NJLNulledGapEquation(couplings, mS-m0S, sigmaS, sigmaU, sigmaD, rhoS, rhoU, rhoD);
@@ -151,7 +164,7 @@ bool SU3NJL3DCutoffFixedTempRhoBEqualChemPot::testSolution(double precision)
     x[2] = getStrangeQuarkEffectiveMass();
     x[3] = getQuarkEffectiveChemicalPotential();
 
-    //the test below (gsl) resturns 0 if the sum_i abs(residual_i) < precision
+    //The test below (gsl) resturns 0 if the sum_i abs(residual_i) < precision
     int gslTest = multiDimensionalRootFindTestResidual(4, precision, &x[0], this, &SU3NJL3DCutoffGapEquationsEqualChemicalPotentialFixedTemperatureBaryonDensity);
 
     if (gslTest==0){ return true; }
@@ -205,9 +218,16 @@ double SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateEntropyDensity()
 }
 
 
-void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::setSigmasAndDensitiesAndChemicalPotentials()
+void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::setSigmasDensitiesChemicalPotentials(
+    double effMassU,
+    double effMassD,
+    double effMassS,
+    double effCPU,
+    double effCPD,
+    double effCPS
+)
 {
-    //calculate the outputs of this solution
+    //Calculate the outputs of this solution
     NJLDimensionfulCouplings couplings = parametersNJL.getDimensionfulCouplings();
 
     NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
@@ -219,25 +239,20 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::setSigmasAndDensitiesAndChemicalPo
     double thermoIntegralPrecision = parametersNJL.getThermoIntegralPrecision();
 
     double T = getTemperature();
-    
-    double mU = getUpQuarkEffectiveMass();
-    double mD = getDownQuarkEffectiveMass();
-    double mS = getStrangeQuarkEffectiveMass();
-    double effCP = getQuarkEffectiveChemicalPotential();
    
     //Calculate the sigma field and density for each quark flavour
-    double sigmaU = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCP, mU, sigmaIntegralPrecision);
-    double sigmaD = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCP, mD, sigmaIntegralPrecision);
-    double sigmaS = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCP, mS, sigmaIntegralPrecision);
+    double sigmaU = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCPU, effMassU, sigmaIntegralPrecision);
+    double sigmaD = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCPD, effMassD, sigmaIntegralPrecision);
+    double sigmaS = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effCPS, effMassS, sigmaIntegralPrecision);
 
-    double rhoU = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCP, mU, thermoIntegralPrecision);
-    double rhoD = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCP, mD, thermoIntegralPrecision);
-    double rhoS = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCP, mS, thermoIntegralPrecision);
+    double rhoU = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCPU, effMassU, thermoIntegralPrecision);
+    double rhoD = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCPD, effMassD, thermoIntegralPrecision);
+    double rhoS = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCPS, effMassS, thermoIntegralPrecision);
 
-    //calculate quark chemical potential from the effective ones
-    double cPU = SU3NJLQuarkChemicalPotential(couplings, effCP, rhoU, rhoD, rhoS, sigmaU, sigmaD, sigmaS);
-    double cPD = SU3NJLQuarkChemicalPotential(couplings, effCP, rhoD, rhoS, rhoU, sigmaD, sigmaS, sigmaU);
-    double cPS = SU3NJLQuarkChemicalPotential(couplings, effCP, rhoS, rhoU, rhoD, sigmaS, sigmaU, sigmaD);
+    //Calculate quark chemical potential from the effective ones
+    double cPU = SU3NJLQuarkChemicalPotential(couplings, effCPU, rhoU, rhoD, rhoS, sigmaU, sigmaD, sigmaS);
+    double cPD = SU3NJLQuarkChemicalPotential(couplings, effCPD, rhoD, rhoS, rhoU, sigmaD, sigmaS, sigmaU);
+    double cPS = SU3NJLQuarkChemicalPotential(couplings, effCPS, rhoS, rhoU, rhoD, sigmaS, sigmaU, sigmaD);
 
     setUpQuarkSigma(sigmaU);
     setDownQuarkSigma(sigmaD);
@@ -255,71 +270,88 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::setSigmasAndDensitiesAndChemicalPo
 }
 
 
+void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::setSigmasDensitiesChemicalPotentials()
+{    
+    double effMassU = getUpQuarkEffectiveMass();
+    double effMassD = getDownQuarkEffectiveMass();
+    double effMassS = getStrangeQuarkEffectiveMass();
+    double effCP = getQuarkEffectiveChemicalPotential();
+
+    setSigmasDensitiesChemicalPotentials(
+        effMassU,
+        effMassD,
+        effMassS,
+        effCP,
+        effCP,
+        effCP
+    );
+}
+
+
 vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> 
 solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum vacuum, 
                                      double minimumBaryonDensity, double maximumBaryonDensity, int numberOfPoints, 
                                      double gapPrecision, MultiRootFindingMethod method)
 {   
-    // Analyse vacuum solution
+    //Analyse vacuum solution
     double pressureVacuum = vacuum.calculatePressure();
     double energyVacuum = vacuum.calculateEnergyDensity();
     cout << "pressureVacuum=" << pressureVacuum << "\n";
     cout << "energyDensityVacuum=" << energyVacuum << "\n";
     
     SU3NJL3DCutoffFixedTempRhoBEqualChemPot vacuumSol(vacuum);
-    vacuumSol.setPressure(0.0);
-    vacuumSol.setEnergyDensity(0.0);
-    vacuumSol.setEntropyDensity(0.0);
 
-    // Build guesses from the vacuum solution
-    double MuGuess = vacuumSol.getUpQuarkEffectiveMass();
-    double MdGuess = vacuumSol.getDownQuarkEffectiveMass();
-    double MsGuess = vacuumSol.getStrangeQuarkEffectiveMass();
-    double effectiveCPGuess = vacuumSol.getUpQuarkEffectiveMass()*(1+1E-4);
+    //Build guesses from the vacuum solution
+    double mUGuess = vacuumSol.getUpQuarkEffectiveMass();
+    double mDGuess = vacuumSol.getDownQuarkEffectiveMass();
+    double mSGuess = vacuumSol.getStrangeQuarkEffectiveMass();
+    double effCPGuess = vacuumSol.getUpQuarkEffectiveMass()*(1+1E-4);
 
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solutions;
     solutions.push_back(vacuumSol);
     double delta = (maximumBaryonDensity-minimumBaryonDensity)/(numberOfPoints-1);
     for (int i = 0; i < numberOfPoints; ++i)
     {   
-        SU3NJL3DCutoffFixedTempRhoBEqualChemPot inMediumSol(vacuum.getParametersNJL());
-        inMediumSol.setTemperature(0.0); 
-        inMediumSol.setBaryonDensity(0.0);
-
-        //step in density
+        //Step in density
         double rhoB = minimumBaryonDensity + i*delta;
-        inMediumSol.setBaryonDensity(rhoB);
 
-        //find quark masses and effective chemical potential
-        inMediumSol.solve(gapPrecision, method, MuGuess, MdGuess, MsGuess, effectiveCPGuess);
+        SU3NJL3DCutoffFixedTempRhoBEqualChemPot inMediumSol(
+            vacuum.getParametersNJL(),
+            0.0,
+            rhoB
+        );
 
-        //guesses for next step
-        MuGuess = inMediumSol.getUpQuarkEffectiveMass();
-        MdGuess = inMediumSol.getDownQuarkEffectiveMass();
-        MsGuess = inMediumSol.getStrangeQuarkEffectiveMass();
-        effectiveCPGuess = inMediumSol.getQuarkEffectiveChemicalPotential();  
+        //Find quark masses and effective chemical potential
+        inMediumSol.solve(gapPrecision, method, mUGuess, mDGuess, mSGuess, effCPGuess);
 
-        //print to console
-        printf("rhoB=%.4f, Mu=%.4f, Md=%.4f, Ms=%.4f [GeV] \n", 
+        //Guesses for next step
+        mUGuess = inMediumSol.getUpQuarkEffectiveMass();
+        mDGuess = inMediumSol.getDownQuarkEffectiveMass();
+        mSGuess = inMediumSol.getStrangeQuarkEffectiveMass();
+        effCPGuess = inMediumSol.getQuarkEffectiveChemicalPotential();  
+
+        //Calculate the sigma field and density for each quark flavour
+        inMediumSol.setSigmasDensitiesChemicalPotentials();
+     
+        //Calculate thermodynamics
+        inMediumSol.setPressure( pressureVacuum );
+        inMediumSol.setEnergyDensity( energyVacuum );
+        inMediumSol.setEntropyDensity();
+
+        //Push to solutions vector if solution passes the test
+        bool testSolution = inMediumSol.testSolution(gapPrecision);
+        if (testSolution==true){ solutions.push_back(inMediumSol); }
+        else{ cout << "Solution fails test!"; }
+
+        //Print solution to console
+        printf("rhoB=%.4f, mU=%.4f, mD=%.4f, mS=%.4f [GeV] \n", 
                 rhoB/pow(hc_GeVfm, 3),
                 inMediumSol.getUpQuarkEffectiveMass(), 
                 inMediumSol.getDownQuarkEffectiveMass(), 
                 inMediumSol.getStrangeQuarkEffectiveMass());
-     
-
-        //calculate thermodynamics
-        double pressureMed = inMediumSol.calculatePressure(pressureVacuum);
-        double energyMed = inMediumSol.calculateEnergyDensity(energyVacuum);
-        double entropyMed = inMediumSol.calculateEntropyDensity();
-        inMediumSol.setPressure( pressureMed );
-        inMediumSol.setEnergyDensity( energyMed );
-        inMediumSol.setEntropyDensity( entropyMed );
-
-        //push to solutions vector if solution passes the test
-        if (inMediumSol.testSolution(gapPrecision)==true){ solutions.push_back(inMediumSol); }
     }
     
-    // Store calculation to file
+    //Store calculation to file
     string filename = string("SU3NJL3DCutoffEqualChemPot_") + vacuum.getParametersNJL().getParameterSetName()
             	                                            + "T0.0"
                                                             + "rhoBMin" + trim0ToDot0(minimumBaryonDensity/pow(hc_GeVfm,3))
@@ -334,7 +366,7 @@ solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum vacuum,
 
 void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solutions, string fileName, bool columnsDescription)
 {
-    // Create file to store solution
+    //Create file to store solution
     std::ofstream aux_file_NJL;
     aux_file_NJL.open(fileName, std::ofstream::out | std::ios::trunc);
     aux_file_NJL.precision(15);
@@ -362,7 +394,7 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> soluti
    		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getDownQuarkEffectiveMass();
    		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getStrangeQuarkEffectiveMass();
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getQuarkEffectiveChemicalPotential();
-        aux_file_NJL.width(25);   aux_file_NJL << 3.0*solutions[i].getQuarkEffectiveChemicalPotential();
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getBaryonChemicalPotential();
    		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getPressure()/pow(hc_GeVfm,3);
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getEnergyDensity()/pow(hc_GeVfm,3);
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getEntropyDensity()/pow(hc_GeVfm,3);
@@ -373,6 +405,14 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> soluti
 
 int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
+    if (x->size != 8) 
+    {   
+        string functionName = "SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint";
+        cout << "Error: gsl_vector 'x' has insufficient size in " << functionName << "\n";
+        cout << "(expected 4, got " << x->size << ").\n";
+        return GSL_FAILURE;
+    }
+
     //Define variables
     double mU_broken = gsl_vector_get(x,0);
     double mD_broken = gsl_vector_get(x,1);
@@ -394,14 +434,16 @@ int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *x
     double T = source.getTemperature();
 
     //Broken phase
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot brokenPhase(source.getParametersNJL(),
-                                                        T,
-                                                        0.0,
-                                                        mU_broken,
-                                                        mD_broken,
-                                                        mS_broken,
-                                                        effCP_broken);
-    brokenPhase.setSigmasAndDensitiesAndChemicalPotentials();
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot brokenPhase(
+        source.getParametersNJL(),
+        T,
+        0.0,
+        mU_broken,
+        mD_broken,
+        mS_broken,
+        effCP_broken
+    );
+    brokenPhase.setSigmasDensitiesChemicalPotentials();
 
     double sigmaU_broken = brokenPhase.getUpQuarkSigma();
     double sigmaD_broken = brokenPhase.getDownQuarkSigma();
@@ -416,20 +458,22 @@ int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *x
     double pressure_broken = brokenPhase.calculatePressure(0.0);//the vacuum values can be any value
 
     //Restored phase
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot restoredPhase(source.getParametersNJL(),
-                                                          T,
-                                                          0.0,
-                                                          mU_restored,
-                                                          mD_restored,
-                                                          mS_restored,
-                                                          effCP_restored);
-    restoredPhase.setSigmasAndDensitiesAndChemicalPotentials();
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot restoredPhase(
+        source.getParametersNJL(),
+        T,
+        0.0,
+        mU_restored,
+        mD_restored,
+        mS_restored,
+        effCP_restored
+    );
+    restoredPhase.setSigmasDensitiesChemicalPotentials();
 
     double sigmaU_restored = restoredPhase.getUpQuarkSigma();
     double sigmaD_restored = restoredPhase.getDownQuarkSigma();
     double sigmaS_restored = restoredPhase.getStrangeQuarkSigma();
 
-    //get all the necessary quantities
+    //Get all the necessary quantities
     double rhoU_restored = restoredPhase.getUpQuarkDensity();
     double rhoD_restored = restoredPhase.getDownQuarkDensity();
     double rhoS_restored = restoredPhase.getStrangeQuarkDensity();
@@ -466,13 +510,13 @@ int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *x
 
 vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> findChiralTransitionPointsFixedTemperature(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solutions, double precision, MultiRootFindingMethod method)
 {
-    //run check that solutions have the same temperature
+    //Run check that solutions have the same temperature
     for (int i = 0; i < int(solutions.size()); ++i)
     {   
         if ( fabs(solutions[1].getTemperature()-solutions[i].getTemperature())>0 ){ cout << "Temperature is not fixed in this vector of solutions!\n"; abort(); }
     }
 
-    //finding guesses for transition point
+    //Finding guesses for transition point
     int first = 0;
     for (int i = 1; i < int(solutions.size()); ++i)
     {
@@ -502,7 +546,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> findChiralTransitionPointsFixedT
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> transitionPoints;
     if ( first>0 && second>0 )
     {
-        //estimate guesses
+        //Estimate guesses
         double mU_broken = solutions[first].getUpQuarkEffectiveMass();
         double mD_broken = solutions[first].getDownQuarkEffectiveMass();
         double mS_broken = solutions[first].getStrangeQuarkEffectiveMass();
@@ -512,7 +556,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> findChiralTransitionPointsFixedT
         double mS_restored = solutions[second].getStrangeQuarkEffectiveMass();
         double effCP_restored = solutions[second].getQuarkEffectiveChemicalPotential();
 
-        //solve system
+        //Solve system
         double x[8];
         x[0] = mU_broken; 
         x[1] = mD_broken;  
@@ -542,7 +586,6 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> findChiralTransitionPointsFixedT
         cout << "Restored phase:\n";
         cout << mU_restored << "\t" << mD_restored << "\t" << mS_restored << "\n";
         cout << effCP_restored << "\n";
-
     }
 
     return transitionPoints;

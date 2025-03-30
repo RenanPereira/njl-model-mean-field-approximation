@@ -44,6 +44,7 @@ public:
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(void* );
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffParameters );
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffParameters , double );
+	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffParameters , double , double );
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffParameters , double , double , double , double , double , double );
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffVacuum );
 
@@ -52,11 +53,9 @@ public:
 	double getTemperature(){ return temperature; };
 	double getBaryonDensity(){ return baryonDensity; };
 
-	void setTemperature(double temperatureAux){ temperature = temperatureAux; };
-	void setBaryonDensity(double baryonDensityAux){ baryonDensity = baryonDensityAux; };
-	void setPressure(double pressureAux){ pressure = pressureAux; };
-	void setEnergyDensity(double energyDensityAux){ energyDensity = energyDensityAux; };
-	void setEntropyDensity(double entropyDensityAux){ entropyDensity = entropyDensityAux; };
+	void setPressure(double pressureVacuum){ pressure = calculatePressure(pressureVacuum); };
+	void setEnergyDensity(double energyVacuum){ energyDensity = calculateEnergyDensity(energyVacuum); };
+	void setEntropyDensity(){ entropyDensity = calculateEntropyDensity(); };
 
 	double getUpQuarkEffectiveMass(){ return upQuarkEffectiveMass; };
 	double getDownQuarkEffectiveMass(){ return downQuarkEffectiveMass; };
@@ -91,14 +90,18 @@ public:
 	void setBaryonChemicalPotential(){ baryonChemicalPotential = getUpQuarkChemicalPotential() + 2.0*getDownQuarkChemicalPotential(); };
 	double getBaryonChemicalPotential(){ return baryonChemicalPotential; }
 	
-	void setSigmasAndDensitiesAndChemicalPotentials();
-
-private:
+	void setSigmasDensitiesChemicalPotentials(double , double , double , double , double , double );
+	void setSigmasDensitiesChemicalPotentials();
+	
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };
 	void setDownQuarkEffectiveMass(double downQuarkEffectiveMassAux){ downQuarkEffectiveMass = downQuarkEffectiveMassAux; };
 	void setStrangeQuarkEffectiveMass(double strangeQuarkEffectiveMassAux){ strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux; };
 	void setQuarkEffectiveChemicalPotential(double quarkEffectiveChemicalPotentialAux){ quarkEffectiveChemicalPotential = quarkEffectiveChemicalPotentialAux; };
 
+private:
+	void setTemperature(double temperatureAux){ temperature = temperatureAux; };
+	void setBaryonDensity(double baryonDensityAux){ baryonDensity = baryonDensityAux; };
+	
 	void setUpQuarkSigma(double upQuarkSigmaAux){ upQuarkSigma = upQuarkSigmaAux; };
 	void setDownQuarkSigma(double downQuarkSigmaAux){ downQuarkSigma = downQuarkSigmaAux; };
 	void setStrangeQuarkSigma(double strangeQuarkSigmaAux){ strangeQuarkSigma = strangeQuarkSigmaAux; };

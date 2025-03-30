@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
                                          1E-8, HYBRIDS);
     
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> transition = 
-    findChiralTransitionPointsFixedTemperature(test, 1E-8, HYBRIDS);
+    findChiralTransitionPointsFixedTemperature(test, 1E-8, DNEWTON);
 
 /*
     //////////////////////////////////////////////////////////////////////////////////////////
