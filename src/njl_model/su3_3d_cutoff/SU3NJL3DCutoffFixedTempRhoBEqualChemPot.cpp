@@ -65,7 +65,6 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::SU3NJL3DCutoffFixedTempRhoBEqualChemPot
     downQuarkEffectiveMass = downQuarkEffectiveMassAux;
     strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux;
     quarkEffectiveChemicalPotential = quarkEffectiveChemicalPotentialAux;
-
 }
 
 
@@ -76,14 +75,26 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::SU3NJL3DCutoffFixedTempRhoBEqualChemPot
     temperature = 0.0;
     baryonDensity = 0.0;
 
-    pressure = 0.0;
-    energyDensity = 0.0;
-    entropyDensity = 0.0;
-
     upQuarkEffectiveMass = vacuum.getUpQuarkEffectiveMass();
     downQuarkEffectiveMass = vacuum.getDownQuarkEffectiveMass();
     strangeQuarkEffectiveMass = vacuum.getStrangeQuarkEffectiveMass();
     quarkEffectiveChemicalPotential = 0.0;
+
+    upQuarkChemicalPotential = 0.0;
+	downQuarkChemicalPotential = 0.0;
+	strangeQuarkChemicalPotential = 0.0;
+	baryonChemicalPotential = 0.0;
+
+    setSigmasDensitiesChemicalPotentials(upQuarkEffectiveMass, 
+                                         downQuarkEffectiveMass, 
+                                         strangeQuarkEffectiveMass, 
+                                         quarkEffectiveChemicalPotential, 
+                                         quarkEffectiveChemicalPotential, 
+                                         quarkEffectiveChemicalPotential);
+
+    pressure = 0.0;
+    energyDensity = 0.0;
+    entropyDensity = 0.0;
 }
 
 
@@ -291,7 +302,7 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::setSigmasDensitiesChemicalPotentia
 vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> 
 solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum vacuum, 
                                      double minimumBaryonDensity, double maximumBaryonDensity, int numberOfPoints, 
-                                     double gapPrecision, MultiRootFindingMethod method)
+                                     double gapPrecision, MultiRootFindingMethod method, bool storeToFile)
 {   
     //Analyse vacuum solution
     double pressureVacuum = vacuum.calculatePressure();
@@ -344,21 +355,25 @@ solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum vacuum,
         else{ cout << "Solution fails test!"; }
 
         //Print solution to console
-        printf("rhoB=%.4f, mU=%.4f, mD=%.4f, mS=%.4f [GeV] \n", 
+        printf("rhoB=%.4f, mU=%.4f, mD=%.4f, mS=%.4f, effCP=%.4f [GeV] \n", 
                 rhoB/pow(hc_GeVfm, 3),
                 inMediumSol.getUpQuarkEffectiveMass(), 
                 inMediumSol.getDownQuarkEffectiveMass(), 
-                inMediumSol.getStrangeQuarkEffectiveMass());
+                inMediumSol.getStrangeQuarkEffectiveMass(),
+                inMediumSol.getQuarkEffectiveChemicalPotential());
     }
     
-    //Store calculation to file
-    string filename = string("SU3NJL3DCutoffEqualChemPot_") + vacuum.getParametersNJL().getParameterSetName()
-            	                                            + "T0.0"
-                                                            + "rhoBMin" + trim0ToDot0(minimumBaryonDensity/pow(hc_GeVfm,3))
-                                                            + "rhoBMax" + trim0ToDot0(maximumBaryonDensity/pow(hc_GeVfm,3))
-                                                            + "N" + to_string(numberOfPoints)
-                                                            + ".dat";
-    writeSolutionsToFile(solutions, filename, true);
+    if ( storeToFile )
+    {
+        //Store calculation to file
+        string filename = string("SU3NJL3DCutoffEqualChemPot_") + vacuum.getParametersNJL().getParameterSetName()
+                                                                + "T0.0"
+                                                                + "rhoBMin" + trim0ToDot0(minimumBaryonDensity/pow(hc_GeVfm,3))
+                                                                + "rhoBMax" + trim0ToDot0(maximumBaryonDensity/pow(hc_GeVfm,3))
+                                                                + "N" + to_string(numberOfPoints)
+                                                                + ".dat";
+        writeSolutionsToFile(solutions, filename, true);
+    }
 
     return solutions;
 }
@@ -383,6 +398,12 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> soluti
         aux_file_NJL.width(25);   aux_file_NJL << "pressure[GeVfm-3]";
         aux_file_NJL.width(25);   aux_file_NJL << "energyDensity[GeVfm-3]";
         aux_file_NJL.width(25);   aux_file_NJL << "entropyDensity[fm-3]";
+        aux_file_NJL.width(25);   aux_file_NJL << "sigmaU[GeV]";
+        aux_file_NJL.width(25);   aux_file_NJL << "sigmaD[GeV]";
+        aux_file_NJL.width(25);   aux_file_NJL << "sigmaS[GeV]";
+        aux_file_NJL.width(25);   aux_file_NJL << "rhoU[fm-3]";
+        aux_file_NJL.width(25);   aux_file_NJL << "rhoD[fm-3]";
+        aux_file_NJL.width(25);   aux_file_NJL << "rhoS[fm-3]";
         aux_file_NJL << std::endl;
     }
 
@@ -398,6 +419,12 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> soluti
    		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getPressure()/pow(hc_GeVfm,3);
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getEnergyDensity()/pow(hc_GeVfm,3);
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getEntropyDensity()/pow(hc_GeVfm,3);
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getUpQuarkSigma();
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getDownQuarkSigma();
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getStrangeQuarkSigma();
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getUpQuarkDensity();
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getDownQuarkDensity();
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getStrangeQuarkDensity();
 		aux_file_NJL << std::endl;
     }
 }

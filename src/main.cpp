@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
                                          minimumBaryonDensity, 
                                          maximumBaryonDensity, 
                                          numberOfPoints, 
-                                         1E-8, HYBRIDS);
+                                         1E-8, HYBRIDS, true);
     
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> transition = 
     findChiralTransitionPointsFixedTemperature(test, 1E-8, DNEWTON);

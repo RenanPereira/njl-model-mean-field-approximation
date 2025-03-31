@@ -122,7 +122,7 @@ int SU3NJL3DCutoffGapEquationsEqualChemicalPotentialFixedTemperatureBaryonDensit
 vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> 
 solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum , 
                                      double , double , int , 
-                                     double , MultiRootFindingMethod );
+                                     double , MultiRootFindingMethod , bool);
 
 void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , string , bool );
 
