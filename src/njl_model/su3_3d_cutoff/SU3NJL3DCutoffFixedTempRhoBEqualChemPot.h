@@ -8,6 +8,15 @@
 
 class SU3NJL3DCutoffFixedTempRhoBEqualChemPot
 {
+public:
+	struct ChiralTransitionPoint {
+		double mU_broken, mD_broken, mS_broken;
+		double effCP_broken;
+		double mU_restored, mD_restored, mS_restored;
+		double effCP_restored;
+	};
+
+
 private:
 	SU3NJL3DCutoffParameters parametersNJL;
 
@@ -38,6 +47,7 @@ private:
 	double pressure = 0.0/0.0;
 	double energyDensity = 0.0/0.0;
 	double entropyDensity = 0.0/0.0;
+
 
 public:
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(){};
@@ -98,6 +108,15 @@ public:
 	void setStrangeQuarkEffectiveMass(double strangeQuarkEffectiveMassAux){ strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux; };
 	void setQuarkEffectiveChemicalPotential(double quarkEffectiveChemicalPotentialAux){ quarkEffectiveChemicalPotential = quarkEffectiveChemicalPotentialAux; };
 
+	static ChiralTransitionPoint calculateChiralTransitionPoint(
+		double ,
+		const ChiralTransitionPoint& ,
+		const SU3NJL3DCutoffParameters& ,
+		double ,
+		MultiRootFindingMethod );
+		static vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> calculateFirstOrderLine(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , double , MultiRootFindingMethod );
+
+
 private:
 	void setTemperature(double temperatureAux){ temperature = temperatureAux; };
 	void setBaryonDensity(double baryonDensityAux){ baryonDensity = baryonDensityAux; };
@@ -118,6 +137,7 @@ private:
 
 int SU3NJL3DCutoffGapEquationsEqualChemicalPotentialFixedTemperatureBaryonDensity(const gsl_vector *, void *, gsl_vector *);
 
+int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *, void *, gsl_vector *);
 
 vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> 
 solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum , 
@@ -126,8 +146,5 @@ solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum ,
 
 void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , string , bool );
 
-int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *, void *, gsl_vector *);
-
-vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> findChiralTransitionPointsFixedTemperature(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , double , MultiRootFindingMethod );
 
 #endif

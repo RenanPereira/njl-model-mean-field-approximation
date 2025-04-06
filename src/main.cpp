@@ -65,8 +65,8 @@ int main(int argc, char* argv[])
                                          numberOfPoints, 
                                          1E-8, HYBRIDS, true);
     
-    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> transition = 
-    findChiralTransitionPointsFixedTemperature(test, 1E-8, DNEWTON);
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firtOrderLine = 
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(test, 1E-8, DNEWTON);
 
 /*
     //////////////////////////////////////////////////////////////////////////////////////////

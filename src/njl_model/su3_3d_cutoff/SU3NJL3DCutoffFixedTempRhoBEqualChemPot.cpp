@@ -355,7 +355,7 @@ solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum vacuum,
         else{ cout << "Solution fails test!"; }
 
         //Print solution to console
-        printf("rhoB=%.4f, mU=%.4f, mD=%.4f, mS=%.4f, effCP=%.4f [GeV] \n", 
+        printf("rhoB=%.6f, mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n", 
                 rhoB/pow(hc_GeVfm, 3),
                 inMediumSol.getUpQuarkEffectiveMass(), 
                 inMediumSol.getDownQuarkEffectiveMass(), 
@@ -535,14 +535,51 @@ int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *x
 }
 
 
-vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> findChiralTransitionPointsFixedTemperature(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solutions, double precision, MultiRootFindingMethod method)
+SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateChiralTransitionPoint(
+    double T,
+    const ChiralTransitionPoint& guess,
+    const SU3NJL3DCutoffParameters& parametersNJL,
+    double precision,
+    MultiRootFindingMethod method) 
 {
+    double x[8] = {
+        guess.mU_broken,
+        guess.mD_broken,
+        guess.mS_broken,
+        guess.effCP_broken,
+        guess.mU_restored,
+        guess.mD_restored,
+        guess.mS_restored,
+        guess.effCP_restored
+    };
+
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot aux(parametersNJL, T);
+    multiDimensionalRootFind(8, precision, x, &aux, &SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint, method);
+
+    return ChiralTransitionPoint { 
+        x[0], x[1], x[2], x[3], 
+        x[4], x[5], x[6], x[7] 
+    };
+}
+
+
+vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solutions, 
+    double precision, 
+    MultiRootFindingMethod method)
+{   
+    double deltaT = 0.0001;
+    double massDifferenceCEP = 1E-8;
+    
     //Run check that solutions have the same temperature
     for (int i = 0; i < int(solutions.size()); ++i)
     {   
         if ( fabs(solutions[1].getTemperature()-solutions[i].getTemperature())>0 ){ cout << "Temperature is not fixed in this vector of solutions!\n"; abort(); }
     }
 
+    SU3NJL3DCutoffParameters parametersNJL = solutions[0].getParametersNJL();
+    double T = solutions[0].getTemperature();
+    
     //Finding guesses for transition point
     int first = 0;
     for (int i = 1; i < int(solutions.size()); ++i)
@@ -570,7 +607,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> findChiralTransitionPointsFixedT
         }
     }
 
-    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> transitionPoints;
+    vector<ChiralTransitionPoint> transitionPoints;
     if ( first>0 && second>0 )
     {
         //Estimate guesses
@@ -583,36 +620,73 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> findChiralTransitionPointsFixedT
         double mS_restored = solutions[second].getStrangeQuarkEffectiveMass();
         double effCP_restored = solutions[second].getQuarkEffectiveChemicalPotential();
 
-        //Solve system
-        double x[8];
-        x[0] = mU_broken; 
-        x[1] = mD_broken;  
-        x[2] = mS_broken;  
-        x[3] = 0.5*effCP_broken + 0.5*effCP_restored;
-        x[4] = mU_restored; 
-        x[5] = mD_restored;  
-        x[6] = mS_restored;  
-        x[7] = 0.5*effCP_broken + 0.5*effCP_restored;
+        ChiralTransitionPoint point = {
+            mU_broken,
+            mD_broken,
+            mS_broken,
+            0.5*effCP_broken + 0.5*effCP_restored,
+            mU_restored,
+            mD_restored,
+            mS_restored,
+            0.5*effCP_broken + 0.5*effCP_restored
+        };
+        
+        point = calculateChiralTransitionPoint(T, point, parametersNJL, precision, method);
 
-        SU3NJL3DCutoffFixedTempRhoBEqualChemPot aux(solutions[0].getParametersNJL(), 
-                                                    solutions[0].getTemperature());
-        multiDimensionalRootFind(8, precision, &x[0], &aux, &SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint, method);
+        mU_broken = point.mU_broken; 
+        mD_broken = point.mD_broken;
+        mS_broken = point.mS_broken;
+        effCP_broken = point.effCP_broken;
+        mU_restored = point.mU_restored; 
+        mD_restored = point.mD_restored; 
+        mS_restored = point.mS_restored;
+        effCP_restored = point.effCP_restored;
+        
+        //Store the chiral transition point
+        transitionPoints.push_back(point);
+        
+        printf("Temperature=%.6f [GeV]\n", T);
+        printf("Broken phase:\n");
+        printf("mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n", mU_broken, mD_broken, mS_broken, effCP_broken);
+        printf("Restored phase:\n");
+        printf("mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n\n", mU_restored, mD_restored, mS_restored, effCP_restored);
 
-        mU_broken = x[0]; 
-        mD_broken = x[1];
-        mS_broken = x[2]; 
-        effCP_broken = x[3];
-        mU_restored = x[4]; 
-        mD_restored = x[5];  
-        mS_restored = x[6];  
-        effCP_restored = x[7]; 
+        //Calculate if there is a first order phase transition by checking if the difference between masses in both phase is large
+		double deltaCEP = fabs(mU_broken - mU_restored);
 
-        cout << "Broken phase:\n";
-        cout << mU_broken << "\t" << mD_broken << "\t" << mS_broken << "\n";
-        cout << effCP_broken << "\n";
-        cout << "Restored phase:\n";
-        cout << mU_restored << "\t" << mD_restored << "\t" << mS_restored << "\n";
-        cout << effCP_restored << "\n";
+        //Find first order line by increasing temperature while the mass difference is not reached: repeat the above calculation
+        T = 0.001;//Set temperature to 1GeV for the first step
+        while ( deltaCEP>massDifferenceCEP )
+        {
+            point = calculateChiralTransitionPoint(T, point, parametersNJL, precision, method);
+
+            mU_broken = point.mU_broken; 
+            mD_broken = point.mD_broken;
+            mS_broken = point.mS_broken;
+            effCP_broken = point.effCP_broken;
+            mU_restored = point.mU_restored; 
+            mD_restored = point.mD_restored; 
+            mS_restored = point.mS_restored;
+            effCP_restored = point.effCP_restored;
+
+            //Store the chiral transition point
+            transitionPoints.push_back(point);
+            
+            printf("Temperature=%.6f [GeV]\n", T);
+            printf("Broken phase:\n");
+            printf("mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n", mU_broken, mD_broken, mS_broken, effCP_broken);
+            printf("Restored phase:\n");
+            printf("mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n\n", mU_restored, mD_restored, mS_restored, effCP_restored);
+            
+            deltaCEP = abs(mU_broken - mU_restored);
+            
+            //Increase temperature
+            T = T + deltaT;
+        }
+    }
+    else
+    {
+        cout << "No first-order phase transition point was detected at zero temperature!\n";
     }
 
     return transitionPoints;
