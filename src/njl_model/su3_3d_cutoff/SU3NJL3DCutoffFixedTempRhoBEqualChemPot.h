@@ -113,8 +113,28 @@ public:
 		const ChiralTransitionPoint& ,
 		const SU3NJL3DCutoffParameters& ,
 		double ,
-		MultiRootFindingMethod );
-		static vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> calculateFirstOrderLine(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , double , MultiRootFindingMethod );
+		MultiRootFindingMethod 
+	);
+	static vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> calculateFirstOrderLine(
+		vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , 
+		double , 
+		MultiRootFindingMethod ,
+		double ,
+		double 
+	);
+	static vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> calculateFirstOrderLine(
+		SU3NJL3DCutoffVacuum ,
+		double ,
+		double ,
+		int ,
+		double ,
+		MultiRootFindingMethod ,
+		bool ,
+		double , 
+		MultiRootFindingMethod ,
+		double ,
+		double 
+	);
 
 
 private:

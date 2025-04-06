@@ -566,11 +566,11 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint SU3NJL3DCutoffFix
 vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solutions, 
     double precision, 
-    MultiRootFindingMethod method)
-{   
-    double deltaT = 0.0001;
-    double massDifferenceCEP = 1E-8;
-    
+    MultiRootFindingMethod method,
+    double deltaT,
+    double massDifferenceCEP
+)
+{       
     //Run check that solutions have the same temperature
     for (int i = 0; i < int(solutions.size()); ++i)
     {   
@@ -607,7 +607,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
         }
     }
 
-    vector<ChiralTransitionPoint> transitionPoints;
+    vector<ChiralTransitionPoint> firtOrderLine;
     if ( first>0 && second>0 )
     {
         //Estimate guesses
@@ -643,7 +643,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
         effCP_restored = point.effCP_restored;
         
         //Store the chiral transition point
-        transitionPoints.push_back(point);
+        firtOrderLine.push_back(point);
         
         printf("Temperature=%.6f [GeV]\n", T);
         printf("Broken phase:\n");
@@ -670,7 +670,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
             effCP_restored = point.effCP_restored;
 
             //Store the chiral transition point
-            transitionPoints.push_back(point);
+            firtOrderLine.push_back(point);
             
             printf("Temperature=%.6f [GeV]\n", T);
             printf("Broken phase:\n");
@@ -689,5 +689,43 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
         cout << "No first-order phase transition point was detected at zero temperature!\n";
     }
 
-    return transitionPoints;
+    return firtOrderLine;
+}
+
+
+vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
+    SU3NJL3DCutoffVacuum vacuum,
+    double minimumBaryonDensity,
+    double maximumBaryonDensity,
+    int numberOfPoints,
+    double precisionZeroTempSol,
+    MultiRootFindingMethod methodZeroTempSol,
+    bool storeZeroTempSolToFile,
+    double precisionTransitionPointSol, 
+    MultiRootFindingMethod methodTransitionPointSol,
+    double deltaT,
+    double massDifferenceCEP
+)
+{    
+    //Solve the model at zero temperature in order to find guess for chiral transition
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> zeroTempSol = solveFromVacuumToFiniteBaryonDensity(
+        vacuum, 
+        minimumBaryonDensity, 
+        maximumBaryonDensity, 
+        numberOfPoints, 
+        precisionZeroTempSol, 
+        methodZeroTempSol, 
+        storeZeroTempSolToFile
+    );
+    
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firstOrderLine = 
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
+        zeroTempSol, 
+        precisionTransitionPointSol, 
+        methodTransitionPointSol, 
+        deltaT, 
+        massDifferenceCEP
+    );
+
+    return firstOrderLine;
 }

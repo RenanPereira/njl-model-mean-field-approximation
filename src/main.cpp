@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, DNEWTON, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
@@ -58,15 +58,32 @@ int main(int argc, char* argv[])
     double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
     double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
     int numberOfPoints = 2000;
+    /*
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> test =
-    solveFromVacuumToFiniteBaryonDensity(vacuum, 
-                                         minimumBaryonDensity, 
-                                         maximumBaryonDensity, 
-                                         numberOfPoints, 
-                                         1E-8, HYBRIDS, true);
+    solveFromVacuumToFiniteBaryonDensity(
+        vacuum, 
+        minimumBaryonDensity, 
+        maximumBaryonDensity, 
+        numberOfPoints, 
+        1E-8, 
+        DNEWTON, 
+        true
+    );
+    */
     
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firtOrderLine = 
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(test, 1E-8, DNEWTON);
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
+        vacuum, 
+        minimumBaryonDensity, 
+        maximumBaryonDensity, 
+        numberOfPoints, 
+        1E-8, 
+        DNEWTON, 
+        true,
+        1E-8, 
+        DNEWTON, 
+        0.0001, 
+        1E-8);
 
 /*
     //////////////////////////////////////////////////////////////////////////////////////////
