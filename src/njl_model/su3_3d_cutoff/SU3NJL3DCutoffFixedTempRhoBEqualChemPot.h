@@ -10,10 +10,14 @@ class SU3NJL3DCutoffFixedTempRhoBEqualChemPot
 {
 public:
 	struct ChiralTransitionPoint {
-		double mU_broken, mD_broken, mS_broken;
-		double effCP_broken;
-		double mU_restored, mD_restored, mS_restored;
-		double effCP_restored;
+		double upQuarkEffectiveMassBroken;
+		double downQuarkEffectiveMassBroken;
+		double strangeQuarkEffectiveMassBroken;
+		double quarkEffectiveChemicalPotentialBroken;
+		double upQuarkEffectiveMassRestored;
+		double downQuarkEffectiveMassRestored;
+		double strangeQuarkEffectiveMassRestored;
+		double quarkEffectiveChemicalPotentialRestored;
 	};
 
 

@@ -543,14 +543,14 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint SU3NJL3DCutoffFix
     MultiRootFindingMethod method) 
 {
     double x[8] = {
-        guess.mU_broken,
-        guess.mD_broken,
-        guess.mS_broken,
-        guess.effCP_broken,
-        guess.mU_restored,
-        guess.mD_restored,
-        guess.mS_restored,
-        guess.effCP_restored
+        guess.upQuarkEffectiveMassBroken,
+        guess.downQuarkEffectiveMassBroken,
+        guess.strangeQuarkEffectiveMassBroken,
+        guess.quarkEffectiveChemicalPotentialBroken,
+        guess.upQuarkEffectiveMassRestored,
+        guess.downQuarkEffectiveMassRestored,
+        guess.strangeQuarkEffectiveMassRestored,
+        guess.quarkEffectiveChemicalPotentialRestored
     };
 
     SU3NJL3DCutoffFixedTempRhoBEqualChemPot aux(parametersNJL, T);
@@ -633,14 +633,14 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
         
         point = calculateChiralTransitionPoint(T, point, parametersNJL, precision, method);
 
-        mU_broken = point.mU_broken; 
-        mD_broken = point.mD_broken;
-        mS_broken = point.mS_broken;
-        effCP_broken = point.effCP_broken;
-        mU_restored = point.mU_restored; 
-        mD_restored = point.mD_restored; 
-        mS_restored = point.mS_restored;
-        effCP_restored = point.effCP_restored;
+        mU_broken = point.upQuarkEffectiveMassBroken; 
+        mD_broken = point.downQuarkEffectiveMassBroken;
+        mS_broken = point.strangeQuarkEffectiveMassBroken;
+        effCP_broken = point.quarkEffectiveChemicalPotentialBroken;
+        mU_restored = point.upQuarkEffectiveMassRestored; 
+        mD_restored = point.downQuarkEffectiveMassRestored; 
+        mS_restored = point.strangeQuarkEffectiveMassRestored;
+        effCP_restored = point.quarkEffectiveChemicalPotentialRestored;
         
         //Store the chiral transition point
         firtOrderLine.push_back(point);
@@ -660,14 +660,14 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
         {
             point = calculateChiralTransitionPoint(T, point, parametersNJL, precision, method);
 
-            mU_broken = point.mU_broken; 
-            mD_broken = point.mD_broken;
-            mS_broken = point.mS_broken;
-            effCP_broken = point.effCP_broken;
-            mU_restored = point.mU_restored; 
-            mD_restored = point.mD_restored; 
-            mS_restored = point.mS_restored;
-            effCP_restored = point.effCP_restored;
+            mU_broken = point.upQuarkEffectiveMassBroken; 
+            mD_broken = point.downQuarkEffectiveMassBroken;
+            mS_broken = point.strangeQuarkEffectiveMassBroken;
+            effCP_broken = point.quarkEffectiveChemicalPotentialBroken;
+            mU_restored = point.upQuarkEffectiveMassRestored; 
+            mD_restored = point.downQuarkEffectiveMassRestored; 
+            mS_restored = point.strangeQuarkEffectiveMassRestored;
+            effCP_restored = point.quarkEffectiveChemicalPotentialRestored;
 
             //Store the chiral transition point
             firtOrderLine.push_back(point);

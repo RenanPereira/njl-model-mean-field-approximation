@@ -58,18 +58,6 @@ int main(int argc, char* argv[])
     double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
     double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
     int numberOfPoints = 2000;
-    /*
-    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> test =
-    solveFromVacuumToFiniteBaryonDensity(
-        vacuum, 
-        minimumBaryonDensity, 
-        maximumBaryonDensity, 
-        numberOfPoints, 
-        1E-8, 
-        DNEWTON, 
-        true
-    );
-    */
     
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firtOrderLine = 
     SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
@@ -83,7 +71,8 @@ int main(int argc, char* argv[])
         1E-8, 
         DNEWTON, 
         0.0001, 
-        1E-8);
+        1E-8
+    );
 
 /*
     //////////////////////////////////////////////////////////////////////////////////////////
