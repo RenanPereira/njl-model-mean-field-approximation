@@ -8,19 +8,6 @@
 
 class SU3NJL3DCutoffFixedTempRhoBEqualChemPot
 {
-public:
-	struct ChiralTransitionPoint {
-		double upQuarkEffectiveMassBroken;
-		double downQuarkEffectiveMassBroken;
-		double strangeQuarkEffectiveMassBroken;
-		double quarkEffectiveChemicalPotentialBroken;
-		double upQuarkEffectiveMassRestored;
-		double downQuarkEffectiveMassRestored;
-		double strangeQuarkEffectiveMassRestored;
-		double quarkEffectiveChemicalPotentialRestored;
-	};
-
-
 private:
 	SU3NJL3DCutoffParameters parametersNJL;
 
@@ -52,6 +39,27 @@ private:
 	double energyDensity = 0.0/0.0;
 	double entropyDensity = 0.0/0.0;
 
+public:
+	struct ChiralTransitionPoint {
+		double upQuarkEffectiveMassBroken;
+		double downQuarkEffectiveMassBroken;
+		double strangeQuarkEffectiveMassBroken;
+		double quarkEffectiveChemicalPotentialBroken;
+		double upQuarkEffectiveMassRestored;
+		double downQuarkEffectiveMassRestored;
+		double strangeQuarkEffectiveMassRestored;
+		double quarkEffectiveChemicalPotentialRestored;
+
+		SU3NJL3DCutoffParameters parametersNJL;
+		double temperature;
+
+		ChiralTransitionPoint(
+			SU3NJL3DCutoffParameters ,
+			double ,
+			double , double , double , double ,
+			double , double , double , double 
+		);
+	};
 
 public:
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(){};
@@ -115,7 +123,6 @@ public:
 	static ChiralTransitionPoint calculateChiralTransitionPoint(
 		double ,
 		const ChiralTransitionPoint& ,
-		const SU3NJL3DCutoffParameters& ,
 		double ,
 		MultiRootFindingMethod 
 	);
@@ -139,8 +146,11 @@ public:
 		double ,
 		double 
 	);
-
-
+	/*
+	static void test(
+		vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> 
+	);
+	*/
 private:
 	void setTemperature(double temperatureAux){ temperature = temperatureAux; };
 	void setBaryonDensity(double baryonDensityAux){ baryonDensity = baryonDensityAux; };

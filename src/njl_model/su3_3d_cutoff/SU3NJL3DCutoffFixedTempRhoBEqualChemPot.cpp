@@ -430,6 +430,26 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> soluti
 }
 
 
+SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint::ChiralTransitionPoint(
+	SU3NJL3DCutoffParameters params,
+	double temp,
+	double mU_broken, double mD_broken, double mS_broken, double effCP_broken,
+	double mU_restored, double mD_restored, double mS_restored, double effCP_restored
+)
+	: upQuarkEffectiveMassBroken(mU_broken),
+	  downQuarkEffectiveMassBroken(mD_broken),
+	  strangeQuarkEffectiveMassBroken(mS_broken),
+	  quarkEffectiveChemicalPotentialBroken(effCP_broken),
+	  upQuarkEffectiveMassRestored(mU_restored),
+	  downQuarkEffectiveMassRestored(mD_restored),
+	  strangeQuarkEffectiveMassRestored(mS_restored),
+	  quarkEffectiveChemicalPotentialRestored(effCP_restored),
+	  parametersNJL(params),
+	  temperature(temp)
+{}
+
+
+
 int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
     if (x->size != 8) 
@@ -538,7 +558,6 @@ int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *x
 SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateChiralTransitionPoint(
     double T,
     const ChiralTransitionPoint& guess,
-    const SU3NJL3DCutoffParameters& parametersNJL,
     double precision,
     MultiRootFindingMethod method) 
 {
@@ -553,13 +572,14 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint SU3NJL3DCutoffFix
         guess.quarkEffectiveChemicalPotentialRestored
     };
 
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot aux(parametersNJL, T);
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot aux(guess.parametersNJL, T);
     multiDimensionalRootFind(8, precision, x, &aux, &SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint, method);
 
-    return ChiralTransitionPoint { 
+    return ChiralTransitionPoint (
+        guess.parametersNJL, T,
         x[0], x[1], x[2], x[3], 
         x[4], x[5], x[6], x[7] 
-    };
+    );
 }
 
 
@@ -621,6 +641,8 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
         double effCP_restored = solutions[second].getQuarkEffectiveChemicalPotential();
 
         ChiralTransitionPoint point = {
+            parametersNJL,
+            T,
             mU_broken,
             mD_broken,
             mS_broken,
@@ -631,7 +653,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
             0.5*effCP_broken + 0.5*effCP_restored
         };
         
-        point = calculateChiralTransitionPoint(T, point, parametersNJL, precision, method);
+        point = calculateChiralTransitionPoint(T, point, precision, method);
 
         mU_broken = point.upQuarkEffectiveMassBroken; 
         mD_broken = point.downQuarkEffectiveMassBroken;
@@ -658,7 +680,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
         T = 0.001;//Set temperature to 1GeV for the first step
         while ( deltaCEP>massDifferenceCEP )
         {
-            point = calculateChiralTransitionPoint(T, point, parametersNJL, precision, method);
+            point = calculateChiralTransitionPoint(T, point, precision, method);
 
             mU_broken = point.upQuarkEffectiveMassBroken; 
             mD_broken = point.downQuarkEffectiveMassBroken;
@@ -729,3 +751,26 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
 
     return firstOrderLine;
 }
+
+/*
+static void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::test(
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firstOrderLine
+)
+{
+	//Broken phase - Calculate density for each quark flavour
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot brokenPhase(
+        parametersNJL,
+        T,
+        0.0,
+        mU_broken,
+        mD_broken,
+        mS_broken,
+        effCP_broken
+    );
+    brokenPhase.setSigmasDensitiesChemicalPotentials();
+    double rhoU_broken = brokenPhase.getUpQuarkDensity();
+    double rhoD_broken = brokenPhase.getDownQuarkDensity();
+    double rhoS_broken = brokenPhase.getStrangeQuarkDensity();
+    double rhoB_broken = SU3BaryonDensity(rhoU_broken, rhoD_broken, rhoS_broken);
+}
+*/
