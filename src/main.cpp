@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
         1E-8
     );
 
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeFirstOrderLineToFile(vacuum, firtOrderLine, "test.dat", true);
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(vacuum, firtOrderLine, "test.dat", true);
 
 /*
     //////////////////////////////////////////////////////////////////////////////////////////

@@ -39,6 +39,7 @@ private:
 	double energyDensity = 0.0/0.0;
 	double entropyDensity = 0.0/0.0;
 
+
 public:
 	struct ChiralTransitionPoint {
 		double upQuarkEffectiveMassBroken;
@@ -61,7 +62,7 @@ public:
 		);
 	};
 
-public:
+
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(){};
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(void* );
 	SU3NJL3DCutoffFixedTempRhoBEqualChemPot(SU3NJL3DCutoffParameters );
@@ -91,11 +92,18 @@ public:
 	void solve(double , MultiRootFindingMethod , double , double , double , double );
 	bool testSolution(double );
 
+	static vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solveFromVacuumToFiniteBaryonDensity(
+		SU3NJL3DCutoffVacuum , 
+        double , double , int , 
+        double , MultiRootFindingMethod , bool
+	);
+
+	static void writeToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , string , bool );
+
 	double calculatePressure(double );
 	double calculateEnergyDensity(double );
 	double calculateEntropyDensity();
 
-	//get other quantities
 	double getUpQuarkSigma(){ return upQuarkSigma; };
 	double getDownQuarkSigma(){ return downQuarkSigma; };
 	double getStrangeQuarkSigma(){ return strangeQuarkSigma; };
@@ -119,6 +127,9 @@ public:
 	void setDownQuarkEffectiveMass(double downQuarkEffectiveMassAux){ downQuarkEffectiveMass = downQuarkEffectiveMassAux; };
 	void setStrangeQuarkEffectiveMass(double strangeQuarkEffectiveMassAux){ strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux; };
 	void setQuarkEffectiveChemicalPotential(double quarkEffectiveChemicalPotentialAux){ quarkEffectiveChemicalPotential = quarkEffectiveChemicalPotentialAux; };
+
+	static int GapEquations(const gsl_vector *, void *, gsl_vector *);
+	static int ChiralTransitionEquations(const gsl_vector *, void *, gsl_vector *);
 
 	static ChiralTransitionPoint calculateChiralTransitionPoint(
 		double ,
@@ -146,7 +157,7 @@ public:
 		double ,
 		double 
 	);
-	static void writeFirstOrderLineToFile(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> , string , bool );
+	static void writeToFile(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> , string , bool );
 
 private:
 	void setTemperature(double temperatureAux){ temperature = temperatureAux; };
@@ -164,18 +175,6 @@ private:
 	void setDownQuarkChemicalPotential(double downQuarkChemicalPotentialAux){ downQuarkChemicalPotential = downQuarkChemicalPotentialAux; };
 	void setStrangeQuarkChemicalPotential(double strangeQuarkChemicalPotentialAux){ strangeQuarkChemicalPotential = strangeQuarkChemicalPotentialAux; };
 };
-
-
-int SU3NJL3DCutoffGapEquationsEqualChemicalPotentialFixedTemperatureBaryonDensity(const gsl_vector *, void *, gsl_vector *);
-
-int SU3NJL3DCutoffEqualChemPotFixedTempChiralTransitionPoint(const gsl_vector *, void *, gsl_vector *);
-
-vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> 
-solveFromVacuumToFiniteBaryonDensity(SU3NJL3DCutoffVacuum , 
-                                     double , double , int , 
-                                     double , MultiRootFindingMethod , bool);
-
-void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , string , bool );
 
 
 #endif
