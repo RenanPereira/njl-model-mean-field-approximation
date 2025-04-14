@@ -752,25 +752,145 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
     return firstOrderLine;
 }
 
-/*
-static void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::test(
-    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firstOrderLine
+
+void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeFirstOrderLineToFile(
+    SU3NJL3DCutoffVacuum vacuum,
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firstOrderLine,
+    string fileName, 
+    bool columnsDescription
 )
 {
-	//Broken phase - Calculate density for each quark flavour
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot brokenPhase(
-        parametersNJL,
-        T,
-        0.0,
-        mU_broken,
-        mD_broken,
-        mS_broken,
-        effCP_broken
-    );
-    brokenPhase.setSigmasDensitiesChemicalPotentials();
-    double rhoU_broken = brokenPhase.getUpQuarkDensity();
-    double rhoD_broken = brokenPhase.getDownQuarkDensity();
-    double rhoS_broken = brokenPhase.getStrangeQuarkDensity();
-    double rhoB_broken = SU3BaryonDensity(rhoU_broken, rhoD_broken, rhoS_broken);
+    //Analyse vacuum solution
+    double pressureVacuum = vacuum.calculatePressure();
+
+    //Create file to store first order line
+    std::ofstream file;
+    file.open(fileName, std::ofstream::out | std::ios::trunc);
+    file.precision(15);
+
+    if ( columnsDescription )
+    {
+        file.width(25);   file << "quarkChemPot[GeV]";
+        file.width(25);   file << "baryonChemPot[GeV]";
+        file.width(25);   file << "T[GeV]";
+        file.width(25);   file << "pressure[GeVfm-3]";
+
+        file.width(25);   file << "rhoB_broken[fm-3]";
+        file.width(25);   file << "massU_broken[GeV]";
+        file.width(25);   file << "massD_broken[GeV]";
+        file.width(25);   file << "massS_broken[GeV]";
+        file.width(30);   file << "energyDens_broken[GeVfm-3]";
+        file.width(30);   file << "entropyDens_broken[fm-3]";
+        file.width(25);   file << "sigmaU_broken[GeV]";
+        file.width(25);   file << "sigmaD_broken[GeV]";
+        file.width(25);   file << "sigmaS_broken[GeV]";
+        file.width(25);   file << "rhoU_broken[fm-3]";
+        file.width(25);   file << "rhoD_broken[fm-3]";
+        file.width(25);   file << "rhoS_broken[fm-3]";
+
+        file.width(25);   file << "rhoB_restored[fm-3]";
+        file.width(25);   file << "massU_restored[GeV]";
+        file.width(25);   file << "massD_restored[GeV]";
+        file.width(25);   file << "massS_restored[GeV]";
+        file.width(30);   file << "energyDens_restored[GeVfm-3]";
+        file.width(30);   file << "entropyDens_restored[fm-3]";
+        file.width(25);   file << "sigmaU_restored[GeV]";
+        file.width(25);   file << "sigmaD_restored[GeV]";
+        file.width(25);   file << "sigmaS_restored[GeV]";
+        file.width(25);   file << "rhoU_restored[fm-3]";
+        file.width(25);   file << "rhoD_restored[fm-3]";
+        file.width(25);   file << "rhoS_restored[fm-3]";
+        
+        file << std::endl;
+    }
+
+    for (int i = 0; i < int(firstOrderLine.size()-1); i++)
+    {
+        ChiralTransitionPoint point = firstOrderLine[i];
+
+        double T = point.temperature;
+        SU3NJL3DCutoffParameters parametersNJL = point.parametersNJL;
+
+        double mU_broken = point.upQuarkEffectiveMassBroken; 
+        double mD_broken = point.downQuarkEffectiveMassBroken;
+        double mS_broken = point.strangeQuarkEffectiveMassBroken;
+        double effCP_broken = point.quarkEffectiveChemicalPotentialBroken;
+
+        double mU_restored = point.upQuarkEffectiveMassRestored; 
+        double mD_restored = point.downQuarkEffectiveMassRestored; 
+        double mS_restored = point.strangeQuarkEffectiveMassRestored;
+        double effCP_restored = point.quarkEffectiveChemicalPotentialRestored;
+
+        //Broken phase - Calculate sigma and density for each quark flavour
+        SU3NJL3DCutoffFixedTempRhoBEqualChemPot brokenPhase(
+            parametersNJL,
+            T,
+            0.0,
+            mU_broken,
+            mD_broken,
+            mS_broken,
+            effCP_broken
+        );
+        brokenPhase.setSigmasDensitiesChemicalPotentials();
+        double rhoU_broken = brokenPhase.getUpQuarkDensity();
+        double rhoD_broken = brokenPhase.getDownQuarkDensity();
+        double rhoS_broken = brokenPhase.getStrangeQuarkDensity();
+        brokenPhase.setBaryonDensity( SU3BaryonDensity(rhoU_broken, rhoD_broken, rhoS_broken) );
+        brokenPhase.setPressure( pressureVacuum );
+        brokenPhase.setEnergyDensity( -pressureVacuum );
+        brokenPhase.setEntropyDensity();
+
+        //Restored phase - Calculate sigma and density for each quark flavour
+        SU3NJL3DCutoffFixedTempRhoBEqualChemPot restoredPhase(
+            parametersNJL,
+            T,
+            0.0,
+            mU_restored,
+            mD_restored,
+            mS_restored,
+            effCP_restored
+        );
+        restoredPhase.setSigmasDensitiesChemicalPotentials();
+        double rhoU_restored = restoredPhase.getUpQuarkDensity();
+        double rhoD_restored = restoredPhase.getDownQuarkDensity();
+        double rhoS_restored = restoredPhase.getStrangeQuarkDensity();
+        restoredPhase.setBaryonDensity( SU3BaryonDensity(rhoU_restored, rhoD_restored, rhoS_restored) );
+        restoredPhase.setPressure( pressureVacuum );
+        restoredPhase.setEnergyDensity( -pressureVacuum );
+        restoredPhase.setEntropyDensity();
+
+        // Print to file
+        file.width(25);   file << effCP_broken;
+        file.width(25);   file << brokenPhase.getBaryonChemicalPotential();
+        file.width(25);   file << T;
+        file.width(25);   file << brokenPhase.getPressure()/pow(hc_GeVfm,3);
+
+        file.width(25);   file << brokenPhase.getBaryonDensity()/pow(hc_GeVfm,3);
+        file.width(25);   file << brokenPhase.getUpQuarkEffectiveMass();
+        file.width(25);   file << brokenPhase.getDownQuarkEffectiveMass();
+        file.width(25);   file << brokenPhase.getStrangeQuarkEffectiveMass();
+        file.width(30);   file << brokenPhase.getEnergyDensity()/pow(hc_GeVfm,3);
+        file.width(30);   file << brokenPhase.getEntropyDensity()/pow(hc_GeVfm,3);
+        file.width(25);   file << brokenPhase.getUpQuarkSigma();
+        file.width(25);   file << brokenPhase.getDownQuarkSigma();
+        file.width(25);   file << brokenPhase.getStrangeQuarkSigma();
+        file.width(25);   file << brokenPhase.getUpQuarkDensity();
+        file.width(25);   file << brokenPhase.getDownQuarkDensity();
+        file.width(25);   file << brokenPhase.getStrangeQuarkDensity();
+
+        file.width(25);   file << restoredPhase.getBaryonDensity()/pow(hc_GeVfm,3);
+        file.width(25);   file << restoredPhase.getUpQuarkEffectiveMass();
+        file.width(25);   file << restoredPhase.getDownQuarkEffectiveMass();
+        file.width(25);   file << restoredPhase.getStrangeQuarkEffectiveMass();
+        file.width(30);   file << restoredPhase.getEnergyDensity()/pow(hc_GeVfm,3);
+        file.width(30);   file << restoredPhase.getEntropyDensity()/pow(hc_GeVfm,3);
+        file.width(25);   file << restoredPhase.getUpQuarkSigma();
+        file.width(25);   file << restoredPhase.getDownQuarkSigma();
+        file.width(25);   file << restoredPhase.getStrangeQuarkSigma();
+        file.width(25);   file << restoredPhase.getUpQuarkDensity();
+        file.width(25);   file << restoredPhase.getDownQuarkDensity();
+        file.width(25);   file << restoredPhase.getStrangeQuarkDensity();
+
+        file << std::endl;
+    }
 }
-*/

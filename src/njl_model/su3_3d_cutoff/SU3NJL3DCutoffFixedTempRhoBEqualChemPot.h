@@ -146,11 +146,8 @@ public:
 		double ,
 		double 
 	);
-	/*
-	static void test(
-		vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> 
-	);
-	*/
+	static void writeFirstOrderLineToFile(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> , string , bool );
+
 private:
 	void setTemperature(double temperatureAux){ temperature = temperatureAux; };
 	void setBaryonDensity(double baryonDensityAux){ baryonDensity = baryonDensityAux; };
