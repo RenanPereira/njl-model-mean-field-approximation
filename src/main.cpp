@@ -29,8 +29,6 @@ int main(int argc, char* argv[])
     	std::cout << "\nCommands processed successfully, continuing execution..." << std::endl;
 	}
 
-    SU3NJL3DCutoffCalculator::evaluateFirstOrderLine();
-/*
     //////////////////////////////////////////////////////////////////////////////////////////
     //parameter set A (Klevansky parameter set)
     double cutoff = 0.6023;
@@ -40,6 +38,21 @@ int main(int argc, char* argv[])
     double m0d = 0.0055;
     double m0s = 0.1407;
 
+    double precisionVacuum = 1E-8;
+    MultiRootFindingMethod methodVacuum = DNEWTON;
+    double mUGuess = 0.3;
+    double mDGuess = 0.3;
+    double mSGuess = 0.5;
+    double minimumBaryonDensity_fmMinus3 = 1E-4;
+    double maximumBaryonDensity_fmMinus3 = 2.00;
+    int numberOfPoints = 2000;
+    double precisionZeroTempSol = 1E-8;
+    MultiRootFindingMethod methodZeroTempSol = DNEWTON;
+    double precisionTransitionPointSol = 1E-8;
+    MultiRootFindingMethod methodTransitionPointSol = DNEWTON;
+    double deltaT = 0.0001;
+    double massDifferenceCEP = 1E-8;
+
     //Fix Lagrangian dimensionful couplings
     NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
@@ -47,38 +60,25 @@ int main(int argc, char* argv[])
     SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setA");
 
-    //solve model in the vacuum
-    double gapPrecision = 1E-8;
-    SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, DNEWTON, 0.3, 0.3, 0.5);
-
-    cout << "Vacuum effective masses: \n";
-    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
-    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
-         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
-         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
-
-    double minimumBaryonDensity = 1E-4*pow(hc_GeVfm,3);
-    double maximumBaryonDensity = 2.00*pow(hc_GeVfm,3);
-    int numberOfPoints = 2000;
-    
-    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firtOrderLine = 
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
-        vacuum, 
-        minimumBaryonDensity, 
-        maximumBaryonDensity, 
-        numberOfPoints, 
-        1E-8, 
-        DNEWTON, 
+    SU3NJL3DCutoffCalculator::evaluateFirstOrderLine(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
+        mUGuess,
+        mDGuess, 
+        mSGuess,
+        minimumBaryonDensity_fmMinus3, 
+        maximumBaryonDensity_fmMinus3,
+        numberOfPoints,
+        precisionZeroTempSol, 
+        methodZeroTempSol, 
         true,
-        1E-8, 
-        DNEWTON, 
-        0.0001, 
-        1E-8
+        precisionTransitionPointSol, 
+        methodTransitionPointSol, 
+        deltaT, 
+        massDifferenceCEP
     );
 
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(vacuum, firtOrderLine, "test.dat", true);
-*/
 
 /*
     //////////////////////////////////////////////////////////////////////////////////////////

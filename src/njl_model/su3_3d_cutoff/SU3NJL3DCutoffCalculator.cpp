@@ -1,7 +1,9 @@
 #include <iostream>
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCalculator.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
+#include "physics_utils/physical_constants.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.h"
 
 using namespace std;
 
@@ -16,14 +18,16 @@ void SU3NJL3DCutoffCalculator::evaluateVacuumMasses(
 )
 {   
     // Solve model in the vacuum
-    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in vacuum...\n";
+    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in the vacuum...\n";
 
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, 
-                 method, 
-                 upQuarkMassGuess, 
-                 downQuarkMassGuess, 
-                 strangeQuarkMassGuess);
+    vacuum.solve(
+        gapPrecision, 
+        method,          
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
 
     double Mu = vacuum.getUpQuarkEffectiveMass();
     double Md = vacuum.getDownQuarkEffectiveMass();
@@ -99,7 +103,61 @@ void SU3NJL3DCutoffCalculator::evaluateVacuumMasses(const IniFileParser& config)
     );
 }
 
-void SU3NJL3DCutoffCalculator::evaluateFirstOrderLine()
+void SU3NJL3DCutoffCalculator::evaluateFirstOrderLine(
+    SU3NJL3DCutoffParameters& parameters,                                    
+    double precisionVacuum,                                    
+    MultiRootFindingMethod methodVacuum,                                    
+    double upQuarkMassGuess, 
+    double downQuarkMassGuess, 
+    double strangeQuarkMassGuess,
+    double minimumBaryonDensity_fmMinus3, 
+    double maximumBaryonDensity_fmMinus3, 
+    int numberOfPoints,
+    double precisionZeroTempSol,
+    MultiRootFindingMethod methodZeroTempSol,
+    bool storeZeroTempSolToFile,
+    double precisionTransitionPointSol, 
+    MultiRootFindingMethod methodTransitionPointSol,
+    double deltaT,
+    double massDifferenceCEP
+)
 {
-    cout << "Test\n";
+    // Solve model in the vacuum
+    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in the vacuum...\n";
+
+    SU3NJL3DCutoffVacuum vacuum(parameters);
+    vacuum.solve(
+        precisionVacuum, 
+        methodVacuum,          
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
+    double Mu = vacuum.getUpQuarkEffectiveMass();
+    double Md = vacuum.getDownQuarkEffectiveMass();
+    double Ms = vacuum.getStrangeQuarkEffectiveMass();
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuum.testSolution(precisionVacuum) << "\n";
+    cout << "Mu[GeV] = " << Mu << "\n" 
+         << "Md[GeV] = " << Md << "\n" 
+         << "Ms[GeV] = " << Ms << "\n";
+
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firtOrderLine = 
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
+        vacuum, 
+        minimumBaryonDensity_fmMinus3*pow(hc_GeVfm,3), 
+        maximumBaryonDensity_fmMinus3*pow(hc_GeVfm,3), 
+        numberOfPoints, 
+        precisionZeroTempSol, 
+        methodZeroTempSol, 
+        storeZeroTempSolToFile,
+        precisionTransitionPointSol, 
+        methodTransitionPointSol, 
+        deltaT, 
+        massDifferenceCEP
+    );
+
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(vacuum, firtOrderLine, "test.dat", true);
 }
