@@ -5,12 +5,17 @@
 #include "gsl_wrapper/root_solver_gsl.h"
 #include "SU3NJL3DCutoff.h"
 
+namespace SU3NJL3DCutoffCalculator
+{
+    void evaluateVacuumMasses(
+        SU3NJL3DCutoffParameters& ,                                
+        double ,                                
+        MultiRootFindingMethod ,                                
+        double , double , double 
+    );
+    void evaluateVacuumMasses(const IniFileParser& );
 
-void evaluateSU3NJL3DCutoffVacuumMasses(SU3NJL3DCutoffParameters& ,
-                                        double ,
-                                        MultiRootFindingMethod ,
-                                        double , double , double );
-
-void evaluateSU3NJL3DCutoffVacuumMasses(const IniFileParser& );
+    void evaluateFirstOrderLine();
+}
 
 #endif

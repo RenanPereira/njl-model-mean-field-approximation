@@ -30,3 +30,10 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 ```
 cd src/gsl_wrapper/ && ./execute_tests.sh && cd ../../
 ```
+
+# Calculations
+
+## B0 Integral
+```
+cd calculations/two_fermion_line_integral_3d_cutoff/plot_scripts && python3 build_plots_B0_vs_k0.py && cd ../../../
+```

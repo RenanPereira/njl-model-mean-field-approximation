@@ -58,7 +58,6 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		const SU3NJL3DCutoffVacuumFileParser config(configFile);
 		if(config.validateFileQuality())
 		{	
-			//evaluateSU3NJL3DCutoffVacuumMasses(configFile);
 			config.evaluateVacuumMasses();
 		}
 		else

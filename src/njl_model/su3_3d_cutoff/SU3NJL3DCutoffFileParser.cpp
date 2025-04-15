@@ -12,24 +12,29 @@ using namespace std;
 
 NJLDimensionfulCouplings SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCouplings(const IniFileParser& config)
 {	
-	double cutoffInGeV = config.getDouble(SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-                                          SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV);
+	double cutoffInGeV = config.getDouble(
+        SU3NJL3DCutoffConfigKeys::ModelParameters::section,                                   
+        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV
+    );
 
-    LagrangianInteractions interaction = 
-        stringToLagrangianInteractions(
-            config.getValue(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-                            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::lagrangianInteractions)
-        );
+    LagrangianInteractions interaction = stringToLagrangianInteractions(
+        config.getValue(
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section,             
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::lagrangianInteractions
+        )
+    );
 	cout << "interaction = " << toStringLagrangianInteractions(interaction) << endl;
 
 	if ( interaction==SP4Q_DET2NFQ )
 	{
-		double fourQuarkSPCouplingCutoff2 = 
-            config.getDouble(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-                             NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING);
-		double determinantCouplingCutoff5 = 
-            config.getDouble(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-                             NJLDimensionlessCouplings::DETERMINANT_COUPLING);
+		double fourQuarkSPCouplingCutoff2 = config.getDouble(
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section,              
+            NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING
+        );
+		double determinantCouplingCutoff5 = config.getDouble(
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section,              
+            NJLDimensionlessCouplings::DETERMINANT_COUPLING
+        );
 		
 		cout << NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING + " = " << fourQuarkSPCouplingCutoff2 << endl;
 		cout << NJLDimensionlessCouplings::DETERMINANT_COUPLING + " = " << determinantCouplingCutoff5 << endl;
@@ -43,18 +48,22 @@ NJLDimensionfulCouplings SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCoup
 	}
 	else if( interaction==SP4Q_DET2NFQ_SP8Q )
 	{
-		double fourQuarkSPCouplingCutoff2 = 
-            config.getDouble(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-                             NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING);
-		double determinantCouplingCutoff5 = 
-            config.getDouble(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-                             NJLDimensionlessCouplings::DETERMINANT_COUPLING);
-		double eightQuarkSPOziViolatingCouplingCutoff8 = 
-            config.getDouble(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-                             NJLDimensionlessCouplings::EIGHT_QUARK_SP_OZI_COUPLING);
-		double eightQuarkSPNonOziViolatingCouplingCutoff8 = 
-            config.getDouble(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-                             NJLDimensionlessCouplings::EIGHT_QUARK_SP_NON_OZI_COUPLING);
+		double fourQuarkSPCouplingCutoff2 = config.getDouble(
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
+            NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING
+        );
+		double determinantCouplingCutoff5 = config.getDouble(
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
+            NJLDimensionlessCouplings::DETERMINANT_COUPLING
+        );
+		double eightQuarkSPOziViolatingCouplingCutoff8 = config.getDouble(
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
+            NJLDimensionlessCouplings::EIGHT_QUARK_SP_OZI_COUPLING
+        );
+		double eightQuarkSPNonOziViolatingCouplingCutoff8 = config.getDouble(
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
+            NJLDimensionlessCouplings::EIGHT_QUARK_SP_NON_OZI_COUPLING
+        );
 		
 		cout << NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING << " = " << fourQuarkSPCouplingCutoff2 << endl;
 		cout << NJLDimensionlessCouplings::DETERMINANT_COUPLING + " = " << determinantCouplingCutoff5 << endl;
@@ -117,39 +126,44 @@ bool SU3NJL3DCutoffVacuumFileParser::validateFileQuality() const
 bool SU3NJL3DCutoffVacuumFileParser::validateModelParameters() const 
 {   
     // Validate regularizationScheme
-    string regularizationScheme = 
-        config.getValue(SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-                        SU3NJL3DCutoffConfigKeys::ModelParameters::regularizationScheme);
+    string regularizationScheme = config.getValue(
+        SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::regularizationScheme
+    );
     bool isRegularizationSchemeValid = isValidNJL3DCutoffRegularizationScheme(regularizationScheme);
     if( !isRegularizationSchemeValid ){ cout << invalidFileMessage << endl; }
 
     // Ensure cutoffInGeV>0
-    bool isCutoffInGeVValid = 
-        config.validatePositiveDouble(SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-                                      SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV, 
-                                      invalidFileMessage, 
-                                      SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV + " > 0 must be satisfied.");
+    bool isCutoffInGeVValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV, 
+        invalidFileMessage, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV + " > 0 must be satisfied."
+    );
 
     // Ensure upQuarkCurrentMassInGeV>0
-    bool isUpQuarkCurrentMassInGeVValid = 
-        config.validatePositiveDouble(SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-                                      SU3NJL3DCutoffConfigKeys::ModelParameters::upQuarkCurrentMassInGeV, 
-                                      invalidFileMessage, 
-                                      SU3NJL3DCutoffConfigKeys::ModelParameters::upQuarkCurrentMassInGeV + " > 0 must be satisfied.");
+    bool isUpQuarkCurrentMassInGeVValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::upQuarkCurrentMassInGeV, 
+        invalidFileMessage, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::upQuarkCurrentMassInGeV + " > 0 must be satisfied."
+    );
 
     // Ensure downQuarkCurrentMassInGeV>0
-    bool isDownQuarkCurrentMassInGeVValid = 
-        config.validatePositiveDouble(SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-                                      SU3NJL3DCutoffConfigKeys::ModelParameters::downQuarkCurrentMassInGeV, 
-                                      invalidFileMessage, 
-                                      SU3NJL3DCutoffConfigKeys::ModelParameters::downQuarkCurrentMassInGeV + " > 0 must be satisfied.");
+    bool isDownQuarkCurrentMassInGeVValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::downQuarkCurrentMassInGeV, 
+        invalidFileMessage, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::downQuarkCurrentMassInGeV + " > 0 must be satisfied."
+    );
 
     // Ensure strangeQuarkCurrentMassInGeV>0
-    bool isStrangeQuarkCurrentMassInGeVValid = 
-        config.validatePositiveDouble(SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-                                      SU3NJL3DCutoffConfigKeys::ModelParameters::strangeQuarkCurrentMassInGeV, 
-                                      invalidFileMessage, 
-                                      SU3NJL3DCutoffConfigKeys::ModelParameters::strangeQuarkCurrentMassInGeV + " > 0 must be satisfied.");
+    bool isStrangeQuarkCurrentMassInGeVValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::strangeQuarkCurrentMassInGeV, 
+        invalidFileMessage, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::strangeQuarkCurrentMassInGeV + " > 0 must be satisfied."
+    );
 
     // The function return true only if all tests passed
     if ( isRegularizationSchemeValid && 
@@ -166,17 +180,21 @@ bool SU3NJL3DCutoffVacuumFileParser::validateModelParameters() const
 bool SU3NJL3DCutoffVacuumFileParser::validateDimensionfulCouplings() const 
 {
     // Validate lagrangianInteractions
-    string lagrangianInteractions = config.getValue(SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-                                                    SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::lagrangianInteractions);
+    string lagrangianInteractions = config.getValue(
+        SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section,                                             
+        SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::lagrangianInteractions
+    );
     bool isLagrangianInteractionsValid = isValidLagrangianInteractions(lagrangianInteractions);
     if( !isLagrangianInteractionsValid ){ cout << invalidFileMessage << endl; }
 
     bool areCouplingsValid = false;
     if ( isLagrangianInteractionsValid )
     {
-        areCouplingsValid = validateNJLDimensionfulCouplings(config,
-                                                             SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section,
-                                                             SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::lagrangianInteractions);
+        areCouplingsValid = validateNJLDimensionfulCouplings(
+            config,
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section,
+            SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::lagrangianInteractions
+        );
     }
 
     return areCouplingsValid;
@@ -185,36 +203,41 @@ bool SU3NJL3DCutoffVacuumFileParser::validateDimensionfulCouplings() const
 bool SU3NJL3DCutoffVacuumFileParser::validateGapEquationsVacuumParameters() const 
 {   
     // Ensure gapPrecision>0
-    bool isGapPrecisionValid = 
-        config.validatePositiveDouble(SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section,
-                                      SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::gapPrecision, 
-                                      invalidFileMessage, 
-                                      SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::gapPrecision + " > 0 must be satisfied.");
+    bool isGapPrecisionValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section,
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::gapPrecision, 
+        invalidFileMessage, 
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::gapPrecision + " > 0 must be satisfied."
+    );
 
     // Ensure rootFindingMethod is valid
-    string rootFindingMethod = 
-        config.getValue(SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
-                        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::rootFindingMethod);
+    string rootFindingMethod = config.getValue(
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::rootFindingMethod
+    );
     bool isRootFindingMethodValid = isValidMultiRootFindingMethod(rootFindingMethod);
     if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
 
-    bool isUpQuarkMassGuessValid = 
-        config.validatePositiveDouble(SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
-                                      SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::upQuarkMassGuess, 
-                                      invalidFileMessage, 
-                                      SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::upQuarkMassGuess + " > 0 must be satisfied.");
+    bool isUpQuarkMassGuessValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::upQuarkMassGuess, 
+        invalidFileMessage, 
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::upQuarkMassGuess + " > 0 must be satisfied."
+    );
 
-    bool isDownQuarkMassGuessValid = 
-        config.validatePositiveDouble(SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
-                                      SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::downQuarkMassGuess, 
-                                      invalidFileMessage, 
-                                      SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::downQuarkMassGuess + " > 0 must be satisfied.");
+    bool isDownQuarkMassGuessValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::downQuarkMassGuess, 
+        invalidFileMessage, 
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::downQuarkMassGuess + " > 0 must be satisfied."
+    );
 
-    bool isStrangeQuarkMassGuessValid = 
-        config.validatePositiveDouble(SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
-                                      SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::strangeQuarkMassGuess, 
-                                      invalidFileMessage, 
-                                      SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::strangeQuarkMassGuess + " > 0 must be satisfied.");
+    bool isStrangeQuarkMassGuessValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::strangeQuarkMassGuess, 
+        invalidFileMessage, 
+        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::strangeQuarkMassGuess + " > 0 must be satisfied."
+    );
 
     // The function return true only if all tests passed
     if ( isGapPrecisionValid && 
@@ -271,18 +294,22 @@ void SU3NJL3DCutoffVacuumFileParser::evaluateVacuumMasses() const
 
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
-                                        cutoffInGeV, 
-                                        couplings, 
-                                        upQuarkCurrentMassInGeV, 
-                                        downQuarkCurrentMassInGeV, 
-                                        strangeQuarkCurrentMassInGeV);
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoffInGeV, 
+        couplings, 
+        upQuarkCurrentMassInGeV, 
+        downQuarkCurrentMassInGeV, 
+        strangeQuarkCurrentMassInGeV
+    );
     parameters.setParameterSetName(parameterSetName);
 
-    evaluateSU3NJL3DCutoffVacuumMasses(parameters, 
-                                       gapPrecision, 
-                                       stringToMultiRootFindingMethod(rootFindingMethod), 
-                                       upQuarkMassGuess, 
-                                       downQuarkMassGuess, 
-                                       strangeQuarkMassGuess);
+    SU3NJL3DCutoffCalculator::evaluateVacuumMasses(
+        parameters, 
+        gapPrecision, 
+        stringToMultiRootFindingMethod(rootFindingMethod), 
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
 }
