@@ -128,8 +128,8 @@ public:
 	void setStrangeQuarkEffectiveMass(double strangeQuarkEffectiveMassAux){ strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux; };
 	void setQuarkEffectiveChemicalPotential(double quarkEffectiveChemicalPotentialAux){ quarkEffectiveChemicalPotential = quarkEffectiveChemicalPotentialAux; };
 
-	static int GapEquations(const gsl_vector *, void *, gsl_vector *);
-	static int ChiralTransitionEquations(const gsl_vector *, void *, gsl_vector *);
+	static int gapEquations(const gsl_vector *, void *, gsl_vector *);
+	static int chiralTransitionEquations(const gsl_vector *, void *, gsl_vector *);
 
 	static ChiralTransitionPoint calculateChiralTransitionPoint(
 		double ,

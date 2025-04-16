@@ -30,6 +30,7 @@ public:
 	double getStrangeQuarkEffectiveMass(){ return strangeQuarkEffectiveMass; };
 
 	//gap equations
+	static int gapEquations(const gsl_vector *, void *, gsl_vector *);
 	void solve(double , MultiRootFindingMethod , double , double , double );
 	bool testSolution(double );
 
@@ -48,9 +49,6 @@ private:
 	void setDownQuarkEffectiveMass(double downQuarkEffectiveMassAux){ downQuarkEffectiveMass = downQuarkEffectiveMassAux; };
 	void setStrangeQuarkEffectiveMass(double strangeQuarkEffectiveMassAux){ strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux; };
 };
-
-
-int SU3NJLGapEquationsVacuum(const gsl_vector *, void *, gsl_vector *);
 
 
 #endif

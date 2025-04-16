@@ -32,7 +32,7 @@ void SU3NJL3DCutoffVacuum::solve(double precision, MultiRootFindingMethod method
     x[1] = downQuarkEffectiveMassGuess; 
     x[2] = strangeQuarkEffectiveMassGuess; 
     
-    multiDimensionalRootFind(3, precision, &x[0], this, &SU3NJLGapEquationsVacuum, method);
+    multiDimensionalRootFind(3, precision, &x[0], this, &gapEquations, method);
 
 	setUpQuarkEffectiveMass(x[0]);
 	setDownQuarkEffectiveMass(x[1]);
@@ -40,7 +40,7 @@ void SU3NJL3DCutoffVacuum::solve(double precision, MultiRootFindingMethod method
 }
 
 
-int SU3NJLGapEquationsVacuum(const gsl_vector *x, void *auxiliar, gsl_vector *f)
+int SU3NJL3DCutoffVacuum::gapEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {   
     //define variables
     double mU = gsl_vector_get(x,0);
@@ -92,7 +92,7 @@ bool SU3NJL3DCutoffVacuum::testSolution(double precision)
     x[2] = getStrangeQuarkEffectiveMass();
     
     //the test below (gsl) resturns 0 if the sum_i abs(residual_i) < precision
-    int gslTest = multiDimensionalRootFindTestResidual(3, precision, &x[0], this, &SU3NJLGapEquationsVacuum);
+    int gslTest = multiDimensionalRootFindTestResidual(3, precision, &x[0], this, &gapEquations);
 
     if (gslTest==0){ return true; }
     else{ return false; }

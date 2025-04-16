@@ -116,7 +116,7 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::solve(double precision, MultiRootF
     x[2] = strangeQuarkEffectiveMassGuess;
     x[3] = effectiveChemicalPotentialGuess;
     
-    multiDimensionalRootFind(4, precision, &x[0], this, &GapEquations, method);
+    multiDimensionalRootFind(4, precision, &x[0], this, &gapEquations, method);
 
 	setUpQuarkEffectiveMass(x[0]);
 	setDownQuarkEffectiveMass(x[1]);
@@ -125,11 +125,11 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::solve(double precision, MultiRootF
 }
 
 
-int SU3NJL3DCutoffFixedTempRhoBEqualChemPot::GapEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
+int SU3NJL3DCutoffFixedTempRhoBEqualChemPot::gapEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
     if (x->size != 4) 
     {   
-        string functionName = "SU3NJL3DCutoffFixedTempRhoBEqualChemPot::GapEquations";
+        string functionName = "SU3NJL3DCutoffFixedTempRhoBEqualChemPot::gapEquations";
         cout << "Error: gsl_vector 'x' has insufficient size in " << functionName << "\n";
         cout << "(expected 4, got " << x->size << ").\n";
         return GSL_FAILURE;
@@ -182,7 +182,7 @@ bool SU3NJL3DCutoffFixedTempRhoBEqualChemPot::testSolution(double precision)
     x[3] = getQuarkEffectiveChemicalPotential();
 
     //The test below (gsl) resturns 0 if the sum_i abs(residual_i) < precision
-    int gslTest = multiDimensionalRootFindTestResidual(4, precision, &x[0], this, &GapEquations);
+    int gslTest = multiDimensionalRootFindTestResidual(4, precision, &x[0], this, &gapEquations);
 
     if (gslTest==0){ return true; }
     else{ return false; }
@@ -464,11 +464,11 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint::ChiralTransition
 {}
 
 
-int SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
+int SU3NJL3DCutoffFixedTempRhoBEqualChemPot::chiralTransitionEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
     if (x->size != 8) 
     {   
-        string functionName = "SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionEquations";
+        string functionName = "SU3NJL3DCutoffFixedTempRhoBEqualChemPot::chiralTransitionEquations";
         cout << "Error: gsl_vector 'x' has insufficient size in " << functionName << "\n";
         cout << "(expected 4, got " << x->size << ").\n";
         return GSL_FAILURE;
@@ -587,7 +587,7 @@ SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint SU3NJL3DCutoffFix
     };
 
     SU3NJL3DCutoffFixedTempRhoBEqualChemPot aux(guess.parametersNJL, T);
-    multiDimensionalRootFind(8, precision, x, &aux, &ChiralTransitionEquations, method);
+    multiDimensionalRootFind(8, precision, x, &aux, &chiralTransitionEquations, method);
 
     return ChiralTransitionPoint (
         guess.parametersNJL, T,
