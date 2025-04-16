@@ -34,6 +34,15 @@ public:
 	void solve(double , MultiRootFindingMethod , double , double , double );
 	bool testSolution(double );
 
+	static SU3NJL3DCutoffVacuum evaluateVacuumMasses(
+		SU3NJL3DCutoffParameters& ,                                    
+		double ,                                    
+		MultiRootFindingMethod ,                                    
+		double , 
+		double , 
+		double 
+	);
+
 	//thermodynamics
 	double calculatePressure();
 	double calculateEnergyDensity();

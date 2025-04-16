@@ -17,27 +17,14 @@ void SU3NJL3DCutoffCalculator::evaluateVacuumMasses(
     double strangeQuarkMassGuess
 )
 {   
-    // Solve model in the vacuum
-    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in the vacuum...\n";
-
-    SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(
-        gapPrecision, 
-        method,          
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
+        parameters,                                    
+        gapPrecision,                                    
+        method,                                    
         upQuarkMassGuess, 
         downQuarkMassGuess, 
         strangeQuarkMassGuess
     );
-
-    double Mu = vacuum.getUpQuarkEffectiveMass();
-    double Md = vacuum.getDownQuarkEffectiveMass();
-    double Ms = vacuum.getStrangeQuarkEffectiveMass();
-
-    cout << "Vacuum effective masses: \n";
-    cout << "testSolution=" << vacuum.testSolution(gapPrecision) << "\n";
-    cout << "Mu[GeV] = " << Mu << "\n" 
-         << "Md[GeV] = " << Md << "\n" 
-         << "Ms[GeV] = " << Ms << "\n";
 
     vacuum.logVacuumSolutionToFile("SU3NJL3DCutoffVacuumMasses_" + parameters.getParameterSetName() + ".dat");
 }
@@ -122,27 +109,14 @@ void SU3NJL3DCutoffCalculator::evaluateFirstOrderLine(
     double massDifferenceCEP
 )
 {
-    // Solve model in the vacuum
-    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in the vacuum...\n";
-
-    SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(
-        precisionVacuum, 
-        methodVacuum,          
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
         upQuarkMassGuess, 
         downQuarkMassGuess, 
         strangeQuarkMassGuess
     );
-
-    double Mu = vacuum.getUpQuarkEffectiveMass();
-    double Md = vacuum.getDownQuarkEffectiveMass();
-    double Ms = vacuum.getStrangeQuarkEffectiveMass();
-
-    cout << "Vacuum effective masses: \n";
-    cout << "testSolution=" << vacuum.testSolution(precisionVacuum) << "\n";
-    cout << "Mu[GeV] = " << Mu << "\n" 
-         << "Md[GeV] = " << Md << "\n" 
-         << "Ms[GeV] = " << Ms << "\n";
 
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firtOrderLine = 
     SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(

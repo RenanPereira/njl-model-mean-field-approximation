@@ -99,6 +99,41 @@ bool SU3NJL3DCutoffVacuum::testSolution(double precision)
 }
 
 
+SU3NJL3DCutoffVacuum SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
+    SU3NJL3DCutoffParameters& parameters,                                    
+    double gapPrecision,                                    
+    MultiRootFindingMethod method,                                    
+    double upQuarkMassGuess, 
+    double downQuarkMassGuess, 
+    double strangeQuarkMassGuess
+)
+{
+    // Solve model in the vacuum
+    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in the vacuum...\n";
+
+    SU3NJL3DCutoffVacuum vacuumSolution(parameters);
+    vacuumSolution.solve(
+        gapPrecision, 
+        method,          
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
+    double Mu = vacuumSolution.getUpQuarkEffectiveMass();
+    double Md = vacuumSolution.getDownQuarkEffectiveMass();
+    double Ms = vacuumSolution.getStrangeQuarkEffectiveMass();
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuumSolution.testSolution(gapPrecision) << "\n";
+    cout << "Mu[GeV] = " << Mu << "\n" 
+         << "Md[GeV] = " << Md << "\n" 
+         << "Ms[GeV] = " << Ms << "\n";
+
+    return vacuumSolution;
+}
+
+
 double SU3NJL3DCutoffVacuum::calculatePressure()
 {
     double pressure = SU3NJL3DCutoffPressure(parametersNJL, 0.0, upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 0.0, 0.0, 0.0);
