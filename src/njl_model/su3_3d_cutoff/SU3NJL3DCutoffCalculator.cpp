@@ -51,7 +51,7 @@ void SU3NJL3DCutoffCalculator::evaluateVacuumMasses(const IniFileParser& config)
 
     // Get SU3 NJL 3D Cutoff Dimensionful Couplings
     cout << "\nSU3NJL3DCutoffGapEquationsVacuumParameters:" << endl;
-    NJLDimensionfulCouplings couplings = SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCouplings(config);
+    NJLDimensionfulCouplings couplings = SU3NJL3DCutoffFileParser::extractDimensionfulCouplings(config);
 
     // SU3 NJL 3D Cutoff Gap Equations Vacuum Parameters
     cout << "\nSU3NJL3DCutoffGapEquationsVacuumParameters: " << endl;
@@ -133,5 +133,10 @@ void SU3NJL3DCutoffCalculator::evaluateFirstOrderLine(
         massDifferenceCEP
     );
 
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(vacuum, firtOrderLine, "test.dat", true);
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(
+        vacuum, 
+        firtOrderLine, 
+        "SU3NJL3DCutoffFirstOrderLine_" + parameters.getParameterSetName() + ".dat",
+        true
+    );
 }

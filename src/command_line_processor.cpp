@@ -52,11 +52,11 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	cout << "\nFileDetails:" << endl;
 	cout << "type = " << fileTypeStr << endl;
 
-	if(fileTypeStr=="evaluateSU3NJL3DCutoffVacuumMasses")
+	if(fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::evaluateVacuumMasses)
 	{	
 		//Check if file is written conrrectly
-		const SU3NJL3DCutoffVacuumFileParser config(configFile);
-		if(config.validateFileQuality())
+		const SU3NJL3DCutoffFileParser config(configFile);
+		if(config.validateFileQualityEvaluateVacuumMasses())
 		{	
 			config.evaluateVacuumMasses();
 		}
@@ -65,13 +65,26 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
 		}
 	}
-	else if(fileTypeStr=="evaluateKlevanskyB0Integral3DCutoff")
+	else if(fileTypeStr==KlevanskyB0Integral3DCutoffConfigKeys::CalculationType::evaluateIntegral)
 	{	
 		//Check if file is written conrrectly
 		const KlevanskyB0Integral3DCutoffFileParser config(configFile);
-		if(config.validateFileQuality())
+		if(config.validateFileQualityEvaluateIntegral())
 		{	
 			config.evaluateKlevanskyB0Integral3DCutoff();
+		}
+		else
+		{
+			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+		}
+	}
+	else if (fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::evaluateFirstOrderLine)
+	{
+		//Check if file is written conrrectly
+		const SU3NJL3DCutoffFileParser config(configFile);
+		if(config.validateFileQualityEvaluateFirstOrderLine())
+		{	
+			config.evaluateFirstOrderLine();
 		}
 		else
 		{

@@ -6,15 +6,14 @@
 #include "njl_model/NJLDimensionlessCouplings.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCalculator.h"
 
-
 using namespace std;
 
 
-NJLDimensionfulCouplings SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCouplings(const IniFileParser& config)
+NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::extractDimensionfulCouplings(const IniFileParser& config)
 {	
-	double cutoffInGeV = config.getDouble(
+	double cutoff = config.getDouble(
         SU3NJL3DCutoffConfigKeys::ModelParameters::section,                                   
-        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV
+        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoff
     );
 
     LagrangianInteractions interaction = stringToLagrangianInteractions(
@@ -39,8 +38,8 @@ NJLDimensionfulCouplings SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCoup
 		cout << NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING + " = " << fourQuarkSPCouplingCutoff2 << endl;
 		cout << NJLDimensionlessCouplings::DETERMINANT_COUPLING + " = " << determinantCouplingCutoff5 << endl;
 		
-		double gs = fourQuarkSPCouplingCutoff2/pow(cutoffInGeV, 2);
-		double kappa = determinantCouplingCutoff5/pow(cutoffInGeV, 5);
+		double gs = fourQuarkSPCouplingCutoff2/pow(cutoff, 2);
+		double kappa = determinantCouplingCutoff5/pow(cutoff, 5);
 		
 		NJLDimensionfulCouplings couplingsSU3NJL3DCutoff(interaction, gs, kappa);
 
@@ -70,10 +69,10 @@ NJLDimensionfulCouplings SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCoup
 		cout << NJLDimensionlessCouplings::EIGHT_QUARK_SP_OZI_COUPLING + " = " << eightQuarkSPOziViolatingCouplingCutoff8 << endl;
 		cout << NJLDimensionlessCouplings::EIGHT_QUARK_SP_NON_OZI_COUPLING + " = " << eightQuarkSPNonOziViolatingCouplingCutoff8 << endl;
 		
-		double gs = fourQuarkSPCouplingCutoff2/pow(cutoffInGeV, 2);
-		double kappa = determinantCouplingCutoff5/pow(cutoffInGeV, 5);
-		double g1 = eightQuarkSPOziViolatingCouplingCutoff8/pow(cutoffInGeV, 8);
-		double g2 = eightQuarkSPNonOziViolatingCouplingCutoff8/pow(cutoffInGeV, 8);    
+		double gs = fourQuarkSPCouplingCutoff2/pow(cutoff, 2);
+		double kappa = determinantCouplingCutoff5/pow(cutoff, 5);
+		double g1 = eightQuarkSPOziViolatingCouplingCutoff8/pow(cutoff, 8);
+		double g2 = eightQuarkSPNonOziViolatingCouplingCutoff8/pow(cutoff, 8);    
 		
 		NJLDimensionfulCouplings couplingsSU3NJL3DCutoff(interaction, gs, kappa, g1, g2);
 
@@ -87,7 +86,7 @@ NJLDimensionfulCouplings SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCoup
 }
 
 
-bool SU3NJL3DCutoffVacuumFileParser::validateFileQuality() const 
+bool SU3NJL3DCutoffFileParser::validateFileQualityEvaluateVacuumMasses() const 
 {
     // Check for missing sections
     bool allRequiredSectionsPresent = true;
@@ -95,7 +94,7 @@ bool SU3NJL3DCutoffVacuumFileParser::validateFileQuality() const
     {
         SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
         SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::section
     };  
     for (int i = 0; i < int(requiredSections.size()); ++i) 
     {
@@ -110,20 +109,20 @@ bool SU3NJL3DCutoffVacuumFileParser::validateFileQuality() const
     // Validate individual sections
     bool areModelParametersValid = validateModelParameters();
     bool areDimensionfulCouplingsValid = validateDimensionfulCouplings();
-    bool areGapEquationsVacuumParametersValid = validateGapEquationsVacuumParameters();
+    bool areVacuumMassesParametersValid = validateVacuumMassesParameters();
 
     // The function return true only if all tests passed
-    if ( allRequiredSectionsPresent &&
-         areModelParametersValid &&
-         areDimensionfulCouplingsValid &&
-         areGapEquationsVacuumParametersValid )
+    if (allRequiredSectionsPresent &&
+        areModelParametersValid &&
+        areDimensionfulCouplingsValid &&
+        areVacuumMassesParametersValid)
     { 
         return true; 
     }
     else{ return false; }
 }
 
-bool SU3NJL3DCutoffVacuumFileParser::validateModelParameters() const 
+bool SU3NJL3DCutoffFileParser::validateModelParameters() const 
 {   
     // Validate regularizationScheme
     string regularizationScheme = config.getValue(
@@ -133,51 +132,51 @@ bool SU3NJL3DCutoffVacuumFileParser::validateModelParameters() const
     bool isRegularizationSchemeValid = isValidNJL3DCutoffRegularizationScheme(regularizationScheme);
     if( !isRegularizationSchemeValid ){ cout << invalidFileMessage << endl; }
 
-    // Ensure cutoffInGeV>0
-    bool isCutoffInGeVValid = config.validatePositiveDouble(
+    // Ensure cutoff>0
+    bool isCutoffValid = config.validatePositiveDouble(
         SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoff, 
         invalidFileMessage, 
-        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoffInGeV + " > 0 must be satisfied."
+        SU3NJL3DCutoffConfigKeys::ModelParameters::cutoff + " > 0 must be satisfied."
     );
 
-    // Ensure upQuarkCurrentMassInGeV>0
-    bool isUpQuarkCurrentMassInGeVValid = config.validatePositiveDouble(
+    // Ensure upQuarkCurrentMass>0
+    bool isUpQuarkCurrentMassValid = config.validatePositiveDouble(
         SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-        SU3NJL3DCutoffConfigKeys::ModelParameters::upQuarkCurrentMassInGeV, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::upQuarkCurrentMass, 
         invalidFileMessage, 
-        SU3NJL3DCutoffConfigKeys::ModelParameters::upQuarkCurrentMassInGeV + " > 0 must be satisfied."
+        SU3NJL3DCutoffConfigKeys::ModelParameters::upQuarkCurrentMass + " > 0 must be satisfied."
     );
 
     // Ensure downQuarkCurrentMassInGeV>0
-    bool isDownQuarkCurrentMassInGeVValid = config.validatePositiveDouble(
+    bool isDownQuarkCurrentMassValid = config.validatePositiveDouble(
         SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-        SU3NJL3DCutoffConfigKeys::ModelParameters::downQuarkCurrentMassInGeV, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::downQuarkCurrentMass, 
         invalidFileMessage, 
-        SU3NJL3DCutoffConfigKeys::ModelParameters::downQuarkCurrentMassInGeV + " > 0 must be satisfied."
+        SU3NJL3DCutoffConfigKeys::ModelParameters::downQuarkCurrentMass + " > 0 must be satisfied."
     );
 
-    // Ensure strangeQuarkCurrentMassInGeV>0
-    bool isStrangeQuarkCurrentMassInGeVValid = config.validatePositiveDouble(
+    // Ensure strangeQuarkCurrentMass>0
+    bool isStrangeQuarkCurrentMassValid = config.validatePositiveDouble(
         SU3NJL3DCutoffConfigKeys::ModelParameters::section, 
-        SU3NJL3DCutoffConfigKeys::ModelParameters::strangeQuarkCurrentMassInGeV, 
+        SU3NJL3DCutoffConfigKeys::ModelParameters::strangeQuarkCurrentMass, 
         invalidFileMessage, 
-        SU3NJL3DCutoffConfigKeys::ModelParameters::strangeQuarkCurrentMassInGeV + " > 0 must be satisfied."
+        SU3NJL3DCutoffConfigKeys::ModelParameters::strangeQuarkCurrentMass + " > 0 must be satisfied."
     );
 
     // The function return true only if all tests passed
-    if ( isRegularizationSchemeValid && 
-         isCutoffInGeVValid &&
-         isUpQuarkCurrentMassInGeVValid &&
-         isDownQuarkCurrentMassInGeVValid &&
-         isStrangeQuarkCurrentMassInGeVValid )
+    if (isRegularizationSchemeValid && 
+        isCutoffValid &&
+        isUpQuarkCurrentMassValid &&
+        isDownQuarkCurrentMassValid &&
+        isStrangeQuarkCurrentMassValid)
     { 
         return true; 
     }
     else{ return false; }
 }
 
-bool SU3NJL3DCutoffVacuumFileParser::validateDimensionfulCouplings() const 
+bool SU3NJL3DCutoffFileParser::validateDimensionfulCouplings() const 
 {
     // Validate lagrangianInteractions
     string lagrangianInteractions = config.getValue(
@@ -200,51 +199,54 @@ bool SU3NJL3DCutoffVacuumFileParser::validateDimensionfulCouplings() const
     return areCouplingsValid;
 }
 
-bool SU3NJL3DCutoffVacuumFileParser::validateGapEquationsVacuumParameters() const 
+bool SU3NJL3DCutoffFileParser::validateVacuumMassesParameters() const 
 {   
-    // Ensure gapPrecision>0
-    bool isGapPrecisionValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section,
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::gapPrecision, 
+    // Ensure precisionVacuum>0
+    bool isPrecisionVacuumValid = config.validatePositiveDouble(
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::section,
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::precisionVacuum, 
         invalidFileMessage, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::gapPrecision + " > 0 must be satisfied."
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::precisionVacuum + " > 0 must be satisfied."
     );
 
-    // Ensure rootFindingMethod is valid
-    string rootFindingMethod = config.getValue(
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::rootFindingMethod
+    // Ensure methodVacuum is valid
+    string methodVacuum = config.getValue(
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::section, 
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::methodVacuum
     );
-    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(rootFindingMethod);
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacuum);
     if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
 
+    // Ensure up quark mass is valid
     bool isUpQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::upQuarkMassGuess, 
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::section, 
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::upQuarkMassGuess, 
         invalidFileMessage, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::upQuarkMassGuess + " > 0 must be satisfied."
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::upQuarkMassGuess + " > 0 must be satisfied."
     );
 
+    // Ensure down quark mass is valid
     bool isDownQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::downQuarkMassGuess, 
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::section, 
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::downQuarkMassGuess, 
         invalidFileMessage, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::downQuarkMassGuess + " > 0 must be satisfied."
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::downQuarkMassGuess + " > 0 must be satisfied."
     );
 
+    // Ensure strange quark mass is valid
     bool isStrangeQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::section, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::strangeQuarkMassGuess, 
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::section, 
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::strangeQuarkMassGuess, 
         invalidFileMessage, 
-        SU3NJL3DCutoffConfigKeys::GapEquationsVacuumParameters::strangeQuarkMassGuess + " > 0 must be satisfied."
+        SU3NJL3DCutoffConfigKeys::VacuumMassesParameters::strangeQuarkMassGuess + " > 0 must be satisfied."
     );
 
     // The function return true only if all tests passed
-    if ( isGapPrecisionValid && 
-         isRootFindingMethodValid &&
-         isDownQuarkMassGuessValid &&
-         isStrangeQuarkMassGuessValid &&
-         isUpQuarkMassGuessValid )
+    if (isPrecisionVacuumValid && 
+        isRootFindingMethodValid &&
+        isDownQuarkMassGuessValid &&
+        isStrangeQuarkMassGuessValid &&
+        isUpQuarkMassGuessValid)
     { 
         return true; 
     }
@@ -252,64 +254,305 @@ bool SU3NJL3DCutoffVacuumFileParser::validateGapEquationsVacuumParameters() cons
 }
 
 
-void SU3NJL3DCutoffVacuumFileParser::evaluateVacuumMasses() const
+void SU3NJL3DCutoffFileParser::evaluateVacuumMasses() const
 {
-    // Get SU3 NJL 3D Cutoff Model Parameters
-    cout << "\nSU3NJL3DCutoffModelParameters:" << endl;
+    // Model Parameters
+    namespace MPKeys = SU3NJL3DCutoffConfigKeys::ModelParameters;
+    cout << "\n" << MPKeys::section << ": " << endl;
 
-    string parameterSetName = config.getValue("SU3NJL3DCutoffModelParameters", "parameterSetName");
-    string regularizationScheme = config.getValue("SU3NJL3DCutoffModelParameters", "regularizationScheme");
-    double cutoffInGeV = config.getDouble("SU3NJL3DCutoffModelParameters", "cutoffInGeV");
-    double upQuarkCurrentMassInGeV = config.getDouble("SU3NJL3DCutoffModelParameters", "upQuarkCurrentMassInGeV");
-    double downQuarkCurrentMassInGeV = config.getDouble("SU3NJL3DCutoffModelParameters", "downQuarkCurrentMassInGeV");
-    double strangeQuarkCurrentMassInGeV = config.getDouble("SU3NJL3DCutoffModelParameters", "strangeQuarkCurrentMassInGeV");
+    string parameterSetName = config.getValue(MPKeys::section, MPKeys::parameterSetName);
+    string regularizationScheme = config.getValue(MPKeys::section, MPKeys::regularizationScheme);
+    double cutoff = config.getDouble(MPKeys::section, MPKeys::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::strangeQuarkCurrentMass);
     
-    cout << "parameterSetName = " << parameterSetName << endl;
-    cout << "regularizationScheme = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
-    cout << "cutoffInGeV = " << cutoffInGeV << endl;
-    cout << "upQuarkCurrentMassInGeV = " << upQuarkCurrentMassInGeV << endl;
-    cout << "downQuarkCurrentMassInGeV = " << downQuarkCurrentMassInGeV << endl;
-    cout << "strangeQuarkCurrentMassInGeV = " << strangeQuarkCurrentMassInGeV << endl;
+    cout << MPKeys::parameterSetName << " = " << parameterSetName << endl;
+    cout << MPKeys::regularizationScheme << " = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MPKeys::cutoff << " = " << cutoff << endl;
+    cout << MPKeys::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MPKeys::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MPKeys::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
 
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings(config);
 
-    // Get SU3 NJL 3D Cutoff Dimensionful Couplings
-    cout << "\nSU3NJL3DCutoffGapEquationsVacuumParameters:" << endl;
-    NJLDimensionfulCouplings couplings = SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCouplings(config);
+    // VacuumMasses
+    namespace VMPKeys = SU3NJL3DCutoffConfigKeys::VacuumMassesParameters;
+    cout << "\n" << VMPKeys::section << ": " << endl;
 
+    double precisionVacuum = config.getDouble(VMPKeys::section, VMPKeys::precisionVacuum);
+    string methodVacuum = config.getValue(VMPKeys::section, VMPKeys::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::strangeQuarkMassGuess);
 
-    // SU3 NJL 3D Cutoff Gap Equations Vacuum Parameters
-    cout << "\nSU3NJL3DCutoffGapEquationsVacuumParameters: " << endl;
-
-    double gapPrecision = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "gapPrecision");
-    string rootFindingMethod = config.getValue("SU3NJL3DCutoffGapEquationsVacuumParameters", "rootFindingMethod");
-    double upQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "upQuarkMassGuess");
-    double downQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "downQuarkMassGuess");
-    double strangeQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "strangeQuarkMassGuess");
-
-    cout << "gapPrecision = " << gapPrecision << endl;
-    cout << "rootFindingMethod = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(rootFindingMethod)) << endl;
-    cout << "upQuarkMassGuess = " << upQuarkMassGuess << endl;
-    cout << "downQuarkMassGuess = " << downQuarkMassGuess << endl;
-    cout << "strangeQuarkMassGuess = " << strangeQuarkMassGuess << endl;
-
+    cout << VMPKeys::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMPKeys::methodVacuum << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMPKeys::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMPKeys::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMPKeys::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(
         stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
-        cutoffInGeV, 
+        cutoff, 
         couplings, 
-        upQuarkCurrentMassInGeV, 
-        downQuarkCurrentMassInGeV, 
-        strangeQuarkCurrentMassInGeV
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
     );
     parameters.setParameterSetName(parameterSetName);
 
     SU3NJL3DCutoffCalculator::evaluateVacuumMasses(
         parameters, 
-        gapPrecision, 
-        stringToMultiRootFindingMethod(rootFindingMethod), 
+        precisionVacuum, 
+        stringToMultiRootFindingMethod(methodVacuum), 
         upQuarkMassGuess, 
         downQuarkMassGuess, 
         strangeQuarkMassGuess
+    );
+}
+
+bool SU3NJL3DCutoffFileParser::validateVacuumToFiniteBaryonDensityParameters() const 
+{   
+    namespace VFBDPKeys = SU3NJL3DCutoffConfigKeys::VacuumToFiniteBaryonDensityParameters;
+
+    // Ensure minimumBaryonDensity>0
+    bool isMinimumBaryonDensityValid = config.validatePositiveDouble(
+        VFBDPKeys::section,
+        VFBDPKeys::minimumBaryonDensity,
+        invalidFileMessage + " Invalid value found in section " + VFBDPKeys::section + ".", 
+        VFBDPKeys::minimumBaryonDensity + " > 0 must be satisfied."
+    );
+
+    // Ensure maximumBaryonDensity>0
+    bool isMaximumBaryonDensityValid = config.validatePositiveDouble(
+        VFBDPKeys::section,
+        VFBDPKeys::maximumBaryonDensity,
+        invalidFileMessage + " Invalid value found in section " + VFBDPKeys::section + ".", 
+        VFBDPKeys::maximumBaryonDensity + " > 0 must be satisfied."
+    );
+    
+    // Ensure isNumberOfPointsValid>0
+    bool isNumberOfPointsValid = config.validatePositiveInteger(
+        VFBDPKeys::section,
+        VFBDPKeys::numberOfPoints, 
+        invalidFileMessage + " Invalid value found in section " + VFBDPKeys::section + ".", 
+        VFBDPKeys::numberOfPoints + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionZeroTempSol>0
+    bool isPrecisionZeroTempSolValid = config.validatePositiveDouble(
+        VFBDPKeys::section,
+        VFBDPKeys::precisionZeroTempSol, 
+        invalidFileMessage + " Invalid value found in section " + VFBDPKeys::section + ".", 
+        VFBDPKeys::precisionZeroTempSol + " > 0 must be satisfied."
+    );
+
+    // Ensure methodZeroTempSol is valid
+    string methodZeroTempSol = config.getValue(
+        VFBDPKeys::section, 
+        VFBDPKeys::methodZeroTempSol
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodZeroTempSol);
+    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+
+    // The function return true only if all tests passed
+    if (isMinimumBaryonDensityValid && 
+        isMaximumBaryonDensityValid &&
+        isNumberOfPointsValid &&
+        isPrecisionZeroTempSolValid &&
+        isRootFindingMethodValid)
+    { 
+        return true; 
+    }
+    else{ return false; }
+}
+
+bool SU3NJL3DCutoffFileParser::validateFirstOrderLineParameters() const 
+{   
+    namespace FOLPKeys = SU3NJL3DCutoffConfigKeys::FirstOrderLineParameters;
+
+    // Ensure precisionTransitionPointSol>0
+    bool isPrecisionTransitionPointSolValid = config.validatePositiveDouble(
+        FOLPKeys::section,
+        FOLPKeys::precisionTransitionPointSol,
+        invalidFileMessage + " Invalid value found in section " + FOLPKeys::section + ".", 
+        FOLPKeys::precisionTransitionPointSol + " > 0 must be satisfied."
+    );
+
+    // Ensure methodTransitionPointSol is valid
+    string methodTransitionPointSol = config.getValue(
+        FOLPKeys::section, 
+        FOLPKeys::methodTransitionPointSol
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodTransitionPointSol);
+    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+
+    // Ensure deltaT>0
+    bool isDeltaTValid = config.validatePositiveDouble(
+        FOLPKeys::section,
+        FOLPKeys::deltaT,
+        invalidFileMessage + " Invalid value found in section " + FOLPKeys::section + ".", 
+        FOLPKeys::deltaT + " > 0 must be satisfied."
+    );
+
+    // Ensure massDifferenceCEP>0
+    bool isMassDifferenceCEPValid = config.validatePositiveDouble(
+        FOLPKeys::section,
+        FOLPKeys::massDifferenceCEP,
+        invalidFileMessage + " Invalid value found in section " + FOLPKeys::section + ".", 
+        FOLPKeys::massDifferenceCEP + " > 0 must be satisfied."
+    );
+
+    // The function return true only if all tests passed
+    if (isPrecisionTransitionPointSolValid && 
+        isRootFindingMethodValid &&
+        isDeltaTValid &&
+        isMassDifferenceCEPValid)
+    { 
+        return true; 
+    }
+    else{ return false; }
+}
+
+bool SU3NJL3DCutoffFileParser::validateFileQualityEvaluateFirstOrderLine() const
+{   
+    // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
+    bool vacuumValidations = validateFileQualityEvaluateVacuumMasses();
+
+    // Check for missing sections
+    bool allRequiredSectionsPresent = true;
+    vector<string> requiredSections = 
+    {
+        SU3NJL3DCutoffConfigKeys::VacuumToFiniteBaryonDensityParameters::section,
+        SU3NJL3DCutoffConfigKeys::FirstOrderLineParameters::section
+    };  
+    for (int i = 0; i < int(requiredSections.size()); ++i) 
+    {
+        string section = requiredSections[i];
+        if (config.getSectionsData(section).empty()) 
+        {   
+            allRequiredSectionsPresent = false;
+            cout << "Missing required section: " << section << endl;
+        }
+    }
+
+    // Validate individual sections
+    bool areVacuumToFiniteBaryonDensityParametersValid = validateVacuumToFiniteBaryonDensityParameters();
+    bool areFirstOrderLineParameters = validateFirstOrderLineParameters();
+
+    // The function return true only if all tests passed
+    if (vacuumValidations && 
+        allRequiredSectionsPresent &&
+        areVacuumToFiniteBaryonDensityParametersValid &&
+        areFirstOrderLineParameters)
+    { 
+        return true; 
+    }
+    else{ return false; }
+}
+
+void SU3NJL3DCutoffFileParser::evaluateFirstOrderLine() const
+{
+    // Model Parameters
+    namespace MPKeys = SU3NJL3DCutoffConfigKeys::ModelParameters;
+    cout << "\n" << MPKeys::section << ": " << endl;
+
+    string parameterSetName = config.getValue(MPKeys::section, MPKeys::parameterSetName);
+    string regularizationScheme = config.getValue(MPKeys::section, MPKeys::regularizationScheme);
+    double cutoff = config.getDouble(MPKeys::section, MPKeys::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::strangeQuarkCurrentMass);
+    
+    cout << MPKeys::parameterSetName << " = " << parameterSetName << endl;
+    cout << MPKeys::regularizationScheme << " = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MPKeys::cutoff << " = " << cutoff << endl;
+    cout << MPKeys::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MPKeys::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MPKeys::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
+
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings(config);
+
+    // VacuumMasses
+    namespace VMPKeys = SU3NJL3DCutoffConfigKeys::VacuumMassesParameters;
+    cout << "\n" << VMPKeys::section << ": " << endl;
+
+    double precisionVacuum = config.getDouble(VMPKeys::section, VMPKeys::precisionVacuum);
+    string methodVacuum = config.getValue(VMPKeys::section, VMPKeys::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::strangeQuarkMassGuess);
+
+    cout << VMPKeys::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMPKeys::methodVacuum << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMPKeys::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMPKeys::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMPKeys::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
+
+    // VacuumToFiniteBaryonDensity
+    namespace VFBDPKeys = SU3NJL3DCutoffConfigKeys::VacuumToFiniteBaryonDensityParameters;
+    cout << "\n" << VFBDPKeys::section << ": " << endl;
+    
+    double minimumBaryonDensity = config.getDouble(VFBDPKeys::section, VFBDPKeys::minimumBaryonDensity);
+    double maximumBaryonDensity = config.getDouble(VFBDPKeys::section, VFBDPKeys::maximumBaryonDensity);
+    int numberOfPoints = config.getInt(VFBDPKeys::section, VFBDPKeys::numberOfPoints);
+    double precisionZeroTempSol = config.getDouble(VFBDPKeys::section, VFBDPKeys::precisionZeroTempSol);
+    string methodZeroTempSol = config.getValue(VFBDPKeys::section, VFBDPKeys::methodZeroTempSol);
+
+    cout << VFBDPKeys::minimumBaryonDensity << " = " << minimumBaryonDensity << endl;
+    cout << VFBDPKeys::maximumBaryonDensity << " = " << maximumBaryonDensity << endl;
+    cout << VFBDPKeys::numberOfPoints << " = " << numberOfPoints << endl;
+    cout << VFBDPKeys::precisionZeroTempSol << " = " << precisionZeroTempSol << endl;
+    cout << VFBDPKeys::methodZeroTempSol << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodZeroTempSol)) << endl;
+
+    // FirstOrderLine
+    namespace FOLPKeys = SU3NJL3DCutoffConfigKeys::FirstOrderLineParameters;
+    cout << "\n" << FOLPKeys::section << ":\n";
+    
+    double precisionTransitionPointSol = config.getDouble(FOLPKeys::section, FOLPKeys::precisionTransitionPointSol);
+    string methodTransitionPointSol = config.getValue(FOLPKeys::section, FOLPKeys::methodTransitionPointSol);
+    double deltaT = config.getDouble(FOLPKeys::section, FOLPKeys::deltaT);
+    double massDifferenceCEP = config.getDouble(FOLPKeys::section, FOLPKeys::massDifferenceCEP);
+    
+    cout << FOLPKeys::precisionTransitionPointSol  << " = " << precisionTransitionPointSol << endl;
+    cout << FOLPKeys::methodTransitionPointSol << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodTransitionPointSol)) << endl;
+    cout << FOLPKeys::deltaT << " = " << deltaT << endl;
+    cout << FOLPKeys::massDifferenceCEP << " = " << massDifferenceCEP << endl;
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoff, 
+        couplings, 
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
+    );
+    parameters.setParameterSetName(parameterSetName);
+
+    // Perform calculation
+    SU3NJL3DCutoffCalculator::evaluateFirstOrderLine(
+        parameters,                                    
+        precisionVacuum,                                    
+        stringToMultiRootFindingMethod(methodVacuum),                                    
+        upQuarkMassGuess,
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess,
+        minimumBaryonDensity, 
+        maximumBaryonDensity,
+        numberOfPoints,
+        precisionZeroTempSol, 
+        stringToMultiRootFindingMethod(methodZeroTempSol), 
+        true,
+        precisionTransitionPointSol, 
+        stringToMultiRootFindingMethod(methodTransitionPointSol), 
+        deltaT, 
+        massDifferenceCEP
     );
 }

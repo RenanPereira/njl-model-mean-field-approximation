@@ -5,8 +5,6 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.h"
 #include "physics_utils/physical_constants.h"
 
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCalculator.h" // added for tests, to be removed after
-
 using namespace std;
 
 
@@ -29,6 +27,7 @@ int main(int argc, char* argv[])
     	std::cout << "\nCommands processed successfully, continuing execution..." << std::endl;
 	}
 
+    /*
     //////////////////////////////////////////////////////////////////////////////////////////
     //parameter set A (Klevansky parameter set)
     double cutoff = 0.6023;
@@ -78,7 +77,7 @@ int main(int argc, char* argv[])
         deltaT, 
         massDifferenceCEP
     );
-
+    */
 
 /*
     //////////////////////////////////////////////////////////////////////////////////////////
