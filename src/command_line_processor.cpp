@@ -1,6 +1,5 @@
 #include "command_line_processor.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCalculator.h"
 #include "njl_model/n_fermion_line_integrals/KlevanskyB0Integral3DCutoffFileParser.h"
 
 using namespace std;

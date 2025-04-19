@@ -99,7 +99,7 @@ bool SU3NJL3DCutoffVacuum::testSolution(double precision)
 }
 
 
-SU3NJL3DCutoffVacuum SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
+SU3NJL3DCutoffVacuum SU3NJL3DCutoffVacuum::calculateVacuumMasses(
     SU3NJL3DCutoffParameters& parameters,                                    
     double gapPrecision,                                    
     MultiRootFindingMethod method,                                    
@@ -198,3 +198,26 @@ void SU3NJL3DCutoffVacuum::logVacuumSolutionToFile(string fileName)
 
 	fileVacuumSolution.close();
 }
+
+
+void SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
+    SU3NJL3DCutoffParameters& parameters,                                    
+    double gapPrecision,                                    
+    MultiRootFindingMethod method,                                    
+    double upQuarkMassGuess, 
+    double downQuarkMassGuess, 
+    double strangeQuarkMassGuess
+)
+{   
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        gapPrecision,                                    
+        method,                                    
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
+    vacuum.logVacuumSolutionToFile("SU3NJL3DCutoffVacuumMasses_" + parameters.getParameterSetName() + ".dat");
+}
+

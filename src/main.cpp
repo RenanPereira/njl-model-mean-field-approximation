@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setA");
 
-    SU3NJL3DCutoffCalculator::evaluateFirstOrderLine(
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPot::evaluateFirstOrderLine(
         parameters,                                    
         precisionVacuum,                                    
         methodVacuum,                                    

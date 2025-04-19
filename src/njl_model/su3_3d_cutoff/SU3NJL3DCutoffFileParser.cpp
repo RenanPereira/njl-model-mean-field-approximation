@@ -4,8 +4,8 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
 #include "njl_model/njl_regularization_schemes.h"
 #include "njl_model/NJLDimensionlessCouplings.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCalculator.h"
 
 using namespace std;
 
@@ -306,7 +306,7 @@ void SU3NJL3DCutoffFileParser::evaluateVacuumMasses() const
     );
     parameters.setParameterSetName(parameterSetName);
 
-    SU3NJL3DCutoffCalculator::evaluateVacuumMasses(
+    SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
         parameters, 
         precisionVacuum, 
         stringToMultiRootFindingMethod(methodVacuum), 

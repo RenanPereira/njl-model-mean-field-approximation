@@ -928,7 +928,7 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::evaluateFirstOrderLine(
     double massDifferenceCEP
 )
 {
-    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
         parameters,                                    
         precisionVacuum,                                    
         methodVacuum,                                    
