@@ -13,7 +13,6 @@ namespace SU3NJL3DCutoffCalculator
         MultiRootFindingMethod ,                                
         double , double , double 
     );
-    void evaluateVacuumMasses(const IniFileParser& );
 
     void evaluateFirstOrderLine(
         SU3NJL3DCutoffParameters& ,                                

@@ -29,67 +29,6 @@ void SU3NJL3DCutoffCalculator::evaluateVacuumMasses(
     vacuum.logVacuumSolutionToFile("SU3NJL3DCutoffVacuumMasses_" + parameters.getParameterSetName() + ".dat");
 }
 
-
-void SU3NJL3DCutoffCalculator::evaluateVacuumMasses(const IniFileParser& config)
-{   
-    // Get SU3 NJL 3D Cutoff Model Parameters
-    cout << "\nSU3NJL3DCutoffModelParameters:" << endl;
-
-    string parameterSetName = config.getValue("SU3NJL3DCutoffModelParameters", "parameterSetName");
-    string regularizationScheme = config.getValue("SU3NJL3DCutoffModelParameters", "regularizationScheme");
-    double cutoffInGeV = config.getDouble("SU3NJL3DCutoffModelParameters", "cutoffInGeV");
-    double upQuarkCurrentMassInGeV = config.getDouble("SU3NJL3DCutoffModelParameters", "upQuarkCurrentMassInGeV");
-    double downQuarkCurrentMassInGeV = config.getDouble("SU3NJL3DCutoffModelParameters", "downQuarkCurrentMassInGeV");
-    double strangeQuarkCurrentMassInGeV = config.getDouble("SU3NJL3DCutoffModelParameters", "strangeQuarkCurrentMassInGeV");
-    
-    cout << "parameterSetName = " << parameterSetName << endl;
-    cout << "regularizationScheme = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
-    cout << "cutoffInGeV = " << cutoffInGeV << endl;
-    cout << "upQuarkCurrentMassInGeV = " << upQuarkCurrentMassInGeV << endl;
-    cout << "downQuarkCurrentMassInGeV = " << downQuarkCurrentMassInGeV << endl;
-    cout << "strangeQuarkCurrentMassInGeV = " << strangeQuarkCurrentMassInGeV << endl;
-
-    // Get SU3 NJL 3D Cutoff Dimensionful Couplings
-    cout << "\nSU3NJL3DCutoffGapEquationsVacuumParameters:" << endl;
-    NJLDimensionfulCouplings couplings = SU3NJL3DCutoffFileParser::extractDimensionfulCouplings(config);
-
-    // SU3 NJL 3D Cutoff Gap Equations Vacuum Parameters
-    cout << "\nSU3NJL3DCutoffGapEquationsVacuumParameters: " << endl;
-
-    double gapPrecision = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "gapPrecision");
-    string rootFindingMethod = config.getValue("SU3NJL3DCutoffGapEquationsVacuumParameters", "rootFindingMethod");
-    double upQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "upQuarkMassGuess");
-    double downQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "downQuarkMassGuess");
-    double strangeQuarkMassGuess = config.getDouble("SU3NJL3DCutoffGapEquationsVacuumParameters", "strangeQuarkMassGuess");
-
-    cout << "gapPrecision = " << gapPrecision << endl;
-    cout << "rootFindingMethod = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(rootFindingMethod)) << endl;
-    cout << "upQuarkMassGuess = " << upQuarkMassGuess << endl;
-    cout << "downQuarkMassGuess = " << downQuarkMassGuess << endl;
-    cout << "strangeQuarkMassGuess = " << strangeQuarkMassGuess << endl;
-
-    //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(
-        stringToNJL3DCutoffRegularizationScheme(regularizationScheme),                                 
-        cutoffInGeV,                                 
-        couplings,                                 
-        upQuarkCurrentMassInGeV,                                 
-        downQuarkCurrentMassInGeV,                                 
-        strangeQuarkCurrentMassInGeV
-    );
-    parameters.setParameterSetName(parameterSetName);
-
-    // Solve model in the vacuum
-    evaluateVacuumMasses(
-        parameters,                                
-        gapPrecision,                                
-        stringToMultiRootFindingMethod(rootFindingMethod),                                
-        upQuarkMassGuess,                                
-        downQuarkMassGuess,                                
-        strangeQuarkMassGuess
-    );
-}
-
 void SU3NJL3DCutoffCalculator::evaluateFirstOrderLine(
     SU3NJL3DCutoffParameters& parameters,                                    
     double precisionVacuum,                                    
