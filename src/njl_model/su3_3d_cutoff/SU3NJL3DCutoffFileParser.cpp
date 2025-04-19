@@ -10,7 +10,7 @@
 using namespace std;
 
 
-NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::extractDimensionfulCouplings(const IniFileParser& config)
+NJLDimensionfulCouplings SU3NJL3DCutoffVacuumFileParser::extractDimensionfulCouplings(const IniFileParser& config)
 {	
 	double cutoff = config.getDouble(
         SU3NJL3DCutoffConfigKeys::ModelParameters::section,                                   
@@ -87,7 +87,7 @@ NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::extractDimensionfulCouplings(
 }
 
 
-bool SU3NJL3DCutoffFileParser::validateFileQualityEvaluateVacuumMasses() const 
+bool SU3NJL3DCutoffVacuumFileParser::validateFileQualityEvaluateVacuumMasses() const 
 {
     // Check for missing sections
     bool allRequiredSectionsPresent = true;
@@ -123,7 +123,7 @@ bool SU3NJL3DCutoffFileParser::validateFileQualityEvaluateVacuumMasses() const
     else{ return false; }
 }
 
-bool SU3NJL3DCutoffFileParser::validateModelParameters() const 
+bool SU3NJL3DCutoffVacuumFileParser::validateModelParameters() const 
 {   
     // Validate regularizationScheme
     string regularizationScheme = config.getValue(
@@ -177,7 +177,7 @@ bool SU3NJL3DCutoffFileParser::validateModelParameters() const
     else{ return false; }
 }
 
-bool SU3NJL3DCutoffFileParser::validateDimensionfulCouplings() const 
+bool SU3NJL3DCutoffVacuumFileParser::validateDimensionfulCouplings() const 
 {
     // Validate lagrangianInteractions
     string lagrangianInteractions = config.getValue(
@@ -200,7 +200,7 @@ bool SU3NJL3DCutoffFileParser::validateDimensionfulCouplings() const
     return areCouplingsValid;
 }
 
-bool SU3NJL3DCutoffFileParser::validateVacuumMassesParameters() const 
+bool SU3NJL3DCutoffVacuumFileParser::validateVacuumMassesParameters() const 
 {   
     // Ensure precisionVacuum>0
     bool isPrecisionVacuumValid = config.validatePositiveDouble(
@@ -255,7 +255,7 @@ bool SU3NJL3DCutoffFileParser::validateVacuumMassesParameters() const
 }
 
 
-void SU3NJL3DCutoffFileParser::evaluateVacuumMasses() const
+void SU3NJL3DCutoffVacuumFileParser::evaluateVacuumMasses() const
 {
     // Model Parameters
     namespace MPKeys = SU3NJL3DCutoffConfigKeys::ModelParameters;
@@ -316,7 +316,7 @@ void SU3NJL3DCutoffFileParser::evaluateVacuumMasses() const
     );
 }
 
-bool SU3NJL3DCutoffFileParser::validateVacuumToFiniteBaryonDensityParameters() const 
+bool SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser::validateVacuumToFiniteBaryonDensityParameters() const 
 {   
     namespace VFBDPKeys = SU3NJL3DCutoffConfigKeys::VacuumToFiniteBaryonDensityParameters;
 
@@ -372,7 +372,7 @@ bool SU3NJL3DCutoffFileParser::validateVacuumToFiniteBaryonDensityParameters() c
     else{ return false; }
 }
 
-bool SU3NJL3DCutoffFileParser::validateFirstOrderLineParameters() const 
+bool SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser::validateFirstOrderLineParameters() const 
 {   
     namespace FOLPKeys = SU3NJL3DCutoffConfigKeys::FirstOrderLineParameters;
 
@@ -419,7 +419,7 @@ bool SU3NJL3DCutoffFileParser::validateFirstOrderLineParameters() const
     else{ return false; }
 }
 
-bool SU3NJL3DCutoffFileParser::validateFileQualityEvaluateFirstOrderLine() const
+bool SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser::validateFileQualityEvaluateFirstOrderLine() const
 {   
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
     bool vacuumValidations = validateFileQualityEvaluateVacuumMasses();
@@ -456,7 +456,7 @@ bool SU3NJL3DCutoffFileParser::validateFileQualityEvaluateFirstOrderLine() const
     else{ return false; }
 }
 
-void SU3NJL3DCutoffFileParser::evaluateFirstOrderLine() const
+void SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser::evaluateFirstOrderLine() const
 {
     // Model Parameters
     namespace MPKeys = SU3NJL3DCutoffConfigKeys::ModelParameters;

@@ -9,8 +9,8 @@ namespace SU3NJL3DCutoffConfigKeys
 {
     namespace CalculationType
     {
-        const std::string evaluateVacuumMasses = "evaluateSU3NJL3DCutoffVacuumMasses";
-        const std::string evaluateFirstOrderLine = "evaluateSU3NJL3DCutoffFirstOrderLine";
+        const std::string Vacuum_evaluateVacuumMasses = "SU3NJL3DCutoffVacuum_evaluateVacuumMasses";
+        const std::string FixedTempRhoBEqualChemPot_evaluateFirstOrderLine = "SU3NJL3DCutoffFixedTemperatureRhoBEqualChemicalPotential_evaluateFirstOrderLine";
     }
 
     namespace ModelParameters 
@@ -61,14 +61,14 @@ namespace SU3NJL3DCutoffConfigKeys
 }
 
 
-class SU3NJL3DCutoffFileParser
+class SU3NJL3DCutoffVacuumFileParser
 {
 public:
     const IniFileParser& config;    
     std::string invalidFileMessage = "Error: Invalid configuration found in the " + config.getFilename() + " file.";
 
 public:
-    SU3NJL3DCutoffFileParser(const IniFileParser& p) : config(p) {}
+    SU3NJL3DCutoffVacuumFileParser(const IniFileParser& p) : config(p) {}
     
     // Validations
     static NJLDimensionfulCouplings extractDimensionfulCouplings(const IniFileParser& );
@@ -76,16 +76,23 @@ public:
     bool validateModelParameters() const;
     bool validateDimensionfulCouplings() const;
     bool validateVacuumMassesParameters() const;
+    bool validateFileQualityEvaluateVacuumMasses() const;
+
+    void evaluateVacuumMasses() const;
+};
+
+
+class SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser : public SU3NJL3DCutoffVacuumFileParser
+{
+public:
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser(const IniFileParser& p) : SU3NJL3DCutoffVacuumFileParser(p) {}
 
     bool validateVacuumToFiniteBaryonDensityParameters() const;
     bool validateFirstOrderLineParameters() const;
-
-    bool validateFileQualityEvaluateVacuumMasses() const;
     bool validateFileQualityEvaluateFirstOrderLine() const;
 
-    //Calculations
-    void evaluateVacuumMasses() const;
     void evaluateFirstOrderLine() const;
 };
+
 
 #endif
