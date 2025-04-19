@@ -13,25 +13,6 @@ namespace SU3NJL3DCutoffCalculator
         MultiRootFindingMethod ,                                
         double , double , double 
     );
-
-    void evaluateFirstOrderLine(
-        SU3NJL3DCutoffParameters& ,                                
-        double ,                                
-        MultiRootFindingMethod ,                                
-        double , 
-        double , 
-        double ,
-        double , 
-        double, 
-        int ,
-        double ,
-        MultiRootFindingMethod ,
-        bool ,
-        double , 
-        MultiRootFindingMethod ,
-        double ,
-        double 
-    );
 }
 
 #endif
