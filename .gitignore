@@ -10,3 +10,5 @@ bin/*.dat
 src/*/*.o*
 
 calculations/two_fermion_line_integral_3d_cutoff/plot_scripts/__pycache__/
+calculations/common_utils/__pycache__/
+calculations/su3_3d_cutoff_phase_diagram/plots_scripts/__pycache__/
