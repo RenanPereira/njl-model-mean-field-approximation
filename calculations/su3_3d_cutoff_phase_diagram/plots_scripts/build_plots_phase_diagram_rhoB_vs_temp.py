@@ -1,16 +1,7 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
-import os
-import sys
-
-# Get the parent directory of the current script (two levels up) and add the parent directory to sys.path
-# This is necessary in order to import the PhaseTransitionAnalyzerAtFixedTemperature class
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'common_utils'))
-sys.path.append(parent_dir)
-
-from plot_helper import *
-from first_order_line_data import *
+from common_utils.plot_helper import *
+from common_utils.first_order_line_data import *
 
 
 ####################################################################################################
@@ -23,6 +14,10 @@ fig_dpi = 150
 fig_x_size = 6
 fig_y_size = 6
 
+# Location of the data and plots folder with respect to calculations folder
+data_folder = "su3_3d_cutoff_phase_diagram/data/"
+plots_folder = "su3_3d_cutoff_phase_diagram/plots/"
+
 
 ####################################################################################################
 # Phase Diagram set A
@@ -30,7 +25,7 @@ print("Building plot: first order line (baryon density versus temperature) for s
 
 # Load data from the file
 filename = "SU3NJL3DCutoffFirstOrderLine_setA.dat"
-data_setA = FirstOrderLineData( "../data/" + filename)
+data_setA = FirstOrderLineData(data_folder + filename)
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -67,7 +62,7 @@ fig.tight_layout()
 
 # Replace .dat with .png
 plotname = "first_order_setA_rhoB_vs_temp.png"
-plt.savefig("../plots/" + plotname)
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
@@ -86,7 +81,7 @@ print("Building plot: first order line (baryon density versus temperature) for s
 
 # Load data from the file
 filename = "SU3NJL3DCutoffFirstOrderLine_setB.dat"
-data_setB = FirstOrderLineData( "../data/" + filename)
+data_setB = FirstOrderLineData(data_folder + filename)
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -123,7 +118,7 @@ fig.tight_layout()
 
 # Replace .dat with .png
 plotname = "first_order_setB_rhoB_vs_temp.png"
-plt.savefig("../plots/" + plotname)
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
@@ -142,7 +137,7 @@ print("Building plot: first order line (baryon density versus temperature) for s
 
 # Load data from the file
 filename = "SU3NJL3DCutoffFirstOrderLine_setC.dat"
-data_setC = FirstOrderLineData( "../data/" + filename)
+data_setC = FirstOrderLineData(data_folder + filename)
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -179,7 +174,7 @@ fig.tight_layout()
 
 # Replace .dat with .png
 plotname = "first_order_setC_rhoB_vs_temp.png"
-plt.savefig("../plots/" + plotname)
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
@@ -198,13 +193,13 @@ print("Building plot: first order line (chemical potential versus temperature) f
 
 # Load data from the file
 filename = "SU3NJL3DCutoffFirstOrderLine_setA.dat"
-data_setA = FirstOrderLineData( "../data/" + filename)
+data_setA = FirstOrderLineData(data_folder + filename)
 
 filename = "SU3NJL3DCutoffFirstOrderLine_setB.dat"
-data_setB = FirstOrderLineData( "../data/" + filename)
+data_setB = FirstOrderLineData(data_folder + filename)
 
 filename = "SU3NJL3DCutoffFirstOrderLine_setC.dat"
-data_setC = FirstOrderLineData( "../data/" + filename)
+data_setC = FirstOrderLineData(data_folder + filename)
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -256,7 +251,7 @@ ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 fig.tight_layout()
 
 plotname = "first_order_allSets_rhoB_vs_temp.png"
-plt.savefig("../plots/" + plotname)
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()

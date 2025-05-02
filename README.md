@@ -33,7 +33,12 @@ cd src/gsl_wrapper/ && ./execute_tests.sh && cd ../../
 
 # Calculations
 
-## B0 Integral
+## B0 Integral Study (two_fermion_line_integral_3d_cutoff)
 ```
 cd calculations/two_fermion_line_integral_3d_cutoff/plot_scripts && python3 build_plots_B0_vs_k0.py && cd ../../../
+```
+
+## SU3 NJL Phase Diagram Study (su3_3d_cutoff_phase_diagram)
+```
+cd calculations/su3_3d_cutoff_phase_diagram && ./build_plots.sh && cd ../../
 ```
