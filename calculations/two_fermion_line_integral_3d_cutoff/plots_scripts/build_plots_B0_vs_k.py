@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from plot_helper import *
+from common_utils.plot_helper import *
+from common_utils.b03d_cutoff_vs_momentum_data import *
 
 
 ####################################################################################################
@@ -13,18 +14,21 @@ fig_dpi = 150
 fig_x_size = 6
 fig_y_size = 6
 
+# Location of the data and plots folder with respect to calculations folder
+data_folder = "two_fermion_line_integral_3d_cutoff/data/"
+plots_folder = "two_fermion_line_integral_3d_cutoff/plots/"
 
 ####################################################################################################
 # B0 vs k, M1=M2, T=0.0 GeV, mu1=mu2=0.0 GeV, different k0 with Mass Shift
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, mu1=mu2=0.0 GeV, different k0 with Mass Shift")
 
 # Load data from the file
-data_B0_vs_k_k000 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.0.dat")
-data_B0_vs_k_k005 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.5.dat")
-data_B0_vs_k_k010 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.0.dat")
-data_B0_vs_k_k015 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.5.dat")
-data_B0_vs_k_k020 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.0.dat")
-data_B0_vs_k_k025 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.5.dat")
+data_B0_vs_k_k000 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.0.dat")
+data_B0_vs_k_k005 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.5.dat")
+data_B0_vs_k_k010 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.0.dat")
+data_B0_vs_k_k015 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.5.dat")
+data_B0_vs_k_k020 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.0.dat")
+data_B0_vs_k_k025 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.5.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -168,7 +172,7 @@ fig.tight_layout()
 
 # Replace .dat with .png
 plotname = "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4_diff_k0.png"
-plt.savefig("../plots/" + plotname)
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()

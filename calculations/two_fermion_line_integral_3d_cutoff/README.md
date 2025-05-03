@@ -17,7 +17,7 @@ Or, check the [DOI](https://journals.aps.org/prc/abstract/10.1103/PhysRevC.109.0
 │   ├── *.ini                # Configuration files for the calculations
 │   ├── *.dat                # Generated data files
 ├── execute_calculations.sh  # Shell script to execute the calculations
-├── plot_scripts             # Python scripts for generating plots
+├── plots_scripts             # Python scripts for generating plots
 │   ├── build_plots_*.py     # Specific plot scripts for various scenarios
 │   ├── plot_helper.py       # Helper functions for the plotting scripts
 ├── plots                    # Directory to store the generated plot images
@@ -49,7 +49,7 @@ Run the `build_plots.sh` script to generate the plots based on the generated dat
 ./build_plots.sh
 ```
 This script:
-1. Navigates to the `plot_scripts` directory.
+1. Navigates to the `plots_scripts` directory.
 2. Executes the Python scripts to build the plots for each scenario.
 3. Stores the generated plots in the `plots` folder.
 
