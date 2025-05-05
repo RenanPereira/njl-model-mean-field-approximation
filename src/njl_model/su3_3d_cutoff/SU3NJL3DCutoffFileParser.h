@@ -7,15 +7,21 @@
 
 namespace SU3NJL3DCutoffConfigKeys 
 {
+    namespace CalculationType
+    {
+        const std::string Vacuum_evaluateVacuumMasses = "SU3NJL3DCutoffVacuum_evaluateVacuumMasses";
+        const std::string FixedTempRhoBEqualChemPot_evaluateFirstOrderLine = "SU3NJL3DCutoffFixedTemperatureRhoBEqualChemicalPotential_evaluateFirstOrderLine";
+    }
+
     namespace ModelParameters 
     {
         const std::string section = "SU3NJL3DCutoffModelParameters";
         const std::string parameterSetName = "parameterSetName";
         const std::string regularizationScheme = "regularizationScheme";
-        const std::string cutoffInGeV = "cutoffInGeV";
-        const std::string upQuarkCurrentMassInGeV = "upQuarkCurrentMassInGeV";
-        const std::string downQuarkCurrentMassInGeV = "downQuarkCurrentMassInGeV";
-        const std::string strangeQuarkCurrentMassInGeV = "strangeQuarkCurrentMassInGeV";
+        const std::string cutoff = "cutoff_GeV";
+        const std::string upQuarkCurrentMass = "upQuarkCurrentMass_GeV";
+        const std::string downQuarkCurrentMass = "downQuarkCurrentMass_GeV";
+        const std::string strangeQuarkCurrentMass = "strangeQuarkCurrentMass_GeV";
     }
 
     namespace DimensionfulCouplings 
@@ -24,14 +30,33 @@ namespace SU3NJL3DCutoffConfigKeys
         const std::string lagrangianInteractions = "lagrangianInteractions";
     }
 
-    namespace GapEquationsVacuumParameters 
+    namespace VacuumMassesParameters 
     {
-        const std::string section = "SU3NJL3DCutoffGapEquationsVacuumParameters";
-        const std::string gapPrecision = "gapPrecision";
-        const std::string rootFindingMethod = "rootFindingMethod";
-        const std::string upQuarkMassGuess = "upQuarkMassGuess";
-        const std::string downQuarkMassGuess = "downQuarkMassGuess";
-        const std::string strangeQuarkMassGuess = "strangeQuarkMassGuess";
+        const std::string section = "VacuumMassesParameters";
+        const std::string precisionVacuum = "precisionVacuum";
+        const std::string methodVacuum = "methodVacuum";
+        const std::string upQuarkMassGuess = "upQuarkMassGuess_GeV";
+        const std::string downQuarkMassGuess = "downQuarkMassGuess_GeV";
+        const std::string strangeQuarkMassGuess = "strangeQuarkMassGuess_GeV";
+    }
+
+    namespace VacuumToFiniteBaryonDensityParameters
+    {
+        const std::string section = "VacuumToFiniteBaryonDensityParameters";
+        const std::string minimumBaryonDensity = "minimumBaryonDensity_fmMinus3";
+        const std::string maximumBaryonDensity = "maximumBaryonDensity_fmMinus3";
+        const std::string numberOfPoints = "numberOfPoints";
+        const std::string precisionZeroTempSol = "precisionZeroTemperatureSolution";
+        const std::string methodZeroTempSol= "methodZeroTemperatureSolution";
+    }
+
+    namespace FirstOrderLineParameters
+    {
+        const std::string section = "FirstOrderLineParameters";
+        const std::string precisionTransitionPointSol = "precisionTransitionPointSolution";
+        const std::string methodTransitionPointSol = "methodTransitionPointSolution";
+        const std::string deltaT = "deltaTemperature_GeV";
+        const std::string massDifferenceCEP = "massDifferenceCEP_GeV";
     }
 }
 
@@ -47,13 +72,27 @@ public:
     
     // Validations
     static NJLDimensionfulCouplings extractDimensionfulCouplings(const IniFileParser& );
-    bool validateFileQuality() const;
+    
     bool validateModelParameters() const;
     bool validateDimensionfulCouplings() const;
-    bool validateGapEquationsVacuumParameters() const;
+    bool validateVacuumMassesParameters() const;
+    bool validateFileQualityEvaluateVacuumMasses() const;
 
-    //Calculations
     void evaluateVacuumMasses() const;
 };
+
+
+class SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser : public SU3NJL3DCutoffVacuumFileParser
+{
+public:
+    SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser(const IniFileParser& p) : SU3NJL3DCutoffVacuumFileParser(p) {}
+
+    bool validateVacuumToFiniteBaryonDensityParameters() const;
+    bool validateFirstOrderLineParameters() const;
+    bool validateFileQualityEvaluateFirstOrderLine() const;
+
+    void evaluateFirstOrderLine() const;
+};
+
 
 #endif

@@ -32,7 +32,7 @@ void SU3NJL3DCutoffVacuum::solve(double precision, MultiRootFindingMethod method
     x[1] = downQuarkEffectiveMassGuess; 
     x[2] = strangeQuarkEffectiveMassGuess; 
     
-    multiDimensionalRootFind(3, precision, &x[0], this, &SU3NJLGapEquationsVacuum, method);
+    multiDimensionalRootFind(3, precision, &x[0], this, &gapEquations, method);
 
 	setUpQuarkEffectiveMass(x[0]);
 	setDownQuarkEffectiveMass(x[1]);
@@ -40,7 +40,7 @@ void SU3NJL3DCutoffVacuum::solve(double precision, MultiRootFindingMethod method
 }
 
 
-int SU3NJLGapEquationsVacuum(const gsl_vector *x, void *auxiliar, gsl_vector *f)
+int SU3NJL3DCutoffVacuum::gapEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {   
     //define variables
     double mU = gsl_vector_get(x,0);
@@ -92,10 +92,45 @@ bool SU3NJL3DCutoffVacuum::testSolution(double precision)
     x[2] = getStrangeQuarkEffectiveMass();
     
     //the test below (gsl) resturns 0 if the sum_i abs(residual_i) < precision
-    int gslTest = multiDimensionalRootFindTestResidual(3, precision, &x[0], this, &SU3NJLGapEquationsVacuum);
+    int gslTest = multiDimensionalRootFindTestResidual(3, precision, &x[0], this, &gapEquations);
 
     if (gslTest==0){ return true; }
     else{ return false; }
+}
+
+
+SU3NJL3DCutoffVacuum SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+    SU3NJL3DCutoffParameters& parameters,                                    
+    double gapPrecision,                                    
+    MultiRootFindingMethod method,                                    
+    double upQuarkMassGuess, 
+    double downQuarkMassGuess, 
+    double strangeQuarkMassGuess
+)
+{
+    // Solve model in the vacuum
+    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in the vacuum...\n";
+
+    SU3NJL3DCutoffVacuum vacuumSolution(parameters);
+    vacuumSolution.solve(
+        gapPrecision, 
+        method,          
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
+    double Mu = vacuumSolution.getUpQuarkEffectiveMass();
+    double Md = vacuumSolution.getDownQuarkEffectiveMass();
+    double Ms = vacuumSolution.getStrangeQuarkEffectiveMass();
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuumSolution.testSolution(gapPrecision) << "\n";
+    cout << "Mu[GeV] = " << Mu << "\n" 
+         << "Md[GeV] = " << Md << "\n" 
+         << "Ms[GeV] = " << Ms << "\n";
+
+    return vacuumSolution;
 }
 
 
@@ -163,3 +198,26 @@ void SU3NJL3DCutoffVacuum::logVacuumSolutionToFile(string fileName)
 
 	fileVacuumSolution.close();
 }
+
+
+void SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
+    SU3NJL3DCutoffParameters& parameters,                                    
+    double gapPrecision,                                    
+    MultiRootFindingMethod method,                                    
+    double upQuarkMassGuess, 
+    double downQuarkMassGuess, 
+    double strangeQuarkMassGuess
+)
+{   
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        gapPrecision,                                    
+        method,                                    
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
+    vacuum.logVacuumSolutionToFile("SU3NJL3DCutoffVacuumMasses_" + parameters.getParameterSetName() + ".dat");
+}
+

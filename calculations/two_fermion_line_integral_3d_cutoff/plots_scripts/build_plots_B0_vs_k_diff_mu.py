@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from plot_helper import *
+from common_utils.plot_helper import *
+from common_utils.b03d_cutoff_vs_momentum_data import *
 
 
 ####################################################################################################
@@ -13,16 +14,19 @@ fig_dpi = 150
 fig_x_size = 6
 fig_y_size = 6
 
+# Location of the data and plots folder with respect to calculations folder
+data_folder = "two_fermion_line_integral_3d_cutoff/data/"
+plots_folder = "two_fermion_line_integral_3d_cutoff/plots/"
 
 ####################################################################################################
 # B0 vs k, M1=M2, T=0.0 GeV, k0=0.0 GeV, different mu1=mu2 with Mass Shift
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=0.0 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.0.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k00.0.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k00.0.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k00.0.dat")
+data_B0_vs_k_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.0.dat")
+data_B0_vs_k_mu06 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k00.0.dat")
+data_B0_vs_k_mu08 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k00.0.dat")
+data_B0_vs_k_mu10 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k00.0.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -33,32 +37,32 @@ colorT03 = 'red'
 colorT05 = 'lime'
 colorT10 = 'blue'
 
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT00, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT00, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT03, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT03, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT05, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT05, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT10, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT10, linewidth=2, linestyle='--')
 
 # Axes labels
@@ -74,9 +78,10 @@ xmin= 0; xmax = 2.5; ymin = -3.0; ymax = 3.0
 configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
-auxH = 0.065; auxX = 0.66; auxY = 0.74 + auxH
+auxH = 0.065; auxX = 0.66; auxY = 0.74
 texts = [
     r'$\Lambda = 1.0\ \mathrm{GeV}$',
+    r'$T/\Lambda = 0.0$',
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$k_0/\Lambda = 0.0$',
 ]
@@ -87,40 +92,40 @@ add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, 
 dist = 0.06
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.0\,,\,\mu_{i,j}/\Lambda = 0.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*0,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT00, color2=colorT00, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.3\,,\,\mu_{i,j}/\Lambda = 0.6$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.6$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*1,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT03, color2=colorT03, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.5\,,\,\mu_{i,j}/\Lambda = 0.8$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.8$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*2,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT05, color2=colorT05, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 1.0\,,\,\mu_{i,j}/\Lambda = 1.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 1.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*3,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT10, color2=colorT10, 
                       width1=2, width2=2, 
@@ -130,15 +135,15 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k00.0_diff_T_mu.png"
-plt.savefig("../plots/" + plotname)
+plotname = "B0_vs_k_T0.0L1.0Mi0.4Mj0.4k00.0_diff_mu.png"
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
 plt.close()
 
 # Clear variables (optional cleanup)
-del data_B0_vs_k_T00_mu00, data_B0_vs_k_T03_mu00, data_B0_vs_k_T05_mu00, data_B0_vs_k_T10_mu00, plotname, dist
+del data_B0_vs_k_mu00, data_B0_vs_k_mu06, data_B0_vs_k_mu08, data_B0_vs_k_mu10, plotname, dist
 del colorT00, colorT03, colorT05, colorT10
 del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 
@@ -148,10 +153,10 @@ del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=0.5 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.5.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k00.5.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k00.5.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k00.5.dat")
+data_B0_vs_k_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.5.dat")
+data_B0_vs_k_mu06 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k00.5.dat")
+data_B0_vs_k_mu08 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k00.5.dat")
+data_B0_vs_k_mu10 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k00.5.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -162,32 +167,32 @@ colorT03 = 'red'
 colorT05 = 'lime'
 colorT10 = 'blue'
 
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT00, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT00, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT03, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT03, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT05, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT05, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT10, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT10, linewidth=2, linestyle='--')
 
 # Axes labels
@@ -203,9 +208,10 @@ xmin= 0; xmax = 2.5; ymin = -3.0; ymax = 3.0
 configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
-auxH = 0.065; auxX = 0.66; auxY = 0.74 + auxH
+auxH = 0.065; auxX = 0.66; auxY = 0.74
 texts = [
     r'$\Lambda = 1.0\ \mathrm{GeV}$',
+    r'$T/\Lambda = 0.0$',
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$k_0/\Lambda = 0.5$',
 ]
@@ -216,40 +222,40 @@ add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, 
 dist = 0.06
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.0\,,\,\mu_{i,j}/\Lambda = 0.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*0,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT00, color2=colorT00, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.3\,,\,\mu_{i,j}/\Lambda = 0.6$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.6$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*1,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT03, color2=colorT03, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.5\,,\,\mu_{i,j}/\Lambda = 0.8$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.8$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*2,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT05, color2=colorT05, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 1.0\,,\,\mu_{i,j}/\Lambda = 1.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 1.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*3,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT10, color2=colorT10, 
                       width1=2, width2=2, 
@@ -259,15 +265,15 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k00.5_diff_T_mu.png"
-plt.savefig("../plots/" + plotname)
+plotname = "B0_vs_k_T0.0L1.0Mi0.4Mj0.4k00.5_diff_mu.png"
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
 plt.close()
 
 # Clear variables (optional cleanup)
-del data_B0_vs_k_T00_mu00, data_B0_vs_k_T03_mu00, data_B0_vs_k_T05_mu00, data_B0_vs_k_T10_mu00, plotname, dist
+del data_B0_vs_k_mu00, data_B0_vs_k_mu06, data_B0_vs_k_mu08, data_B0_vs_k_mu10, plotname, dist
 del colorT00, colorT03, colorT05, colorT10
 del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 
@@ -277,10 +283,10 @@ del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.0.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k01.0.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k01.0.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k01.0.dat")
+data_B0_vs_k_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.0.dat")
+data_B0_vs_k_mu06 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k01.0.dat")
+data_B0_vs_k_mu08 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k01.0.dat")
+data_B0_vs_k_mu10 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k01.0.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -291,32 +297,32 @@ colorT03 = 'red'
 colorT05 = 'lime'
 colorT10 = 'blue'
 
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT00, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT00, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT03, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT03, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT05, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT05, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT10, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT10, linewidth=2, linestyle='--')
 
 # Axes labels
@@ -332,9 +338,10 @@ xmin= 0; xmax = 2.5; ymin = -3.0; ymax = 3.0
 configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
-auxH = 0.065; auxX = 0.66; auxY = 0.74 + auxH
+auxH = 0.065; auxX = 0.66; auxY = 0.74
 texts = [
     r'$\Lambda = 1.0\ \mathrm{GeV}$',
+    r'$T/\Lambda = 0.0$',
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$k_0/\Lambda = 1.0$',
 ]
@@ -345,40 +352,40 @@ add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, 
 dist = 0.06
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.0\,,\,\mu_{i,j}/\Lambda = 0.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*0,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT00, color2=colorT00, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.3\,,\,\mu_{i,j}/\Lambda = 0.6$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.6$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*1,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT03, color2=colorT03, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.5\,,\,\mu_{i,j}/\Lambda = 0.8$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.8$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*2,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT05, color2=colorT05, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 1.0\,,\,\mu_{i,j}/\Lambda = 1.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 1.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*3,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT10, color2=colorT10, 
                       width1=2, width2=2, 
@@ -388,28 +395,28 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k01.0_diff_T_mu.png"
-plt.savefig("../plots/" + plotname)
+plotname = "B0_vs_k_T0.0L1.0Mi0.4Mj0.4k01.0_diff_mu.png"
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
 plt.close()
 
 # Clear variables (optional cleanup)
-del data_B0_vs_k_T00_mu00, data_B0_vs_k_T03_mu00, data_B0_vs_k_T05_mu00, data_B0_vs_k_T10_mu00, plotname, dist
+del data_B0_vs_k_mu00, data_B0_vs_k_mu06, data_B0_vs_k_mu08, data_B0_vs_k_mu10, plotname, dist
 del colorT00, colorT03, colorT05, colorT10
 del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 
 
 ####################################################################################################
-# B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift
-print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift")
+# B0 vs k, M1=M2, T=0.0 GeV, k0=1.5 GeV, different mu1=mu2 with Mass Shift
+print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.5 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.5.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k01.5.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k01.5.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k01.5.dat")
+data_B0_vs_k_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.5.dat")
+data_B0_vs_k_mu06 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k01.5.dat")
+data_B0_vs_k_mu08 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k01.5.dat")
+data_B0_vs_k_mu10 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k01.5.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -420,32 +427,32 @@ colorT03 = 'red'
 colorT05 = 'lime'
 colorT10 = 'blue'
 
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT00, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT00, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT03, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT03, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT05, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT05, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT10, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT10, linewidth=2, linestyle='--')
 
 # Axes labels
@@ -461,9 +468,10 @@ xmin= 0; xmax = 2.5; ymin = -3.0; ymax = 3.0
 configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
-auxH = 0.065; auxX = 0.66; auxY = 0.74 + auxH
+auxH = 0.065; auxX = 0.66; auxY = 0.74
 texts = [
     r'$\Lambda = 1.0\ \mathrm{GeV}$',
+    r'$T/\Lambda = 0.0$',
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$k_0/\Lambda = 1.5$',
 ]
@@ -474,40 +482,40 @@ add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, 
 dist = 0.06
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.0\,,\,\mu_{i,j}/\Lambda = 0.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*0,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT00, color2=colorT00, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.3\,,\,\mu_{i,j}/\Lambda = 0.6$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.6$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*1,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT03, color2=colorT03, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.5\,,\,\mu_{i,j}/\Lambda = 0.8$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.8$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*2,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT05, color2=colorT05, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 1.0\,,\,\mu_{i,j}/\Lambda = 1.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 1.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*3,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT10, color2=colorT10, 
                       width1=2, width2=2, 
@@ -517,28 +525,28 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k01.5_diff_T_mu.png"
-plt.savefig("../plots/" + plotname)
+plotname = "B0_vs_k_T0.0L1.0Mi0.4Mj0.4k01.5_diff_mu.png"
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
 plt.close()
 
 # Clear variables (optional cleanup)
-del data_B0_vs_k_T00_mu00, data_B0_vs_k_T03_mu00, data_B0_vs_k_T05_mu00, data_B0_vs_k_T10_mu00, plotname, dist
+del data_B0_vs_k_mu00, data_B0_vs_k_mu06, data_B0_vs_k_mu08, data_B0_vs_k_mu10, plotname, dist
 del colorT00, colorT03, colorT05, colorT10
 del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 
 
 ####################################################################################################
-# B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift
-print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift")
+# B0 vs k, M1=M2, T=0.0 GeV, k0=2.0 GeV, different mu1=mu2 with Mass Shift
+print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=2.0 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.0.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k02.0.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k02.0.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k02.0.dat")
+data_B0_vs_k_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.0.dat")
+data_B0_vs_k_mu06 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k02.0.dat")
+data_B0_vs_k_mu08 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k02.0.dat")
+data_B0_vs_k_mu10 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k02.0.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -549,32 +557,32 @@ colorT03 = 'red'
 colorT05 = 'lime'
 colorT10 = 'blue'
 
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT00, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT00, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT03, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT03, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT05, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT05, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT10, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT10, linewidth=2, linestyle='--')
 
 # Axes labels
@@ -590,9 +598,10 @@ xmin= 0; xmax = 2.5; ymin = -3.0; ymax = 3.0
 configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
-auxH = 0.065; auxX = 0.66; auxY = 0.74 + auxH
+auxH = 0.065; auxX = 0.66; auxY = 0.74
 texts = [
     r'$\Lambda = 1.0\ \mathrm{GeV}$',
+    r'$T/\Lambda = 0.0$',
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$k_0/\Lambda = 2.0$',
 ]
@@ -603,40 +612,40 @@ add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, 
 dist = 0.06
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.0\,,\,\mu_{i,j}/\Lambda = 0.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*0,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT00, color2=colorT00, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.3\,,\,\mu_{i,j}/\Lambda = 0.6$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.6$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*1,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT03, color2=colorT03, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.5\,,\,\mu_{i,j}/\Lambda = 0.8$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.8$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*2,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT05, color2=colorT05, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 1.0\,,\,\mu_{i,j}/\Lambda = 1.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 1.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*3,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT10, color2=colorT10, 
                       width1=2, width2=2, 
@@ -646,28 +655,28 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k02.0_diff_T_mu.png"
-plt.savefig("../plots/" + plotname)
+plotname = "B0_vs_k_T0.0L1.0Mi0.4Mj0.4k02.0_diff_mu.png"
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
 plt.close()
 
 # Clear variables (optional cleanup)
-del data_B0_vs_k_T00_mu00, data_B0_vs_k_T03_mu00, data_B0_vs_k_T05_mu00, data_B0_vs_k_T10_mu00, plotname, dist
+del data_B0_vs_k_mu00, data_B0_vs_k_mu06, data_B0_vs_k_mu08, data_B0_vs_k_mu10, plotname, dist
 del colorT00, colorT03, colorT05, colorT10
 del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 
 
 ####################################################################################################
-# B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift
-print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift")
+# B0 vs k, M1=M2, T=0.0 GeV, k0=2.5 GeV, different mu1=mu2 with Mass Shift
+print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=2.5 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.5.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k02.5.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k02.5.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData( "../data/B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k02.5.dat")
+data_B0_vs_k_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.5.dat")
+data_B0_vs_k_mu06 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k02.5.dat")
+data_B0_vs_k_mu08 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k02.5.dat")
+data_B0_vs_k_mu10 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k02.5.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -678,32 +687,32 @@ colorT03 = 'red'
 colorT05 = 'lime'
 colorT10 = 'blue'
 
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT00, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T00_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T00_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu00.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu00.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT00, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT03, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T03_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T03_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu06.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu06.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT03, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT05, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T05_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T05_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu08.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu08.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT05, linewidth=2, linestyle='--')
 
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Re_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Re_B0(), 
         label=r'$\mathrm{Re}[B_0]$', color=colorT10, linewidth=2, linestyle='-')
-ax.plot(data_B0_vs_k_T10_mu00.get_momentum_to_Lambda_ratio(), 
-        data_B0_vs_k_T10_mu00.get_Im_B0(), 
+ax.plot(data_B0_vs_k_mu10.get_momentum_to_Lambda_ratio(), 
+        data_B0_vs_k_mu10.get_Im_B0(), 
         label=r'$\mathrm{Im}[B_0]$', color=colorT10, linewidth=2, linestyle='--')
 
 # Axes labels
@@ -719,9 +728,10 @@ xmin= 0; xmax = 2.5; ymin = -3.0; ymax = 3.0
 configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
-auxH = 0.065; auxX = 0.66; auxY = 0.74 + auxH
+auxH = 0.065; auxX = 0.66; auxY = 0.74
 texts = [
     r'$\Lambda = 1.0\ \mathrm{GeV}$',
+    r'$T/\Lambda = 0.0$',
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$k_0/\Lambda = 2.5$',
 ]
@@ -732,40 +742,40 @@ add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, 
 dist = 0.06
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.0\,,\,\mu_{i,j}/\Lambda = 0.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*0,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT00, color2=colorT00, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.3\,,\,\mu_{i,j}/\Lambda = 0.6$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.6$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*1,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT03, color2=colorT03, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 0.5\,,\,\mu_{i,j}/\Lambda = 0.8$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 0.8$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*2,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT05, color2=colorT05, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
 
 annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
-                      r'$T/\Lambda = 1.0\,,\,\mu_{i,j}/\Lambda = 1.0$', 
-                      x_start_factor=0.3, 
+                      r'$\mu_{i,j}/\Lambda = 1.0$', 
+                      x_start_factor=0.56, 
                       y_factor=0.24 - auxH*3,
-                      length_line_fraction_of_box=0.25, 
+                      length_line_fraction_of_box=0.4, 
                       fontsize=16, 
                       color1=colorT10, color2=colorT10, 
                       width1=2, width2=2, 
@@ -775,15 +785,14 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k02.5_diff_T_mu.png"
-plt.savefig("../plots/" + plotname)
+plotname = "B0_vs_k_T0.0L1.0Mi0.4Mj0.4k02.5_diff_mu.png"
+plt.savefig(plots_folder + plotname)
 
 # Clean up
 plt.clf()
 plt.close()
 
 # Clear variables (optional cleanup)
-del data_B0_vs_k_T00_mu00, data_B0_vs_k_T03_mu00, data_B0_vs_k_T05_mu00, data_B0_vs_k_T10_mu00, plotname, dist
+del data_B0_vs_k_mu00, data_B0_vs_k_mu06, data_B0_vs_k_mu08, data_B0_vs_k_mu10, plotname, dist
 del colorT00, colorT03, colorT05, colorT10
 del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
-

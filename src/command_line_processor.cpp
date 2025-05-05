@@ -1,6 +1,5 @@
 #include "command_line_processor.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCalculator.h"
 #include "njl_model/n_fermion_line_integrals/KlevanskyB0Integral3DCutoffFileParser.h"
 
 using namespace std;
@@ -52,13 +51,12 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	cout << "\nFileDetails:" << endl;
 	cout << "type = " << fileTypeStr << endl;
 
-	if(fileTypeStr=="evaluateSU3NJL3DCutoffVacuumMasses")
+	if(fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::Vacuum_evaluateVacuumMasses)
 	{	
-		//Check if file is written conrrectly
+		//Check if file is written correctly
 		const SU3NJL3DCutoffVacuumFileParser config(configFile);
-		if(config.validateFileQuality())
+		if(config.validateFileQualityEvaluateVacuumMasses())
 		{	
-			//evaluateSU3NJL3DCutoffVacuumMasses(configFile);
 			config.evaluateVacuumMasses();
 		}
 		else
@@ -66,13 +64,26 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
 		}
 	}
-	else if(fileTypeStr=="evaluateKlevanskyB0Integral3DCutoff")
+	else if(fileTypeStr==KlevanskyB0Integral3DCutoffConfigKeys::CalculationType::evaluateIntegral)
 	{	
-		//Check if file is written conrrectly
+		//Check if file is written correctly
 		const KlevanskyB0Integral3DCutoffFileParser config(configFile);
-		if(config.validateFileQuality())
+		if(config.validateFileQualityEvaluateIntegral())
 		{	
 			config.evaluateKlevanskyB0Integral3DCutoff();
+		}
+		else
+		{
+			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+		}
+	}
+	else if (fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::FixedTempRhoBEqualChemPot_evaluateFirstOrderLine)
+	{
+		//Check if file is written correctly
+		const SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser config(configFile);
+		if(config.validateFileQualityEvaluateFirstOrderLine())
+		{	
+			config.evaluateFirstOrderLine();
 		}
 		else
 		{

@@ -5,7 +5,7 @@
 using namespace std;
 
 
-bool KlevanskyB0Integral3DCutoffFileParser::validateFileQuality() const 
+bool KlevanskyB0Integral3DCutoffFileParser::validateFileQualityEvaluateIntegral() const 
 {   
     // Check for missing sections
     vector<string> vsK0section = 

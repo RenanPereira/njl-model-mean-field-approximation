@@ -7,6 +7,11 @@
 
 namespace KlevanskyB0Integral3DCutoffConfigKeys 
 {
+    namespace CalculationType
+    {
+        const std::string evaluateIntegral = "evaluateKlevanskyB0Integral3DCutoff";
+    }
+
     namespace VsK0Parameters 
     {
         const std::string vsK0section = "VsK0Parameters";
@@ -52,10 +57,11 @@ public:
 public:
     KlevanskyB0Integral3DCutoffFileParser(const IniFileParser& p) : config(p) {};
 
-    bool validateFileQuality() const;
     bool validateSectionVsK0Parameters(std::string ) const;
     bool validateSectionVsKParameters(std::string ) const;
 
+    bool validateFileQualityEvaluateIntegral() const;
+    
     void evaluateKlevanskyB0Integral3DCutoff() const;
 };
 

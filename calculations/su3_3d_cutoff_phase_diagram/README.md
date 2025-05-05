@@ -1,12 +1,10 @@
 # README
 
 ## Overview
-This folder contains the necessary scripts, data files, and configuration files to evaluate the two fermion line integral for various scenarios of momentum, temperature, and chemical potential. It also includes tools to generate corresponding plots for visualization.
 
-The majority of these results have been published in the following paper:
-[A new approach to the 3-momentum regularization of the in-medium one and two fermion line integrals with applications to cross sections in the Nambu–Jona-Lasinio model](https://arxiv.org/pdf/2310.05749)
-Or, check the [DOI](https://journals.aps.org/prc/abstract/10.1103/PhysRevC.109.025206).
+This folder contains the necessary scripts, data files, and configuration files to evaluate the phase diagram of the SU(3) NJL model for different parameter sets—specifically without (Set A) and with 8-quark interactions at the Lagrangian level (Sets B and C). 
 
+The NJL parameter set A, is the usual Klevansky parameter set. The NJL parameters given in Sets B and C contain 8-quark interactions. In these sets the coupling $g_1$ was fixed manually and the remaining six free parameters were found by requiring the model to reproduce the masses of the pion ($M_{\pi^\pm} = 0.140 \,\mathrm{GeV}$), the kaon ($M_{K^\pm} = 0.494 \,\mathrm{GeV}$), the eta prime ($M_\eta'= 0.958 \,\mathrm{GeV}$) and $a_0^\pm$ ( $M_{a_0^\pm}= 0.960 \,\mathrm{GeV}$) mesons, the leptonic decays of the pion ($f_{\pi^\pm} = 0.0924 \,\mathrm{GeV}$) and kaon ($f_{K^\pm}=0.094 \,\mathrm{GeV}$). For further details, see [Renan Camara Pereira PhD thesis](https://estudogeral.uc.pt/handle/10316/95294).
 
 ### Folder Structure
 ```
@@ -58,7 +56,6 @@ This script:
 - **Plots**: Saved in the `plots` directory, with `.png` extensions.
 
 ## Notes
-- Modify the `.ini` files in the `data` directory to configure specific scenarios of momentum, temperature, and chemical potential.
 - Ensure that the `plots` and `data` directories are writable by the scripts.
 
 ### Example Commands
@@ -67,4 +64,3 @@ To execute everything in one go:
 ./execute_calculations.sh
 ./build_plots.sh
 ```
-

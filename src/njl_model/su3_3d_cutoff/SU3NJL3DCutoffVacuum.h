@@ -30,8 +30,18 @@ public:
 	double getStrangeQuarkEffectiveMass(){ return strangeQuarkEffectiveMass; };
 
 	//gap equations
+	static int gapEquations(const gsl_vector *, void *, gsl_vector *);
 	void solve(double , MultiRootFindingMethod , double , double , double );
 	bool testSolution(double );
+
+	static SU3NJL3DCutoffVacuum calculateVacuumMasses(
+		SU3NJL3DCutoffParameters& ,                                    
+		double ,                                    
+		MultiRootFindingMethod ,                                    
+		double , 
+		double , 
+		double 
+	);
 
 	//thermodynamics
 	double calculatePressure();
@@ -43,14 +53,18 @@ public:
 	SU3NJL3DCutoffMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
 	void logVacuumSolutionToFile(string );
 
+	static void evaluateVacuumMasses(
+        SU3NJL3DCutoffParameters& ,                                
+        double ,                                
+        MultiRootFindingMethod ,                                
+        double , double , double 
+    );
+
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };
 	void setDownQuarkEffectiveMass(double downQuarkEffectiveMassAux){ downQuarkEffectiveMass = downQuarkEffectiveMassAux; };
 	void setStrangeQuarkEffectiveMass(double strangeQuarkEffectiveMassAux){ strangeQuarkEffectiveMass = strangeQuarkEffectiveMassAux; };
 };
-
-
-int SU3NJLGapEquationsVacuum(const gsl_vector *, void *, gsl_vector *);
 
 
 #endif
