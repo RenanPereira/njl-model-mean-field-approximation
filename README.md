@@ -42,3 +42,10 @@ cd calculations/two_fermion_line_integral_3d_cutoff && ./build_plots.sh && cd ..
 ```
 cd calculations/su3_3d_cutoff_phase_diagram && ./build_plots.sh && cd ../../
 ```
+
+## SU3 NJL Cross Section Study 
+
+### Klevansky parameter set (su3_3d_cutoff_phase_diagram)
+```
+cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./build_plots.sh && cd ../../
+```

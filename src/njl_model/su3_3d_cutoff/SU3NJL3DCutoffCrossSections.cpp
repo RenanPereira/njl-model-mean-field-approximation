@@ -295,7 +295,7 @@ void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters parameters
                     + "_CPU" + to_string(effChemPotU)
                     + "_CPD" + to_string(effChemPotD)
                     + "_CPS" + to_string(effChemPotS);
-    std::replace( fileName.begin(), fileName.end(), '.', ','); 
+    //std::replace( fileName.begin(), fileName.end(), '.', ','); 
     fileName = fileName + ".dat";
 
 
