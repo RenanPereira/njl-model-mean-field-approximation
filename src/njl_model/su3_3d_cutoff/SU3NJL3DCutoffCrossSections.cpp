@@ -302,6 +302,12 @@ void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters parameters
     std::ofstream fileCrossSection;
     fileCrossSection.open(fileName, std::ofstream::out | std::ios::trunc);
     fileCrossSection.precision(15);
+
+    fileCrossSection.precision(15);
+    fileCrossSection.width(25);   fileCrossSection << "sqrt(s) [GeV]"; 
+    fileCrossSection.width(25);   fileCrossSection << "sigma [mb]"; 
+    fileCrossSection << endl;
+
     for (int i = 0; i <numberOfPoints; ++i)
     {
         fileCrossSection.width(25);   fileCrossSection << sqrtCenterOfMassEnergy[i];

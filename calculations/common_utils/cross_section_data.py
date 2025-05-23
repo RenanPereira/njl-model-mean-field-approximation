@@ -20,8 +20,7 @@ class CrossSectionData:
     def _load_data(self):
         """Private method to load data from the file."""
         try:
-            #self.data = np.loadtxt(self.filepath, skiprows=1)
-            self.data = np.loadtxt(self.filepath)
+            self.data = np.loadtxt(self.filepath, skiprows=1)
 
             self.sqrt_center_of_mass_energy = self.data[:, 0]
             self.cross_section = self.data[:, 1]
