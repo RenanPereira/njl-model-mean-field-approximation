@@ -58,6 +58,9 @@ public:
     
     bool validateRequiredKeys(const std::string& , const std::vector<std::string>& ) const;
     bool validateRequiredKeys(const std::map<std::string, std::string>& , const std::vector<std::string>& ) const;
+
+    bool getBool(const std::string& , const std::string& , bool ) const;
+    bool getBool(const std::string& , const std::string& ) const;
 };
 
 
