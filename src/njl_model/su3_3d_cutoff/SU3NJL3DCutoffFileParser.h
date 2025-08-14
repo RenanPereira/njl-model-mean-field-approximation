@@ -11,6 +11,7 @@ namespace SU3NJL3DCutoffConfigKeys
     {
         const std::string Vacuum_evaluateVacuumMasses = "SU3NJL3DCutoffVacuum_evaluateVacuumMasses";
         const std::string FixedTempRhoBEqualChemPot_evaluateFirstOrderLine = "SU3NJL3DCutoffFixedTemperatureRhoBEqualChemicalPotential_evaluateFirstOrderLine";
+        const std::string FixedChemPotTemp_evaluateCrossSectionsEqualLightMasses = "SU3NJL3DCutoffFixedChemicalPotentialTemperature_evaluateCrossSectionsEqualLightMasses";
     }
 
     namespace ModelParameters 
@@ -58,6 +59,33 @@ namespace SU3NJL3DCutoffConfigKeys
         const std::string deltaT = "deltaTemperature_GeV";
         const std::string massDifferenceCEP = "massDifferenceCEP_GeV";
     }
+
+    namespace VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters 
+    {
+        const std::string section = "VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters";
+        const std::string temperature = "temperature_GeV";
+        const std::string numberOfPointsFromVacToFinTemp = "numberOfPointsFromVacuumToFineteTemperature";
+        const std::string precisionVacToFinTemp = "precisionVacuumToFiniteTemperature";
+        const std::string methodVacToFinTemp = "methodVacuumToFiniteTemperature";
+    }
+
+    namespace FiniteTemperatureToFiniteChemicalPotentialParameters
+    {
+        const std::string section = "FiniteTemperatureToFiniteChemicalPotentialParameters";
+        const std::string chemPot = "quarkChemicalPotential_GeV";
+        const std::string numberOfPointsFromFinTempToFinChemPot = "numberOfPointsFromFiniteTemperatureToFiniteChemicalPotential";
+        const std::string precisionFinTempToFinChemPot = "precisionFiniteTemperatureToFiniteChemicalPotential";
+        const std::string methodFinTempToFinChemPot = "methodFiniteTemperatureToFiniteChemicalPotential";
+    }
+    
+    namespace CrossSectionsParameters
+    {
+        const std::string section = "CrossSectionsParameters";
+        const std::string propagatorIntegralPrecision = "propagatorIntegralPrecision";
+        const std::string largeAngleScatteringContribution = "largeAngleScatteringContribution";
+        const std::string precisionCrossSections = "precisionCrossSections";
+        const std::string numberOfPointsCrossSections = "numberOfPointsCrossSections";
+    }
 }
 
 
@@ -94,5 +122,18 @@ public:
     void evaluateFirstOrderLine() const;
 };
 
+
+class SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser : public SU3NJL3DCutoffVacuumFileParser
+{
+public:
+    SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser(const IniFileParser& p) : SU3NJL3DCutoffVacuumFileParser(p) {}
+
+    bool validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const;
+    bool validateFiniteTemperatureToFiniteChemicalPotentialParameters() const;
+    bool validateCrossSectionsParameters() const;
+    bool validateFileQualityEvaluateCrossSectionsEqualLightMasses() const;
+
+    void evaluateCrossSectionsEqualLightMasses() const;
+};
 
 #endif

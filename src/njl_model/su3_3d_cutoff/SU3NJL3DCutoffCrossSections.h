@@ -1,6 +1,8 @@
 #ifndef SU3NJL3DCUTOFFCROSSSECTIONS_H
 #define SU3NJL3DCUTOFFCROSSSECTIONS_H
 
+#include "gsl_wrapper/root_solver_gsl.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 
@@ -145,12 +147,14 @@ void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters , double ,
                                          bool , double ,
                                          int );
 
-void evaluateCrossSectionsPaperFiniteChemicalPotential(SU3NJL3DCutoffParameters , double , 
-                                                       double , double , double , 
-                                                       double , double , double , 
-                                                       double , 
-                                                       bool , double ,
-                                                       int );
+void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
+    SU3NJL3DCutoffParameters , double , 
+    double , double , double , 
+    double , double , double , 
+    double , 
+    bool , double ,
+    int 
+);
 
 
 

@@ -30,27 +30,8 @@ int main(int argc, char* argv[])
     	std::cout << "\nCommands processed successfully, continuing execution..." << std::endl;
 	}
 
-    //parameter set A (Klevansky parameter set)
-    double cutoff = 0.6023;
-    double gs = 10.116734156126128;
-    double kappa = -155.93878816540243;
-    double m0u = 0.0055;
-    double m0d = 0.0055;
-    double m0s = 0.1407;
-
-    double precisionVacuum = 1E-8;
-    MultiRootFindingMethod methodVacuum = DNEWTON;
-    double mUGuess = 0.3;
-    double mDGuess = 0.3;
-    double mSGuess = 0.5;
-
-    //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
-
-    //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
-    parameters.setParameterSetName("setA");
     
+/*
     SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
         parameters,                                    
         precisionVacuum,                                    
@@ -83,7 +64,7 @@ int main(int argc, char* argv[])
     double effMassD = inMedium.getDownQuarkEffectiveMass();
     double effMassS = inMedium.getStrangeQuarkEffectiveMass();
 
-/*
+
     scatteringProcess process = UUUU;
     evaluateCrossSectionProcess12To34ToFile(parameters, T, 
                                             effChemPotU, effChemPotD, effChemPotS, 
@@ -126,16 +107,6 @@ int main(int argc, char* argv[])
          << "Md=" << effMassD << "GeV" << "\t" 
          << "Ms=" << effMassS << "GeV" << "\n";
 */
-
-    evaluateCrossSectionsPaperFiniteChemicalPotential(
-        parameters, T, 
-        0, 0, 0, 
-        effMassU, effMassD, effMassS, 
-        1E-8,
-        false, 1E-4,
-        200
-    );
-
 
 
 /*

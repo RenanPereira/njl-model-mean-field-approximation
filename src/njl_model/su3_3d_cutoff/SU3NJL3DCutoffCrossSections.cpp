@@ -6,6 +6,7 @@
 #include "physics_utils/distribution_functions.h"
 #include "physics_utils/physical_constants.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
 
 
 //In this file we have functions to calculate quark-quark and quark-antiquark cross sections
@@ -350,12 +351,14 @@ void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters parametersNJL,
 }
 
 
-void evaluateCrossSectionsPaperFiniteChemicalPotential(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                                                       double effChemPotU, double effChemPotD, double effChemPotS, 
-                                                       double effMassU, double effMassD, double effMassS, 
-                                                       double propIntPrecision, 
-                                                       bool largeAngleScatteringContribution, double crossSecIntPrecision,
-                                                       int numberOfPoints)
+void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
+    SU3NJL3DCutoffParameters parametersNJL, double T,                                                    
+    double effChemPotU, double effChemPotD, double effChemPotS, 
+    double effMassU, double effMassD, double effMassS, 
+    double propIntPrecision, 
+    bool largeAngleScatteringContribution, double crossSecIntPrecision,
+    int numberOfPoints
+)
 {   
     ////////////////////////////////////////////////////////////
     // Mu=Md, Cpu_u=Cp_d=Cp_s
@@ -382,4 +385,3 @@ void evaluateCrossSectionsPaperFiniteChemicalPotential(SU3NJL3DCutoffParameters 
     }
 
 }
-

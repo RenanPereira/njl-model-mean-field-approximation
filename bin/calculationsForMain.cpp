@@ -213,3 +213,116 @@
 
 */
 
+
+
+
+/*
+// Cross sections for paper
+
+    //parameter set A (Klevansky parameter set)
+    double cutoff = 0.6023;
+    double gs = 10.116734156126128;
+    double kappa = -155.93878816540243;
+    double m0u = 0.0055;
+    double m0d = 0.0055;
+    double m0s = 0.1407;
+
+    double precisionVacuum = 1E-8;
+    MultiRootFindingMethod methodVacuum = DNEWTON;
+    double mUGuess = 0.3;
+    double mDGuess = 0.3;
+    double mSGuess = 0.5;
+
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    parameters.setParameterSetName("setA");
+    
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
+        mUGuess, 
+        mDGuess, 
+        mSGuess
+    );
+
+    double T = 0.250;
+    double effChemPotU = 0.0;
+    double effChemPotD = 0.0;
+    double effChemPotS = 0.0;
+
+    //find solution in the at finite temperature and fixed chemical potentials
+    SU3NJL3DCutoffFixedChemPotTemp inMedium(parameters, T, effChemPotU, effChemPotD, effChemPotS);
+    inMedium.solve(1E-8, HYBRIDS, vacuum.getUpQuarkEffectiveMass(), 
+                                  vacuum.getDownQuarkEffectiveMass(), 
+                                  vacuum.getStrangeQuarkEffectiveMass());
+
+    cout << "inMediumSolution=" << inMedium.testSolution(1E-8) << "\n";
+    cout << "Mu=" << inMedium.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << inMedium.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << inMedium.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+
+    
+    cout << "\n\n";
+
+    double effMassU = inMedium.getUpQuarkEffectiveMass();
+    double effMassD = inMedium.getDownQuarkEffectiveMass();
+    double effMassS = inMedium.getStrangeQuarkEffectiveMass();
+
+/*
+    scatteringProcess process = UUUU;
+    evaluateCrossSectionProcess12To34ToFile(parameters, T, 
+                                            effChemPotU, effChemPotD, effChemPotS, 
+                                            effMassU, effMassD, effMassS, 
+                                            1E-8, process,  
+                                            false, 1E-4,
+                                            20);
+*/
+/*
+    evaluateCrossSectionsKlevanskyPaper(parameters, T, 
+                                        effChemPotU, effChemPotD, effChemPotS, 
+                                        effMassU, effMassD, effMassS, 
+                                        1E-8,
+                                        false, 1E-4,
+                                        200);
+*/
+/*
+    double effMassU, effMassD, effMassS;
+
+    double T = 0.250;
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, HYBRIDS);
+
+    effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
+    effMassD = finiteTempSol[int(finiteTempSol.size()-1)].getDownQuarkEffectiveMass();
+    effMassS = finiteTempSol[int(finiteTempSol.size()-1)].getStrangeQuarkEffectiveMass();
+
+    cout << "Mu=" << effMassU << "GeV" << "\t" 
+         << "Md=" << effMassD << "GeV" << "\t" 
+         << "Ms=" << effMassS << "GeV" << "\n";
+
+
+    double chemPot = 0.100;
+    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, HYBRIDS);
+
+    effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
+    effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();
+    effMassS = inMediumSol[int(inMediumSol.size()-1)].getStrangeQuarkEffectiveMass();
+
+    cout << "Mu=" << effMassU << "GeV" << "\t" 
+         << "Md=" << effMassD << "GeV" << "\t" 
+         << "Ms=" << effMassS << "GeV" << "\n";
+
+
+    evaluateCrossSectionsPaperFiniteChemicalPotential(
+        parameters, T, 
+        0, 0, 0, 
+        effMassU, effMassD, effMassS, 
+        1E-8,
+        false, 1E-4,
+        200
+    );
+
+*/

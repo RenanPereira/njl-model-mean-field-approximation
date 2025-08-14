@@ -54,6 +54,26 @@ public:
     SU3NJL3DCutoffMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
     void findNondiagonalMesonMottTemperature(mesonState , double , MultiRootFindingMethod , double , double , double , double );
 
+	static void evaluateCrossSectionsEqualLightMasses(
+		SU3NJL3DCutoffParameters& , 
+		double , 
+		MultiRootFindingMethod , 
+		double , 
+		double , 
+		double ,
+		int ,
+		double ,
+		MultiRootFindingMethod ,
+		double ,
+		int ,
+		double ,
+		MultiRootFindingMethod,
+		double ,
+		bool ,
+		double ,
+		int
+	);
+	
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };
 	void setDownQuarkEffectiveMass(double downQuarkEffectiveMassAux){ downQuarkEffectiveMass = downQuarkEffectiveMassAux; };
