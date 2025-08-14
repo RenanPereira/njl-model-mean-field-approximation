@@ -673,10 +673,19 @@ bool SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::validateCrossSection
         CSPKeys::numberOfPointsCrossSections + " > 0 must be satisfied."
     );
 
+    // Ensure numberOfThreads>0
+    bool isNumberOfThreadsValid = config.validatePositiveInteger(
+        CSPKeys::section,
+        CSPKeys::numberOfThreads, 
+        invalidFileMessage + " Invalid value found in section " + CSPKeys::section + ".", 
+        CSPKeys::numberOfThreads + " > 0 must be satisfied."
+    );
+
     // The function return true only if all tests passed
     return isPropagatorIntegralPrecisionValid && 
            isPrecisionCrossSectionsValid &&
-           isNumberOfPointsCrossSectionsValid;
+           isNumberOfPointsCrossSectionsValid &&
+           isNumberOfThreadsValid;
 }
 
 bool SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::validateFileQualityEvaluateCrossSectionsEqualLightMasses() const
@@ -806,11 +815,13 @@ void SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::evaluateCrossSection
     bool largeAngleScatteringContribution = config.getBool(CSPKeys::section, CSPKeys::largeAngleScatteringContribution);
     double precisionCrossSections = config.getDouble(CSPKeys::section, CSPKeys::precisionCrossSections);
     int numberOfPointsCrossSections = config.getInt(CSPKeys::section, CSPKeys::numberOfPointsCrossSections);
+    int numberOfThreads = config.getInt(CSPKeys::section, CSPKeys::numberOfThreads);
 
     cout << CSPKeys::propagatorIntegralPrecision << " = " << propagatorIntegralPrecision << endl;
     cout << CSPKeys::largeAngleScatteringContribution << " = " << largeAngleScatteringContribution << endl;
     cout << CSPKeys::precisionCrossSections << " = " << precisionCrossSections << endl;
     cout << CSPKeys::numberOfPointsCrossSections << " = " << numberOfPointsCrossSections << endl;
+    cout << CSPKeys::numberOfThreads << " = " << numberOfThreads << endl;
 
     // Calculate Cross Sections
     SU3NJL3DCutoffFixedChemPotTemp::evaluateCrossSectionsEqualLightMasses(
@@ -830,6 +841,7 @@ void SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::evaluateCrossSection
         propagatorIntegralPrecision,
         largeAngleScatteringContribution,
         precisionCrossSections,
-        numberOfPointsCrossSections
+        numberOfPointsCrossSections,
+        numberOfThreads
     );
 }

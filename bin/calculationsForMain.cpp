@@ -287,7 +287,7 @@
                                         effMassU, effMassD, effMassS, 
                                         1E-8,
                                         false, 1E-4,
-                                        200);
+                                        200, 14);
 */
 /*
     double effMassU, effMassD, effMassS;

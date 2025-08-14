@@ -255,7 +255,8 @@ void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters parameters
                                              double effMassU, double effMassD, double effMassS, 
                                              double propIntPrecision, scatteringProcess process, 
                                              bool largeAngleScatteringContribution, double crossSecIntPrecision,
-                                             int numberOfPoints)
+                                             int numberOfPoints,
+                                             int numberOfThreads)
 {   
     //create arrays to save the calculation of the cross sections as a function of the center of mass energy
     vector<double> sqrtCenterOfMassEnergy(numberOfPoints);
@@ -273,9 +274,8 @@ void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters parameters
     double sqrtDelta = (sqrtCenterOfMassMax - sqrtCenterOfMassMin)/(numberOfPoints-1);
 
 
-    int numberThreads = omp_get_max_threads() - 2; //leave one thread free
-    cout << "Number of threads being used: " << numberThreads << "\n";
-    #pragma omp parallel for schedule(dynamic) num_threads( numberThreads )
+    cout << "Number of threads being used: " << numberOfThreads << "\n";
+    #pragma omp parallel for schedule(dynamic) num_threads(numberOfThreads)
     for (int i = 0; i < numberOfPoints; ++i)
     {   
         sqrtCenterOfMassEnergy[i] = sqrtCenterOfMassMin + i*sqrtDelta;
@@ -325,7 +325,7 @@ void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters parametersNJL,
                                          double effMassU, double effMassD, double effMassS, 
                                          double propIntPrecision, 
                                          bool largeAngleScatteringContribution, double crossSecIntPrecision,
-                                         int numberOfPoints)
+                                         int numberOfPoints, int numberOfThreads)
 {   
     ////////////////////////////////////////////////////////////
     // Mu=Md, Cpu_u=Cp_d=Cp_s=0.0
@@ -345,7 +345,7 @@ void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters parametersNJL,
                                                 effMassU, effMassD, effMassS, 
                                                 propIntPrecision, processes[i], 
                                                 largeAngleScatteringContribution, crossSecIntPrecision,
-                                                numberOfPoints);   
+                                                numberOfPoints, numberOfThreads);   
     }
 
 }
@@ -357,7 +357,8 @@ void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
     double effMassU, double effMassD, double effMassS, 
     double propIntPrecision, 
     bool largeAngleScatteringContribution, double crossSecIntPrecision,
-    int numberOfPoints
+    int numberOfPoints,
+    int numberOfThreads
 )
 {   
     ////////////////////////////////////////////////////////////
@@ -376,12 +377,15 @@ void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
     for (int i = 0; i < int(processes.size()); ++i)
     {
         cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
-        evaluateCrossSectionProcess12To34ToFile(parametersNJL, T, 
-                                                effChemPotU, effChemPotD, effChemPotS, 
-                                                effMassU, effMassD, effMassS, 
-                                                propIntPrecision, processes[i], 
-                                                largeAngleScatteringContribution, crossSecIntPrecision,
-                                                numberOfPoints);   
+        evaluateCrossSectionProcess12To34ToFile(
+            parametersNJL, T,
+            effChemPotU, effChemPotD, effChemPotS, 
+            effMassU, effMassD, effMassS, 
+            propIntPrecision, processes[i], 
+            largeAngleScatteringContribution, crossSecIntPrecision, 
+            numberOfPoints,
+            numberOfThreads
+        );   
     }
 
 }

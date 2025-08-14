@@ -85,6 +85,7 @@ namespace SU3NJL3DCutoffConfigKeys
         const std::string largeAngleScatteringContribution = "largeAngleScatteringContribution";
         const std::string precisionCrossSections = "precisionCrossSections";
         const std::string numberOfPointsCrossSections = "numberOfPointsCrossSections";
+        const std::string numberOfThreads = "numberOfThreads";
     }
 }
 

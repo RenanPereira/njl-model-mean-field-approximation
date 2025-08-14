@@ -138,14 +138,14 @@ void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters , double ,
                                              double , double , double , 
                                              double , scatteringProcess , 
                                              bool , double ,
-                                             int );
+                                             int , int );
 
 void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters , double , 
                                          double , double , double , 
                                          double , double , double , 
                                          double , 
                                          bool , double ,
-                                         int );
+                                         int , int );
 
 void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
     SU3NJL3DCutoffParameters , double , 
@@ -153,7 +153,8 @@ void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
     double , double , double , 
     double , 
     bool , double ,
-    int 
+    int ,
+    int
 );
 
 

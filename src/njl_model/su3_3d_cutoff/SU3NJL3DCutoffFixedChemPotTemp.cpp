@@ -459,7 +459,7 @@ SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum
 
 
 //Evaluate Cross section for paper at finite chemical potential using Klevansky parameter set
-void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPot, int numberOfCrossSectionPoints)
+void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPot, int numberOfCrossSectionPoints, int numberOfThreads)
 {
     //define Klevansky parameters
     //parameter set A (Klevansky parameter set)
@@ -528,7 +528,8 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
         effMassU, effMassD, effMassS, 
         mesonPropagatorIntegralPrecision,
         false, crossSectionIntegralPrecision,
-        numberOfCrossSectionPoints
+        numberOfCrossSectionPoints,
+        numberOfThreads
     );
 }
 
@@ -630,7 +631,8 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateCrossSectionsEqualLightMasses(
     double propagatorIntegralPrecision,
     bool largeAngleScatteringContribution,
     double precisionCrossSections,
-    int numberOfPointsCrossSections
+    int numberOfPointsCrossSections,
+    int numberOfThreads
 )
 {
     SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
@@ -692,6 +694,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateCrossSectionsEqualLightMasses(
         propagatorIntegralPrecision,
         largeAngleScatteringContribution, 
         precisionCrossSections,
-        numberOfPointsCrossSections
+        numberOfPointsCrossSections,
+        numberOfThreads
     );
 }

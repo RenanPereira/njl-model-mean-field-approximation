@@ -71,6 +71,7 @@ public:
 		double ,
 		bool ,
 		double ,
+		int ,
 		int
 	);
 	
@@ -100,7 +101,7 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
 
 SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedChemPotTemp> , mesonState , double , MultiRootFindingMethod , double , double );
 
-void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double , double , int );
+void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double , double , int , int);
 
 void someVacuumAndThermalPropertiesKlevanskyParameterSet();
 
