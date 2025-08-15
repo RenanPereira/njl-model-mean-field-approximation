@@ -47,5 +47,6 @@ cd calculations/su3_3d_cutoff_phase_diagram && ./build_plots.sh && cd ../../
 
 ### Klevansky parameter set (su3_3d_cutoff_phase_diagram)
 ```
+cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./execute_calculations.sh && cd ../../
 cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./build_plots.sh && cd ../../
 ```

@@ -606,8 +606,8 @@ bool SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::validateFiniteTemper
 {
     namespace FTFCPPKeys = SU3NJL3DCutoffConfigKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
 
-    // Ensure chemPot>0
-    bool isChemPotValid = config.validatePositiveDouble(
+    // Ensure chemPot>=0
+    bool isChemPotValid = config.validateNonNegativeDouble(
         FTFCPPKeys::section,
         FTFCPPKeys::chemPot,
         invalidFileMessage + " Invalid value found in section " + FTFCPPKeys::section + ".", 
