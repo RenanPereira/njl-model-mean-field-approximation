@@ -10,10 +10,10 @@ class CrossSectionData:
         filepath (str): Path to the data file.
         """
         self.filepath = filepath
-        self.data = None
+        self.data = np.empty((0, 2))
         
-        self.sqrt_center_of_mass_energy = None
-        self.cross_section = None
+        self.sqrt_center_of_mass_energy = np.array([])
+        self.cross_section = np.array([])
 
         self._load_data()
 
@@ -22,8 +22,11 @@ class CrossSectionData:
         try:
             self.data = np.loadtxt(self.filepath, skiprows=1)
 
-            self.sqrt_center_of_mass_energy = self.data[:, 0]
-            self.cross_section = self.data[:, 1]
+            if self.data.ndim == 2:
+                self.sqrt_center_of_mass_energy = self.data[:, 0]
+                self.cross_section = self.data[:, 1]
+            else:
+                raise ValueError(f"Error loading data from {self.filepath}: data file must have two columns!")
 
         except Exception as e:
             raise ValueError(f"Error loading data from {self.filepath}: {e}")
