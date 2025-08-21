@@ -9,8 +9,4 @@ bin/*.dat
 
 src/*/*.o*
 
-calculations/common_utils/__pycache__/
-calculations/two_fermion_line_integral_3d_cutoff/__pycache__/
-calculations/two_fermion_line_integral_3d_cutoff/plots_scripts/__pycache__/
-calculations/su3_3d_cutoff_phase_diagram/__pycache__/
-calculations/su3_3d_cutoff_phase_diagram/plots_scripts/__pycache__/
+calculations/**/__pycache__/

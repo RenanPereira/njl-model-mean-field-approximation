@@ -6,6 +6,7 @@
 #include "njl_model/NJLDimensionlessCouplings.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
 
 using namespace std;
 
@@ -443,13 +444,13 @@ bool SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser::validateFileQualityEvalu
 
     // Validate individual sections
     bool areVacuumToFiniteBaryonDensityParametersValid = validateVacuumToFiniteBaryonDensityParameters();
-    bool areFirstOrderLineParameters = validateFirstOrderLineParameters();
+    bool areFirstOrderLineParametersValid = validateFirstOrderLineParameters();
 
     // The function return true only if all tests passed
     if (vacuumValidations && 
         allRequiredSectionsPresent &&
         areVacuumToFiniteBaryonDensityParametersValid &&
-        areFirstOrderLineParameters)
+        areFirstOrderLineParametersValid)
     { 
         return true; 
     }
@@ -539,21 +540,308 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser::evaluateFirstOrderLine()
 
     // Perform calculation
     SU3NJL3DCutoffFixedTempRhoBEqualChemPot::evaluateFirstOrderLine(
-        parameters,                                    
-        precisionVacuum,                                    
-        stringToMultiRootFindingMethod(methodVacuum),                                    
-        upQuarkMassGuess,
+        parameters, 
+        precisionVacuum, 
+        stringToMultiRootFindingMethod(methodVacuum), 
+        upQuarkMassGuess, 
         downQuarkMassGuess, 
-        strangeQuarkMassGuess,
+        strangeQuarkMassGuess, 
         minimumBaryonDensity, 
-        maximumBaryonDensity,
-        numberOfPoints,
+        maximumBaryonDensity, 
+        numberOfPoints, 
         precisionZeroTempSol, 
         stringToMultiRootFindingMethod(methodZeroTempSol), 
-        true,
+        true, 
         precisionTransitionPointSol, 
         stringToMultiRootFindingMethod(methodTransitionPointSol), 
         deltaT, 
         massDifferenceCEP
+    );
+}
+
+bool SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const
+{
+    namespace VFTZCPPKeys = SU3NJL3DCutoffConfigKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+
+    // Ensure temperature>0
+    bool isTemperatureValid = config.validatePositiveDouble(
+        VFTZCPPKeys::section,
+        VFTZCPPKeys::temperature,
+        invalidFileMessage + " Invalid value found in section " + VFTZCPPKeys::section + ".", 
+        VFTZCPPKeys::temperature + " > 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsFromVacToFinTemp>0
+    bool isNumberOfPointsFromVacToFinTempValid = config.validatePositiveInteger(
+        VFTZCPPKeys::section,
+        VFTZCPPKeys::numberOfPointsFromVacToFinTemp, 
+        invalidFileMessage + " Invalid value found in section " + VFTZCPPKeys::section + ".", 
+        VFTZCPPKeys::numberOfPointsFromVacToFinTemp + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionVacToFinTemp>0
+    bool isPrecisionVacToFinTempValid = config.validatePositiveDouble(
+        VFTZCPPKeys::section,
+        VFTZCPPKeys::precisionVacToFinTemp,
+        invalidFileMessage + " Invalid value found in section " + VFTZCPPKeys::section + ".", 
+        VFTZCPPKeys::precisionVacToFinTemp + " > 0 must be satisfied."
+    );
+
+    // Ensure methodVacToFinTemp is valid
+    string methodVacToFinTemp = config.getValue(
+        VFTZCPPKeys::section, 
+        VFTZCPPKeys::methodVacToFinTemp
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacToFinTemp);
+    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+
+    // The function return true only if all tests passed
+    return isTemperatureValid && 
+           isNumberOfPointsFromVacToFinTempValid &&
+           isPrecisionVacToFinTempValid &&
+           isRootFindingMethodValid;
+}
+
+bool SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::validateFiniteTemperatureToFiniteChemicalPotentialParameters() const
+{
+    namespace FTFCPPKeys = SU3NJL3DCutoffConfigKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
+
+    // Ensure chemPot>=0
+    bool isChemPotValid = config.validateNonNegativeDouble(
+        FTFCPPKeys::section,
+        FTFCPPKeys::chemPot,
+        invalidFileMessage + " Invalid value found in section " + FTFCPPKeys::section + ".", 
+        FTFCPPKeys::chemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsFromFinTempToFinChemPot>0
+    bool isNumberOfPointsFromFinTempToFinChemPotValid = config.validatePositiveInteger(
+        FTFCPPKeys::section,
+        FTFCPPKeys::numberOfPointsFromFinTempToFinChemPot, 
+        invalidFileMessage + " Invalid value found in section " + FTFCPPKeys::section + ".", 
+        FTFCPPKeys::numberOfPointsFromFinTempToFinChemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionFinTempToFinChemPot>0
+    bool isPrecisionFinTempToFinChemPotValid = config.validatePositiveDouble(
+        FTFCPPKeys::section,
+        FTFCPPKeys::precisionFinTempToFinChemPot,
+        invalidFileMessage + " Invalid value found in section " + FTFCPPKeys::section + ".", 
+        FTFCPPKeys::precisionFinTempToFinChemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure methodFinTempToFinChemPot is valid
+    string methodFinTempToFinChemPot = config.getValue(
+        FTFCPPKeys::section, 
+        FTFCPPKeys::methodFinTempToFinChemPot
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodFinTempToFinChemPot);
+    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+
+    // The function return true only if all tests passed
+    return isChemPotValid && 
+           isNumberOfPointsFromFinTempToFinChemPotValid &&
+           isPrecisionFinTempToFinChemPotValid &&
+           isRootFindingMethodValid;
+}
+
+bool SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::validateCrossSectionsParameters() const
+{
+    namespace CSPKeys = SU3NJL3DCutoffConfigKeys::CrossSectionsParameters;
+
+    // Ensure propagatorIntegralPrecision>0
+    bool isPropagatorIntegralPrecisionValid = config.validatePositiveDouble(
+        CSPKeys::section,
+        CSPKeys::propagatorIntegralPrecision,
+        invalidFileMessage + " Invalid value found in section " + CSPKeys::section + ".", 
+        CSPKeys::propagatorIntegralPrecision + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionCrossSections>0
+    bool isPrecisionCrossSectionsValid = config.validatePositiveDouble(
+        CSPKeys::section,
+        CSPKeys::precisionCrossSections,
+        invalidFileMessage + " Invalid value found in section " + CSPKeys::section + ".", 
+        CSPKeys::precisionCrossSections + " > 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsCrossSections>0
+    bool isNumberOfPointsCrossSectionsValid = config.validatePositiveInteger(
+        CSPKeys::section,
+        CSPKeys::numberOfPointsCrossSections, 
+        invalidFileMessage + " Invalid value found in section " + CSPKeys::section + ".", 
+        CSPKeys::numberOfPointsCrossSections + " > 0 must be satisfied."
+    );
+
+    // Ensure numberOfThreads>0
+    bool isNumberOfThreadsValid = config.validatePositiveInteger(
+        CSPKeys::section,
+        CSPKeys::numberOfThreads, 
+        invalidFileMessage + " Invalid value found in section " + CSPKeys::section + ".", 
+        CSPKeys::numberOfThreads + " > 0 must be satisfied."
+    );
+
+    // The function return true only if all tests passed
+    return isPropagatorIntegralPrecisionValid && 
+           isPrecisionCrossSectionsValid &&
+           isNumberOfPointsCrossSectionsValid &&
+           isNumberOfThreadsValid;
+}
+
+bool SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::validateFileQualityEvaluateCrossSectionsEqualLightMasses() const
+{
+    // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
+    bool vacuumValidations = validateFileQualityEvaluateVacuumMasses();
+
+    // Check for missing sections
+    bool allRequiredSectionsPresent = true;
+    vector<string> requiredSections = 
+    {
+        SU3NJL3DCutoffConfigKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
+        SU3NJL3DCutoffConfigKeys::FiniteTemperatureToFiniteChemicalPotentialParameters::section,
+        SU3NJL3DCutoffConfigKeys::CrossSectionsParameters::section
+    };  
+    for (int i = 0; i < int(requiredSections.size()); ++i) 
+    {
+        string section = requiredSections[i];
+        if (config.getSectionsData(section).empty()) 
+        {   
+            allRequiredSectionsPresent = false;
+            cout << "Missing required section: " << section << endl;
+        }
+    }
+
+    // Validate individual sections
+    bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
+    bool areFiniteTemperatureToFiniteChemicalPotentialParametersValid = validateFiniteTemperatureToFiniteChemicalPotentialParameters();
+    bool areCrossSectionsParametersValid = validateCrossSectionsParameters();
+
+    // The function return true only if all tests passed
+    if (vacuumValidations && 
+        allRequiredSectionsPresent && 
+        areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid && 
+        areFiniteTemperatureToFiniteChemicalPotentialParametersValid &&
+        areCrossSectionsParametersValid )
+    { 
+        return true; 
+    }
+    else{ return false; }
+}
+
+void SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser::evaluateCrossSectionsEqualLightMasses() const
+{   
+    // Model Parameters
+    namespace MPKeys = SU3NJL3DCutoffConfigKeys::ModelParameters;
+    cout << "\n" << MPKeys::section << ": " << endl;
+
+    string parameterSetName = config.getValue(MPKeys::section, MPKeys::parameterSetName);
+    string regularizationScheme = config.getValue(MPKeys::section, MPKeys::regularizationScheme);
+    double cutoff = config.getDouble(MPKeys::section, MPKeys::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MPKeys::section, MPKeys::strangeQuarkCurrentMass);
+
+    cout << MPKeys::parameterSetName << " = " << parameterSetName << endl;
+    cout << MPKeys::regularizationScheme << " = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MPKeys::cutoff << " = " << cutoff << endl;
+    cout << MPKeys::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MPKeys::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MPKeys::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
+
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffConfigKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings(config);
+
+    // VacuumMassesParameters
+    namespace VMPKeys = SU3NJL3DCutoffConfigKeys::VacuumMassesParameters;
+    cout << "\n" << VMPKeys::section << ": " << endl;
+
+    double precisionVacuum = config.getDouble(VMPKeys::section, VMPKeys::precisionVacuum);
+    string methodVacuum = config.getValue(VMPKeys::section, VMPKeys::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMPKeys::section, VMPKeys::strangeQuarkMassGuess);
+
+    cout << VMPKeys::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMPKeys::methodVacuum << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMPKeys::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMPKeys::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMPKeys::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
+
+    // Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoff, 
+        couplings, 
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
+    );
+    parameters.setParameterSetName(parameterSetName);
+
+    // VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters
+    namespace VFTZCPPKeys = SU3NJL3DCutoffConfigKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    cout << "\n" << VFTZCPPKeys::section << ": " << endl;
+
+    double temperature = config.getDouble(VFTZCPPKeys::section, VFTZCPPKeys::temperature);
+    int numberOfPointsFromVacToFinTemp = config.getInt(VFTZCPPKeys::section, VFTZCPPKeys::numberOfPointsFromVacToFinTemp);
+    double precisionVacToFinTemp = config.getDouble(VFTZCPPKeys::section, VFTZCPPKeys::precisionVacToFinTemp);
+    string methodVacToFinTemp = config.getValue(VFTZCPPKeys::section, VFTZCPPKeys::methodVacToFinTemp);
+
+    cout << VFTZCPPKeys::temperature << " = " << temperature << endl;
+    cout << VFTZCPPKeys::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
+    cout << VFTZCPPKeys::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
+    cout << VFTZCPPKeys::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
+
+    // FiniteTemperatureToFiniteChemicalPotentialParameters
+    namespace FTFCPPKeys = SU3NJL3DCutoffConfigKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
+    cout << "\n" << FTFCPPKeys::section << ": " << endl;
+    
+    double chemPot = config.getDouble(FTFCPPKeys::section, FTFCPPKeys::chemPot);
+    int numberOfPointsFromFinTempToFinChemPot = config.getInt(FTFCPPKeys::section, FTFCPPKeys::numberOfPointsFromFinTempToFinChemPot);
+    double precisionFinTempToFinChemPot = config.getDouble(FTFCPPKeys::section, FTFCPPKeys::precisionFinTempToFinChemPot);
+    string methodFinTempToFinChemPot = config.getValue(FTFCPPKeys::section, FTFCPPKeys::methodFinTempToFinChemPot);
+
+    cout << FTFCPPKeys::chemPot << " = " << chemPot << endl;
+    cout << FTFCPPKeys::numberOfPointsFromFinTempToFinChemPot << " = " << numberOfPointsFromFinTempToFinChemPot << endl;
+    cout << FTFCPPKeys::precisionFinTempToFinChemPot << " = " << precisionFinTempToFinChemPot << endl;
+    cout << FTFCPPKeys::methodFinTempToFinChemPot << " = " << methodFinTempToFinChemPot << endl;
+
+    // CrossSectionsParameters
+    namespace CSPKeys = SU3NJL3DCutoffConfigKeys::CrossSectionsParameters;
+    cout << "\n" << CSPKeys::section << ": " << endl;
+
+    double propagatorIntegralPrecision = config.getDouble(CSPKeys::section, CSPKeys::propagatorIntegralPrecision);
+    bool largeAngleScatteringContribution = config.getBool(CSPKeys::section, CSPKeys::largeAngleScatteringContribution);
+    double precisionCrossSections = config.getDouble(CSPKeys::section, CSPKeys::precisionCrossSections);
+    int numberOfPointsCrossSections = config.getInt(CSPKeys::section, CSPKeys::numberOfPointsCrossSections);
+    int numberOfThreads = config.getInt(CSPKeys::section, CSPKeys::numberOfThreads);
+
+    cout << CSPKeys::propagatorIntegralPrecision << " = " << propagatorIntegralPrecision << endl;
+    cout << CSPKeys::largeAngleScatteringContribution << " = " << largeAngleScatteringContribution << endl;
+    cout << CSPKeys::precisionCrossSections << " = " << precisionCrossSections << endl;
+    cout << CSPKeys::numberOfPointsCrossSections << " = " << numberOfPointsCrossSections << endl;
+    cout << CSPKeys::numberOfThreads << " = " << numberOfThreads << endl;
+
+    // Calculate Cross Sections
+    SU3NJL3DCutoffFixedChemPotTemp::evaluateCrossSectionsEqualLightMasses(
+    	parameters, 
+		precisionVacuum, 
+		stringToMultiRootFindingMethod(methodVacuum), 
+		upQuarkMassGuess, 
+		strangeQuarkMassGuess,
+        temperature,
+        numberOfPointsFromVacToFinTemp,
+        precisionVacToFinTemp,
+        stringToMultiRootFindingMethod(methodVacToFinTemp),
+        chemPot,
+        numberOfPointsFromFinTempToFinChemPot,
+        precisionFinTempToFinChemPot,
+        stringToMultiRootFindingMethod(methodFinTempToFinChemPot),
+        propagatorIntegralPrecision,
+        largeAngleScatteringContribution,
+        precisionCrossSections,
+        numberOfPointsCrossSections,
+        numberOfThreads
     );
 }

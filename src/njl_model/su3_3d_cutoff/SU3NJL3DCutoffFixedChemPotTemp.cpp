@@ -459,7 +459,7 @@ SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum
 
 
 //Evaluate Cross section for paper at finite chemical potential using Klevansky parameter set
-void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPot, int numberOfCrossSectionPoints)
+void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPot, int numberOfCrossSectionPoints, int numberOfThreads)
 {
     //define Klevansky parameters
     //parameter set A (Klevansky parameter set)
@@ -522,12 +522,15 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
 
 
     //evaluate cross sections
-    evaluateCrossSectionsPaperFiniteChemicalPotential(parameters, T, 
-                                                      chemPot, chemPot, chemPot, 
-                                                      effMassU, effMassD, effMassS, 
-                                                      mesonPropagatorIntegralPrecision,
-                                                      false, crossSectionIntegralPrecision,
-                                                      numberOfCrossSectionPoints);
+    evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
+        parameters, T, 
+        chemPot, chemPot, chemPot, 
+        effMassU, effMassD, effMassS, 
+        mesonPropagatorIntegralPrecision,
+        false, crossSectionIntegralPrecision,
+        numberOfCrossSectionPoints,
+        numberOfThreads
+    );
 }
 
 
@@ -611,3 +614,87 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
 }
 
 
+void SU3NJL3DCutoffFixedChemPotTemp::evaluateCrossSectionsEqualLightMasses(
+    SU3NJL3DCutoffParameters& parameters,                                    
+    double precisionVacuum,                                    
+    MultiRootFindingMethod methodVacuum,                                    
+    double lightQuarkMassGuess, 
+    double strangeQuarkMassGuess,
+    double temperature,
+    int numberOfPointsFromVacToFinTemp,
+    double precisionVacToFinTemp,
+    MultiRootFindingMethod methodVacToFinTemp,
+    double quarkChemicalPotential,
+    int numberOfPointsFromFinTempToFinChemPot,
+    double precisionFinTempToFinChemPot,
+    MultiRootFindingMethod methodFinTempToFinChemPot,
+    double propagatorIntegralPrecision,
+    bool largeAngleScatteringContribution,
+    double precisionCrossSections,
+    int numberOfPointsCrossSections,
+    int numberOfThreads
+)
+{
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
+        lightQuarkMassGuess, 
+        lightQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+        vacuum, 
+        temperature, 
+        numberOfPointsFromVacToFinTemp, 
+        precisionVacToFinTemp, 
+        methodVacToFinTemp
+    );
+    
+    double effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
+    double effMassD = finiteTempSol[int(finiteTempSol.size()-1)].getDownQuarkEffectiveMass();
+    double effMassS = finiteTempSol[int(finiteTempSol.size()-1)].getStrangeQuarkEffectiveMass();
+
+    cout << "\n";
+    cout << "Temperature[GeV] = " << temperature << "\n";
+    cout << "quarkChemicalPotential[GeV] = 0.0 \n";
+    cout << "Effective masses: \n";
+    cout << "Mu[GeV] = " << effMassU << "\n" 
+         << "Md[GeV] = " << effMassD << "\n" 
+         << "Ms[GeV] = " << effMassS << "\n";
+
+    if ( quarkChemicalPotential>0.0 )
+    {
+        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(
+            finiteTempSol[int(finiteTempSol.size()-1)], 
+            quarkChemicalPotential, 
+            numberOfPointsFromFinTempToFinChemPot, 
+            precisionFinTempToFinChemPot, 
+            methodFinTempToFinChemPot
+        );
+
+        effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
+        effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();
+        effMassS = inMediumSol[int(inMediumSol.size()-1)].getStrangeQuarkEffectiveMass();
+
+        cout << "\n";
+        cout << "Temperature[GeV] = " << temperature << "\n";
+        cout << "quarkChemicalPotential[GeV] = " << quarkChemicalPotential << "\n";
+        cout << "Effective masses: \n";
+        cout << "Mu[GeV] = " << effMassU << "\n" 
+             << "Md[GeV] = " << effMassD << "\n" 
+             << "Ms[GeV] = " << effMassS << "\n";
+    }
+
+    evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
+        parameters, temperature, 
+        quarkChemicalPotential, quarkChemicalPotential, quarkChemicalPotential, 
+        effMassU, effMassD, effMassS, 
+        propagatorIntegralPrecision,
+        largeAngleScatteringContribution, 
+        precisionCrossSections,
+        numberOfPointsCrossSections,
+        numberOfThreads
+    );
+}

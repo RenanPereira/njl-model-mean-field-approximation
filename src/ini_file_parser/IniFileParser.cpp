@@ -383,3 +383,29 @@ bool IniFileParser::validateRequiredKeys(const std::map<std::string, std::string
 
     return allPresent;
 }
+
+bool IniFileParser::getBool(const std::string& section, const std::string& key, bool defaultValue) const 
+{
+    std::string value = trim(getValue(section, key));
+
+    if (value == "true" || value == "1" || value == "yes" || value == "on") 
+    {
+        return true;
+    } 
+    else if (value == "false" || value == "0" || value == "no" || value == "off") 
+    {
+        return false;
+    } 
+    else if (!value.empty()) 
+    {
+        std::cout << "Warning: Unrecognized boolean value '" << value << "' for key '" << key 
+                  << "' in section '" << section << "'. Using default value.\n";
+    }
+
+    return defaultValue;
+}
+
+bool IniFileParser::getBool(const std::string& section, const std::string& key) const 
+{
+    return getBool(section, key, false);
+}

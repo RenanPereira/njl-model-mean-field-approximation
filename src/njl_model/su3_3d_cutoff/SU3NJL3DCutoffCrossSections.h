@@ -1,6 +1,8 @@
 #ifndef SU3NJL3DCUTOFFCROSSSECTIONS_H
 #define SU3NJL3DCUTOFFCROSSSECTIONS_H
 
+#include "gsl_wrapper/root_solver_gsl.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 
@@ -25,11 +27,13 @@ private:
     bool largeAngleScatteringContribution = false;
 
 public:
-    CrossSectionIntegrand(string integralIDAux, SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
-                          double upQuarkEffectiveChemicalPotentialAux, double downQuarkEffectiveChemicalPotentialAux, double strangeQuarkEffectiveChemicalPotentialAux, 
-                          double upQuarkEffectiveMassAux, double downQuarkEffectiveMassAux, double strangeQuarkEffectiveMassAux, 
-                          double centerOfMassEnergyAux, double propagatorIntegralPrecisionAux, scatteringProcess processAux, 
-                          bool largeAngleScatteringContributionAux)
+    CrossSectionIntegrand(
+        string integralIDAux, SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
+        double upQuarkEffectiveChemicalPotentialAux, double downQuarkEffectiveChemicalPotentialAux, double strangeQuarkEffectiveChemicalPotentialAux, 
+        double upQuarkEffectiveMassAux, double downQuarkEffectiveMassAux, double strangeQuarkEffectiveMassAux, 
+        double centerOfMassEnergyAux, double propagatorIntegralPrecisionAux, scatteringProcess processAux, 
+        bool largeAngleScatteringContributionAux
+    )
     {   
         integralID = integralIDAux;
         parametersNJL = parametersNJLAux;
@@ -125,33 +129,41 @@ double sMaximumKlevansky(double , double , double , double );
 
 double crossSectionProcess12To34Integrand(double x, void *parameters);
 
-double crossSectionProcess12To34(SU3NJL3DCutoffParameters , double , 
-                                 double , double , double , 
-                                 double , double , double , 
-                                 double , double , scatteringProcess ,
-                                 bool , double );
+double crossSectionProcess12To34(
+    SU3NJL3DCutoffParameters , double , 
+    double , double , double , 
+    double , double , double , 
+    double , double , scatteringProcess ,
+    bool , double 
+);
 
-void evaluateCrossSectionProcess12To34ToFile(SU3NJL3DCutoffParameters , double , 
-                                             double , double , double , 
-                                             double , double , double , 
-                                             double , scatteringProcess , 
-                                             bool , double ,
-                                             int );
+void evaluateCrossSectionProcess12To34ToFile(
+    SU3NJL3DCutoffParameters , double , 
+    double , double , double , 
+    double , double , double , 
+    double , scatteringProcess , 
+    bool , double , 
+    int , int 
+);
 
-void evaluateCrossSectionsKlevanskyPaper(SU3NJL3DCutoffParameters , double , 
-                                         double , double , double , 
-                                         double , double , double , 
-                                         double , 
-                                         bool , double ,
-                                         int );
+void evaluateCrossSectionsKlevanskyPaper(
+    SU3NJL3DCutoffParameters , double , 
+    double , double , double , 
+    double , double , double , 
+    double , 
+    bool , double , 
+    int , int 
+);
 
-void evaluateCrossSectionsPaperFiniteChemicalPotential(SU3NJL3DCutoffParameters , double , 
-                                                       double , double , double , 
-                                                       double , double , double , 
-                                                       double , 
-                                                       bool , double ,
-                                                       int );
-
+void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
+    SU3NJL3DCutoffParameters , double , 
+    double , double , double , 
+    double , double , double , 
+    double , 
+    bool , double ,
+    int ,
+    int
+);
 
 
 #endif

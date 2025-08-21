@@ -90,6 +90,19 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
 		}
 	}
+	else if (fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::FixedChemPotTemp_evaluateCrossSectionsEqualLightMasses)
+	{
+		//Check if file is written correctly
+		const SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser config(configFile);
+		if(config.validateFileQualityEvaluateCrossSectionsEqualLightMasses())
+		{	
+			config.evaluateCrossSectionsEqualLightMasses();
+		}
+		else
+		{
+			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+		}
+	}
 	else
 	{
 		cout << "The file " << configFile.getFilename() << " does not match any known configuration! Check the FileDetails.\n";
