@@ -124,7 +124,7 @@ In this section we present the results of the cross sections for different proce
 #### uubar $\rightarrow$ uubar (T[GeV]=0.250, finite chemical potential)
 ![Cross section plot](plots/cross_section_uubaruubar_T0250_CP.png)
 
-#### uudbar $\rightarrow$ udbar (T[GeV]=0.250, finite chemical potential)
+#### udbar $\rightarrow$ udbar (T[GeV]=0.250, finite chemical potential)
 ![Cross section plot](plots/cross_section_udbarudbar_T0250_CP.png)
 
 #### uubar $\rightarrow$ ddbar (T[GeV]=0.250, finite chemical potential)
