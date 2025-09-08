@@ -1,6 +1,7 @@
 #ifndef INTEGRATION1DIMNEWTONCOTES_H
 #define INTEGRATION1DIMNEWTONCOTES_H
 
+#include <iostream>
 
 using namespace std;
 
