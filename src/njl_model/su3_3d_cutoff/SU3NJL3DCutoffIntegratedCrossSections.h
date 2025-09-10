@@ -299,11 +299,28 @@ double integratedCrossSectionProcess12To34Zhuang(SU3NJL3DCutoffParameters , doub
                                                  double );
 
 
-enum IntegratedCrossSectionApproximationMethod { completeOG, completeCOV, Klevansky, Zhuang };
+enum IntegratedCrossSectionApproximationMethod 
+{ 
+    COMPLETE_OG, 
+    COMPLETE_COV, 
+    KLEVANSKY, 
+    ZHUANG 
+};
+
+inline const std::map<IntegratedCrossSectionApproximationMethod, std::string> IntegratedCrossSectionApproximationMethodMap = 
+{
+    {IntegratedCrossSectionApproximationMethod::COMPLETE_OG, "COMPLETE_OG"},
+    {IntegratedCrossSectionApproximationMethod::COMPLETE_COV, "COMPLETE_COV"},
+    {IntegratedCrossSectionApproximationMethod::KLEVANSKY, "KLEVANSKY"},
+    {IntegratedCrossSectionApproximationMethod::ZHUANG, "ZHUANG"}
+};
 
 
 string toString(IntegratedCrossSectionApproximationMethod );
 
+IntegratedCrossSectionApproximationMethod stringToIntegratedCrossSectionApproximationMethod(const std::string& );
+
+bool isValidIntegratedCrossSectionApproximationMethod(const string& );
 
 class SU3NJL3DCutoffIntegratedCrossSection
 {
@@ -361,7 +378,7 @@ public:
         integratedCrossSectionIntegralPrecision_dXdY = integratedCrossSectionIntegralPrecision_dXdYAux;
         integratedCrossSectionIntegralPrecision_dX = integratedCrossSectionIntegralPrecision_dXAux;
         approximationMethod = approximationMethodAux;
-        if ( approximationMethod!=completeOG )
+        if ( approximationMethod!=COMPLETE_OG )
         {
             cout << "Calling a constructor for SU3NJL3DCutoffIntegratedCrossSection that is not appropriate for the chosen approximation method! Aborting!\n";
             abort();
@@ -391,7 +408,7 @@ public:
         integratedCrossSectionIntegralPrecision_dXdY = integratedCrossSectionIntegralPrecision_dXdYAux;
         integratedCrossSectionIntegralPrecision_dX = integratedCrossSectionIntegralPrecision_dXAux;
         approximationMethod = approximationMethodAux;
-        if ( approximationMethod==completeOG )
+        if ( approximationMethod==COMPLETE_OG )
         {
             cout << "Calling a constructor for SU3NJL3DCutoffIntegratedCrossSection that is not appropriate for the chosen approximation method! Aborting!\n";
             abort();
@@ -419,7 +436,7 @@ public:
         crossSectionIntegralPrecision = crossSectionIntegralPrecisionAux;
         integratedCrossSectionIntegralPrecision_dX = integratedCrossSectionIntegralPrecision_dXAux;
         approximationMethod = approximationMethodAux;
-        if ( approximationMethod!=Zhuang  )
+        if ( approximationMethod!=ZHUANG )
         {
             cout << "Calling constructor for SU3NJL3DCutoffIntegratedCrossSection that is not appropriate for the chosen approximation method! Aborting!\n";
             abort();
@@ -444,7 +461,7 @@ public:
         largeAngleScatteringContribution = largeAngleScatteringContributionAux;
         approximationMethod = approximationMethodAux;
 
-        if ( approximationMethod==completeOG )
+        if ( approximationMethod==COMPLETE_OG )
         {
             cout << "Calling a constructor for SU3NJL3DCutoffIntegratedCrossSection that is not appropriate for the chosen approximation method! Aborting!\n";
             abort();
@@ -470,7 +487,7 @@ public:
 
     void setIntegratedCrossSection()
     {   
-        if ( approximationMethod==completeCOV )
+        if ( approximationMethod==COMPLETE_COV )
         {   
             integratedCrossSection = 
             integratedCrossSectionProcess12To34(parametersNJL, temperature, 
@@ -482,7 +499,7 @@ public:
                                                 largeAngleScatteringContribution, crossSectionIntegralPrecision,
                                                 integratedCrossSectionIntegralPrecision_dXdY, integratedCrossSectionIntegralPrecision_dX);
         }
-        else if( approximationMethod==Klevansky )
+        else if( approximationMethod==KLEVANSKY )
         {
             integratedCrossSection = 
             integratedCrossSectionProcess12To34Klevansky(parametersNJL, temperature, 
@@ -494,7 +511,7 @@ public:
                                                          largeAngleScatteringContribution, crossSectionIntegralPrecision,
                                                          integratedCrossSectionIntegralPrecision_dXdY, integratedCrossSectionIntegralPrecision_dX);
         }
-        else if( approximationMethod==Zhuang )
+        else if( approximationMethod==ZHUANG )
         {
             integratedCrossSection = 
             integratedCrossSectionProcess12To34Zhuang(parametersNJL, temperature, 
@@ -506,7 +523,7 @@ public:
                                                       largeAngleScatteringContribution, crossSectionIntegralPrecision,
                                                       integratedCrossSectionIntegralPrecision_dX);
         }
-        else if( approximationMethod==completeOG )
+        else if( approximationMethod==COMPLETE_OG )
         {
             integratedCrossSection = 
             integratedCrossSectionOGProcess12To34(parametersNJL, temperature, 
@@ -575,10 +592,18 @@ void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTraj
                                                                                        double , double , double , 
                                                                                        IntegratedCrossSectionApproximationMethod );
 
-void evaluateIntegratedCrossSectionsWithZeroChemicalPotential(SU3NJL3DCutoffVacuum ,
-                                                              double , double , double , int , int , bool , 
-                                                              IntegratedCrossSectionApproximationMethod ,
-                                                              double , double , double , double );
+void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
+    SU3NJL3DCutoffParameters& , 
+	double , 
+	MultiRootFindingMethod , 
+	double , double , double , 
+    MultiRootFindingMethod , 
+    double , double , 
+    int , int , 
+    bool , 
+    IntegratedCrossSectionApproximationMethod ,
+    double , double , double , double 
+);
 
 void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum ,
                                                          double , double , int , int , int , double , double , bool , 

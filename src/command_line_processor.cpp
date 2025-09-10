@@ -51,9 +51,9 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	cout << "\nFileDetails:" << endl;
 	cout << "type = " << fileTypeStr << endl;
 
+	// Check if file is written correctly and then make calculation
 	if(fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::Vacuum_evaluateVacuumMasses)
 	{	
-		//Check if file is written correctly
 		const SU3NJL3DCutoffVacuumFileParser config(configFile);
 		if(config.validateFileQualityEvaluateVacuumMasses())
 		{	
@@ -66,7 +66,6 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	}
 	else if(fileTypeStr==KlevanskyB0Integral3DCutoffConfigKeys::CalculationType::evaluateIntegral)
 	{	
-		//Check if file is written correctly
 		const KlevanskyB0Integral3DCutoffFileParser config(configFile);
 		if(config.validateFileQualityEvaluateIntegral())
 		{	
@@ -79,7 +78,6 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::FixedTempRhoBEqualChemPot_evaluateFirstOrderLine)
 	{
-		//Check if file is written correctly
 		const SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser config(configFile);
 		if(config.validateFileQualityEvaluateFirstOrderLine())
 		{	
@@ -92,11 +90,23 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::FixedChemPotTemp_evaluateCrossSectionsEqualLightMasses)
 	{
-		//Check if file is written correctly
 		const SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser config(configFile);
 		if(config.validateFileQualityEvaluateCrossSectionsEqualLightMasses())
 		{	
 			config.evaluateCrossSectionsEqualLightMasses();
+		}
+		else
+		{
+			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+		}
+	}
+	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::zeroChemicalPotential )
+	{	
+		namespace FCPT = SU3NJL3DCutoffFileParser::FixedChemPotTemp;
+		const FCPT::IsospinSymmetricIntegratedCrossSections config(configFile);
+		if(config.validateFile(FCPT::IsospinSymmetricIntegratedCrossSections::zeroChemicalPotential))
+		{	
+			config.evaluate(FCPT::IsospinSymmetricIntegratedCrossSections::zeroChemicalPotential);
 		}
 		else
 		{

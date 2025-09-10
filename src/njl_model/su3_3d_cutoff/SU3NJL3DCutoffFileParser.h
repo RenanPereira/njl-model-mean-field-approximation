@@ -9,86 +9,107 @@ namespace SU3NJL3DCutoffConfigKeys
 {
     namespace CalculationType
     {
-        const std::string Vacuum_evaluateVacuumMasses = "SU3NJL3DCutoffVacuum_evaluateVacuumMasses";
-        const std::string FixedTempRhoBEqualChemPot_evaluateFirstOrderLine = "SU3NJL3DCutoffFixedTemperatureRhoBEqualChemicalPotential_evaluateFirstOrderLine";
-        const std::string FixedChemPotTemp_evaluateCrossSectionsEqualLightMasses = "SU3NJL3DCutoffFixedChemicalPotentialTemperature_evaluateCrossSectionsEqualLightMasses";
+        inline const std::string Vacuum_evaluateVacuumMasses = "SU3NJL3DCutoffVacuum_evaluateVacuumMasses";
+        inline const std::string FixedTempRhoBEqualChemPot_evaluateFirstOrderLine = "SU3NJL3DCutoffFixedTemperatureRhoBEqualChemicalPotential_evaluateFirstOrderLine";
+        inline const std::string FixedChemPotTemp_evaluateCrossSectionsEqualLightMasses = "SU3NJL3DCutoffFixedChemicalPotentialTemperature_evaluateCrossSectionsEqualLightMasses";
     }
 
     namespace ModelParameters 
     {
-        const std::string section = "SU3NJL3DCutoffModelParameters";
-        const std::string parameterSetName = "parameterSetName";
-        const std::string regularizationScheme = "regularizationScheme";
-        const std::string cutoff = "cutoff_GeV";
-        const std::string upQuarkCurrentMass = "upQuarkCurrentMass_GeV";
-        const std::string downQuarkCurrentMass = "downQuarkCurrentMass_GeV";
-        const std::string strangeQuarkCurrentMass = "strangeQuarkCurrentMass_GeV";
+        inline const std::string section = "SU3NJL3DCutoffModelParameters";
+        inline const std::string parameterSetName = "parameterSetName";
+        inline const std::string regularizationScheme = "regularizationScheme";
+        inline const std::string cutoff = "cutoff_GeV";
+        inline const std::string upQuarkCurrentMass = "upQuarkCurrentMass_GeV";
+        inline const std::string downQuarkCurrentMass = "downQuarkCurrentMass_GeV";
+        inline const std::string strangeQuarkCurrentMass = "strangeQuarkCurrentMass_GeV";
     }
 
     namespace DimensionfulCouplings 
     {
-        const std::string section = "NJLDimensionfulCouplings";
-        const std::string lagrangianInteractions = "lagrangianInteractions";
+        inline const std::string section = "NJLDimensionfulCouplings";
+        inline const std::string lagrangianInteractions = "lagrangianInteractions";
     }
 
     namespace VacuumMassesParameters 
     {
-        const std::string section = "VacuumMassesParameters";
-        const std::string precisionVacuum = "precisionVacuum";
-        const std::string methodVacuum = "methodVacuum";
-        const std::string upQuarkMassGuess = "upQuarkMassGuess_GeV";
-        const std::string downQuarkMassGuess = "downQuarkMassGuess_GeV";
-        const std::string strangeQuarkMassGuess = "strangeQuarkMassGuess_GeV";
+        inline const std::string section = "VacuumMassesParameters";
+        inline const std::string precisionVacuum = "precisionVacuum";
+        inline const std::string methodVacuum = "methodVacuum";
+        inline const std::string upQuarkMassGuess = "upQuarkMassGuess_GeV";
+        inline const std::string downQuarkMassGuess = "downQuarkMassGuess_GeV";
+        inline const std::string strangeQuarkMassGuess = "strangeQuarkMassGuess_GeV";
     }
 
     namespace VacuumToFiniteBaryonDensityParameters
     {
-        const std::string section = "VacuumToFiniteBaryonDensityParameters";
-        const std::string minimumBaryonDensity = "minimumBaryonDensity_fmMinus3";
-        const std::string maximumBaryonDensity = "maximumBaryonDensity_fmMinus3";
-        const std::string numberOfPoints = "numberOfPoints";
-        const std::string precisionZeroTempSol = "precisionZeroTemperatureSolution";
-        const std::string methodZeroTempSol= "methodZeroTemperatureSolution";
+        inline const std::string section = "VacuumToFiniteBaryonDensityParameters";
+        inline const std::string minimumBaryonDensity = "minimumBaryonDensity_fmMinus3";
+        inline const std::string maximumBaryonDensity = "maximumBaryonDensity_fmMinus3";
+        inline const std::string numberOfPoints = "numberOfPoints";
+        inline const std::string precisionZeroTempSol = "precisionZeroTemperatureSolution";
+        inline const std::string methodZeroTempSol= "methodZeroTemperatureSolution";
     }
 
     namespace FirstOrderLineParameters
     {
-        const std::string section = "FirstOrderLineParameters";
-        const std::string precisionTransitionPointSol = "precisionTransitionPointSolution";
-        const std::string methodTransitionPointSol = "methodTransitionPointSolution";
-        const std::string deltaT = "deltaTemperature_GeV";
-        const std::string massDifferenceCEP = "massDifferenceCEP_GeV";
+        inline const std::string section = "FirstOrderLineParameters";
+        inline const std::string precisionTransitionPointSol = "precisionTransitionPointSolution";
+        inline const std::string methodTransitionPointSol = "methodTransitionPointSolution";
+        inline const std::string deltaT = "deltaTemperature_GeV";
+        inline const std::string massDifferenceCEP = "massDifferenceCEP_GeV";
     }
 
     namespace VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters 
     {
-        const std::string section = "VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters";
-        const std::string temperature = "temperature_GeV";
-        const std::string numberOfPointsFromVacToFinTemp = "numberOfPointsFromVacuumToFineteTemperature";
-        const std::string precisionVacToFinTemp = "precisionVacuumToFiniteTemperature";
-        const std::string methodVacToFinTemp = "methodVacuumToFiniteTemperature";
+        inline const std::string section = "VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters";
+        inline const std::string temperature = "temperature_GeV";
+        inline const std::string numberOfPointsFromVacToFinTemp = "numberOfPointsFromVacuumToFineteTemperature";
+        inline const std::string precisionVacToFinTemp = "precisionVacuumToFiniteTemperature";
+        inline const std::string methodVacToFinTemp = "methodVacuumToFiniteTemperature";
     }
+
+    namespace LowToHighTemperatureAtZeroChemicalPotentialParameters 
+    {
+        inline const std::string section = "LowToHighTemperatureAtZeroChemicalPotentialParameters";
+        inline const std::string minimumTemp = "minimumTemperature_GeV";
+        inline const std::string maximumTemp = "maximumTemperature_GeV";
+        inline const std::string numberOfPointsFromLowToHighTemp = "numberOfPointsFromLowToHighTemperature";
+        inline const std::string precisionLowToHighTemp = "precisionLowToHighTemperature";
+        inline const std::string methodLowToHighTemp = "methodLowToHighTemperature";
+    }    
 
     namespace FiniteTemperatureToFiniteChemicalPotentialParameters
     {
-        const std::string section = "FiniteTemperatureToFiniteChemicalPotentialParameters";
-        const std::string chemPot = "quarkChemicalPotential_GeV";
-        const std::string numberOfPointsFromFinTempToFinChemPot = "numberOfPointsFromFiniteTemperatureToFiniteChemicalPotential";
-        const std::string precisionFinTempToFinChemPot = "precisionFiniteTemperatureToFiniteChemicalPotential";
-        const std::string methodFinTempToFinChemPot = "methodFiniteTemperatureToFiniteChemicalPotential";
+        inline const std::string section = "FiniteTemperatureToFiniteChemicalPotentialParameters";
+        inline const std::string chemPot = "quarkChemicalPotential_GeV";
+        inline const std::string numberOfPointsFromFinTempToFinChemPot = "numberOfPointsFromFiniteTemperatureToFiniteChemicalPotential";
+        inline const std::string precisionFinTempToFinChemPot = "precisionFiniteTemperatureToFiniteChemicalPotential";
+        inline const std::string methodFinTempToFinChemPot = "methodFiniteTemperatureToFiniteChemicalPotential";
     }
     
     namespace CrossSectionsParameters
     {
-        const std::string section = "CrossSectionsParameters";
-        const std::string propagatorIntegralPrecision = "propagatorIntegralPrecision";
-        const std::string largeAngleScatteringContribution = "largeAngleScatteringContribution";
-        const std::string precisionCrossSections = "precisionCrossSections";
-        const std::string numberOfPointsCrossSections = "numberOfPointsCrossSections";
-        const std::string numberOfThreads = "numberOfThreads";
+        inline const std::string section = "CrossSectionsParameters";
+        inline const std::string propagatorIntegralPrecision = "propagatorIntegralPrecision";
+        inline const std::string largeAngleScatteringContribution = "largeAngleScatteringContribution";
+        inline const std::string precisionCrossSections = "precisionCrossSections";
+        inline const std::string numberOfPointsCrossSections = "numberOfPointsCrossSections";
+        inline const std::string numberOfThreads = "numberOfThreads";
+    }
+
+    namespace IntegratedCrossSectionsParameters
+    {
+        inline const std::string section = "IntegratedCrossSectionsParameters";
+        inline const std::string numberOfPointsIntegratedCrossSections = "numberOfPointsIntegratedCrossSections";        
+        inline const std::string propagatorIntegralPrecision = "propagatorIntegralPrecision";
+        inline const std::string largeAngleScatteringContribution = "largeAngleScatteringContribution";
+        inline const std::string crossSectionIntegralPrecision = "crossSectionIntegralPrecision";
+        inline const std::string integratedCrossSectionIntegralPrecision_dXdY = "integratedCrossSectionIntegralPrecision_dXdY";
+        inline const std::string integratedCrossSectionIntegralPrecision_dX = "integratedCrossSectionIntegralPrecision_dX";
+        inline const std::string approximationMethod = "approximationMethod";
     }
 }
-
 
 class SU3NJL3DCutoffVacuumFileParser
 {
@@ -136,5 +157,90 @@ public:
 
     void evaluateCrossSectionsEqualLightMasses() const;
 };
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+namespace SU3NJL3DCutoffFileParser
+{   
+    inline const std::string model = "SU3NJL3DCutoff";
+
+    class Common
+    {
+        public:
+            const IniFileParser& config;    
+            std::string invalidFileMessage;
+
+        public:
+            Common(const IniFileParser& p)
+                : config(p),
+                invalidFileMessage("Error: Invalid configuration found in the " + p.getFilename() + " file.") {}
+
+        NJLDimensionfulCouplings extractDimensionfulCouplings() const;
+        bool validateModelParameters() const;
+        bool validateDimensionfulCouplings() const;
+        bool validateVacuumMassesParameters() const;
+        bool validateVacuumToFiniteBaryonDensityParameters() const;
+        bool validateFirstOrderLineParameters() const;
+        bool validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const;
+        bool validateFiniteTemperatureToFiniteChemicalPotentialParameters() const;
+        bool validateCrossSectionsParameters() const;
+        bool validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const;
+        bool validateIntegratedCrossSectionsParameters() const;
+    };
+
+    namespace Vacuum
+    {   
+        class VacuumMasses : public Common
+        {
+            public:
+                VacuumMasses(const IniFileParser& p) : Common(p) {}
+
+                bool validateFile() const;
+                void evaluate() const;
+        };
+    }
+
+    namespace FixedTempRhoBEqualChemPot
+    {
+        class FirstOrderLine : public Common
+        {
+            public:
+                FirstOrderLine(const IniFileParser& p) : Common(p) {}
+
+                bool validateFile() const;
+                void evaluate() const;
+        };
+    }
+
+    namespace FixedChemPotTemp
+    {   
+        inline const std::string type = model + "FixedChemicalPotentialTemperature";
+
+        class IsospinSymmetricCrossSections : public Common
+        {
+            public:
+                IsospinSymmetricCrossSections(const IniFileParser& p) : Common(p) {}
+                
+                bool validateFile() const;
+                void evaluate() const;
+        };
+
+        class IsospinSymmetricIntegratedCrossSections : public Common
+        {   
+            public:
+                inline static const std::string zeroChemicalPotential = 
+                type + "IsospinSymmetricIntegratedCrossSectionsZeroChemicalPotential";
+
+            public:
+                IsospinSymmetricIntegratedCrossSections(const IniFileParser& p) : Common(p) {}
+                
+                bool validateFileZeroChemicalPotential() const;
+                bool validateFile(std::string ) const;
+                void evaluate(std::string ) const;
+        };
+    }
+}
 
 #endif
