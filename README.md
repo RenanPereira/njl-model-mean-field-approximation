@@ -59,3 +59,17 @@ cd calculations/su3_3d_cutoff_integrated_cross_sections && ./execute_calculation
 cd calculations/su3_3d_cutoff_integrated_cross_sections && ./build_plots.sh && cd ../../
 ```
 
+# Conventions
+
+
+This code was written by a Physicist without the most in-depth knowledge about the standards and structures of `Clean Code`. The following conventions are being used in the code (at least trying to...): 
+
+C++ code:
+- classes  → PascalCase
+- namespaces → PascalCase
+- methods → camelCase
+- member variables → camelCase
+- header guard → UPPER_CASE with underscores
+
+Python code:
+- 
