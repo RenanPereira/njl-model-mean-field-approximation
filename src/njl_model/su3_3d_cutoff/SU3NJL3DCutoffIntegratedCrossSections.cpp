@@ -529,12 +529,14 @@ double integratedCrossSectionCOVVolumeIntegrand_ds(double s, void *parameters)
 double integratedCrossSectionCOVVolume(double cutoff, double M1, double M2, double integralPrecision_dsdE, double integralPrecision_ds)
 {	
 	SU3NJL3DCutoffParameters parametersNJL(cutoff);
-	IntegratedCrossSectionIntegrand aux("integratedCrossSectionCOVVolumeIntegral", parametersNJL, 0.0, 
-                                        0.0, 0.0, 0.0, 
-                                    	M1, M2, 0.0, 
-                                    	0.0, UDUD, 
-                                    	false, 0.0,
-                                    	integralPrecision_dsdE);
+	IntegratedCrossSectionIntegrand aux(
+		"integratedCrossSectionCOVVolumeIntegral", parametersNJL, 0.0, 
+        0.0, 0.0, 0.0, 
+        M1, M2, 0.0, 
+        0.0, UDUD, 
+        false, 0.0,
+        integralPrecision_dsdE
+	);
 
 	double sMin = pow(M1+M2,2);
     double sMax = pow(sqrt( pow(cutoff,2) + pow(M1,2) ) + sqrt( pow(cutoff,2) + pow(M2,2) ), 2);
@@ -615,12 +617,14 @@ double integratedCrossSectionOGVolumeIntegrand_dp1(double p1, void *parameters)
 double integratedCrossSectionOGVolume(double cutoff, double M1, double M2, double integralPrecision_dp1dp2dtheta, double integralPrecision_dp1dp2, double integralPrecision_dp1)
 {
 	SU3NJL3DCutoffParameters parametersNJL(cutoff);
-	IntegratedCrossSectionIntegrand aux("integratedCrossSectionOGVolumeIntegral", parametersNJL, 0.0, 
-                                        0.0, 0.0, 0.0, 
-                                    	M1, M2, 0.0, 
-                                    	0.0, UDUD, 
-                                    	false, 0.0,
-                                    	integralPrecision_dp1dp2dtheta, integralPrecision_dp1dp2);
+	IntegratedCrossSectionIntegrand aux(
+		"integratedCrossSectionOGVolumeIntegral", parametersNJL, 0.0, 
+        0.0, 0.0, 0.0, 
+        M1, M2, 0.0, 
+        0.0, UDUD, 
+        false, 0.0,
+        integralPrecision_dp1dp2dtheta, integralPrecision_dp1dp2
+	);
 
     int integrationWorkspace = 1000;
     Integration1DimGSLQAGS integratedCrossSectionOGVolumeIntegral(0, cutoff, &aux, integratedCrossSectionOGVolumeIntegrand_dp1, integralPrecision_dp1, integralPrecision_dp1, integrationWorkspace);
@@ -751,11 +755,13 @@ double integratedCrossSectionIntegrand_ds(double s, void *parameters)
 	
 	//calculate cross section	
 	double crossSection = 1.0;
-	crossSection = crossSectionProcess12To34(aux.getParametersNJL(), T, 
-                                 			 effCPU, effCPD, effCPS, 
-                                 			 effMU, effMD, effMS, 
-                                 			 s, aux.getPropagatorIntegralPrecision(), process, 
-                                 			 aux.getLargeAngleScatteringContribution(), aux.getCrossSectionIntegralPrecision());
+	crossSection = crossSectionProcess12To34(
+		aux.getParametersNJL(), T, 
+        effCPU, effCPD, effCPS, 
+        effMU, effMD, effMS, 
+        s, aux.getPropagatorIntegralPrecision(), process, 
+        aux.getLargeAngleScatteringContribution(), aux.getCrossSectionIntegralPrecision()
+	);
 
     double EMin = dsdEdepsilon_EMin(cutoff, m1, m2, s);
     double EMax = dsdEdepsilon_EMax(cutoff, m1, m2, s);
@@ -859,19 +865,23 @@ double integratedCrossSectionCOVNormalizedIntegrand_dx(double x, void *parameter
 }
 
 
-double integratedCrossSectionProcess12To34(SU3NJL3DCutoffParameters parametersNJL, double T, 
-										   double effChemPotU, double effChemPotD, double effChemPotS, 
-										   double effMassU, double effMassD, double effMassS, 
-										   double propagatorIntegralPrecision, scatteringProcess process, 
-										   bool largeAngleScatteringContribution, double crossSectionIntegralPrecision,
-										   double integralPrecision_dsdE, double integralPrecision_ds)
+double integratedCrossSectionProcess12To34(
+	SU3NJL3DCutoffParameters parametersNJL, double T, 
+	double effChemPotU, double effChemPotD, double effChemPotS, 
+	double effMassU, double effMassD, double effMassS, 
+	double propagatorIntegralPrecision, scatteringProcess process, 
+	bool largeAngleScatteringContribution, double crossSectionIntegralPrecision,
+	double integralPrecision_dsdE, double integralPrecision_ds
+)
 {	
-	IntegratedCrossSectionIntegrand aux("integratedCrossSectionIntegral_dx", parametersNJL, T, 
-                                    	effChemPotU, effChemPotD, effChemPotS, 
-                                    	effMassU, effMassD, effMassS, 
-                                    	propagatorIntegralPrecision, process, 
-                                    	largeAngleScatteringContribution, crossSectionIntegralPrecision,
-                                    	integralPrecision_dsdE);
+	IntegratedCrossSectionIntegrand aux(
+		"integratedCrossSectionIntegral_dx", parametersNJL, T, 
+        effChemPotU, effChemPotD, effChemPotS, 
+        effMassU, effMassD, effMassS, 
+        propagatorIntegralPrecision, process, 
+        largeAngleScatteringContribution, crossSectionIntegralPrecision,
+        integralPrecision_dsdE
+	);
 
 	double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
@@ -936,11 +946,13 @@ double integratedCrossSectionOGIntegrand_dp1dp2dtheta(double theta, void *parame
 	double vRel = momentumCM(s, m1, m2)*sqrt(s)/( E1*E2 );
 	
 	double crossSection = 1.0;
-	crossSection = crossSectionProcess12To34(aux.getParametersNJL(), T, 
-                                 			 effCPU, effCPD, effCPS, 
-                                 			 effMU, effMD, effMS, 
-                                 			 s, aux.getPropagatorIntegralPrecision(), process, 
-                                 			 aux.getLargeAngleScatteringContribution(), aux.getCrossSectionIntegralPrecision());
+	crossSection = crossSectionProcess12To34(
+		aux.getParametersNJL(), T, 
+        effCPU, effCPD, effCPS, 
+        effMU, effMD, effMS, 
+        s, aux.getPropagatorIntegralPrecision(), process, 
+        aux.getLargeAngleScatteringContribution(), aux.getCrossSectionIntegralPrecision()
+	);
 
 	double integratedCrossSection_dp1dp2dtheta = ( sin(theta)*pow(p1,2)*pow(p2,2) )*( fermiDist1*fermiDist2*vRel*crossSection );
 
@@ -1003,19 +1015,23 @@ double integratedCrossSectionOGIntegrand_dp1(double p1, void *parameters)
 }
 
 
-double integratedCrossSectionOGProcess12To34(SU3NJL3DCutoffParameters parametersNJL, double T, 
-										   	 double effChemPotU, double effChemPotD, double effChemPotS, 
-										   	 double effMassU, double effMassD, double effMassS, 
-										   	 double propagatorIntegralPrecision, scatteringProcess process, 
-										   	 bool largeAngleScatteringContribution, double crossSectionIntegralPrecision,
-										   	 double integralPrecision_dp1dp2dtheta, double integralPrecision_dp1dp2, double integralPrecision_dp1)
+double integratedCrossSectionOGProcess12To34(
+	SU3NJL3DCutoffParameters parametersNJL, double T, 
+	double effChemPotU, double effChemPotD, double effChemPotS, 
+	double effMassU, double effMassD, double effMassS, 
+	double propagatorIntegralPrecision, scatteringProcess process, 
+	bool largeAngleScatteringContribution, double crossSectionIntegralPrecision,
+	double integralPrecision_dp1dp2dtheta, double integralPrecision_dp1dp2, double integralPrecision_dp1
+)
 {   
-	IntegratedCrossSectionIntegrand aux("integratedCrossSectionOGIntegral_dp1", parametersNJL, T, 
-                                    	effChemPotU, effChemPotD, effChemPotS, 
-                                    	effMassU, effMassD, effMassS, 
-                                    	propagatorIntegralPrecision, process, 
-                                    	largeAngleScatteringContribution, crossSectionIntegralPrecision,
-                                    	integralPrecision_dp1dp2dtheta, integralPrecision_dp1dp2);
+	IntegratedCrossSectionIntegrand aux(
+		"integratedCrossSectionOGIntegral_dp1", parametersNJL, T, 
+        effChemPotU, effChemPotD, effChemPotS, 
+        effMassU, effMassD, effMassS, 
+        propagatorIntegralPrecision, process, 
+        largeAngleScatteringContribution, crossSectionIntegralPrecision,
+        integralPrecision_dp1dp2dtheta, integralPrecision_dp1dp2
+	);
 
 	double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
@@ -1103,18 +1119,22 @@ double probabilityKlevanskyIntegrand_dx(double x, void *parameters)
 }
 
 
-double probabilityKlevansky(SU3NJL3DCutoffParameters parametersNJL, double T, 
-							double effChemPotU, double effChemPotD, double effChemPotS, 
-							double effMassU, double effMassD, double effMassS, 
-							double s, scatteringProcess process,
-							double integralPrecision_dE1)
+double probabilityKlevansky(
+	SU3NJL3DCutoffParameters parametersNJL, double T, 
+	double effChemPotU, double effChemPotD, double effChemPotS, 
+	double effMassU, double effMassD, double effMassS, 
+	double s, scatteringProcess process,
+	double integralPrecision_dE1
+)
 {   
-	IntegratedCrossSectionIntegrand aux("probabilityKlevanskyIntegral_dx", parametersNJL, T, 
-                                    	effChemPotU, effChemPotD, effChemPotS, 
-                                    	effMassU, effMassD, effMassS, 
-                                    	0.0, process, 
-                                    	false, 0.0,
-                                    	0.0);
+	IntegratedCrossSectionIntegrand aux(
+		"probabilityKlevanskyIntegral_dx", parametersNJL, T, 
+        effChemPotU, effChemPotD, effChemPotS, 
+    	effMassU, effMassD, effMassS, 
+        0.0, process, 
+        false, 0.0,
+        0.0
+	);
 
 	//set center of mass energy
 	aux.setCenterOfMassEnergy(s);
@@ -1152,11 +1172,13 @@ double probabilityKlevansky(double s, void *parameters)
 	scatteringProcess process = aux.getProcess();
 	double integralPrecision_dsdx = aux.getIntegratedCrossSectionIntegralPrecision_dXdY();
 
-	double probabilityKlev = probabilityKlevansky(aux.getParametersNJL(), T, 
-						 						  effCPU, effCPD, effCPS, 
-						 						  effMU, effMD, effMS, 
-						 						  s, process,
-						 						  integralPrecision_dsdx);
+	double probabilityKlev = probabilityKlevansky(
+		aux.getParametersNJL(), T, 
+		effCPU, effCPD, effCPS, 
+		effMU, effMD, effMS, 
+		s, process,
+		integralPrecision_dsdx
+	);
 
     return probabilityKlev;
 }
@@ -1188,11 +1210,13 @@ double integratedCrossSectionKlevanskyIntegrand_ds(double s, void *parameters)
 	double probability = probabilityKlevansky(s, parameters);
 
 	double crossSection = 1.0;
-	crossSection = crossSectionProcess12To34(aux.getParametersNJL(), T, 
-                                 			 effCPU, effCPD, effCPS, 
-                                 			 effMU, effMD, effMS, 
-                                 			 s, aux.getPropagatorIntegralPrecision(), process, 
-                                 			 aux.getLargeAngleScatteringContribution(), aux.getCrossSectionIntegralPrecision());
+	crossSection = crossSectionProcess12To34(
+		aux.getParametersNJL(), T, 
+        effCPU, effCPD, effCPS, 
+        effMU, effMD, effMS, 
+        s, aux.getPropagatorIntegralPrecision(), process, 
+        aux.getLargeAngleScatteringContribution(), aux.getCrossSectionIntegralPrecision()
+	);
 
 	double E1 = energyOutParticle1(s, m1, m2);
 	double E2 = energyOutParticle2(s, m1, m2);
@@ -1226,19 +1250,23 @@ double integratedCrossSectionKlevanskyNormalizedIntegrand_dx(double x, void *par
 }
 
 
-double integratedCrossSectionProcess12To34Klevansky(SU3NJL3DCutoffParameters parametersNJL, double T, 
-										   			double effChemPotU, double effChemPotD, double effChemPotS, 
-										   			double effMassU, double effMassD, double effMassS, 
-										   			double propagatorIntegralPrecision, scatteringProcess process, 
-										   			bool largeAngleScatteringContribution, double crossSectionIntegralPrecision,
-										   			double integralPrecision_dsdE, double integralPrecision_ds)
+double integratedCrossSectionProcess12To34Klevansky(
+	SU3NJL3DCutoffParameters parametersNJL, double T, 
+	double effChemPotU, double effChemPotD, double effChemPotS, 
+	double effMassU, double effMassD, double effMassS, 
+	double propagatorIntegralPrecision, scatteringProcess process, 
+	bool largeAngleScatteringContribution, double crossSectionIntegralPrecision,
+	double integralPrecision_dsdE, double integralPrecision_ds
+)
 {	
-	IntegratedCrossSectionIntegrand aux("integratedCrossSectionKlevasnkyIntegral_dx", parametersNJL, T, 
-                                    	effChemPotU, effChemPotD, effChemPotS, 
-                                    	effMassU, effMassD, effMassS, 
-                                    	propagatorIntegralPrecision, process, 
-                                    	largeAngleScatteringContribution, crossSectionIntegralPrecision,
-                                    	integralPrecision_dsdE);
+	IntegratedCrossSectionIntegrand aux(
+		"integratedCrossSectionKlevasnkyIntegral_dx", parametersNJL, T, 
+        effChemPotU, effChemPotD, effChemPotS, 
+    	effMassU, effMassD, effMassS, 
+        propagatorIntegralPrecision, process, 
+        largeAngleScatteringContribution, crossSectionIntegralPrecision,
+        integralPrecision_dsdE
+	);
 
 	double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
@@ -1309,18 +1337,22 @@ double nonNormalizedProbabilityZhuangIntegrand_ds(double s, void *parameters)
 }
 
 
-double probabilityNormalizationInverseZhuang(SU3NJL3DCutoffParameters parametersNJL, double T, 
-									  		 double effChemPotU, double effChemPotD, double effChemPotS, 
-									  		 double effMassU, double effMassD, double effMassS, 
-									  		 scatteringProcess process,
-									  		 double integralPrecision_ds)
+double probabilityNormalizationInverseZhuang(
+	SU3NJL3DCutoffParameters parametersNJL, double T, 
+	double effChemPotU, double effChemPotD, double effChemPotS, 
+	double effMassU, double effMassD, double effMassS, 
+	scatteringProcess process,
+	double integralPrecision_ds
+)
 {
-	IntegratedCrossSectionIntegrand aux("nonNormalizedProbabilityZhuangIntegral_ds", parametersNJL, T, 
-                                    	effChemPotU, effChemPotD, effChemPotS, 
-                                    	effMassU, effMassD, effMassS, 
-                                    	0.0, process, 
-                                    	false, 0.0,
-                                    	0.0);
+	IntegratedCrossSectionIntegrand aux(
+		"nonNormalizedProbabilityZhuangIntegral_ds", parametersNJL, T, 
+        effChemPotU, effChemPotD, effChemPotS, 
+        effMassU, effMassD, effMassS, 
+        0.0, process, 
+        false, 0.0,
+    	0.0
+	);
 
     //set incoming and outgoing masses
 	double m1, m2, m3, m4;
@@ -1366,11 +1398,13 @@ double integratedCrossSectionZhuangIntegrand_ds(double s, void *parameters)
 	double nonNormalizedProbability = nonNormalizedProbabilityZhuangIntegrand_ds(s, parameters);
 
 	double crossSection = 1.0;
-	crossSection = crossSectionProcess12To34(aux.getParametersNJL(), T, 
-                                 			 effCPU, effCPD, effCPS, 
-                                 			 effMU, effMD, effMS, 
-                                 			 s, aux.getPropagatorIntegralPrecision(), process, 
-                                 			 aux.getLargeAngleScatteringContribution(), aux.getCrossSectionIntegralPrecision());
+	crossSection = crossSectionProcess12To34(
+		aux.getParametersNJL(), T, 
+        effCPU, effCPD, effCPS, 
+        effMU, effMD, effMS, 
+        s, aux.getPropagatorIntegralPrecision(), process, 
+        aux.getLargeAngleScatteringContribution(), aux.getCrossSectionIntegralPrecision()
+	);
 
 	double integratedCrossSection = crossSection*nonNormalizedProbability;
 
@@ -1401,19 +1435,23 @@ double integratedCrossSectionZhuangNormalizedIntegrand_dx(double x, void *parame
 }
 
 
-double integratedCrossSectionProcess12To34Zhuang(SU3NJL3DCutoffParameters parametersNJL, double T, 
-										   		 double effChemPotU, double effChemPotD, double effChemPotS, 
-										   		 double effMassU, double effMassD, double effMassS, 
-										   		 double propagatorIntegralPrecision, scatteringProcess process, 
-										   		 bool largeAngleScatteringContribution, double crossSectionIntegralPrecision,
-										   		 double integralPrecision_ds)
+double integratedCrossSectionProcess12To34Zhuang(
+	SU3NJL3DCutoffParameters parametersNJL, double T, 
+	double effChemPotU, double effChemPotD, double effChemPotS, 
+	double effMassU, double effMassD, double effMassS, 
+	double propagatorIntegralPrecision, scatteringProcess process, 
+	bool largeAngleScatteringContribution, double crossSectionIntegralPrecision,
+	double integralPrecision_ds
+)
 {	
-	IntegratedCrossSectionIntegrand aux("integratedCrossSectionZhuangNormalizedIntegral_dx", parametersNJL, T, 
-                                    	effChemPotU, effChemPotD, effChemPotS, 
-                                    	effMassU, effMassD, effMassS, 
-                                    	propagatorIntegralPrecision, process, 
-                                    	largeAngleScatteringContribution, crossSectionIntegralPrecision,
-                                    	0.0);
+	IntegratedCrossSectionIntegrand aux(
+		"integratedCrossSectionZhuangNormalizedIntegral_dx", parametersNJL, T, 
+        effChemPotU, effChemPotD, effChemPotS, 
+        effMassU, effMassD, effMassS, 
+        propagatorIntegralPrecision, process, 
+        largeAngleScatteringContribution, crossSectionIntegralPrecision,
+    	0.0
+	);
 
 	double cutoff = parametersNJL.getThreeMomentumCutoff();
 
@@ -1428,11 +1466,13 @@ double integratedCrossSectionProcess12To34Zhuang(SU3NJL3DCutoffParameters parame
     double sMin = centerOfMassEnergyThreshold(m1, m2, m3, m4);
     double sMax = sMaximumKlevansky(cutoff, effMassU, effMassD, effMassS);
 
-    double cte = probabilityNormalizationInverseZhuang(parametersNJL, T,
-									  		 		   effChemPotU, effChemPotD, effChemPotS, 
-									  		 		   effMassU, effMassD, effMassS, 
-									  		 		   process,
-									  		 		   integralPrecision_ds);
+    double cte = probabilityNormalizationInverseZhuang(
+		parametersNJL, T,
+		effChemPotU, effChemPotD, effChemPotS, 
+		effMassU, effMassD, effMassS, 
+		process,
+		integralPrecision_ds
+	);
 
     Integration1DimNewtonCotes trapezoidalSum(1.001*sMin, 0.999*sMax, 10, &aux, integratedCrossSectionZhuangIntegrand_ds, alternativeCompositeSimpson);
     double normalization_ds = trapezoidalSum.evaluate();
@@ -1496,14 +1536,16 @@ bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString
     return isIntegratedCrossSectionApproximationMethod;
 }
 
-vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlongTrajectory(vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
-																						   scatteringProcess process, 
-																						   double propagatorIntegralPrecision,
-																						   bool largeAngleScatteringContribution, 
-																						   double crossSectionIntegralPrecision,
-																						   double integratedCrossSectionIntegralPrecision_dXdY, 
-																						   double integratedCrossSectionIntegralPrecision_dX, 
-																						   IntegratedCrossSectionApproximationMethod approximationMethod)
+vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlongTrajectory(
+	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
+	scatteringProcess process, 
+	double propagatorIntegralPrecision,
+	bool largeAngleScatteringContribution, 
+	double crossSectionIntegralPrecision,
+	double integratedCrossSectionIntegralPrecision_dXdY, 
+	double integratedCrossSectionIntegralPrecision_dX, 
+	IntegratedCrossSectionApproximationMethod approximationMethod
+)
 {	
 	//get parameters from provided set of solutions
 	SU3NJL3DCutoffParameters parameters = finiteTemperatureSolution[0].getParametersNJL();
@@ -1525,13 +1567,15 @@ vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlong
         double effMassD = finiteTemperatureSolution[i].getDownQuarkEffectiveMass();
         double effMassS = finiteTemperatureSolution[i].getStrangeQuarkEffectiveMass();
 
-        SU3NJL3DCutoffIntegratedCrossSection intCrossSection(parameters, T, 
-                                                             effChemPotU, effChemPotD, effChemPotS, 
-                                                             effMassU, effMassD, effMassS, 
-                                                             propagatorIntegralPrecision, process,
-                                                             largeAngleScatteringContribution, crossSectionIntegralPrecision,
-                                                             integratedCrossSectionIntegralPrecision_dXdY, integratedCrossSectionIntegralPrecision_dX,
-                                                             approximationMethod);
+        SU3NJL3DCutoffIntegratedCrossSection intCrossSection(
+			parameters, T, 
+            effChemPotU, effChemPotD, effChemPotS, 
+            effMassU, effMassD, effMassS, 
+            propagatorIntegralPrecision, process,
+            largeAngleScatteringContribution, crossSectionIntegralPrecision,
+            integratedCrossSectionIntegralPrecision_dXdY, integratedCrossSectionIntegralPrecision_dX,
+            approximationMethod
+		);
         intCrossSection.setIntegratedCrossSection();
         intCrossSection.setQuarkNumbers();
 
@@ -1586,25 +1630,29 @@ void writeIntegratedCrossSectionToFile(vector<SU3NJL3DCutoffIntegratedCrossSecti
 }
 
 
-void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
-														 				 scatteringProcess process, 
-														 				 double propagatorIntegralPrecision,
-														 				 bool largeAngleScatteringContribution, 
-														 				 double crossSectionIntegralPrecision,
-														 				 double integratedCrossSectionIntegralPrecision_dXdY, 
-														 				 double integratedCrossSectionIntegralPrecision_dX, 
-														 				 IntegratedCrossSectionApproximationMethod approximationMethod)
+void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
+	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
+	scatteringProcess process, 
+	double propagatorIntegralPrecision,
+	bool largeAngleScatteringContribution, 
+	double crossSectionIntegralPrecision,
+	double integratedCrossSectionIntegralPrecision_dXdY, 
+	double integratedCrossSectionIntegralPrecision_dX, 
+	IntegratedCrossSectionApproximationMethod approximationMethod
+)
 {
 	//calculate integrated cross sections for the path at finite temperature
     vector<SU3NJL3DCutoffIntegratedCrossSection> integratedCrossSectionFiniteTemperature =
-    evaluateIntegratedCrossSectionAlongTrajectory(finiteTemperatureSolution,
-                                                  process, 
-                                                  propagatorIntegralPrecision,
-                                                  largeAngleScatteringContribution, 
-                                                  crossSectionIntegralPrecision,
-                                                  integratedCrossSectionIntegralPrecision_dXdY, 
-                                                  integratedCrossSectionIntegralPrecision_dX, 
-                                                  approximationMethod);
+    evaluateIntegratedCrossSectionAlongTrajectory(
+		finiteTemperatureSolution,
+        process, 
+        propagatorIntegralPrecision,
+        largeAngleScatteringContribution, 
+        crossSectionIntegralPrecision,
+        integratedCrossSectionIntegralPrecision_dXdY, 
+        integratedCrossSectionIntegralPrecision_dX, 
+        approximationMethod
+	);
 
 
     string fileName = "IntegratedCrossSection";
@@ -1648,14 +1696,18 @@ void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotenti
 	vector<scatteringProcess> process;
 	if ( runFiniteDensityProcesses )
 	{
-		process = { UUUU, UDUD, USUS, SSSS,
-					UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SUBarSUBar, SSBarUUBar, SSBarSSBar,
-					UBarUBarUBarUBar, UBarDBarUBarDBar, UBarSBarUBarSBar, SBarSBarSBarSBar };
+		process = { 
+			UUUU, UDUD, USUS, SSSS,
+			UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SUBarSUBar, SSBarUUBar, SSBarSSBar,
+			UBarUBarUBarUBar, UBarDBarUBarDBar, UBarSBarUBarSBar, SBarSBarSBarSBar 
+		};
 	}
 	else
 	{
-		process = { UUUU, UDUD, USUS, SSSS,
-					UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SSBarUUBar, SSBarSSBar };
+		process = { 
+			UUUU, UDUD, USUS, SSSS,
+			UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SSBarUUBar, SSBarSSBar 
+		};
 	}
 
 	for (int i = 0; i < int(process.size()); ++i)
@@ -1674,25 +1726,29 @@ void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotenti
 }
 
 
-void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
-														 		   scatteringProcess process, 
-														 		   double propagatorIntegralPrecision,
-														 		   bool largeAngleScatteringContribution, 
-														 		   double crossSectionIntegralPrecision,
-														 		   double integratedCrossSectionIntegralPrecision_dXdY, 
-														 		   double integratedCrossSectionIntegralPrecision_dX, 
-														 		   IntegratedCrossSectionApproximationMethod approximationMethod)
+void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
+	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
+	scatteringProcess process, 
+	double propagatorIntegralPrecision,
+	bool largeAngleScatteringContribution, 
+	double crossSectionIntegralPrecision,
+	double integratedCrossSectionIntegralPrecision_dXdY, 
+	double integratedCrossSectionIntegralPrecision_dX, 
+	IntegratedCrossSectionApproximationMethod approximationMethod
+)
 {
 	//calculate integrated cross sections for the path at finite temperature
     vector<SU3NJL3DCutoffIntegratedCrossSection> integratedCrossSectionFiniteTemperature =
-    evaluateIntegratedCrossSectionAlongTrajectory(finiteTemperatureSolution,
-                                                  process, 
-                                                  propagatorIntegralPrecision,
-                                                  largeAngleScatteringContribution, 
-                                                  crossSectionIntegralPrecision,
-                                                  integratedCrossSectionIntegralPrecision_dXdY, 
-                                                  integratedCrossSectionIntegralPrecision_dX, 
-                                                  approximationMethod);
+    evaluateIntegratedCrossSectionAlongTrajectory(
+		finiteTemperatureSolution,
+        process, 
+        propagatorIntegralPrecision,
+        largeAngleScatteringContribution, 
+        crossSectionIntegralPrecision,
+        integratedCrossSectionIntegralPrecision_dXdY, 
+        integratedCrossSectionIntegralPrecision_dX, 
+        approximationMethod
+	);
 
 
     string fileName = "IntegratedCrossSection";
@@ -1710,29 +1766,35 @@ void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(vector<SU3NJL
 }
 
 
-void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
-																 			 		   double propagatorIntegralPrecision,
-																 			 		   bool largeAngleScatteringContribution, 
-																 			 		   double crossSectionIntegralPrecision,
-																 			 		   double integratedCrossSectionIntegralPrecision_dXdY, 
-																 			 		   double integratedCrossSectionIntegralPrecision_dX, 
-																 			 		   IntegratedCrossSectionApproximationMethod approximationMethod)
+void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
+	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
+	double propagatorIntegralPrecision,
+	bool largeAngleScatteringContribution, 
+	double crossSectionIntegralPrecision,
+	double integratedCrossSectionIntegralPrecision_dXdY, 
+	double integratedCrossSectionIntegralPrecision_dX, 
+	IntegratedCrossSectionApproximationMethod approximationMethod
+)
 {
 	vector<scatteringProcess> process;
-	process = { UUUU, UDUD, USUS, SSSS,
-				UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SUBarSUBar, SSBarUUBar, SSBarSSBar,
-				UBarUBarUBarUBar, UBarDBarUBarDBar, UBarSBarUBarSBar, SBarSBarSBarSBar };
+	process = { 
+		UUUU, UDUD, USUS, SSSS,
+		UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SUBarSUBar, SSBarUUBar, SSBarSSBar,
+		UBarUBarUBarUBar, UBarDBarUBarDBar, UBarSBarUBarSBar, SBarSBarSBarSBar 
+	};
 
 	for (int i = 0; i < int(process.size()); ++i)
 	{
-		evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(finiteTemperatureSolution,
-                                                        			  process[i], 
-                                                        			  propagatorIntegralPrecision,
-                                                        			  largeAngleScatteringContribution, 
-                                                        			  crossSectionIntegralPrecision,
-                                                        			  integratedCrossSectionIntegralPrecision_dXdY, 
-                                                        			  integratedCrossSectionIntegralPrecision_dX, 
-                                                        			  approximationMethod);
+		evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
+			finiteTemperatureSolution,
+        	process[i], 
+            propagatorIntegralPrecision,
+            largeAngleScatteringContribution, 
+            crossSectionIntegralPrecision,
+            integratedCrossSectionIntegralPrecision_dXdY, 
+            integratedCrossSectionIntegralPrecision_dX, 
+            approximationMethod
+		);
 	}
 }
 
@@ -1799,20 +1861,22 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
 }
 
 
-void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum vacuum,
-														 double gapPrecision,
-														 double fixedTemperature, 
-														 int numberOfPointsFromVacToMinTemp, 
-														 int numberOfPointsFromMinTempToMinChemPot, 
-														 int numberOfPointsFromMinToMaxChemPot, 
-														 double minChemPot,
-														 double maxChemPot,
-														 bool largeAngleScatteringContribution, 
-														 IntegratedCrossSectionApproximationMethod approximationMethod,
-														 double propagatorIntegralPrecision,
-														 double crossSectionIntegralPrecision,
-													     double integratedCrossSectionIntegralPrecision_dXdY,
-														 double integratedCrossSectionIntegralPrecision_dX)
+void evaluateIntegratedCrossSectionsWithFixedTemperature(
+	SU3NJL3DCutoffVacuum vacuum,
+	double gapPrecision,
+	double fixedTemperature, 
+	int numberOfPointsFromVacToMinTemp, 
+	int numberOfPointsFromMinTempToMinChemPot, 
+	int numberOfPointsFromMinToMaxChemPot, 
+	double minChemPot,
+	double maxChemPot,
+	bool largeAngleScatteringContribution, 
+	IntegratedCrossSectionApproximationMethod approximationMethod,
+	double propagatorIntegralPrecision,
+	double crossSectionIntegralPrecision,
+	double integratedCrossSectionIntegralPrecision_dXdY,
+	double integratedCrossSectionIntegralPrecision_dX
+)
 {
     //solve model at zero chemical potential up to some finite temperature
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
@@ -1872,31 +1936,35 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(SU3NJL3DCutoffVacuum va
 	    }
 	}
 
-    evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(finiteChemPotSolution, 
-                                                                                      propagatorIntegralPrecision,
-                                                                                      largeAngleScatteringContribution, 
-                                                                                      crossSectionIntegralPrecision,
-                                                                                      integratedCrossSectionIntegralPrecision_dXdY, 
-                                                                                      integratedCrossSectionIntegralPrecision_dX, 
-                                                                                      approximationMethod);
+    evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
+		finiteChemPotSolution, 
+        propagatorIntegralPrecision,
+        largeAngleScatteringContribution, 
+        crossSectionIntegralPrecision,
+        integratedCrossSectionIntegralPrecision_dXdY, 
+    	integratedCrossSectionIntegralPrecision_dX, 
+        approximationMethod
+	);
 
 }
 
 
-void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(SU3NJL3DCutoffVacuum vacuum,
-															   double gapPrecision,
-															   double chemPot,
-															   double minimumTemperature, 
-															   double maximumTemperature, 
-															   int numberOfPointsFromVacToMinTemp, 
-															   int numberOfPointsMinTempToChemPot, 
-															   int numberOfPointsFromMinToMaxTemp, 
-															   bool largeAngleScatteringContribution, 
-															   IntegratedCrossSectionApproximationMethod approximationMethod,
-															   double propagatorIntegralPrecision,
-															   double crossSectionIntegralPrecision,
-															   double integratedCrossSectionIntegralPrecision_dXdY,
-															   double integratedCrossSectionIntegralPrecision_dX)
+void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
+	SU3NJL3DCutoffVacuum vacuum,
+	double gapPrecision,
+	double chemPot,
+	double minimumTemperature, 
+	double maximumTemperature, 
+	int numberOfPointsFromVacToMinTemp, 
+	int numberOfPointsMinTempToChemPot, 
+	int numberOfPointsFromMinToMaxTemp, 
+	bool largeAngleScatteringContribution, 
+	IntegratedCrossSectionApproximationMethod approximationMethod,
+	double propagatorIntegralPrecision,
+	double crossSectionIntegralPrecision,
+	double integratedCrossSectionIntegralPrecision_dXdY,
+	double integratedCrossSectionIntegralPrecision_dX
+)
 {
     //solve model at zero chemical potential up to some finite temperature
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
@@ -1935,11 +2003,13 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(SU3NJL3DCutoffVac
     }
 
 
-    evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(finiteTSolution, 
-                                                                                            propagatorIntegralPrecision,
-                                                                                            largeAngleScatteringContribution, 
-                                                                                            crossSectionIntegralPrecision,
-                                                                                            integratedCrossSectionIntegralPrecision_dXdY, 
-                                                                                            integratedCrossSectionIntegralPrecision_dX, 
-                                                                                            approximationMethod);
+    evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
+		finiteTSolution, 
+        propagatorIntegralPrecision,
+        largeAngleScatteringContribution, 
+        crossSectionIntegralPrecision,
+        integratedCrossSectionIntegralPrecision_dXdY, 
+        integratedCrossSectionIntegralPrecision_dX, 
+        approximationMethod
+	);
 }
