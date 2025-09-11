@@ -52,12 +52,12 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	cout << "type = " << fileTypeStr << endl;
 
 	// Check if file is written correctly and then make calculation
-	if(fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::Vacuum_evaluateVacuumMasses)
+	if(fileTypeStr==SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::vacuumMasses)
 	{	
-		const SU3NJL3DCutoffVacuumFileParser config(configFile);
-		if(config.validateFileQualityEvaluateVacuumMasses())
+		const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses config(configFile);
+		if(config.validateFile())
 		{	
-			config.evaluateVacuumMasses();
+			config.evaluate();
 		}
 		else
 		{
@@ -76,24 +76,24 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
 		}
 	}
-	else if (fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::FixedTempRhoBEqualChemPot_evaluateFirstOrderLine)
+	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::firstOrderLine)
 	{
-		const SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser config(configFile);
-		if(config.validateFileQualityEvaluateFirstOrderLine())
-		{	
-			config.evaluateFirstOrderLine();
+		const SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine config(configFile);
+		if(config.validateFile())
+		{
+			config.evaluate();
 		}
 		else
 		{
 			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
 		}
 	}
-	else if (fileTypeStr==SU3NJL3DCutoffConfigKeys::CalculationType::FixedChemPotTemp_evaluateCrossSectionsEqualLightMasses)
+	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::isospinSymmetricCrossSections)
 	{
-		const SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser config(configFile);
-		if(config.validateFileQualityEvaluateCrossSectionsEqualLightMasses())
+		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections config(configFile);
+		if(config.validateFile())
 		{	
-			config.evaluateCrossSectionsEqualLightMasses();
+			config.evaluate();
 		}
 		else
 		{

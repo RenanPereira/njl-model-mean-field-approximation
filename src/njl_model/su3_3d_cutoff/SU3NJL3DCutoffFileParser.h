@@ -7,13 +7,6 @@
 
 namespace SU3NJL3DCutoffConfigKeys 
 {
-    namespace CalculationType
-    {
-        inline const std::string Vacuum_evaluateVacuumMasses = "SU3NJL3DCutoffVacuum_evaluateVacuumMasses";
-        inline const std::string FixedTempRhoBEqualChemPot_evaluateFirstOrderLine = "SU3NJL3DCutoffFixedTemperatureRhoBEqualChemicalPotential_evaluateFirstOrderLine";
-        inline const std::string FixedChemPotTemp_evaluateCrossSectionsEqualLightMasses = "SU3NJL3DCutoffFixedChemicalPotentialTemperature_evaluateCrossSectionsEqualLightMasses";
-    }
-
     namespace ModelParameters 
     {
         inline const std::string section = "SU3NJL3DCutoffModelParameters";
@@ -111,57 +104,6 @@ namespace SU3NJL3DCutoffConfigKeys
     }
 }
 
-class SU3NJL3DCutoffVacuumFileParser
-{
-public:
-    const IniFileParser& config;    
-    std::string invalidFileMessage = "Error: Invalid configuration found in the " + config.getFilename() + " file.";
-
-public:
-    SU3NJL3DCutoffVacuumFileParser(const IniFileParser& p) : config(p) {}
-    
-    // Validations
-    static NJLDimensionfulCouplings extractDimensionfulCouplings(const IniFileParser& );
-    
-    bool validateModelParameters() const;
-    bool validateDimensionfulCouplings() const;
-    bool validateVacuumMassesParameters() const;
-    bool validateFileQualityEvaluateVacuumMasses() const;
-
-    void evaluateVacuumMasses() const;
-};
-
-
-class SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser : public SU3NJL3DCutoffVacuumFileParser
-{
-public:
-    SU3NJL3DCutoffFixedTempRhoBEqualChemPotFileParser(const IniFileParser& p) : SU3NJL3DCutoffVacuumFileParser(p) {}
-
-    bool validateVacuumToFiniteBaryonDensityParameters() const;
-    bool validateFirstOrderLineParameters() const;
-    bool validateFileQualityEvaluateFirstOrderLine() const;
-
-    void evaluateFirstOrderLine() const;
-};
-
-
-class SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser : public SU3NJL3DCutoffVacuumFileParser
-{
-public:
-    SU3NJL3DCutoffFixedChemPotTempCrossSectionsFileParser(const IniFileParser& p) : SU3NJL3DCutoffVacuumFileParser(p) {}
-
-    bool validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const;
-    bool validateFiniteTemperatureToFiniteChemicalPotentialParameters() const;
-    bool validateCrossSectionsParameters() const;
-    bool validateFileQualityEvaluateCrossSectionsEqualLightMasses() const;
-
-    void evaluateCrossSectionsEqualLightMasses() const;
-};
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-
 namespace SU3NJL3DCutoffFileParser
 {   
     inline const std::string model = "SU3NJL3DCutoff";
@@ -192,8 +134,13 @@ namespace SU3NJL3DCutoffFileParser
 
     namespace Vacuum
     {   
+        inline const std::string type = model + "Vacuum";
+
         class VacuumMasses : public Common
-        {
+        {   
+            public:
+                inline static const std::string vacuumMasses = type + "VacuumMasses";
+            
             public:
                 VacuumMasses(const IniFileParser& p) : Common(p) {}
 
@@ -204,8 +151,13 @@ namespace SU3NJL3DCutoffFileParser
 
     namespace FixedTempRhoBEqualChemPot
     {
+        inline const std::string type = model + "FixedTemperatureRhoBEqualChemicalPotential";
+
         class FirstOrderLine : public Common
-        {
+        {   
+            public:
+                inline static const std::string firstOrderLine = type + "FirstOrderLine";
+
             public:
                 FirstOrderLine(const IniFileParser& p) : Common(p) {}
 
@@ -221,6 +173,9 @@ namespace SU3NJL3DCutoffFileParser
         class IsospinSymmetricCrossSections : public Common
         {
             public:
+                inline static const std::string isospinSymmetricCrossSections = type + "IsospinSymmetricCrossSections";
+
+            public:
                 IsospinSymmetricCrossSections(const IniFileParser& p) : Common(p) {}
                 
                 bool validateFile() const;
@@ -230,8 +185,7 @@ namespace SU3NJL3DCutoffFileParser
         class IsospinSymmetricIntegratedCrossSections : public Common
         {   
             public:
-                inline static const std::string zeroChemicalPotential = 
-                type + "IsospinSymmetricIntegratedCrossSectionsZeroChemicalPotential";
+                inline static const std::string zeroChemicalPotential = type + "IsospinSymmetricIntegratedCrossSectionsZeroChemicalPotential";
 
             public:
                 IsospinSymmetricIntegratedCrossSections(const IniFileParser& p) : Common(p) {}
