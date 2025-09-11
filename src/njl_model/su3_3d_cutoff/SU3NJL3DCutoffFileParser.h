@@ -5,7 +5,7 @@
 #include "njl_model/NJLDimensionfulCouplings.h"
 
 
-namespace SU3NJL3DCutoffConfigKeys 
+namespace SU3NJL3DCutoffFileParser
 {
     namespace ModelParameters 
     {
