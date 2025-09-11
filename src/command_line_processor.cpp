@@ -64,7 +64,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
 		}
 	}
-	else if(fileTypeStr==KlevanskyB0Integral3DCutoffConfigKeys::CalculationType::evaluateIntegral)
+	else if(fileTypeStr==KlevanskyB0Integral3DCutoffFileParser::klevanskyB0Integral3DCutoff)
 	{	
 		const KlevanskyB0Integral3DCutoffFileParser config(configFile);
 		if(config.validateFileQualityEvaluateIntegral())

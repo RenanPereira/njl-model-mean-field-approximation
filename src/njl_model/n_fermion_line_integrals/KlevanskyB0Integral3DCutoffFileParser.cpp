@@ -10,11 +10,11 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateFileQualityEvaluateIntegral(
     // Check for missing sections
     vector<string> vsK0section = 
     {
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::vsK0section, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::vsK0section, 
     }; 
     vector<string> vsKsection = 
     {
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::vsKsection, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::vsKsection, 
     }; 
     if (!config.validateRequiredSections(vsK0section) && !config.validateRequiredSections(vsKsection)) 
     {
@@ -27,7 +27,7 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateFileQualityEvaluateIntegral(
     bool areVsK0ParametersValid = true;
     for (int i = 0; i < int(sections.size()); i++)
     {
-        if ( sections[i].find(KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::vsK0section)==0 )
+        if ( sections[i].find(KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::vsK0section)==0 )
         {
             //cout << "Validating section: " << sections[i] << ".\n";
             areVsK0ParametersValid = areVsK0ParametersValid && validateSectionVsK0Parameters(sections[i]);
@@ -37,7 +37,7 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateFileQualityEvaluateIntegral(
     bool areVsKParametersValid = true;
     for (int i = 0; i < int(sections.size()); i++)
     {
-        if ( sections[i].find(KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::vsKsection)==0 )
+        if ( sections[i].find(KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::vsKsection)==0 )
         {
             //cout << "Validating section: " << sections[i] << ".\n";
             areVsKParametersValid = areVsKParametersValid && validateSectionVsKParameters(sections[i]);
@@ -62,18 +62,18 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsK0Parameters(string
 {   
     vector<string> requiredKeys = 
     {
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::numberOfPoints, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::k0LambdaRatioMin, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::k0LambdaRatioMax, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::regularizationScheme, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::temperature, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveChemicalPotential1, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveChemicalPotential2, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::threeMomentumCutoff,
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveMass1, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveMass2, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::threeMomentum, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::integralPrecision, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::numberOfPoints, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::k0LambdaRatioMin, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::k0LambdaRatioMax, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::regularizationScheme, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::temperature, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveChemicalPotential1, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveChemicalPotential2, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::threeMomentumCutoff,
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveMass1, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveMass2, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::threeMomentum, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::integralPrecision, 
     };
 
     // Check required keys
@@ -85,15 +85,15 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsK0Parameters(string
     // Ensure numberOfPoints>0
     if (!config.validatePositiveInteger(
             sectionName, 
-            KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::numberOfPoints, 
+            KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::numberOfPoints, 
             invalidFileMessage + " Invalid value found in section " + sectionName + ".", 
-            KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::numberOfPoints + " > 0 must be satisfied.")) 
+            KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::numberOfPoints + " > 0 must be satisfied.")) 
     {
         return false;
     }
 
     // Validate regularizationScheme
-    string regularizationScheme = config.getValue(sectionName, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::regularizationScheme);
+    string regularizationScheme = config.getValue(sectionName, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::regularizationScheme);
     if (!isValidNJL3DCutoffRegularizationScheme(regularizationScheme)) 
     {
         cout << invalidFileMessage + " Invalid value found in section " + sectionName + "." << endl;
@@ -103,14 +103,14 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsK0Parameters(string
     // Ensure all other parameters > 0
     vector<string> nonNegativeKeys = 
     {
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::temperature, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveChemicalPotential1, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveChemicalPotential2, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::threeMomentumCutoff,
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveMass1, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveMass2, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::threeMomentum, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::integralPrecision, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::temperature, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveChemicalPotential1, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveChemicalPotential2, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::threeMomentumCutoff,
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveMass1, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveMass2, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::threeMomentum, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::integralPrecision, 
     };
     for (int i = 0; i < int(nonNegativeKeys.size()); i++)
     {
@@ -131,18 +131,18 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsKParameters(string 
 {   
     vector<string> requiredKeys = 
     {
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::numberOfPoints, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::absKLambdaRatioMin, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::absKLambdaRatioMax, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::regularizationScheme, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::temperature, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveChemicalPotential1, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveChemicalPotential2, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::threeMomentumCutoff, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveMass1, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveMass2, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::zeroMomentum, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::integralPrecision, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::numberOfPoints, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::absKLambdaRatioMin, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::absKLambdaRatioMax, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::regularizationScheme, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::temperature, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveChemicalPotential1, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveChemicalPotential2, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::threeMomentumCutoff, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveMass1, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveMass2, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::zeroMomentum, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::integralPrecision, 
     };
 
     // Check required keys
@@ -154,15 +154,15 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsKParameters(string 
     // Ensure numberOfPoints>0
     if (!config.validatePositiveInteger(
             sectionName, 
-            KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::numberOfPoints, 
+            KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::numberOfPoints, 
             invalidFileMessage + " Invalid value found in section " + sectionName + ".", 
-            KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::numberOfPoints + " > 0 must be satisfied.")) 
+            KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::numberOfPoints + " > 0 must be satisfied.")) 
     {
         return false;
     }
 
     // Validate regularizationScheme
-    string regularizationScheme = config.getValue(sectionName, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::regularizationScheme);
+    string regularizationScheme = config.getValue(sectionName, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::regularizationScheme);
     if (!isValidNJL3DCutoffRegularizationScheme(regularizationScheme)) 
     {
         cout << invalidFileMessage + " Invalid value found in section " + sectionName + "." << endl;
@@ -172,14 +172,14 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsKParameters(string 
     // Ensure all other parameters > 0
     vector<string> nonNegativeKeys = 
     {   
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::absKLambdaRatioMin, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::temperature, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveChemicalPotential1, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveChemicalPotential2, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::threeMomentumCutoff, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveMass1, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveMass2, 
-        KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::integralPrecision, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::absKLambdaRatioMin, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::temperature, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveChemicalPotential1, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveChemicalPotential2, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::threeMomentumCutoff, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveMass1, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveMass2, 
+        KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::integralPrecision, 
     };
     for (int i = 0; i < int(nonNegativeKeys.size()); i++)
     {
@@ -198,26 +198,26 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsKParameters(string 
 
 void KlevanskyB0Integral3DCutoffFileParser::evaluateKlevanskyB0Integral3DCutoff() const
 {   
-    vector<map<string, string>> vsK0ParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::vsK0section);
+    vector<map<string, string>> vsK0ParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::vsK0section);
     for (int i = 0; i < int(vsK0ParametersData.size()); ++i) 
 	{
-        cout << "\n" << KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::vsK0section << ":" << endl;
+        cout << "\n" << KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::vsK0section << ":" << endl;
         cout << endl;
 
 		const map<string, string>& section = vsK0ParametersData[i];
 
-        int numberOfPoints = config.getInt(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::numberOfPoints);
-        double k0LambdaRatioMin = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::k0LambdaRatioMin);
-        double k0LambdaRatioMax = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::k0LambdaRatioMax);
-        string regularizationScheme = config.getValue(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::regularizationScheme);
-        double temperature = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::temperature);
-        double effectiveChemicalPotential1 = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveChemicalPotential1);
-        double effectiveChemicalPotential2 = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveChemicalPotential2);
-        double threeMomentumCutoff = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::threeMomentumCutoff);
-        double effectiveMass1 = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveMass1);
-        double effectiveMass2 = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::effectiveMass2);
-        double threeMomentum = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::threeMomentum);
-        double integralPrecision = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::integralPrecision);
+        int numberOfPoints = config.getInt(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::numberOfPoints);
+        double k0LambdaRatioMin = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::k0LambdaRatioMin);
+        double k0LambdaRatioMax = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::k0LambdaRatioMax);
+        string regularizationScheme = config.getValue(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::regularizationScheme);
+        double temperature = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::temperature);
+        double effectiveChemicalPotential1 = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveChemicalPotential1);
+        double effectiveChemicalPotential2 = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveChemicalPotential2);
+        double threeMomentumCutoff = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::threeMomentumCutoff);
+        double effectiveMass1 = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveMass1);
+        double effectiveMass2 = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::effectiveMass2);
+        double threeMomentum = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::threeMomentum);
+        double integralPrecision = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::integralPrecision);
 
         cout << "numberOfPoints = " << numberOfPoints << endl;
         cout << "k0LambdaRatioMin = " << k0LambdaRatioMin << endl;
@@ -249,26 +249,26 @@ void KlevanskyB0Integral3DCutoffFileParser::evaluateKlevanskyB0Integral3DCutoff(
             integralPrecision);
     }
 
-    vector<map<string, string>> vsKParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::vsKsection);
+    vector<map<string, string>> vsKParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::vsKsection);
     for (int i = 0; i < int(vsKParametersData.size()); ++i) 
 	{
-        cout << "\n" << KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::vsKsection << ":" << endl;
+        cout << "\n" << KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::vsKsection << ":" << endl;
         cout << endl;
 
 		const map<string, string>& section = vsKParametersData[i];
 
-        int numberOfPoints = config.getInt(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::numberOfPoints);
-        double absKLambdaRatioMin = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::absKLambdaRatioMin);
-        double absKLambdaRatioMax = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::absKLambdaRatioMax);
-        string regularizationScheme = config.getValue(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::regularizationScheme);
-        double temperature = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::temperature);
-        double effectiveChemicalPotential1 = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveChemicalPotential1);
-        double effectiveChemicalPotential2 = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveChemicalPotential2);
-        double threeMomentumCutoff = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsK0Parameters::threeMomentumCutoff);
-        double effectiveMass1 = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveMass1);
-        double effectiveMass2 = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::effectiveMass2);
-        double zeroMomentum = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::zeroMomentum);
-        double integralPrecision = config.getDouble(section, KlevanskyB0Integral3DCutoffConfigKeys::VsKParameters::integralPrecision);
+        int numberOfPoints = config.getInt(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::numberOfPoints);
+        double absKLambdaRatioMin = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::absKLambdaRatioMin);
+        double absKLambdaRatioMax = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::absKLambdaRatioMax);
+        string regularizationScheme = config.getValue(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::regularizationScheme);
+        double temperature = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::temperature);
+        double effectiveChemicalPotential1 = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveChemicalPotential1);
+        double effectiveChemicalPotential2 = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveChemicalPotential2);
+        double threeMomentumCutoff = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::threeMomentumCutoff);
+        double effectiveMass1 = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveMass1);
+        double effectiveMass2 = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::effectiveMass2);
+        double zeroMomentum = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::zeroMomentum);
+        double integralPrecision = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::integralPrecision);
 
         cout << "numberOfPoints = " << numberOfPoints << endl;
         cout << "absKLambdaRatioMin = " << absKLambdaRatioMin << endl;

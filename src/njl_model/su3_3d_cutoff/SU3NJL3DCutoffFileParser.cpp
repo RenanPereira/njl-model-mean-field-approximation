@@ -15,14 +15,14 @@ using namespace std;
 NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::Common::extractDimensionfulCouplings() const
 {	
 	double cutoff = config.getDouble(
-        SU3NJL3DCutoffFileParser::ModelParameters::section,                                   
-        SU3NJL3DCutoffFileParser::ModelParameters::cutoff
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::section,                                   
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::cutoff
     );
 
     LagrangianInteractions interaction = stringToLagrangianInteractions(
         config.getValue(
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::section,             
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::lagrangianInteractions
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section,             
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::lagrangianInteractions
         )
     );
 	cout << "interaction = " << toStringLagrangianInteractions(interaction) << endl;
@@ -30,11 +30,11 @@ NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::Common::extractDimensionfulCo
 	if ( interaction==SP4Q_DET2NFQ )
 	{
 		double fourQuarkSPCouplingCutoff2 = config.getDouble(
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::section,              
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section,              
             NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING
         );
 		double determinantCouplingCutoff5 = config.getDouble(
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::section,              
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section,              
             NJLDimensionlessCouplings::DETERMINANT_COUPLING
         );
 		
@@ -51,19 +51,19 @@ NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::Common::extractDimensionfulCo
 	else if( interaction==SP4Q_DET2NFQ_SP8Q )
 	{
 		double fourQuarkSPCouplingCutoff2 = config.getDouble(
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::section, 
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section, 
             NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING
         );
 		double determinantCouplingCutoff5 = config.getDouble(
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::section, 
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section, 
             NJLDimensionlessCouplings::DETERMINANT_COUPLING
         );
 		double eightQuarkSPOziViolatingCouplingCutoff8 = config.getDouble(
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::section, 
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section, 
             NJLDimensionlessCouplings::EIGHT_QUARK_SP_OZI_COUPLING
         );
 		double eightQuarkSPNonOziViolatingCouplingCutoff8 = config.getDouble(
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::section, 
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section, 
             NJLDimensionlessCouplings::EIGHT_QUARK_SP_NON_OZI_COUPLING
         );
 		
@@ -92,42 +92,42 @@ bool SU3NJL3DCutoffFileParser::Common::validateModelParameters() const
 {   
     // Validate regularizationScheme
     string regularizationScheme = config.getValue(
-        SU3NJL3DCutoffFileParser::ModelParameters::section, 
-        SU3NJL3DCutoffFileParser::ModelParameters::regularizationScheme
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::regularizationScheme
     );
     bool isRegularizationSchemeValid = isValidNJL3DCutoffRegularizationScheme(regularizationScheme);
     if( !isRegularizationSchemeValid ){ cout << invalidFileMessage << endl; }
 
     // Ensure cutoff>0
     bool isCutoffValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParser::ModelParameters::section, 
-        SU3NJL3DCutoffFileParser::ModelParameters::cutoff, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::cutoff, 
         invalidFileMessage, 
-        SU3NJL3DCutoffFileParser::ModelParameters::cutoff + " > 0 must be satisfied."
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::cutoff + " > 0 must be satisfied."
     );
 
     // Ensure upQuarkCurrentMass>0
     bool isUpQuarkCurrentMassValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParser::ModelParameters::section, 
-        SU3NJL3DCutoffFileParser::ModelParameters::upQuarkCurrentMass, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::upQuarkCurrentMass, 
         invalidFileMessage, 
-        SU3NJL3DCutoffFileParser::ModelParameters::upQuarkCurrentMass + " > 0 must be satisfied."
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::upQuarkCurrentMass + " > 0 must be satisfied."
     );
 
     // Ensure downQuarkCurrentMassInGeV>0
     bool isDownQuarkCurrentMassValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParser::ModelParameters::section, 
-        SU3NJL3DCutoffFileParser::ModelParameters::downQuarkCurrentMass, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::downQuarkCurrentMass, 
         invalidFileMessage, 
-        SU3NJL3DCutoffFileParser::ModelParameters::downQuarkCurrentMass + " > 0 must be satisfied."
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::downQuarkCurrentMass + " > 0 must be satisfied."
     );
 
     // Ensure strangeQuarkCurrentMass>0
     bool isStrangeQuarkCurrentMassValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParser::ModelParameters::section, 
-        SU3NJL3DCutoffFileParser::ModelParameters::strangeQuarkCurrentMass, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::strangeQuarkCurrentMass, 
         invalidFileMessage, 
-        SU3NJL3DCutoffFileParser::ModelParameters::strangeQuarkCurrentMass + " > 0 must be satisfied."
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::strangeQuarkCurrentMass + " > 0 must be satisfied."
     );
 
     // The function return true only if all tests passed
@@ -142,8 +142,8 @@ bool SU3NJL3DCutoffFileParser::Common::validateDimensionfulCouplings() const
 {
     // Validate lagrangianInteractions
     string lagrangianInteractions = config.getValue(
-        SU3NJL3DCutoffFileParser::DimensionfulCouplings::section,                                             
-        SU3NJL3DCutoffFileParser::DimensionfulCouplings::lagrangianInteractions
+        SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section,                                             
+        SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::lagrangianInteractions
     );
     bool isLagrangianInteractionsValid = isValidLagrangianInteractions(lagrangianInteractions);
     if( !isLagrangianInteractionsValid ){ cout << invalidFileMessage << endl; }
@@ -153,8 +153,8 @@ bool SU3NJL3DCutoffFileParser::Common::validateDimensionfulCouplings() const
     {
         areCouplingsValid = validateNJLDimensionfulCouplings(
             config,
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::section,
-            SU3NJL3DCutoffFileParser::DimensionfulCouplings::lagrangianInteractions
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section,
+            SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::lagrangianInteractions
         );
     }
 
@@ -165,42 +165,42 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumMassesParameters() const
 {   
     // Ensure precisionVacuum>0
     bool isPrecisionVacuumValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::section,
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::precisionVacuum, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section,
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::precisionVacuum, 
         invalidFileMessage, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::precisionVacuum + " > 0 must be satisfied."
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::precisionVacuum + " > 0 must be satisfied."
     );
 
     // Ensure methodVacuum is valid
     string methodVacuum = config.getValue(
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::section, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::methodVacuum
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::methodVacuum
     );
     bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacuum);
     if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
 
     // Ensure up quark mass is valid
     bool isUpQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::section, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::upQuarkMassGuess, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::upQuarkMassGuess, 
         invalidFileMessage, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::upQuarkMassGuess + " > 0 must be satisfied."
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::upQuarkMassGuess + " > 0 must be satisfied."
     );
 
     // Ensure down quark mass is valid
     bool isDownQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::section, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::downQuarkMassGuess, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::downQuarkMassGuess, 
         invalidFileMessage, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::downQuarkMassGuess + " > 0 must be satisfied."
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::downQuarkMassGuess + " > 0 must be satisfied."
     );
 
     // Ensure strange quark mass is valid
     bool isStrangeQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::section, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::strangeQuarkMassGuess, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::strangeQuarkMassGuess, 
         invalidFileMessage, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::strangeQuarkMassGuess + " > 0 must be satisfied."
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::strangeQuarkMassGuess + " > 0 must be satisfied."
     );
 
     // The function returns true only if all tests passed
@@ -213,7 +213,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumMassesParameters() const
 
 bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteBaryonDensityParameters() const
 {   
-    namespace VFBD = SU3NJL3DCutoffFileParser::VacuumToFiniteBaryonDensityParameters;
+    namespace VFBD = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteBaryonDensityParameters;
 
     // Ensure minimumBaryonDensity>0
     bool isMinimumBaryonDensityValid = config.validatePositiveDouble(
@@ -265,7 +265,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteBaryonDensityParame
 
 bool SU3NJL3DCutoffFileParser::Common::validateFirstOrderLineParameters() const
 {   
-    namespace FOLP = SU3NJL3DCutoffFileParser::FirstOrderLineParameters;
+    namespace FOLP = SU3NJL3DCutoffFileParserKeys::FirstOrderLineParameters;
 
     // Ensure precisionTransitionPointSol>0
     bool isPrecisionTransitionPointSolValid = config.validatePositiveDouble(
@@ -308,7 +308,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateFirstOrderLineParameters() const
 
 bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const
 {
-    namespace VFTZCPP = SU3NJL3DCutoffFileParser::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
 
     // Ensure temperature>0
     bool isTemperatureValid = config.validatePositiveDouble(
@@ -351,7 +351,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteTemperatureAtZeroCh
 
 bool SU3NJL3DCutoffFileParser::Common::validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const
 {   
-    namespace LHTZCPP = SU3NJL3DCutoffFileParser::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    namespace LHTZCPP = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
 
     // Ensure minimumTemp>0
     bool isMinimumTempValid = config.validatePositiveDouble(
@@ -400,7 +400,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateLowToHighTemperatureAtZeroChemica
 
 bool SU3NJL3DCutoffFileParser::Common::validateFiniteTemperatureToFiniteChemicalPotentialParameters() const
 {
-    namespace FTFCPP = SU3NJL3DCutoffFileParser::FiniteTemperatureToFiniteChemicalPotentialParameters;
+    namespace FTFCPP = SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
 
     // Ensure chemPot>=0
     bool isChemPotValid = config.validateNonNegativeDouble(
@@ -440,7 +440,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateFiniteTemperatureToFiniteChemical
 
 bool SU3NJL3DCutoffFileParser::Common::validateCrossSectionsParameters() const
 {
-    namespace CSP = SU3NJL3DCutoffFileParser::CrossSectionsParameters;
+    namespace CSP = SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters;
 
     // Ensure propagatorIntegralPrecision>0
     bool isPropagatorIntegralPrecisionValid = config.validatePositiveDouble(
@@ -483,7 +483,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateCrossSectionsParameters() const
 
 bool SU3NJL3DCutoffFileParser::Common::validateIntegratedCrossSectionsParameters() const
 {
-    namespace ICSP = SU3NJL3DCutoffFileParser::IntegratedCrossSectionsParameters;
+    namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
 
     // Ensure numberOfPointsIntegratedCrossSections>0
     bool isNumberOfPointsIntegratedCrossSectionsValid = config.validatePositiveInteger(
@@ -554,9 +554,9 @@ bool SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::validateFile() const
     bool allRequiredSectionsPresent = true;
     vector<string> requiredSections = 
     {
-        SU3NJL3DCutoffFileParser::ModelParameters::section, 
-        SU3NJL3DCutoffFileParser::DimensionfulCouplings::section, 
-        SU3NJL3DCutoffFileParser::VacuumMassesParameters::section
+        SU3NJL3DCutoffFileParserKeys::ModelParameters::section, 
+        SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section, 
+        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section
     };  
     for (int i = 0; i < int(requiredSections.size()); ++i) 
     {
@@ -583,7 +583,7 @@ bool SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::validateFile() const
 void SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::evaluate() const
 {
     // Model Parameters
-    namespace MP = SU3NJL3DCutoffFileParser::ModelParameters;
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     cout << "\n" << MP::section << ": " << endl;
 
     string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
@@ -601,11 +601,11 @@ void SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::evaluate() const
     cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
 
     // Dimensionful Couplings
-    cout << "\n" << SU3NJL3DCutoffFileParser::DimensionfulCouplings::section << ": " << endl;
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
     NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
 
     // VacuumMasses
-    namespace VMP = SU3NJL3DCutoffFileParser::VacuumMassesParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
     cout << "\n" << VMP::section << ": " << endl;
 
     double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
@@ -651,8 +651,8 @@ bool SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::valida
     bool allRequiredSectionsPresent = true;
     vector<string> requiredSections = 
     {
-        SU3NJL3DCutoffFileParser::VacuumToFiniteBaryonDensityParameters::section,
-        SU3NJL3DCutoffFileParser::FirstOrderLineParameters::section
+        SU3NJL3DCutoffFileParserKeys::VacuumToFiniteBaryonDensityParameters::section,
+        SU3NJL3DCutoffFileParserKeys::FirstOrderLineParameters::section
     };  
     for (int i = 0; i < int(requiredSections.size()); ++i) 
     {
@@ -678,7 +678,7 @@ bool SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::valida
 void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evaluate() const
 {
     // Model Parameters
-    namespace MP = SU3NJL3DCutoffFileParser::ModelParameters;
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     cout << "\n" << MP::section << ": " << endl;
 
     string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
@@ -696,11 +696,11 @@ void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evalua
     cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
 
     // Dimensionful Couplings
-    cout << "\n" << SU3NJL3DCutoffFileParser::DimensionfulCouplings::section << ": " << endl;
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
     NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
 
     // VacuumMasses
-    namespace VMP = SU3NJL3DCutoffFileParser::VacuumMassesParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
     cout << "\n" << VMP::section << ": " << endl;
 
     double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
@@ -716,7 +716,7 @@ void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evalua
     cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
 
     // VacuumToFiniteBaryonDensity
-    namespace VFBDP = SU3NJL3DCutoffFileParser::VacuumToFiniteBaryonDensityParameters;
+    namespace VFBDP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteBaryonDensityParameters;
     cout << "\n" << VFBDP::section << ": " << endl;
     
     double minimumBaryonDensity = config.getDouble(VFBDP::section, VFBDP::minimumBaryonDensity);
@@ -732,7 +732,7 @@ void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evalua
     cout << VFBDP::methodZeroTempSol << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodZeroTempSol)) << endl;
 
     // FirstOrderLine
-    namespace FOLP = SU3NJL3DCutoffFileParser::FirstOrderLineParameters;
+    namespace FOLP = SU3NJL3DCutoffFileParserKeys::FirstOrderLineParameters;
     cout << "\n" << FOLP::section << ":\n";
     
     double precisionTransitionPointSol = config.getDouble(FOLP::section, FOLP::precisionTransitionPointSol);
@@ -787,9 +787,9 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     bool allRequiredSectionsPresent = true;
     vector<string> requiredSections = 
     {
-        SU3NJL3DCutoffFileParser::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
-        SU3NJL3DCutoffFileParser::FiniteTemperatureToFiniteChemicalPotentialParameters::section,
-        SU3NJL3DCutoffFileParser::CrossSectionsParameters::section
+        SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters::section
     };  
     for (int i = 0; i < int(requiredSections.size()); ++i) 
     {
@@ -817,7 +817,7 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
 void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::evaluate() const
 {   
     // Model Parameters
-    namespace MP = SU3NJL3DCutoffFileParser::ModelParameters;
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     cout << "\n" << MP::section << ": " << endl;
 
     string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
@@ -835,11 +835,11 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
 
     // Dimensionful Couplings
-    cout << "\n" << SU3NJL3DCutoffFileParser::DimensionfulCouplings::section << ": " << endl;
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
     NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
 
     // VacuumMassesParameters
-    namespace VMP = SU3NJL3DCutoffFileParser::VacuumMassesParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
     cout << "\n" << VMP::section << ": " << endl;
 
     double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
@@ -866,7 +866,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     parameters.setParameterSetName(parameterSetName);
 
     // VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters
-    namespace VFTZCPP = SU3NJL3DCutoffFileParser::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
     cout << "\n" << VFTZCPP::section << ": " << endl;
 
     double temperature = config.getDouble(VFTZCPP::section, VFTZCPP::temperature);
@@ -880,7 +880,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     cout << VFTZCPP::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
 
     // FiniteTemperatureToFiniteChemicalPotentialParameters
-    namespace FTFCPP = SU3NJL3DCutoffFileParser::FiniteTemperatureToFiniteChemicalPotentialParameters;
+    namespace FTFCPP = SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
     cout << "\n" << FTFCPP::section << ": " << endl;
     
     double chemPot = config.getDouble(FTFCPP::section, FTFCPP::chemPot);
@@ -894,7 +894,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     cout << FTFCPP::methodFinTempToFinChemPot << " = " << methodFinTempToFinChemPot << endl;
 
     // CrossSectionsParameters
-    namespace CSP = SU3NJL3DCutoffFileParser::CrossSectionsParameters;
+    namespace CSP = SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters;
     cout << "\n" << CSP::section << ": " << endl;
 
     double propagatorIntegralPrecision = config.getDouble(CSP::section, CSP::propagatorIntegralPrecision);
@@ -934,9 +934,9 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
 
 bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::validateFileZeroChemicalPotential() const
 {
-    namespace VFT = SU3NJL3DCutoffFileParser::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
-    namespace LHT = SU3NJL3DCutoffFileParser::LowToHighTemperatureAtZeroChemicalPotentialParameters;
-    namespace ICS = SU3NJL3DCutoffFileParser::IntegratedCrossSectionsParameters;
+    namespace VFT = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    namespace ICS = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
 
     bool areTemperaturesEqual = (config.getValue(VFT::section, VFT::temperature)==config.getValue(LHT::section, LHT::minimumTemp));
     if ( !areTemperaturesEqual )
@@ -965,9 +965,9 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     bool allRequiredSectionsPresent = true;
     vector<string> requiredSections = 
     {
-        SU3NJL3DCutoffFileParser::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
-        SU3NJL3DCutoffFileParser::LowToHighTemperatureAtZeroChemicalPotentialParameters::section,
-        SU3NJL3DCutoffFileParser::IntegratedCrossSectionsParameters::section
+        SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters::section
     };  
     for (int i = 0; i < int(requiredSections.size()); ++i) 
     {
@@ -1001,11 +1001,11 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
 
 void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::evaluate(string physicalScenario) const
 {   
-    namespace MP = SU3NJL3DCutoffFileParser::ModelParameters;
-    namespace VMP = SU3NJL3DCutoffFileParser::VacuumMassesParameters;
-    namespace VFT = SU3NJL3DCutoffFileParser::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
-    namespace LHT = SU3NJL3DCutoffFileParser::LowToHighTemperatureAtZeroChemicalPotentialParameters;
-    namespace ICS = SU3NJL3DCutoffFileParser::IntegratedCrossSectionsParameters;
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
+    namespace VFT = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    namespace ICS = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
 
     // Model Parameters
     cout << "\n" << MP::section << ": " << endl;
@@ -1025,7 +1025,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
 
     // Dimensionful Couplings
-    cout << "\n" << SU3NJL3DCutoffFileParser::DimensionfulCouplings::section << ": " << endl;
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
     NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
 
     // VacuumMassesParameters
@@ -1079,7 +1079,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     double integratedCrossSectionIntegralPrecision_dXdY = config.getDouble(ICS::section, ICS::integratedCrossSectionIntegralPrecision_dXdY);
     double integratedCrossSectionIntegralPrecision_dX = config.getDouble(ICS::section, ICS::integratedCrossSectionIntegralPrecision_dX);
     string approximationMethod = config.getValue(ICS::section, ICS::approximationMethod);
-    //int numberOfThreads = config.getInt(ICS::section, SU3NJL3DCutoffFileParser::CrossSectionsParameters::numberOfThreads);
+    //int numberOfThreads = config.getInt(ICS::section, SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters::numberOfThreads);
   
     cout << ICS::numberOfPointsIntegratedCrossSections << " = " << numberOfPointsIntegratedCrossSections << endl;
     cout << ICS::propagatorIntegralPrecision << " = " << propagatorIntegralPrecision << endl;
@@ -1088,7 +1088,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     cout << ICS::integratedCrossSectionIntegralPrecision_dXdY << " = " << integratedCrossSectionIntegralPrecision_dXdY << endl;
     cout << ICS::integratedCrossSectionIntegralPrecision_dX << " = " << integratedCrossSectionIntegralPrecision_dX << endl;
     cout << ICS::approximationMethod << " = " << approximationMethod << endl;
-    //cout << SU3NJL3DCutoffFileParser::CrossSectionsParameters::numberOfThreads << " = " << numberOfThreads << endl;
+    //cout << SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters::numberOfThreads << " = " << numberOfThreads << endl;
 
     // Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(

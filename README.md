@@ -35,6 +35,7 @@ cd src/gsl_wrapper/ && ./execute_tests.sh && cd ../../
 
 ## B0 Integral Study (two_fermion_line_integral_3d_cutoff)
 ```
+cd calculations/two_fermion_line_integral_3d_cutoff && ./execute_calculations.sh && cd ../../
 cd calculations/two_fermion_line_integral_3d_cutoff && ./build_plots.sh && cd ../../
 ```
 
