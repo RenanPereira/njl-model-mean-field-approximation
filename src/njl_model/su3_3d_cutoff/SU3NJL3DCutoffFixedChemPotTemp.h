@@ -54,7 +54,7 @@ public:
     SU3NJL3DCutoffMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
     void findNondiagonalMesonMottTemperature(mesonState , double , MultiRootFindingMethod , double , double , double , double );
 
-	static void evaluateCrossSectionsEqualLightMasses(
+	static void evaluateIsospinSymmetricCrossSections(
 		SU3NJL3DCutoffParameters& , 
 		double , 
 		MultiRootFindingMethod , 

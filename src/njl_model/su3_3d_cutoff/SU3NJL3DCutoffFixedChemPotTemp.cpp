@@ -614,7 +614,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
 }
 
 
-void SU3NJL3DCutoffFixedChemPotTemp::evaluateCrossSectionsEqualLightMasses(
+void SU3NJL3DCutoffFixedChemPotTemp::evaluateIsospinSymmetricCrossSections(
     SU3NJL3DCutoffParameters& parameters,                                    
     double precisionVacuum,                                    
     MultiRootFindingMethod methodVacuum,                                    

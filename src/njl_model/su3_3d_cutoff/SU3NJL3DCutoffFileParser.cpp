@@ -910,7 +910,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     cout << CSP::numberOfThreads << " = " << numberOfThreads << endl;
 
     // Calculate Cross Sections
-    SU3NJL3DCutoffFixedChemPotTemp::evaluateCrossSectionsEqualLightMasses(
+    SU3NJL3DCutoffFixedChemPotTemp::evaluateIsospinSymmetricCrossSections(
     	parameters, 
 		precisionVacuum, 
 		stringToMultiRootFindingMethod(methodVacuum), 
