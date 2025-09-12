@@ -613,7 +613,7 @@ void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
     IntegratedCrossSectionApproximationMethod 
 );
 
-void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
+void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
     double , bool , 
     double , double , double , 
@@ -627,7 +627,7 @@ void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
     IntegratedCrossSectionApproximationMethod 
 );
 
-void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
+void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
     double , bool , 
     double , double , double , 

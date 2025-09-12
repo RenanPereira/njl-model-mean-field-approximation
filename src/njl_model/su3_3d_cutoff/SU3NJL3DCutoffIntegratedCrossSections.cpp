@@ -1670,7 +1670,7 @@ void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
 }
 
 
-void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
+void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
 	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution, 
 	double propagatorIntegralPrecision, 
 	bool largeAngleScatteringContribution, 
@@ -1766,7 +1766,7 @@ void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
 }
 
 
-void evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
+void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
 	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
 	double propagatorIntegralPrecision,
 	bool largeAngleScatteringContribution, 
@@ -1849,7 +1849,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
         	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-    evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
+    evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
 		finiteTSolution, 
 		propagatorIntegralPrecision, 
 		largeAngleScatteringContribution, 
@@ -1936,7 +1936,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 	    }
 	}
 
-    evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
+    evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
 		finiteChemPotSolution, 
         propagatorIntegralPrecision,
         largeAngleScatteringContribution, 
@@ -2003,7 +2003,7 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
     }
 
 
-    evaluateAllIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
+    evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
 		finiteTSolution, 
         propagatorIntegralPrecision,
         largeAngleScatteringContribution, 
