@@ -60,7 +60,8 @@ int main()
         propagatorIntegralPrecision,
         crossSectionIntegralPrecision,
         integratedCrossSectionIntegralPrecision_dXdY,
-        integratedCrossSectionIntegralPrecision_dX
+        integratedCrossSectionIntegralPrecision_dX,
+        numberOfThreads
     );
 
     

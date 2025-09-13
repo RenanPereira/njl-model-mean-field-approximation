@@ -101,6 +101,7 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string integratedCrossSectionIntegralPrecision_dXdY = "integratedCrossSectionIntegralPrecision_dXdY";
         inline const std::string integratedCrossSectionIntegralPrecision_dX = "integratedCrossSectionIntegralPrecision_dX";
         inline const std::string approximationMethod = "approximationMethod";
+        inline const std::string numberOfThreads = "numberOfThreads";
     }
 }
 

@@ -601,7 +601,8 @@ vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlong
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
     scatteringProcess , double , bool , 
     double , double , double , 
-    IntegratedCrossSectionApproximationMethod 
+    IntegratedCrossSectionApproximationMethod ,
+    int 
 );
 
 void writeIntegratedCrossSectionToFile(vector<SU3NJL3DCutoffIntegratedCrossSection> , string );
@@ -610,28 +611,32 @@ void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
     scatteringProcess , double , bool , 
     double , double , double , 
-    IntegratedCrossSectionApproximationMethod 
+    IntegratedCrossSectionApproximationMethod ,
+    int 
 );
 
 void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
     double , bool , 
     double , double , double , 
-    IntegratedCrossSectionApproximationMethod 
+    IntegratedCrossSectionApproximationMethod ,
+    int 
 );
 
 void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
     scatteringProcess , double , bool , 
     double , double , double , 
-    IntegratedCrossSectionApproximationMethod 
+    IntegratedCrossSectionApproximationMethod ,
+    int 
 );
 
 void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
     double , bool , 
     double , double , double , 
-    IntegratedCrossSectionApproximationMethod 
+    IntegratedCrossSectionApproximationMethod ,
+    int 
 );
 
 void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
@@ -644,21 +649,24 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
     int , int , 
     bool , 
     IntegratedCrossSectionApproximationMethod ,
-    double , double , double , double 
+    double , double , double , double ,
+    int
 );
 
 void evaluateIntegratedCrossSectionsWithFixedTemperature(
     SU3NJL3DCutoffVacuum ,
     double , double , int , int , int , double , double , bool , 
     IntegratedCrossSectionApproximationMethod ,
-    double , double , double , double 
+    double , double , double , double ,
+    int 
 );
 
 void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
     SU3NJL3DCutoffVacuum ,
     double , double , double , double , int , int , int , bool , 
     IntegratedCrossSectionApproximationMethod ,
-    double , double , double , double 
+    double , double , double , double ,
+    int 
 );
 
 #endif

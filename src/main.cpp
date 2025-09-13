@@ -86,7 +86,8 @@ int main(int argc, char* argv[])
         propagatorIntegralPrecision,
         crossSectionIntegralPrecision,
         integratedCrossSectionIntegralPrecision_dXdY,
-        integratedCrossSectionIntegralPrecision_dX
+        integratedCrossSectionIntegralPrecision_dX,
+        numberOfThreads
     );
 */
 /*
@@ -180,6 +181,7 @@ int main(int argc, char* argv[])
     double crossSectionIntegralPrecision = 1E-4;
     double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
     double integratedCrossSectionIntegralPrecision_dX = 1E-3;
+    int numberOfThreads = 14;
     evaluateIntegratedCrossSectionsWithFixedChemicalPotential(vacuum,
                                                               1E-8,
                                                               chemPot,
@@ -193,7 +195,8 @@ int main(int argc, char* argv[])
                                                               propagatorIntegralPrecision,
                                                               crossSectionIntegralPrecision,
                                                               integratedCrossSectionIntegralPrecision_dXdY,
-                                                              integratedCrossSectionIntegralPrecision_dX);
+                                                              integratedCrossSectionIntegralPrecision_dX,
+                                                              numberOfThreads);
 
     largeAngleScatteringContribution = true;
     evaluateIntegratedCrossSectionsWithFixedChemicalPotential(vacuum,
@@ -209,7 +212,8 @@ int main(int argc, char* argv[])
                                                               propagatorIntegralPrecision,
                                                               crossSectionIntegralPrecision,
                                                               integratedCrossSectionIntegralPrecision_dXdY,
-                                                              integratedCrossSectionIntegralPrecision_dX);
+                                                              integratedCrossSectionIntegralPrecision_dX,
+                                                              numberOfThreads);
 */
 /*
     double minimumTemperature = 0.120;

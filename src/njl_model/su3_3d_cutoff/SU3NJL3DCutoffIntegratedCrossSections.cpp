@@ -1544,7 +1544,8 @@ vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlong
 	double crossSectionIntegralPrecision,
 	double integratedCrossSectionIntegralPrecision_dXdY, 
 	double integratedCrossSectionIntegralPrecision_dX, 
-	IntegratedCrossSectionApproximationMethod approximationMethod
+	IntegratedCrossSectionApproximationMethod approximationMethod,
+	int numberOfThreads
 )
 {	
 	//get parameters from provided set of solutions
@@ -1554,9 +1555,8 @@ vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlong
     int size = int(finiteTemperatureSolution.size());
     vector<SU3NJL3DCutoffIntegratedCrossSection> integratedCrossSectionFiniteTemperature(size);
 
-    int numberThreads = omp_get_max_threads() - 2; //leave one thread free
-    cout << "Number of threads being used: " << numberThreads << "\n";
-    #pragma omp parallel for schedule(dynamic) num_threads( numberThreads )
+    cout << "Number of threads being used: " << numberOfThreads << "\n";
+    #pragma omp parallel for schedule(dynamic) num_threads( numberOfThreads )
     for (int i = 0; i < size; ++i)
     {
         double T = finiteTemperatureSolution[i].getTemperature();
@@ -1638,7 +1638,8 @@ void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
 	double crossSectionIntegralPrecision,
 	double integratedCrossSectionIntegralPrecision_dXdY, 
 	double integratedCrossSectionIntegralPrecision_dX, 
-	IntegratedCrossSectionApproximationMethod approximationMethod
+	IntegratedCrossSectionApproximationMethod approximationMethod,
+	int numberOfThreads
 )
 {
 	//calculate integrated cross sections for the path at finite temperature
@@ -1651,7 +1652,8 @@ void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
         crossSectionIntegralPrecision,
         integratedCrossSectionIntegralPrecision_dXdY, 
         integratedCrossSectionIntegralPrecision_dX, 
-        approximationMethod
+        approximationMethod,
+		numberOfThreads
 	);
 
 
@@ -1677,7 +1679,8 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialT
 	double crossSectionIntegralPrecision, 
 	double integratedCrossSectionIntegralPrecision_dXdY, 
 	double integratedCrossSectionIntegralPrecision_dX, 
-	IntegratedCrossSectionApproximationMethod approximationMethod
+	IntegratedCrossSectionApproximationMethod approximationMethod,
+	int numberOfThreads
 )
 {
 	bool runFiniteDensityProcesses = false;
@@ -1720,7 +1723,8 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialT
 			crossSectionIntegralPrecision, 
 			integratedCrossSectionIntegralPrecision_dXdY, 
 			integratedCrossSectionIntegralPrecision_dX, 
-			approximationMethod
+			approximationMethod,
+			numberOfThreads
 		);
 	}
 }
@@ -1734,7 +1738,8 @@ void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
 	double crossSectionIntegralPrecision,
 	double integratedCrossSectionIntegralPrecision_dXdY, 
 	double integratedCrossSectionIntegralPrecision_dX, 
-	IntegratedCrossSectionApproximationMethod approximationMethod
+	IntegratedCrossSectionApproximationMethod approximationMethod,
+	int numberOfThreads
 )
 {
 	//calculate integrated cross sections for the path at finite temperature
@@ -1747,7 +1752,8 @@ void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
         crossSectionIntegralPrecision,
         integratedCrossSectionIntegralPrecision_dXdY, 
         integratedCrossSectionIntegralPrecision_dX, 
-        approximationMethod
+        approximationMethod,
+		numberOfThreads
 	);
 
 
@@ -1773,7 +1779,8 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTraject
 	double crossSectionIntegralPrecision,
 	double integratedCrossSectionIntegralPrecision_dXdY, 
 	double integratedCrossSectionIntegralPrecision_dX, 
-	IntegratedCrossSectionApproximationMethod approximationMethod
+	IntegratedCrossSectionApproximationMethod approximationMethod,
+	int numberOfThreads
 )
 {
 	vector<scatteringProcess> process;
@@ -1793,7 +1800,8 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTraject
             crossSectionIntegralPrecision,
             integratedCrossSectionIntegralPrecision_dXdY, 
             integratedCrossSectionIntegralPrecision_dX, 
-            approximationMethod
+            approximationMethod,
+			numberOfThreads
 		);
 	}
 }
@@ -1816,7 +1824,8 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
 	double propagatorIntegralPrecision, 
 	double crossSectionIntegralPrecision, 
 	double integratedCrossSectionIntegralPrecision_dXdY, 
-	double integratedCrossSectionIntegralPrecision_dX
+	double integratedCrossSectionIntegralPrecision_dX,
+	int numberOfThreads
 )
 {	
 	SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
@@ -1856,7 +1865,8 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
 		crossSectionIntegralPrecision, 
 		integratedCrossSectionIntegralPrecision_dXdY, 
 		integratedCrossSectionIntegralPrecision_dX, 
-		approximationMethod
+		approximationMethod,
+		numberOfThreads
 	);
 }
 
@@ -1875,7 +1885,8 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 	double propagatorIntegralPrecision,
 	double crossSectionIntegralPrecision,
 	double integratedCrossSectionIntegralPrecision_dXdY,
-	double integratedCrossSectionIntegralPrecision_dX
+	double integratedCrossSectionIntegralPrecision_dX,
+	int numberOfThreads
 )
 {
     //solve model at zero chemical potential up to some finite temperature
@@ -1943,7 +1954,8 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
         crossSectionIntegralPrecision,
         integratedCrossSectionIntegralPrecision_dXdY, 
     	integratedCrossSectionIntegralPrecision_dX, 
-        approximationMethod
+        approximationMethod,
+		numberOfThreads
 	);
 
 }
@@ -1963,7 +1975,8 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
 	double propagatorIntegralPrecision,
 	double crossSectionIntegralPrecision,
 	double integratedCrossSectionIntegralPrecision_dXdY,
-	double integratedCrossSectionIntegralPrecision_dX
+	double integratedCrossSectionIntegralPrecision_dX,
+	int numberOfThreads
 )
 {
     //solve model at zero chemical potential up to some finite temperature
@@ -2010,6 +2023,7 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
         crossSectionIntegralPrecision,
         integratedCrossSectionIntegralPrecision_dXdY, 
         integratedCrossSectionIntegralPrecision_dX, 
-        approximationMethod
+        approximationMethod,
+		numberOfThreads
 	);
 }

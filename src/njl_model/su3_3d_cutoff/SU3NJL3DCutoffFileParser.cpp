@@ -538,6 +538,14 @@ bool SU3NJL3DCutoffFileParser::Common::validateIntegratedCrossSectionsParameters
     bool isApproximationMethodValid = isValidIntegratedCrossSectionApproximationMethod(approximationMethod);
     if( !isApproximationMethodValid ){ cout << invalidFileMessage << endl; }
 
+    // Ensure numberOfThreads>0
+    bool isNumberOfThreadsValid = config.validatePositiveInteger(
+        ICSP::section,
+        ICSP::numberOfThreads, 
+        invalidFileMessage + " Invalid value found in section " + ICSP::section + ".", 
+        ICSP::numberOfThreads + " > 0 must be satisfied."
+    );
+
     // The function return true only if all tests passed
     return isNumberOfPointsIntegratedCrossSectionsValid && 
            isPropagatorIntegralPrecisionValid && 
@@ -545,7 +553,8 @@ bool SU3NJL3DCutoffFileParser::Common::validateIntegratedCrossSectionsParameters
            isCrossSectionIntegralPrecisionValid &&
            isIntegratedCrossSectionIntegralPrecision_dXdYValid &&
            isIntegratedCrossSectionIntegralPrecision_dXValid &&
-           isApproximationMethodValid;
+           isApproximationMethodValid &&
+           isNumberOfThreadsValid;
 }
 
 bool SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::validateFile() const
@@ -1005,7 +1014,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
     namespace VFT = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
     namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
-    namespace ICS = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
+    namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
 
     // Model Parameters
     cout << "\n" << MP::section << ": " << endl;
@@ -1071,24 +1080,24 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     cout << LHT::methodLowToHighTemp << " = " << methodLowToHighTemp << endl;
 
     // IntegratedCrossSectionsParameters
-    cout << "\n" << ICS::section << ": " << endl;
-    int numberOfPointsIntegratedCrossSections = config.getInt(ICS::section, ICS::numberOfPointsIntegratedCrossSections);
-    double propagatorIntegralPrecision = config.getDouble(ICS::section, ICS::propagatorIntegralPrecision);
-    bool largeAngleScatteringContribution = config.getBool(ICS::section, ICS::largeAngleScatteringContribution);
-    double crossSectionIntegralPrecision = config.getDouble(ICS::section, ICS::crossSectionIntegralPrecision);
-    double integratedCrossSectionIntegralPrecision_dXdY = config.getDouble(ICS::section, ICS::integratedCrossSectionIntegralPrecision_dXdY);
-    double integratedCrossSectionIntegralPrecision_dX = config.getDouble(ICS::section, ICS::integratedCrossSectionIntegralPrecision_dX);
-    string approximationMethod = config.getValue(ICS::section, ICS::approximationMethod);
-    //int numberOfThreads = config.getInt(ICS::section, SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters::numberOfThreads);
+    cout << "\n" << ICSP::section << ": " << endl;
+    int numberOfPointsIntegratedCrossSections = config.getInt(ICSP::section, ICSP::numberOfPointsIntegratedCrossSections);
+    double propagatorIntegralPrecision = config.getDouble(ICSP::section, ICSP::propagatorIntegralPrecision);
+    bool largeAngleScatteringContribution = config.getBool(ICSP::section, ICSP::largeAngleScatteringContribution);
+    double crossSectionIntegralPrecision = config.getDouble(ICSP::section, ICSP::crossSectionIntegralPrecision);
+    double integratedCrossSectionIntegralPrecision_dXdY = config.getDouble(ICSP::section, ICSP::integratedCrossSectionIntegralPrecision_dXdY);
+    double integratedCrossSectionIntegralPrecision_dX = config.getDouble(ICSP::section, ICSP::integratedCrossSectionIntegralPrecision_dX);
+    string approximationMethod = config.getValue(ICSP::section, ICSP::approximationMethod);
+    int numberOfThreads = config.getInt(ICSP::section, ICSP::numberOfThreads);
   
-    cout << ICS::numberOfPointsIntegratedCrossSections << " = " << numberOfPointsIntegratedCrossSections << endl;
-    cout << ICS::propagatorIntegralPrecision << " = " << propagatorIntegralPrecision << endl;
-    cout << ICS::largeAngleScatteringContribution << " = " << largeAngleScatteringContribution << endl;
-    cout << ICS::crossSectionIntegralPrecision << " = " << crossSectionIntegralPrecision << endl;
-    cout << ICS::integratedCrossSectionIntegralPrecision_dXdY << " = " << integratedCrossSectionIntegralPrecision_dXdY << endl;
-    cout << ICS::integratedCrossSectionIntegralPrecision_dX << " = " << integratedCrossSectionIntegralPrecision_dX << endl;
-    cout << ICS::approximationMethod << " = " << approximationMethod << endl;
-    //cout << SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters::numberOfThreads << " = " << numberOfThreads << endl;
+    cout << ICSP::numberOfPointsIntegratedCrossSections << " = " << numberOfPointsIntegratedCrossSections << endl;
+    cout << ICSP::propagatorIntegralPrecision << " = " << propagatorIntegralPrecision << endl;
+    cout << ICSP::largeAngleScatteringContribution << " = " << largeAngleScatteringContribution << endl;
+    cout << ICSP::crossSectionIntegralPrecision << " = " << crossSectionIntegralPrecision << endl;
+    cout << ICSP::integratedCrossSectionIntegralPrecision_dXdY << " = " << integratedCrossSectionIntegralPrecision_dXdY << endl;
+    cout << ICSP::integratedCrossSectionIntegralPrecision_dX << " = " << integratedCrossSectionIntegralPrecision_dX << endl;
+    cout << ICSP::approximationMethod << " = " << approximationMethod << endl;
+    cout << ICSP::numberOfThreads << " = " << numberOfThreads << endl;
 
     // Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(
@@ -1120,7 +1129,8 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
             propagatorIntegralPrecision,
             crossSectionIntegralPrecision,
             integratedCrossSectionIntegralPrecision_dXdY,
-            integratedCrossSectionIntegralPrecision_dX
+            integratedCrossSectionIntegralPrecision_dX,
+            numberOfThreads
         );
     }
 }
