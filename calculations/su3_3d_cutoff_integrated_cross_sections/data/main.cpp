@@ -11,22 +11,32 @@ int main()
     
 
     //parameter set A (Klevansky parameter set)
-    double cutoff = 0.6023;
-    double gs = 10.116734156126128;
-    double kappa = -155.93878816540243;
-    double m0u = 0.0055;
-    double m0d = 0.0055;
-    double m0s = 0.1407;
+    double cutoff_GeV = 0.6023;
+    double upQuarkCurrentMass_GeV = 0.0055;
+    double downQuarkCurrentMass_GeV = 0.0055;
+    double strangeQuarkCurrentMass_GeV = 0.1407;
+    double fourQuarkSPCouplingCutoff2 = 3.67;
+    double determinantCouplingCutoff5 = -12.36;
+
+    double gs = fourQuarkSPCouplingCutoff2/pow(cutoff_GeV,2);
+    double kappa = determinantCouplingCutoff5/pow(cutoff_GeV,5);
 
     //Fix Lagrangian dimensionful couplings
     NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(
+        CUTOFF_EVERYWHERE, 
+        cutoff_GeV, 
+        couplings, 
+        upQuarkCurrentMass_GeV, 
+        downQuarkCurrentMass_GeV, 
+        strangeQuarkCurrentMass_GeV
+    );
     parameters.setParameterSetName("setA");
 
     double precisionVacuum = 1E-8;
-    string methodVacuum = "HYBRIDS";
+    string methodVacuum = "DNEWTON";
     double upQuarkMassGuess = 0.3;
     double strangeQuarkMassGuess = 0.5;
     double precisionVacToFinTemp = 1E-8;
@@ -34,7 +44,7 @@ int main()
     double minimumTemperature = 0.120;
     double maximumTemperature = 0.300;
     int numberOfPointsFromVacToMinTemp = 200; 
-    int numberOfPointsFromMinToMaxTemp = 181;
+    int numberOfPointsFromMinToMaxTemp = 11;
     bool largeAngleScatteringContribution = false;
     IntegratedCrossSectionApproximationMethod approximationMethod = COMPLETE_COV;
 	double propagatorIntegralPrecision = 1E-5;
