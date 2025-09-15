@@ -8,7 +8,7 @@
 
 
 // Maximum number of iterations in the root-finding loops
-const int MAX_ITERATIONS = 1000;
+inline constexpr int MAX_ITERATIONS = 1000;
 
 enum MultiRootFindingMethod 
 { 
@@ -18,7 +18,7 @@ enum MultiRootFindingMethod
     BROYDEN
 };
 
-static const std::map<MultiRootFindingMethod, std::string> MultiRootFindingMethodMap = 
+inline const std::map<MultiRootFindingMethod, std::string> MultiRootFindingMethodMap = 
 {
     {MultiRootFindingMethod::HYBRIDS, "HYBRIDS"},
     {MultiRootFindingMethod::HYBRID, "HYBRID"},
@@ -39,13 +39,13 @@ MultiRootFindingMethod stringToMultiRootFindingMethod(const string& );
 
 bool isValidMultiRootFindingMethod(const string& );
 
-void multiDimensionalRootFind(int , double , double* , void* , int (const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod );
+void multiDimensionalRootFind(int , double , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod );
 
-double OneDimensionalRootFind(double , double , double , void* , double placeholder_f (double, void*), RootFindingMethod );
+double OneDimensionalRootFind(double , double , double , void* , double placeholder_f(double, void*), RootFindingMethod );
 
-vector<double> multiDimensionalRootFindRelativeErrors(int , double* , void* , int (const gsl_vector*, void*, gsl_vector*));
+vector<double> multiDimensionalRootFindRelativeErrors(int , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*));
 
-int multiDimensionalRootFindTestResidual(int , double , double* , void* , int (const gsl_vector*, void*, gsl_vector*));
+int multiDimensionalRootFindTestResidual(int , double , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*));
 
 vector<gsl_complex> sortGSLComplexNumbersByAbsoluteSize(vector<gsl_complex> );
 
