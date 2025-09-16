@@ -294,7 +294,7 @@ void evaluateCrossSectionProcess12To34ToFile(
             s, propIntPrecision, process, 
             largeAngleScatteringContribution, crossSecIntPrecision
         );
-        crossSection[i] = inverseGeVSquaredToMiliBarn*crossSection[i];
+        crossSection[i] = PhysicalConstants::inverseGeVSquaredToMiliBarn*crossSection[i];
     }
 
 
