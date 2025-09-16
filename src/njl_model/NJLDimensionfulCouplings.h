@@ -48,7 +48,7 @@ inline const map<LagrangianInteractions, string> LagrangianInteractionsMap =
     {SP4Q_DET2NFQ_VPMULTIQ, "SP4Q_DET2NFQ_VPMULTIQ"}
 };
 
-string toStringLagrangianInteractions(LagrangianInteractions );
+string toString(LagrangianInteractions );
 
 LagrangianInteractions stringToLagrangianInteractions(const string& );
 

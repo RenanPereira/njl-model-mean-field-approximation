@@ -20,7 +20,7 @@ inline const std::map<NJL3DCutoffRegularizationScheme, std::string> NJL3DCutoffR
     {CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY, "CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY"}
 };
 
-std::string toStringNJL3DCutoffRegularizationScheme(NJL3DCutoffRegularizationScheme );
+std::string toString(NJL3DCutoffRegularizationScheme );
 
 NJL3DCutoffRegularizationScheme stringToNJL3DCutoffRegularizationScheme(const std::string& );
 

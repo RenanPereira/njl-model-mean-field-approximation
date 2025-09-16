@@ -33,7 +33,7 @@ enum RootFindingMethod
     falsepos 
 };
 
-string toStringMultiRootFindingMethod(MultiRootFindingMethod );
+string toString(MultiRootFindingMethod );
 
 MultiRootFindingMethod stringToMultiRootFindingMethod(const string& );
 

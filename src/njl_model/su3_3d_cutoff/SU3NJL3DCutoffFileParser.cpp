@@ -25,7 +25,7 @@ NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::Common::extractDimensionfulCo
             SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::lagrangianInteractions
         )
     );
-	cout << "interaction = " << toStringLagrangianInteractions(interaction) << endl;
+	cout << "interaction = " << toString(interaction) << endl;
 
 	if ( interaction==SP4Q_DET2NFQ )
 	{
@@ -603,7 +603,7 @@ void SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::evaluate() const
     double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
     
     cout << MP::parameterSetName << " = " << parameterSetName << endl;
-    cout << MP::regularizationScheme << " = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
     cout << MP::cutoff << " = " << cutoff << endl;
     cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
     cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
@@ -624,7 +624,7 @@ void SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::evaluate() const
     double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
 
     cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
-    cout << VMP::methodVacuum << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
     cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
     cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
     cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
@@ -698,7 +698,7 @@ void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evalua
     double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
     
     cout << MP::parameterSetName << " = " << parameterSetName << endl;
-    cout << MP::regularizationScheme << " = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
     cout << MP::cutoff << " = " << cutoff << endl;
     cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
     cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
@@ -719,7 +719,7 @@ void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evalua
     double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
 
     cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
-    cout << VMP::methodVacuum << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
     cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
     cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
     cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
@@ -738,7 +738,7 @@ void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evalua
     cout << VFBDP::maximumBaryonDensity << " = " << maximumBaryonDensity << endl;
     cout << VFBDP::numberOfPoints << " = " << numberOfPoints << endl;
     cout << VFBDP::precisionZeroTempSol << " = " << precisionZeroTempSol << endl;
-    cout << VFBDP::methodZeroTempSol << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodZeroTempSol)) << endl;
+    cout << VFBDP::methodZeroTempSol << " = " << toString(stringToMultiRootFindingMethod(methodZeroTempSol)) << endl;
 
     // FirstOrderLine
     namespace FOLP = SU3NJL3DCutoffFileParserKeys::FirstOrderLineParameters;
@@ -750,7 +750,7 @@ void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evalua
     double massDifferenceCEP = config.getDouble(FOLP::section, FOLP::massDifferenceCEP);
     
     cout << FOLP::precisionTransitionPointSol  << " = " << precisionTransitionPointSol << endl;
-    cout << FOLP::methodTransitionPointSol << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodTransitionPointSol)) << endl;
+    cout << FOLP::methodTransitionPointSol << " = " << toString(stringToMultiRootFindingMethod(methodTransitionPointSol)) << endl;
     cout << FOLP::deltaT << " = " << deltaT << endl;
     cout << FOLP::massDifferenceCEP << " = " << massDifferenceCEP << endl;
 
@@ -837,7 +837,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
 
     cout << MP::parameterSetName << " = " << parameterSetName << endl;
-    cout << MP::regularizationScheme << " = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
     cout << MP::cutoff << " = " << cutoff << endl;
     cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
     cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
@@ -858,7 +858,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
 
     cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
-    cout << VMP::methodVacuum << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
     cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
     cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
     cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
@@ -1027,7 +1027,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
 
     cout << MP::parameterSetName << " = " << parameterSetName << endl;
-    cout << MP::regularizationScheme << " = " << toStringNJL3DCutoffRegularizationScheme(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
     cout << MP::cutoff << " = " << cutoff << endl;
     cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
     cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
@@ -1047,7 +1047,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
 
     cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
-    cout << VMP::methodVacuum << " = " << toStringMultiRootFindingMethod(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
     cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
     cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
     cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;

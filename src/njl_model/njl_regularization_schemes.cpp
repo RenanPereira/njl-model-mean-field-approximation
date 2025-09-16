@@ -5,7 +5,7 @@
 using namespace std;
 
 
-string toStringNJL3DCutoffRegularizationScheme(NJL3DCutoffRegularizationScheme scheme) 
+string toString(NJL3DCutoffRegularizationScheme scheme) 
 {
     // Check if the method exists in the map using count
     if (NJL3DCutoffRegularizationSchemeMap.count(scheme))

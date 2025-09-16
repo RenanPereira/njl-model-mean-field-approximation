@@ -10,7 +10,7 @@
 using namespace std;
 
 
-string toStringMultiRootFindingMethod(MultiRootFindingMethod method) 
+string toString(MultiRootFindingMethod method) 
 {
     // Check if the method exists in the map using count
     if (MultiRootFindingMethodMap.count(method))
