@@ -1696,8 +1696,6 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialT
 		}
 	}
 
-	vector<scatteringProcess> process = { UUUU };
-	/*
 	vector<scatteringProcess> process;
 	if ( runFiniteDensityProcesses )
 	{
@@ -1714,7 +1712,6 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialT
 			UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SSBarUUBar, SSBarSSBar 
 		};
 	}
-	*/
 
 	for (int i = 0; i < int(process.size()); ++i)
 	{
