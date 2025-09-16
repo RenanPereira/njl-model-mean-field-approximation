@@ -39,6 +39,13 @@ cd calculations/two_fermion_line_integral_3d_cutoff && ./execute_calculations.sh
 cd calculations/two_fermion_line_integral_3d_cutoff && ./build_plots.sh && cd ../../
 ```
 
+## SU3 NJL Vacuum (su3_3d_cutoff_vacuum_masses)
+
+### Vacuum Masses with and without 8q interactions
+```
+cd calculations/su3_3d_cutoff_vacuum_masses && ./execute_calculations.sh && cd ../../
+```
+
 ## SU3 NJL Phase Diagram Study (su3_3d_cutoff_phase_diagram)
 ```
 cd calculations/su3_3d_cutoff_phase_diagram && ./execute_calculations.sh && cd ../../
