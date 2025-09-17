@@ -68,3 +68,74 @@ To execute everything in one go:
 ./build_plots.sh
 ```
 
+## Results
+
+In this section we present the results of numerical results for the two fermion line integral, $B_0$, by choosing a particular value for the cutoff, $\Lambda$, and constant values for the fermion masses, $M_i$ and $M_j$. 
+
+
+### Different pole shifts
+
+#### External momentum shift vs mass shift
+![B0 plot](plots/B0_vs_k0_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.0_k0Shift.png)
+![B0 plot](plots/B0_vs_k0_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.0.png)
+
+
+#### $B_0$ vs $|\bold{k}|$ different $k_0$
+
+![B0 plot](plots/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4_diff_k0.png)
+
+
+### $B_0$ vs $|\bold{k}|$ different temperature
+
+![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.0_diff_T.png)
+![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.5_diff_T.png)
+![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.0_diff_T.png)
+![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.5_diff_T.png)
+![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.0_diff_T.png)
+![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.5_diff_T.png)
+
+
+### $B_0$ vs $|\bold{k}|$ different chemical potential
+
+![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k00.0_diff_mu.png)
+![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k00.5_diff_mu.png)
+![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k01.0_diff_mu.png)
+![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k01.5_diff_mu.png)
+![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k02.0_diff_mu.png)
+![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k02.5_diff_mu.png)
+
+
+### $B_0$ vs $|\bold{k}|$ different temperature and chemical potential
+
+![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k00.0_diff_T_mu.png)
+![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k00.5_diff_T_mu.png)
+![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k01.0_diff_T_mu.png)
+![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k01.5_diff_T_mu.png)
+![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k02.0_diff_T_mu.png)
+![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k02.5_diff_T_mu.png)
+
+
+#### $B_0$ vs $k_0$ different $|\bold{k}|$
+
+![B0 plot](plots/B0_vs_k0_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4_diff_k.png)
+
+### $B_0$ vs $k_0$ different temperature
+
+![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.0_diff_T.png)
+![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.5_diff_T.png)
+![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k1.0_diff_T.png)
+![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k1.5_diff_T.png)
+
+### $B_0$ vs $k_0$ different chemical potential
+
+![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k0.0_diff_mu.png)
+![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k0.5_diff_mu.png)
+![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k1.0_diff_mu.png)
+![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k1.5_diff_mu.png)
+
+### $B_0$ vs $k_0$ different temperature and chemical potential
+
+![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k0.0_diff_T_mu.png)
+![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k0.5_diff_T_mu.png)
+![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k1.0_diff_T_mu.png)
+![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k1.5_diff_T_mu.png)
