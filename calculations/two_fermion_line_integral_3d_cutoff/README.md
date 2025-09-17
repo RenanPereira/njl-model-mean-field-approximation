@@ -85,7 +85,7 @@ In this section we present the results of numerical results for the two fermion 
 ![B0 plot](plots/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4_diff_k0.png)
 
 
-### $B_0$ vs $|\bold{k}|$ different temperature
+### $B_0$ vs $|\bold{k}|$ different $k_0$ and temperature
 
 ![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.0_diff_T.png)
 ![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.5_diff_T.png)
@@ -95,7 +95,7 @@ In this section we present the results of numerical results for the two fermion 
 ![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.5_diff_T.png)
 
 
-### $B_0$ vs $|\bold{k}|$ different chemical potential
+### $B_0$ vs $|\bold{k}|$ different $k_0$ and chemical potential
 
 ![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k00.0_diff_mu.png)
 ![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k00.5_diff_mu.png)
@@ -105,7 +105,7 @@ In this section we present the results of numerical results for the two fermion 
 ![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k02.5_diff_mu.png)
 
 
-### $B_0$ vs $|\bold{k}|$ different temperature and chemical potential
+### $B_0$ vs $|\bold{k}|$ different $k_0$, temperature and chemical potential
 
 ![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k00.0_diff_T_mu.png)
 ![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k00.5_diff_T_mu.png)
@@ -119,21 +119,21 @@ In this section we present the results of numerical results for the two fermion 
 
 ![B0 plot](plots/B0_vs_k0_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4_diff_k.png)
 
-### $B_0$ vs $k_0$ different temperature
+### $B_0$ vs $k_0$ different $|\bold{k}|$ and temperature
 
 ![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.0_diff_T.png)
 ![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.5_diff_T.png)
 ![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k1.0_diff_T.png)
 ![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k1.5_diff_T.png)
 
-### $B_0$ vs $k_0$ different chemical potential
+### $B_0$ vs $k_0$ different $|\bold{k}|$ and chemical potential
 
 ![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k0.0_diff_mu.png)
 ![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k0.5_diff_mu.png)
 ![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k1.0_diff_mu.png)
 ![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k1.5_diff_mu.png)
 
-### $B_0$ vs $k_0$ different temperature and chemical potential
+### $B_0$ vs $k_0$ different $|\bold{k}|$, temperature and chemical potential
 
 ![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k0.0_diff_T_mu.png)
 ![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k0.5_diff_T_mu.png)
