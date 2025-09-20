@@ -51,7 +51,9 @@ THE DISCUSSION OVER THE "APPROXIMATION" METHODS MUST BE IMPROVED.
 Run the `execute_calculations.sh` script to compile the C++ code, execute it using the provided configuration files, and generate the data files.
 
 ```bash
-./execute_calculations.sh
+./execute_calculations_COMPLETE_COV.sh
+./execute_calculations_KLEVANSKY.sh
+./execute_calculations_ZHUANG.sh
 ```
 This script:
 1. Navigates to the parent directory and builds the C++ code using `make`.
@@ -87,7 +89,9 @@ Script that switches the `main.cpp` file from the root project by the `main.cpp`
 
 To execute everything in one go:
 ```bash
-./execute_calculations.sh
+./execute_calculations_COMPLETE_COV.sh
+./execute_calculations_KLEVANSKY.sh
+./execute_calculations_ZHUANG.sh
 ./build_plots.sh
 ```
 

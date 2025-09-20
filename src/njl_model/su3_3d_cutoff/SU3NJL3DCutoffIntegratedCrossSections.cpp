@@ -1665,7 +1665,7 @@ void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
     fileName = fileName + "_TMin" + to_string(integratedCrossSectionFiniteTemperature[0].getTemperature());
     fileName = fileName + "_TMax" + to_string(integratedCrossSectionFiniteTemperature[integratedCrossSectionFiniteTemperature.size()-1].getTemperature());
     fileName = fileName + "_CPU" + to_string(integratedCrossSectionFiniteTemperature[0].getUpQuarkEffectiveChemicalPotential());
-    //std::replace( fileName.begin(), fileName.end(), '.', ','); 
+    std::replace( fileName.begin(), fileName.end(), '.', 'p'); 
     fileName =  fileName +".dat";
 
     writeIntegratedCrossSectionToFile(integratedCrossSectionFiniteTemperature, fileName);
@@ -1765,7 +1765,7 @@ void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
     fileName = fileName + "_CPQMin" + to_string(integratedCrossSectionFiniteTemperature[0].getUpQuarkEffectiveChemicalPotential());
     fileName = fileName + "_CPQMax" + to_string(integratedCrossSectionFiniteTemperature[integratedCrossSectionFiniteTemperature.size()-1].getUpQuarkEffectiveChemicalPotential());
     fileName = fileName + "_T" + to_string(integratedCrossSectionFiniteTemperature[0].getTemperature());
-    //std::replace( fileName.begin(), fileName.end(), '.', ','); 
+    std::replace( fileName.begin(), fileName.end(), '.', 'p'); 
     fileName =  fileName +".dat";
 
     writeIntegratedCrossSectionToFile(integratedCrossSectionFiniteTemperature, fileName);

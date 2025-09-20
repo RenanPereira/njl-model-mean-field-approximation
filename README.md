@@ -63,7 +63,9 @@ cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./build_plots.sh && cd
 ## SU3 NJL Integrated Cross Section Study (su3_3d_cutoff_integrated_cross_sections)
 
 ```
-cd calculations/su3_3d_cutoff_integrated_cross_sections && ./execute_calculations.sh && cd ../../
+cd calculations/su3_3d_cutoff_integrated_cross_sections && ./execute_calculations_COMPLETE_COV.sh && cd ../../
+cd calculations/su3_3d_cutoff_integrated_cross_sections && ./execute_calculations_KLEVANSKY.sh && cd ../../
+cd calculations/su3_3d_cutoff_integrated_cross_sections && ./execute_calculations_ZHUANG.sh && cd ../../
 cd calculations/su3_3d_cutoff_integrated_cross_sections && ./build_plots.sh && cd ../../
 ```
 

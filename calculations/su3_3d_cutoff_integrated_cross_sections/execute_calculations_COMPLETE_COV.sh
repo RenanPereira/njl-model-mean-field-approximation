@@ -13,7 +13,9 @@ cp bin/nambuJonaLasinioModel.out calculations/su3_3d_cutoff_integrated_cross_sec
 
 cd calculations/su3_3d_cutoff_integrated_cross_sections/data
 
-./nambuJonaLasinioModel.out use-config-file integratedCrossSections_setA_TMin0.120000_TMax0.300000.ini
+# SetA
+filename="integratedCrossSections_setA_TMin0p120000_TMax0p300000.ini"
+./nambuJonaLasinioModel.out use-config-file $filename
 
 rm nambuJonaLasinioModel.out
 
