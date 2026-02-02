@@ -11,9 +11,9 @@ cd .. && cd .. && cd ..
 make clean
 make -j$(nproc)
 
-cp bin/nambuJonaLasinioModel.out calculations/su3_3d_cutoff_integrated_cross_sections/data
+cp bin/nambuJonaLasinioModel.out calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot/data
 
-cd calculations/su3_3d_cutoff_integrated_cross_sections/data
+cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot/data
 
 # SetA
 filename="integratedCrossSections_setA_TMin0p120000_TMax0p300000.ini"
