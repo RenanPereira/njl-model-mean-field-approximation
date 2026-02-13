@@ -100,3 +100,41 @@ cd zero_chem_pot
 ## Results
 
 In this section we present the results of the integrated cross sections for different processes ($\sigma$ in mb), as a function of temperature and chemical potential.
+
+In this section we present the results of the quark relaxation time for different physical scenarios, different NJL parameter sets and different methods to evaluate the integral over the differential cross sections.
+
+
+### Set A, Zero chemical potential
+
+#### uu $\rightarrow$ uu 
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_uuuu_CP0.png)
+
+#### uubar $\rightarrow$ uubar 
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_uubaruubar_CP0.png)
+
+#### uubar $\rightarrow$ ssbar
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_uubarssbar_CP0.png)
+
+#### uubar $\rightarrow$ ddbar
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_uubarddbar_CP0.png)
+
+#### us $\rightarrow$ us
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA__CP0.png)
+
+#### usbar $\rightarrow$ usbar
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_usbarusbar_CP0.png)
+
+#### ud $\rightarrow$ ud
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_udud_CP0.png)
+
+#### udbar $\rightarrow$ udbar
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_udbarudbar_CP0.png)
+
+#### ss $\rightarrow$ ss
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_ssss_CP0.png)
+
+#### ssbar $\rightarrow$ uubar
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_ssbaruubar_CP0.png)
+
+#### ssbar $\rightarrow$ ssbar
+![Integrated cross section plot](zero_chem_pot/plots/integrated_cross_section_setA_ssbarssbar_CP0.png)

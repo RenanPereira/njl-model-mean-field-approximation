@@ -42,9 +42,9 @@ def plot_integrated_cross_section_vs_temperature(
     x_num_ticks,
     y_num_ticks
 ):
-    complete_label = "Complete"
-    klevansky_label = "Klevansky"
-    zhuang_label = "Zhuang"
+    complete_label = "Method I"
+    klevansky_label = "Method II"
+    zhuang_label = "Method III"
 
     print(f'Building plot: integrated cross section as a function of temperature for {process} (zero chemical potential)')
 
@@ -69,7 +69,7 @@ def plot_integrated_cross_section_vs_temperature(
     color_zhuang = 'blue'
     linestyle_zhuang = '-'
 
-    # Plot cross sections
+    # Plot integrated cross sections
     ax.plot(data_complete.get_temperature(), data_complete.get_integrated_cross_section(), label=complete_label, color=color_complete, linewidth=2, linestyle=linestyle_complete)
     ax.plot(data_klevansky.get_temperature(), data_klevansky.get_integrated_cross_section(), label=klevansky_label, color=color_klevansky, linewidth=2, linestyle=linestyle_klevansky)
     ax.plot(data_zhuang.get_temperature(), data_zhuang.get_integrated_cross_section(), label=zhuang_label, color=color_zhuang, linewidth=2, linestyle=linestyle_zhuang)
@@ -80,7 +80,7 @@ def plot_integrated_cross_section_vs_temperature(
 
     # # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc=legend_loc, fontsize=14, frameon=False, title='Method', title_fontsize=14)
+    plt.legend(loc=legend_loc, fontsize=14, frameon=False, title_fontsize=14)
 
     # # Configure axes using the helper function
     configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
