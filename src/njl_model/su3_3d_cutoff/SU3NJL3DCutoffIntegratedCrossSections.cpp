@@ -1591,20 +1591,20 @@ void writeIntegratedCrossSectionToFile(vector<SU3NJL3DCutoffIntegratedCrossSecti
     std::ofstream fileTest;
     fileTest.open(fileName, std::ofstream::out | std::ios::trunc);
     fileTest.precision(15);
-    fileTest.width(25);   fileTest << "T[GeV]";           //temperature
-    fileTest.width(25);   fileTest << "nU[GeV^3]";       //u quark number
-    fileTest.width(25);   fileTest << "nD[GeV^3]";       //d quark number
-    fileTest.width(25);   fileTest << "nS[GeV^3]";       //s quark number
-    fileTest.width(25);   fileTest << "nUBar[GeV^3]";    //u anti-quark number
-    fileTest.width(25);   fileTest << "nDBar[GeV^3]";    //d anti-quark number
-    fileTest.width(25);   fileTest << "nSBbar[GeV^3]";    //s anti-quark number
-    fileTest.width(25);   fileTest << "W[Gev^-2]";        //integrated cross section
-    fileTest.width(25);   fileTest << "effMU[GeV]";          //u-quark effective mass
-    fileTest.width(25);   fileTest << "effMD[GeV]";          //d-quark effective mass
-    fileTest.width(25);   fileTest << "effMS[GeV]";          //s-quark effective mass
-    fileTest.width(25);   fileTest << "effCPU[GeV]";          //u quark effective chemical potential
-    fileTest.width(25);   fileTest << "effCPD[GeV]";          //d quark effective chemical potential
-    fileTest.width(25);   fileTest << "effCPS[GeV]";          //s quark effective chemical potential
+    fileTest.width(25);   fileTest << "T[GeV]"; //temperature
+    fileTest.width(25);   fileTest << "nU[GeV^3]"; //u quark number
+    fileTest.width(25);   fileTest << "nD[GeV^3]"; //d quark number
+    fileTest.width(25);   fileTest << "nS[GeV^3]"; //s quark number
+    fileTest.width(25);   fileTest << "nUBar[GeV^3]"; //u anti-quark number
+    fileTest.width(25);   fileTest << "nDBar[GeV^3]"; //d anti-quark number
+    fileTest.width(25);   fileTest << "nSBbar[GeV^3]"; //s anti-quark number
+    fileTest.width(25);   fileTest << "W[Gev^-2]"; //integrated cross section
+    fileTest.width(25);   fileTest << "effMU[GeV]"; //u-quark effective mass
+    fileTest.width(25);   fileTest << "effMD[GeV]"; //d-quark effective mass
+    fileTest.width(25);   fileTest << "effMS[GeV]"; //s-quark effective mass
+    fileTest.width(25);   fileTest << "effCPU[GeV]"; //u quark effective chemical potential
+    fileTest.width(25);   fileTest << "effCPD[GeV]"; //d quark effective chemical potential
+    fileTest.width(25);   fileTest << "effCPS[GeV]"; //s quark effective chemical potential
     fileTest << std::endl;
 
     for (int i = 0; i < int(integratedCrossSection.size()); ++i)
