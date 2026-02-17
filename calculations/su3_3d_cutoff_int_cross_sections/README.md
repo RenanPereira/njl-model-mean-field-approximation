@@ -34,7 +34,7 @@ TO DO: THE DISCUSSION OVER THE "APPROXIMATION" METHODS MUST BE IMPROVED.
 ├── execute_calculations.sh  # Shell script to execute the calculations
 ├── execute_local_main.sh    # Shell script that swaps the `main.cpp` file of the source code by a local one,
 |                              compiles and runs the executable
-├── plots_scripts            # Python scripts for generating plots
+├── plotting                 # Python scripts for generating plots
 │   ├── build_plots_*.py     # Specific plot scripts for various scenarios
 │   ├── __init__.py          # Python file necessary to modularize
 ├── plots                    # Directory to store the generated plot images

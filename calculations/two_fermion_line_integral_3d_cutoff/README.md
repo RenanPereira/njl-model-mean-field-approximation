@@ -18,7 +18,7 @@ Or, check the [DOI](https://journals.aps.org/prc/abstract/10.1103/PhysRevC.109.0
 │   ├── *.ini                # Configuration files for the calculations
 │   ├── *.dat                # Generated data files
 ├── execute_calculations.sh  # Shell script to execute the calculations
-├── plots_scripts            # Python scripts for generating plots
+├── plotting                 # Python scripts for generating plots
 │   ├── build_plots_*.py     # Specific plot scripts for various scenarios
 │   ├── __init__.py          # Python file necessary to modularize
 ├── plots                    # Directory to store the generated plot images

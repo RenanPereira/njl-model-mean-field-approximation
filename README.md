@@ -54,7 +54,7 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 
 ## SU3 NJL Cross Section Study 
 
-### Klevansky parameter set (su3_3d_cutoff_phase_diagram)
+### Klevansky parameter set (su3_3d_cutoff_cross_sections_klevansky)
 ```
 (cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./execute_calculations.sh)
 (cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./build_plots.sh)
