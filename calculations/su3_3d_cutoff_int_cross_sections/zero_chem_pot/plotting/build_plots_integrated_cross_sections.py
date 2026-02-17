@@ -49,14 +49,9 @@ def plot_integrated_cross_section_vs_temperature(
     print(f'Building plot: integrated cross section as a function of temperature for {process} (zero chemical potential)')
 
     # Load data from the file
-    filename_complete  = f'IntegratedCrossSection_{set}_{process}_COMPLETE_COV_TMin0p120000_TMax0p300000_CPU0p000000.dat'
-    data_complete = IntegratedCrossSectionData(data_folder + filename_complete )
-
-    filename_klevansky  = f'IntegratedCrossSection_{set}_{process}_KLEVANSKY_TMin0p120000_TMax0p300000_CPU0p000000.dat'
-    data_klevansky = IntegratedCrossSectionData(data_folder + filename_klevansky )
-
-    filename_zhuang  = f'IntegratedCrossSection_{set}_{process}_ZHUANG_TMin0p120000_TMax0p300000_CPU0p000000.dat'
-    data_zhuang = IntegratedCrossSectionData(data_folder + filename_zhuang )
+    data_complete = IntegratedCrossSectionData.from_matching_files(data_folder, set, process, "COMPLETE_COV")
+    data_klevansky = IntegratedCrossSectionData.from_matching_files(data_folder, set, process, "KLEVANSKY")
+    data_zhuang = IntegratedCrossSectionData.from_matching_files(data_folder, set, process, "ZHUANG")
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)

@@ -1,6 +1,6 @@
 import numpy as np
 
-from common_utils.integrated_cross_section_data import IntegratedCrossSectionDataFromMultipleFiles
+from common_utils.integrated_cross_section_data import IntegratedCrossSectionData
 from common_utils.physical_constants import hbarc_gevfm
 
 
@@ -24,7 +24,7 @@ class QuarkRelaxationTimes:
 
     def _load_data_zero_mu_isospin_symmetric(self, path_data_folder: str, parameter_set: str, method: str):
         # read data files for the specific scenario of zero chemical potential
-        loader = IntegratedCrossSectionDataFromMultipleFiles.from_matching_files
+        loader = IntegratedCrossSectionData.from_matching_files
         
         # 1) ud->ud
         self.data_udud = loader(path_data_folder, parameter_set, "UDUD", method)
