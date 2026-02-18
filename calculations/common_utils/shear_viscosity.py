@@ -23,7 +23,7 @@ def simplified_shear_viscosity_integrand(
         momentum: particle momentum
         mass: particle mass
         eta: +1 for particle, -1 for antiparticle
-        chemical_potential: μ
+        chemical_potential: mu
         temperature: T
 
     Returns:
@@ -40,13 +40,19 @@ def simplified_shear_viscosity_integral(
     mass: float, 
     eta: float, 
     chemical_potential: float, 
-    temperature: float
+    temperature: float,
+    epsabs: float,
+    epsrel: float,
 ) -> float:
+    arguments = (mass, eta, chemical_potential, temperature)
+    
     result, error = quad(
         simplified_shear_viscosity_integrand,
         0.0,
         math.inf,
-        args=(mass, eta, chemical_potential, temperature)
+        arguments,
+        epsabs=epsabs,
+        epsrel=epsrel,
     )
 
     return result
@@ -54,7 +60,9 @@ def simplified_shear_viscosity_integral(
 
 def calculate_shear_viscosity(
     quark_rel_times_data: QuarkRelaxationTimesData, 
-    number_of_colors
+    epsabs: float,
+    epsrel: float,
+    number_of_colors: float = 3.0
 ) -> np.ndarray:
     shear_viscosity = [] 
     
@@ -87,42 +95,54 @@ def calculate_shear_viscosity(
             eff_mass_up_quark, 
             +1, 
             eff_chem_pot_up_quark, 
-            temperature
+            temperature,
+            epsabs,
+            epsrel
         )
 
         eta_integral_down_quark = simplified_shear_viscosity_integral(
             eff_mass_down_quark, 
             +1, 
             eff_chem_pot_down_quark, 
-            temperature
+            temperature,
+            epsabs,
+            epsrel
         )
 
         eta_integral_strange_quark = simplified_shear_viscosity_integral(
             eff_mass_strange_quark, 
             +1, 
             eff_chem_pot_strange_quark, 
-            temperature
+            temperature,
+            epsabs,
+            epsrel
         )
 
         eta_integral_up_antiquark = simplified_shear_viscosity_integral(
             eff_mass_up_quark, 
             -1, 
             eff_chem_pot_up_quark, 
-            temperature
+            temperature,
+            epsabs,
+            epsrel
         )
 
         eta_integral_down_antiquark = simplified_shear_viscosity_integral(
             eff_mass_down_quark, 
             -1, 
             eff_chem_pot_down_quark, 
-            temperature
+            temperature,
+            epsabs,
+            epsrel
         )
 
         eta_integral_strange_antiquark = simplified_shear_viscosity_integral(
             eff_mass_strange_quark, 
             -1, 
             eff_chem_pot_strange_quark, 
-            temperature
+            temperature,
+            epsabs,
+            epsrel
         )
 
         coefficient = ( (2.0*number_of_colors)/(15.0*temperature) )*( (4.0*math.pi)/( (2.0*math.pi)**3 ) )
@@ -146,13 +166,18 @@ class ShearViscosity:
         self, 
         input_data_filepath: str, 
         output_data_filepath: str,
+        integral_epsabs: float = 1.49e-8,
+        integral_epsrel: float = 1.49e-8,
         number_of_colors: float = 3
     ):
-        self.number_of_colors = number_of_colors
-
         quark_rel_times_data = QuarkRelaxationTimesData(input_data_filepath)
 
-        self.shear_viscosity = calculate_shear_viscosity(quark_rel_times_data, self.number_of_colors)
+        self.shear_viscosity = calculate_shear_viscosity(
+            quark_rel_times_data, 
+            integral_epsabs,
+            integral_epsrel,
+            number_of_colors
+        )
         
         self.temperature = quark_rel_times_data.get_temperature()
         
