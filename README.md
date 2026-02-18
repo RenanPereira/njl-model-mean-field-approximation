@@ -75,6 +75,12 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 (cd calculations/su3_3d_cutoff_quark_relaxation_times && ./build_plots.sh)
 ```
 
+## SU3 NJL Transport Coefficients Study (su3_3d_cutoff_transport_coefficients)
+```
+(cd calculations/su3_3d_cutoff_transport_coefficients && ./execute_calculations.sh)
+(cd calculations/su3_3d_cutoff_transport_coefficients && ./build_plots.sh)
+```
+
 
 # Conventions
 

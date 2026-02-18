@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 from common_utils.plot_helper import *
-from common_utils.first_order_line_data import *
 from common_utils.quark_relaxation_times_data import QuarkRelaxationTimesData
 
 

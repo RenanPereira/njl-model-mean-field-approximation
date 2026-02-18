@@ -75,3 +75,6 @@ class QuarkRelaxationTimesData:
 
     def get_strange_quark_effective_chemical_potential(self) -> np.ndarray:
         return self.strange_quark_effective_chemical_potential
+
+    def size(self):
+        return len(self.temperature)
