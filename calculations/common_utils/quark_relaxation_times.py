@@ -2,6 +2,7 @@ import numpy as np
 
 from common_utils.integrated_cross_section_data import IntegratedCrossSectionData
 from common_utils.physical_constants import hbarc_gevfm
+from common_utils.io_utils import save_columns_to_file
 
 
 class QuarkRelaxationTimes:
@@ -11,7 +12,7 @@ class QuarkRelaxationTimes:
         parameter_set: str, 
         method: str, 
         physical_scenario: str,
-        path_output_data_folder: str
+        output_data_filepath: str
     ):
         if physical_scenario=="zero_chemical_potential_isospin_symmetric":
             self._load_data_zero_mu_isospin_symmetric(path_input_data_folder, parameter_set, method)
@@ -20,7 +21,7 @@ class QuarkRelaxationTimes:
         
         self._test_data_mismatch()
         self._calculate_quark_relaxation_times()
-        self._save_data_to_file(path_output_data_folder, parameter_set, method)
+        self._save_to_file(output_data_filepath)
 
     def _load_data_zero_mu_isospin_symmetric(self, path_data_folder: str, parameter_set: str, method: str):
         # read data files for the specific scenario of zero chemical potential
@@ -339,12 +340,10 @@ class QuarkRelaxationTimes:
             sigma_sbarsbarsbarsbar_nsbar
         )
 
-    def _save_data_to_file(
+    def _save_to_file(
         self, 
-        path_data_folder: str, 
-        parameter_set: str, 
-        method: str
-    ):
+        output_data_filepath: str
+    ) -> None:
         temperature = self.data_uuuu.get_temperature()
         up_quark_effective_mass = self.data_uuuu.get_up_quark_effective_mass()
         down_quark_effective_mass = self.data_uuuu.get_down_quark_effective_mass()
@@ -352,12 +351,8 @@ class QuarkRelaxationTimes:
         up_quark_effective_chemical_potential = self.data_uuuu.get_up_quark_effective_chemical_potential()
         down_quark_effective_chemical_potential = self.data_uuuu.get_down_quark_effective_chemical_potential()
         strange_quark_effective_chemical_potential = self.data_uuuu.get_strange_quark_effective_chemical_potential()
-        
-        filepath = path_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat'
-        column_width = 25
-        precision = 15
 
-        data = np.column_stack((
+        column_data = [
             temperature, 
             self.tau_up_quark, 
             self.tau_down_quark,
@@ -371,8 +366,8 @@ class QuarkRelaxationTimes:
             up_quark_effective_chemical_potential,
             down_quark_effective_chemical_potential,
             strange_quark_effective_chemical_potential,
-        ))
-
+        ]
+        
         column_labels = [
             "T[GeV]",
             "tauU[fm]",
@@ -389,19 +384,10 @@ class QuarkRelaxationTimes:
             "effCPS[GeV]",
         ]
 
-        column_labels_with_spaces = []
-        for label in column_labels:
-            empty_spaces = column_width - len(label)
-            for i in range(empty_spaces):
-                label = " " + label
-            column_labels_with_spaces.append(label)
-
-        header = " ".join(column_labels_with_spaces)
-
-        np.savetxt(
-            filepath,
-            data,
-            header=header,
-            comments="",
-            fmt=f'%{column_width}.{precision}f',
+        save_columns_to_file(
+            output_data_filepath, 
+            25, 
+            15, 
+            column_data, 
+            column_labels
         )

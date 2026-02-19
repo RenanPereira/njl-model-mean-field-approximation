@@ -6,27 +6,32 @@ path_output_data_folder = "su3_3d_cutoff_quark_relaxation_times/data/"
 
 
 # set A, zero chemical potential
+parameter_set = "setA"
+physical_scenario = "zero_chemical_potential_isospin_symmetric"
 
+method = "COMPLETE_COV"
 quark_relaxation_times = QuarkRelaxationTimes(
     path_input_data_folder, 
-    "setA", 
-    "COMPLETE_COV", 
-    "zero_chemical_potential_isospin_symmetric",
-    path_output_data_folder
+    parameter_set, 
+    method, 
+    physical_scenario,
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat'
 )
 
+method = "KLEVANSKY"
 quark_relaxation_times = QuarkRelaxationTimes(
     path_input_data_folder, 
-    "setA", 
-    "KLEVANSKY", 
-    "zero_chemical_potential_isospin_symmetric",
-    path_output_data_folder
+    parameter_set, 
+    method, 
+    physical_scenario,
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat'
 )
 
+method = "ZHUANG"
 quark_relaxation_times = QuarkRelaxationTimes(
     path_input_data_folder, 
-    "setA", 
-    "ZHUANG", 
-    "zero_chemical_potential_isospin_symmetric",
-    path_output_data_folder
+    parameter_set, 
+    method, 
+    physical_scenario,
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat'
 )

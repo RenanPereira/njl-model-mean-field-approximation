@@ -5,6 +5,7 @@ from scipy.integrate import quad
 from common_utils.quark_relaxation_times_data import QuarkRelaxationTimesData
 from common_utils.general_physics import energy, fermi_distribution
 from common_utils.physical_constants import hbarc_gevfm
+from common_utils.io_utils import save_columns_to_file
 
 
 def simplified_shear_viscosity_integrand(
@@ -180,39 +181,25 @@ class ShearViscosity:
         )
         
         self.temperature = quark_rel_times_data.get_temperature()
-        
-        self._save_data_to_file(output_data_filepath)
-        
-    def _save_data_to_file(
+
+        self._save_to_file(output_data_filepath)
+
+    def _save_to_file(
         self, 
         output_data_filepath: str, 
-    ):        
-        column_width = 25
-        precision = 15
-
-        data = np.column_stack((
+    ) -> None:
+        column_data = [
             self.temperature, 
             self.shear_viscosity
-        ))
-
+        ]
         column_labels = [
             "T[GeV]",
             "eta[GeV^3]",
         ]
-
-        column_labels_with_spaces = []
-        for label in column_labels:
-            empty_spaces = column_width - len(label)
-            for _ in range(empty_spaces):
-                label = " " + label
-            column_labels_with_spaces.append(label)
-
-        header = " ".join(column_labels_with_spaces)
-
-        np.savetxt(
-            output_data_filepath,
-            data,
-            header=header,
-            comments="",
-            fmt=f'%{column_width}.{precision}f',
+        save_columns_to_file(
+            output_data_filepath, 
+            25, 
+            15, 
+            column_data, 
+            column_labels
         )
