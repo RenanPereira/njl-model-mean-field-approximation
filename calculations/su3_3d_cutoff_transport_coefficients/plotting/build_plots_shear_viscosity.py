@@ -21,7 +21,8 @@ path_plots_folder = "su3_3d_cutoff_transport_coefficients/plots/"
 
 ####################################################################################################
 # set A
-print("Building plot: sehar viscosity with set A, at zero chemical potential and using different methods for the integrated cross section")
+print("Building plot: shear viscosity as a function of temperature.")
+print("Parameter set A, zero chemical potential and different methods for the integrated cross section.\n")
 
 parameter_set = "setA"
 
@@ -47,12 +48,32 @@ linestyle_klevansky = '-'
 color_zhuang = 'blue'
 linestyle_zhuang = '-'
 
-# Plot relaxation times
-ax.plot(data_complete.get_temperature(), data_complete.get_shear_viscosity(), label=r'Method I', color=color_complete, linewidth=2, linestyle=linestyle_complete)
+ax.plot(
+    data_complete.get_temperature(), 
+    data_complete.get_shear_viscosity(), 
+    label=r'Method I', 
+    color=color_complete, 
+    linewidth=2, 
+    linestyle=linestyle_complete
+)
 
-ax.plot(data_klevansky.get_temperature(), data_klevansky.get_shear_viscosity(), label=r'Method II', color=color_klevansky, linewidth=2, linestyle=linestyle_klevansky)
+ax.plot(
+    data_klevansky.get_temperature(), 
+    data_klevansky.get_shear_viscosity(), 
+    label=r'Method II', 
+    color=color_klevansky, 
+    linewidth=2, 
+    linestyle=linestyle_klevansky
+)
 
-ax.plot(data_zhuang.get_temperature(), data_zhuang.get_shear_viscosity(), label=r'Method III', color=color_zhuang, linewidth=2, linestyle=linestyle_zhuang)
+ax.plot(
+    data_zhuang.get_temperature(), 
+    data_zhuang.get_shear_viscosity(), 
+    label=r'Method III', 
+    color=color_zhuang, 
+    linewidth=2, 
+    linestyle=linestyle_zhuang
+)
 
 # # Axes labels
 ax.set_xlabel(r'T$\, [\mathrm{GeV}]$', fontsize=20)
