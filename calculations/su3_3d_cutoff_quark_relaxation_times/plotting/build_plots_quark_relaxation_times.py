@@ -64,7 +64,7 @@ ax.plot(data_zhuang.get_temperature(), data_zhuang.get_rel_time_up_quark(), labe
 ax.plot(data_zhuang.get_temperature(), data_zhuang.get_rel_time_strange_quark(), label=r'$\tau_{s,\overline{s}}$ | Method III', color=color_zhuang_s, linewidth=2, linestyle=linestyle_zhuang_s)
 
 # # Axes labels
-ax.set_xlabel(r'T$\, [\mathrm{GeV}]$', fontsize=20)
+ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
 ax.set_ylabel(r'$\tau\, [\mathrm{fm}]$', fontsize=20)
 
 # # Grid and legend

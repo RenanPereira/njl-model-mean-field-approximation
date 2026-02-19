@@ -70,7 +70,7 @@ def plot_integrated_cross_section_vs_temperature(
     ax.plot(data_zhuang.get_temperature(), data_zhuang.get_integrated_cross_section(), label=zhuang_label, color=color_zhuang, linewidth=2, linestyle=linestyle_zhuang)
 
     # # Axes labels
-    ax.set_xlabel(r'T$\, [\mathrm{GeV}]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
     ax.set_ylabel(process_to_ylabel_latex(process), fontsize=20)
 
     # # Grid and legend

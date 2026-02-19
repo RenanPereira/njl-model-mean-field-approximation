@@ -76,7 +76,7 @@ ax.plot(
 )
 
 # # Axes labels
-ax.set_xlabel(r'T$\, [\mathrm{GeV}]$', fontsize=20)
+ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
 ax.set_ylabel(r'$\eta\, [\mathrm{GeV}^3]$', fontsize=20)
 
 # # Grid and legend
