@@ -60,7 +60,7 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 (cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./build_plots.sh)
 ```
 
-## SU3 NJL Integrated Cross Section Study (su3_3d_cutoff_integrated_cross_sections)
+## SU3 NJL Integrated Cross Section Study (su3_3d_cutoff_int_cross_sections)
 ```
 (cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_COMPLETE_COV.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_KLEVANSKY.sh)

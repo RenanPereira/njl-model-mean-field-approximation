@@ -1,11 +1,9 @@
 # This script must be executed from the root folder using: 
-# cd calculations/su3_3d_cutoff_integrated_cross_sections && ./execute_local_main.sh && cd ../../
+# cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_local_main.sh && cd ../../
 
 #!/bin/bash
 
 echo "Script that switches the main.cpp file from the root project by the main.cpp file in this folder before compiling the code."
-echo "In the local main.cpp file, Integrated Cross Sections for the NJL model are calculated for different parameter sets \
-as functions of temperature and chemical potential."
 echo ""
 
 # Go to project root
