@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # This script automates the process of modifying a specific text pattern in a file, 
 # typically used to adjust include statements in C++ source or header files. 
 # It takes three arguments: the file to modify, the text to search for, and the replacement text.
@@ -13,7 +12,6 @@
 # Usage: 
 # ./script_name.sh <file> <search> <replace>
 # Example: ./modify_headers.sh example.cpp '#include "old.h"' '#include "new.h"'
-
 
 # Validate the input arguments
 if [ "$#" -ne 3 ]; then

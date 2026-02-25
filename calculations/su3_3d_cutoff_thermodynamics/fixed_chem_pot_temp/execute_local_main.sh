@@ -3,36 +3,6 @@
 
 #!/bin/bash
 
-echo "Script that switches the main.cpp file from the root project by the main.cpp file in this folder before compiling the code."
-echo "In the local main.cpp file, Integrated Cross Sections for the NJL model are calculated for different parameter sets \
-as functions of temperature and chemical potential."
-echo ""
-
-# Go to project root
-cd ../../../
-
-# Clean previous build 
-make clean
-
-# Backup original main.cpp file for later restoration
-cp src/main.cpp src/main.bak && rm src/main.cpp
-
-# Copy local main.cpp to root folder of the project for build step
-cp calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/main.cpp src/main.cpp
-
-# Compile code with the local main.cpp file
-make -j$(nproc)
-
-# Restore to original main.cpp file
-rm src/main.cpp && cp src/main.bak src/main.cpp && rm src/main.bak
-
-# Copy executable file to data folder where it will be executed
-cp bin/nambuJonaLasinioModel.out calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data
-
-# Run executable
-cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data
-./nambuJonaLasinioModel.out
-rm nambuJonaLasinioModel.out
-
-# Go to project root
-cd ..
+main_folder_path="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data"
+number_of_up_folders_to_makefile="3"
+../../../tools/utils/switch_src_main_and_run.sh $main_folder_path $number_of_up_folders_to_makefile
