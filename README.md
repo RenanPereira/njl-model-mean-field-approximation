@@ -11,11 +11,6 @@ to clean the artifacts, use:
 make clean
 ```
 
-To test the main code by including a `.ini` configuration file:
-```
-(cd bin/ && ./nambuJonaLasinioModel.out use-config-file tests.ini)
-```
-
 To test the `ini_file_parser` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
 ```
 (cd src/ini_file_parser/ && ./execute_tests.sh)

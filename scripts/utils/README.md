@@ -9,7 +9,7 @@ Usage
 
 Run the script from the project root directory:
 ```
-bash setup/create_directories.sh
+bash scripts/utils/create_directories.sh
 ```
 This script:
 - Creates the required directories if they do not exist.
