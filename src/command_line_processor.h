@@ -3,10 +3,10 @@
 
 #include "ini_file_parser/IniFileParser.h"
 
-
 int commandLineArgsProcessor(int , char* []);
 
-void selectPathBasedOnFileDetails(const IniFileParser& );
+void printQualityCheckFailedMessage(std::string );
 
+void selectPathBasedOnFileDetails(const IniFileParser& );
 
 #endif

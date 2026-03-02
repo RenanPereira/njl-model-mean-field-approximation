@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 #include "gsl_wrapper/root_solver_gsl.h"
 #include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
@@ -838,4 +839,63 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedChemPotTemp> solutions, stri
     }
 
     file.close();
+}
+
+void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
+	SU3NJL3DCutoffParameters& parameters,                                    
+    double precisionVacuum,                                    
+    MultiRootFindingMethod methodVacuum,                                    
+    double upQuarkMassGuess, 
+    double downQuarkMassGuess,
+    double strangeQuarkMassGuess,
+	double temperature, 
+	int numberOfPoints,
+    double precisionVacToFinTemp,
+    MultiRootFindingMethod methodVacToFinTemp
+)
+{
+	SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
+    //solve model at zero chemical potential up to some finite temperature
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+        vacuum, 
+        temperature, 
+        numberOfPoints, 
+        precisionVacToFinTemp, 
+        methodVacToFinTemp
+    );
+
+    //calculate vacuum pressure
+    cout << "\nCalculating the vacuum pressure...\n";
+    double pressureVac = vacuum.calculatePressure();
+    //cout << "vacuumPressure[GeV^4]=" << pressureVac << "\n";
+
+    cout << "\nCalculating thermodynamics for the found solutions...\n";
+    for (int i = 0; i < int(finiteTSolution.size()); ++i)
+    {   
+        finiteTSolution[i].setPressure(pressureVac);
+        finiteTSolution[i].setEnergyDensity(-pressureVac);
+        finiteTSolution[i].setEntropyDensity();
+    }
+
+    //Add solution with vacuum solution to start of the vector
+    SU3NJL3DCutoffFixedChemPotTemp auxVacuum(vacuum);
+    finiteTSolution.insert(finiteTSolution.begin(), auxVacuum);
+
+    string fileName = "SU3NJL3DCutoffFixedChemPotTemp";
+    fileName = fileName + "_" + finiteTSolution[0].getParametersNJL().getParameterSetName();
+    fileName = fileName + "_TMin" + to_string(finiteTSolution[0].getTemperature());
+    fileName = fileName + "_TMax" + to_string(finiteTSolution[finiteTSolution.size()-1].getTemperature());
+    fileName = fileName + "_CP0";
+    replace( fileName.begin(), fileName.end(), '.', 'p'); 
+    fileName =  fileName +".dat";
+    writeSolutionsToFile(finiteTSolution, fileName);
 }

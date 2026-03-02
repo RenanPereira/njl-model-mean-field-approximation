@@ -76,6 +76,13 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 (cd calculations/su3_3d_cutoff_transport_coefficients && ./build_plots.sh)
 ```
 
+## SU3 NJL Thermodynamics Study (su3_3d_cutoff_thermodynamics)
+```
+(cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && ./execute_calculations.sh)
+(cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && ./execute_local_main.sh)
+(cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && ./build_plots.sh)
+```
+
 
 # Conventions
 

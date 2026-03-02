@@ -557,6 +557,24 @@ bool SU3NJL3DCutoffFileParser::Common::validateIntegratedCrossSectionsParameters
            isNumberOfThreadsValid;
 }
 
+bool SU3NJL3DCutoffFileParser::Common::checkRequiredSections(const vector<string> requiredSections) const
+{
+    // Check for missing sections
+    bool allRequiredSectionsPresent = true;
+
+    for (int i = 0; i < int(requiredSections.size()); ++i) 
+    {
+        string section = requiredSections[i];
+        if (config.getSectionsData(section).empty()) 
+        {   
+            allRequiredSectionsPresent = false;
+            cout << "Missing required section: " << section << endl;
+        }
+    }
+
+    return allRequiredSectionsPresent;
+}
+
 bool SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::validateFile() const
 {
     // Check for missing sections
@@ -1133,4 +1151,107 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
             numberOfThreads
         );
     }
+}
+
+bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::validateFile() const
+{   
+    // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
+	const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
+    bool vacuumValidations = configVacuum.validateFile();
+
+    // Check for missing sections
+    vector<string> requiredSections = 
+    {
+        SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section
+    };
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
+
+    // Validate individual sections
+    bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
+
+    return vacuumValidations && 
+           allRequiredSectionsPresent &&
+           areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid;
+}
+
+void SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::evaluate() const
+{   
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
+    namespace VFT = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
+
+    // Model Parameters
+    cout << "\n" << MP::section << ": " << endl;
+
+    string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
+    string regularizationScheme = config.getValue(MP::section, MP::regularizationScheme);
+    double cutoff = config.getDouble(MP::section, MP::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MP::section, MP::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MP::section, MP::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
+
+    cout << MP::parameterSetName << " = " << parameterSetName << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::cutoff << " = " << cutoff << endl;
+    cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
+
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
+
+    // VacuumMassesParameters
+    cout << "\n" << VMP::section << ": " << endl;
+
+    double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
+    string methodVacuum = config.getValue(VMP::section, VMP::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMP::section, VMP::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMP::section, VMP::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
+
+    cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
+    
+    // VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters
+    cout << "\n" << VFT::section << ": " << endl;
+
+    double temperature = config.getDouble(VFT::section, VFT::temperature);
+    int numberOfPointsFromVacToFinTemp = config.getInt(VFT::section, VFT::numberOfPointsFromVacToFinTemp);
+    double precisionVacToFinTemp = config.getDouble(VFT::section, VFT::precisionVacToFinTemp);
+    string methodVacToFinTemp = config.getValue(VFT::section, VFT::methodVacToFinTemp);
+
+    cout << VFT::temperature << " = " << temperature << endl;
+    cout << VFT::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
+    cout << VFT::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
+    cout << VFT::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
+
+    // Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoff, 
+        couplings, 
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
+    );
+    parameters.setParameterSetName(parameterSetName);
+
+    SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
+        parameters,                                    
+        precisionVacuum,                                    
+        stringToMultiRootFindingMethod(methodVacuum),                                  
+        upQuarkMassGuess, 
+        downQuarkMassGuess,
+        strangeQuarkMassGuess,
+        temperature, 
+        numberOfPointsFromVacToFinTemp,
+        precisionVacToFinTemp,
+        stringToMultiRootFindingMethod(methodVacToFinTemp)
+    );
 }

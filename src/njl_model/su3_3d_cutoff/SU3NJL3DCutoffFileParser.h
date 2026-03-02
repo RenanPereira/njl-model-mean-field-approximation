@@ -131,6 +131,7 @@ namespace SU3NJL3DCutoffFileParser
         bool validateCrossSectionsParameters() const;
         bool validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const;
         bool validateIntegratedCrossSectionsParameters() const;
+        bool checkRequiredSections(const std::vector<std::string> ) const;
     };
 
     namespace Vacuum
@@ -194,6 +195,18 @@ namespace SU3NJL3DCutoffFileParser
                 bool validateFileZeroChemicalPotential() const;
                 bool validateFile(std::string ) const;
                 void evaluate(std::string ) const;
+        };
+
+        class InMediumMassesAndThermodynamics : public Common
+        {   
+            public:
+                inline static const std::string fileType = type + "InMediumMassesAndThermodynamics";
+
+            public:
+                InMediumMassesAndThermodynamics(const IniFileParser& p) : Common(p) {}
+                
+                bool validateFile() const;
+                void evaluate() const;
         };
     }
 }

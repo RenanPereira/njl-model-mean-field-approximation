@@ -85,6 +85,19 @@ public:
 	double getPressure(){ return pressure; };
 	double getEnergyDensity(){ return energyDensity; };
 	double getEntropyDensity(){ return entropyDensity; };
+
+	static void evaluateInMediumMassesAndThermodynamics(
+		SU3NJL3DCutoffParameters& ,                                    
+		double ,                                    
+		MultiRootFindingMethod ,                                    
+		double , 
+		double ,
+		double ,
+		double , 
+		int ,
+		double ,
+		MultiRootFindingMethod 
+	);
 	
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; };

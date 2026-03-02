@@ -4,22 +4,21 @@
 
 using namespace std;
 
-
 int commandLineArgsProcessor(int argc, char* argv[])
 {	
-	std::string use_file_command = "use-config-file";
+	string use_file_command = "use-config-file";
 
 	// Handle command line input
     if (argc > 1) 
 	{
-        std::string command = argv[1];
+        string command = argv[1];
         // Check for the commands
         if (command == use_file_command) 
 		{
             if (argc == 3) 
 			{	
 				// Get name of the file from the third argument
-                std::string configFileName = argv[2];
+                string configFileName = argv[2];
 
 				// Open configuration file and parse it
 				cout << "\nFeeding IniFileParser with file " << configFileName << "..." << endl;
@@ -28,13 +27,13 @@ int commandLineArgsProcessor(int argc, char* argv[])
             } 
 			else 
 			{
-                std::cerr << "Error: No file provided after the command: " << command << std::endl;
+                cerr << "Error: No file provided after the command: " << command << endl;
                 return 1;
             }
         } 
 		else 
 		{
-            std::cerr << "Unknown command: " << command << std::endl;
+            cerr << "Unknown command: " << command << endl;
             return 1;
         }
     }
@@ -42,6 +41,10 @@ int commandLineArgsProcessor(int argc, char* argv[])
 	return 0;
 }
 
+void printQualityCheckFailedMessage(string filename)
+{
+	cout << "The quality check failed for the " << filename << " file."  << endl;
+}
 
 void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 {	
@@ -60,8 +63,8 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 			config.evaluate();
 		}
 		else
-		{
-			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+		{ 
+			printQualityCheckFailedMessage(configFile.getFilename());
 		}
 	}
 	else if(fileTypeStr==KlevanskyB0Integral3DCutoffFileParser::klevanskyB0Integral3DCutoff)
@@ -73,7 +76,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+			printQualityCheckFailedMessage(configFile.getFilename());
 		}
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::firstOrderLine)
@@ -85,7 +88,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+			printQualityCheckFailedMessage(configFile.getFilename());
 		}
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::isospinSymmetricCrossSections)
@@ -97,7 +100,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+			printQualityCheckFailedMessage(configFile.getFilename());
 		}
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::zeroChemicalPotential )
@@ -110,7 +113,19 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			cout << "The quality check failed for the " << configFile.getFilename() << " file."  << endl;
+			printQualityCheckFailedMessage(configFile.getFilename());
+		}
+	}
+	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::fileType )
+	{	
+		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics config(configFile);
+		if(config.validateFile())
+		{	
+			config.evaluate();
+		}
+		else
+		{
+			printQualityCheckFailedMessage(configFile.getFilename());
 		}
 	}
 	else
