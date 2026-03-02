@@ -1,8 +1,8 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include <algorithm>
 #include <omp.h>
+
 #include "physics_utils/distribution_functions.h"
 #include "physics_utils/physical_constants.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
@@ -304,8 +304,8 @@ void evaluateCrossSectionProcess12To34ToFile(
         + "_T"   + to_string(T) 
         + "_CPU" + to_string(effChemPotU)
         + "_CPD" + to_string(effChemPotD)
-        + "_CPS" + to_string(effChemPotS);
-    //std::replace( fileName.begin(), fileName.end(), '.', ','); 
+        + "_CPS" + to_string(effChemPotS); 
+    //replaceChar(fileName, '.', 'p');
     fileName = fileName + ".dat";
 
 

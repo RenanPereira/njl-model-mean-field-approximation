@@ -1,11 +1,12 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include <algorithm>
 #include <omp.h>
+
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
 #include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
 #include "gsl_wrapper/root_solver_gsl.h"
+#include "utils/format_utils.h"
 
 
 //Zero variables necessary in this file: ICS=IntegratedCrossSections
@@ -1665,7 +1666,7 @@ void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
     fileName = fileName + "_TMin" + to_string(integratedCrossSectionFiniteTemperature[0].getTemperature());
     fileName = fileName + "_TMax" + to_string(integratedCrossSectionFiniteTemperature[integratedCrossSectionFiniteTemperature.size()-1].getTemperature());
     fileName = fileName + "_CPU" + to_string(integratedCrossSectionFiniteTemperature[0].getUpQuarkEffectiveChemicalPotential());
-    std::replace( fileName.begin(), fileName.end(), '.', 'p'); 
+	replaceChar(fileName, '.', 'p');
     fileName =  fileName +".dat";
 
     writeIntegratedCrossSectionToFile(integratedCrossSectionFiniteTemperature, fileName);
@@ -1765,7 +1766,7 @@ void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
     fileName = fileName + "_CPQMin" + to_string(integratedCrossSectionFiniteTemperature[0].getUpQuarkEffectiveChemicalPotential());
     fileName = fileName + "_CPQMax" + to_string(integratedCrossSectionFiniteTemperature[integratedCrossSectionFiniteTemperature.size()-1].getUpQuarkEffectiveChemicalPotential());
     fileName = fileName + "_T" + to_string(integratedCrossSectionFiniteTemperature[0].getTemperature());
-    std::replace( fileName.begin(), fileName.end(), '.', 'p'); 
+    replaceChar(fileName, '.', 'p');
     fileName =  fileName +".dat";
 
     writeIntegratedCrossSectionToFile(integratedCrossSectionFiniteTemperature, fileName);

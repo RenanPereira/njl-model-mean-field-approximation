@@ -1,12 +1,12 @@
 #include <cmath>
 #include <iostream>
-#include <algorithm>
 #include "gsl_wrapper/root_solver_gsl.h"
 #include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
 #include "math_utils/useful_functions.h"
+#include "utils/format_utils.h"
 
 using namespace std;
 
@@ -895,7 +895,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
     fileName = fileName + "_TMin" + to_string(finiteTSolution[0].getTemperature());
     fileName = fileName + "_TMax" + to_string(finiteTSolution[finiteTSolution.size()-1].getTemperature());
     fileName = fileName + "_CP0";
-    replace( fileName.begin(), fileName.end(), '.', 'p'); 
+    replaceChar(fileName, '.', 'p');
     fileName =  fileName +".dat";
     writeSolutionsToFile(finiteTSolution, fileName);
 }

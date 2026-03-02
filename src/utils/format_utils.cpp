@@ -18,3 +18,12 @@ string trim0ToDot0(const double value)
 
     return result;
 }
+
+void replaceChar(string& str, char oldChar, char newChar)
+{
+    for (int i = 0; i < int(str.size()); ++i)
+    {
+        if (str[i] == oldChar)
+            str[i] = newChar;
+    }
+}
