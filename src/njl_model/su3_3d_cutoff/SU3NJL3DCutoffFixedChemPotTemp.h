@@ -124,10 +124,6 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
 
 SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum , std::vector<SU3NJL3DCutoffFixedChemPotTemp> , mesonState , double , MultiRootFindingMethod , double , double );
 
-void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double , double , int , int);
-
-void someVacuumAndThermalPropertiesKlevanskyParameterSet();
-
 void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedChemPotTemp> , string );
 
 #endif

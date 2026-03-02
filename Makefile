@@ -38,7 +38,8 @@ DEPS = src/command_line_processor.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h \
        src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h \
-       src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h 
+       src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h \
+       src/njl_model/su3_3d_cutoff/SU3NJL3DCutoffMisc.h 
 
 
 OBJ = obj/main.o \
@@ -70,7 +71,8 @@ OBJ = obj/main.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.o \
       obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.o \
-      obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.o 
+      obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.o \
+      obj/njl_model/su3_3d_cutoff/SU3NJL3DCutoffMisc.o 
 
 
 obj/%.o: src/%.cpp $(DEPS)
