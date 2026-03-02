@@ -10,18 +10,28 @@ int main()
     double start_s = omp_get_wtime();
 
     //parameter set A (Klevansky parameter set)
-    double cutoff = 0.6023;
-    double gs = 10.116734156126128;
-    double kappa = -155.93878816540243;
-    double m0u = 0.0055;
-    double m0d = 0.0055;
-    double m0s = 0.1407;
+    double cutoff_GeV = 0.6023;
+    double upQuarkCurrentMass_GeV = 0.0055;
+    double downQuarkCurrentMass_GeV = 0.0055;
+    double strangeQuarkCurrentMass_GeV = 0.1407;
+    double fourQuarkSPCouplingCutoff2 = 3.67;
+    double determinantCouplingCutoff5 = -12.36;
+
+    double gs = fourQuarkSPCouplingCutoff2/pow(cutoff_GeV,2);
+    double kappa = determinantCouplingCutoff5/pow(cutoff_GeV,5);
 
     //Fix Lagrangian dimensionful couplings
     NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE_WITH_CTMU, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(
+        CUTOFF_EVERYWHERE_WITH_CTMU, 
+        cutoff_GeV, 
+        couplings, 
+        upQuarkCurrentMass_GeV, 
+        downQuarkCurrentMass_GeV, 
+        strangeQuarkCurrentMass_GeV
+    );
     parameters.setParameterSetName("setA");
 
     double precisionVacuum = 1E-8;
