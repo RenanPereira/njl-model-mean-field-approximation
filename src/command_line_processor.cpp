@@ -103,13 +103,12 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 			printQualityCheckFailedMessage(configFile.getFilename());
 		}
 	}
-	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::zeroChemicalPotential )
+	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsZeroChemPot::zeroChemicalPotential )
 	{	
-		namespace FCPT = SU3NJL3DCutoffFileParser::FixedChemPotTemp;
-		const FCPT::IsospinSymmetricIntegratedCrossSections config(configFile);
-		if(config.validateFile(FCPT::IsospinSymmetricIntegratedCrossSections::zeroChemicalPotential))
+		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsZeroChemPot config(configFile);
+		if(config.validateFile())
 		{	
-			config.evaluate(FCPT::IsospinSymmetricIntegratedCrossSections::zeroChemicalPotential);
+			config.evaluate();
 		}
 		else
 		{

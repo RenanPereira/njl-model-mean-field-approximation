@@ -11,7 +11,10 @@
 
 using namespace std;
 
-NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::Common::extractDimensionfulCouplings() const
+namespace SU3NJL3DCutoffFileParser
+{
+
+NJLDimensionfulCouplings Common::extractDimensionfulCouplings() const
 {	
 	double cutoff = config.getDouble(
         SU3NJL3DCutoffFileParserKeys::ModelParameters::section,                                   
@@ -87,7 +90,7 @@ NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::Common::extractDimensionfulCo
 	}
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateModelParameters() const
+bool Common::validateModelParameters() const
 {   
     // Validate regularizationScheme
     string regularizationScheme = config.getValue(
@@ -137,7 +140,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateModelParameters() const
            isStrangeQuarkCurrentMassValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateDimensionfulCouplings() const
+bool Common::validateDimensionfulCouplings() const
 {
     // Validate lagrangianInteractions
     string lagrangianInteractions = config.getValue(
@@ -160,7 +163,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateDimensionfulCouplings() const
     return areCouplingsValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateVacuumMassesParameters() const
+bool Common::validateVacuumMassesParameters() const
 {   
     // Ensure precisionVacuum>0
     bool isPrecisionVacuumValid = config.validatePositiveDouble(
@@ -210,7 +213,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumMassesParameters() const
            isUpQuarkMassGuessValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteBaryonDensityParameters() const
+bool Common::validateVacuumToFiniteBaryonDensityParameters() const
 {   
     namespace VFBD = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteBaryonDensityParameters;
 
@@ -262,7 +265,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteBaryonDensityParame
            isRootFindingMethodValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateFirstOrderLineParameters() const
+bool Common::validateFirstOrderLineParameters() const
 {   
     namespace FOLP = SU3NJL3DCutoffFileParserKeys::FirstOrderLineParameters;
 
@@ -305,7 +308,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateFirstOrderLineParameters() const
            isMassDifferenceCEPValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const
+bool Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const
 {
     namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
 
@@ -357,7 +360,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteTemperatureAtZeroCh
            isRootFindingMethodValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const
+bool Common::validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const
 {   
     namespace LHTZCPP = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
 
@@ -406,7 +409,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateLowToHighTemperatureAtZeroChemica
            isRootFindingMethodValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateFiniteTemperatureToFiniteChemicalPotentialParameters() const
+bool Common::validateFiniteTemperatureToFiniteChemicalPotentialParameters() const
 {
     namespace FTFCPP = SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
 
@@ -446,7 +449,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateFiniteTemperatureToFiniteChemical
            isRootFindingMethodValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateCrossSectionsParameters() const
+bool Common::validateCrossSectionsParameters() const
 {
     namespace CSP = SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters;
 
@@ -489,7 +492,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateCrossSectionsParameters() const
            isNumberOfThreadsValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::validateIntegratedCrossSectionsParameters() const
+bool Common::validateIntegratedCrossSectionsParameters() const
 {
     namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
 
@@ -565,7 +568,7 @@ bool SU3NJL3DCutoffFileParser::Common::validateIntegratedCrossSectionsParameters
            isNumberOfThreadsValid;
 }
 
-bool SU3NJL3DCutoffFileParser::Common::checkRequiredSections(const vector<string> requiredSections) const
+bool Common::checkRequiredSections(const vector<string> requiredSections) const
 {
     // Check for missing sections
     bool allRequiredSectionsPresent = true;
@@ -583,7 +586,12 @@ bool SU3NJL3DCutoffFileParser::Common::checkRequiredSections(const vector<string
     return allRequiredSectionsPresent;
 }
 
-bool SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::validateFile() const
+}
+
+namespace SU3NJL3DCutoffFileParser::Vacuum
+{
+
+bool VacuumMasses::validateFile() const
 {
     // Check for missing sections
     bool allRequiredSectionsPresent = true;
@@ -615,7 +623,7 @@ bool SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::validateFile() const
            areVacuumMassesParametersValid;
 }
 
-void SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::evaluate() const
+void VacuumMasses::evaluate() const
 {
     // Model Parameters
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
@@ -676,7 +684,12 @@ void SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::evaluate() const
     );
 }
 
-bool SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::validateFile() const
+}
+
+namespace SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot
+{
+
+bool FirstOrderLine::validateFile() const
 {   
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
     const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
@@ -710,7 +723,7 @@ bool SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::valida
            areFirstOrderLineParametersValid;
 }
 
-void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evaluate() const
+void FirstOrderLine::evaluate() const
 {
     // Model Parameters
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
@@ -812,7 +825,11 @@ void SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::evalua
     );
 }
 
-bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::validateFile() const
+}
+namespace SU3NJL3DCutoffFileParser::FixedChemPotTemp 
+{
+
+bool IsospinSymmetricCrossSections::validateFile() const
 {
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
     const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
@@ -849,7 +866,7 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
            areCrossSectionsParametersValid;
 }
 
-void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::evaluate() const
+void IsospinSymmetricCrossSections::evaluate() const
 {   
     // Model Parameters
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
@@ -970,7 +987,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     );
 }
 
-bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::validateFileZeroChemicalPotential() const
+bool IsospinSymmetricIntegratedCrossSectionsZeroChemPot::validateTemperatureAndGridConsistency() const
 {
     namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
     namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
@@ -993,7 +1010,7 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     return areTemperaturesEqual && areNumberOfPointsEqual;
 }
 
-bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::validateFile(string physicalScenario) const
+bool IsospinSymmetricIntegratedCrossSectionsZeroChemPot::validateFile() const
 {   
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
 	const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
@@ -1020,24 +1037,20 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     // Validate individual sections
     bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
     bool areLowToHighTemperatureAtZeroChemicalPotentialParametersValid = validateLowToHighTemperatureAtZeroChemicalPotentialParameters();
-    bool areIntegratedCrossSectionsParameters = validateIntegratedCrossSectionsParameters();
+    bool areIntegratedCrossSectionsParametersValid = validateIntegratedCrossSectionsParameters();
 
-    // Physical scenario specific validations
-    bool isPhysicalScenarioValid = true;
-    if ( physicalScenario==zeroChemicalPotential )
-    {
-        isPhysicalScenarioValid = validateFileZeroChemicalPotential();
-    }
+    // Other validations
+    bool areTemperatureAndGridValid = validateTemperatureAndGridConsistency();
 
     return vacuumValidations && 
            allRequiredSectionsPresent &&
            areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid &&
            areLowToHighTemperatureAtZeroChemicalPotentialParametersValid &&
-           areIntegratedCrossSectionsParameters &&
-           isPhysicalScenarioValid;
+           areIntegratedCrossSectionsParametersValid &&
+           areTemperatureAndGridValid;
 }
 
-void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::evaluate(string physicalScenario) const
+void IsospinSymmetricIntegratedCrossSectionsZeroChemPot::evaluate() const
 {   
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
@@ -1141,33 +1154,30 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     );
     parameters.setParameterSetName(parameterSetName);
     
-    if ( physicalScenario==zeroChemicalPotential )
-    {
-        evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
-            parameters, 
-            precisionVacuum, 
-            stringToMultiRootFindingMethod(methodVacuum), 
-            upQuarkMassGuess, 
-            strangeQuarkMassGuess, 
-            precisionVacToFinTemp,
-            stringToMultiRootFindingMethod(methodVacToFinTemp), 
-            nearVacuumTemperature, 
-            minimumTemp, 
-            maximumTemp, 
-            numberOfPointsFromVacToFinTemp, 
-            numberOfPointsFromLowToHighTemp, 
-            largeAngleScatteringContribution, 
-            stringToIntegratedCrossSectionApproximationMethod(approximationMethod),
-            propagatorIntegralPrecision,
-            crossSectionIntegralPrecision,
-            integratedCrossSectionIntegralPrecision_dXdY,
-            integratedCrossSectionIntegralPrecision_dX,
-            numberOfThreads
-        );
-    }
+    evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
+        parameters, 
+        precisionVacuum, 
+        stringToMultiRootFindingMethod(methodVacuum), 
+        upQuarkMassGuess, 
+        strangeQuarkMassGuess, 
+        precisionVacToFinTemp,
+        stringToMultiRootFindingMethod(methodVacToFinTemp), 
+        nearVacuumTemperature, 
+        minimumTemp, 
+        maximumTemp, 
+        numberOfPointsFromVacToFinTemp, 
+        numberOfPointsFromLowToHighTemp, 
+        largeAngleScatteringContribution, 
+        stringToIntegratedCrossSectionApproximationMethod(approximationMethod),
+        propagatorIntegralPrecision,
+        crossSectionIntegralPrecision,
+        integratedCrossSectionIntegralPrecision_dXdY,
+        integratedCrossSectionIntegralPrecision_dX,
+        numberOfThreads
+    );
 }
 
-bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::validateFile() const
+bool InMediumMassesAndThermodynamics::validateFile() const
 {   
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
 	const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
@@ -1189,7 +1199,7 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics
            areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid;
 }
 
-void SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::evaluate() const
+void InMediumMassesAndThermodynamics::evaluate() const
 {   
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
@@ -1272,4 +1282,6 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics
         precisionVacToFinTemp,
         stringToMultiRootFindingMethod(methodVacToFinTemp)
     );
+}
+
 }
