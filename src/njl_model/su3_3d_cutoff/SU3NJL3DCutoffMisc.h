@@ -3,6 +3,12 @@
 
 void someVacuumAndThermalPropertiesKlevanskyParameterSet();
 
-void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double , double , int , int);
+void evaluateCrossSectionsPaperWithKlevanskyParameterSet(
+    double , 
+    double , 
+    double , 
+    int , 
+    int 
+);
 
 #endif

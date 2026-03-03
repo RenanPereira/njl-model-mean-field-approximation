@@ -53,10 +53,18 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     cout << sigmaPionPlusMassSolution.getMesonMass() << "\t" << sigmaPionPlusMassSolution.getMesonWidth() << "\n";
 
     //solve model at zero chemical potential up to some finite temperature
+    double nearVacuumTemperature = 1E-4;
     double maximumTemperature = 0.400;
     int numberOfPoints = 400;
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, maximumTemperature, numberOfPoints, gapPrecision, HYBRIDS);
+    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+        vacuum, 
+        nearVacuumTemperature,
+        maximumTemperature, 
+        numberOfPoints, 
+        gapPrecision, 
+        HYBRIDS
+    );
 
     //Search for meson melting points in the range of temperatures considered above
     double mesonPropertiesPrecision = 1E-7;
@@ -67,18 +75,40 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     mesonMassVacuumGuess = 0.2;
     mesonWidthVacuumGuess = 0.2;
     mesonID = pionPlus;
-    SU3NJL3DCutoffFixedChemPotTemp meltingPointPionPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, HYBRIDS, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    SU3NJL3DCutoffFixedChemPotTemp meltingPointPionPlus = nondiagonalMesonMeltingPoint(
+        vacuum, 
+        finiteTSolution, 
+        mesonID, 
+        mesonPropertiesPrecision, 
+        HYBRIDS, 
+        mesonMassVacuumGuess, 
+        mesonWidthVacuumGuess
+    );
     cout << "pionPlus TMott: " << meltingPointPionPlus.getTemperature() << "\n";
 
     mesonMassVacuumGuess = 0.5;
     mesonWidthVacuumGuess = 0.2;
     mesonID = kaonPlus;
-    SU3NJL3DCutoffFixedChemPotTemp meltingPointKaonPlus = nondiagonalMesonMeltingPoint(vacuum, finiteTSolution, mesonID, mesonPropertiesPrecision, HYBRIDS, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    SU3NJL3DCutoffFixedChemPotTemp meltingPointKaonPlus = nondiagonalMesonMeltingPoint(
+        vacuum, 
+        finiteTSolution, 
+        mesonID, 
+        mesonPropertiesPrecision, 
+        HYBRIDS, 
+        mesonMassVacuumGuess, 
+        mesonWidthVacuumGuess
+    );
     cout << "kaonPlus TMott: " << meltingPointKaonPlus.getTemperature() << "\n";
 }
 
 //Evaluate Cross section for paper at finite chemical potential using Klevansky parameter set
-void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPot, int numberOfCrossSectionPoints, int numberOfThreads)
+void evaluateCrossSectionsPaperWithKlevanskyParameterSet(
+    double nearVacuumTemperature, 
+    double T, 
+    double chemPot, 
+    int numberOfCrossSectionPoints, 
+    int numberOfThreads
+)
 {
     //define Klevansky parameters
     //parameter set A (Klevansky parameter set)
@@ -110,7 +140,14 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
     //solve gap equation from the vacuum up to finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, gapPrecision, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+        vacuum, 
+        nearVacuumTemperature,
+        T, 
+        100, 
+        gapPrecision, 
+        HYBRIDS
+    );
 
     double effMassU, effMassD, effMassS;
     effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
@@ -124,7 +161,13 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(double T, double chemPo
     //solve gap equation from the finite temperature up to finite chemical potential
     if( chemPot>0.0 )
     {
-        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, gapPrecision, HYBRIDS);
+        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(
+            finiteTempSol[int(finiteTempSol.size()-1)], 
+            chemPot, 
+            100, 
+            gapPrecision, 
+            HYBRIDS
+        );
 
         effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
         effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();

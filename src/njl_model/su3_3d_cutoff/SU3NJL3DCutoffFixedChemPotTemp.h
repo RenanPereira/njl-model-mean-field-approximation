@@ -59,19 +59,20 @@ public:
 		MultiRootFindingMethod , 
 		double , 
 		double , 
-		double ,
-		int ,
-		double ,
-		MultiRootFindingMethod ,
-		double ,
-		int ,
-		double ,
-		MultiRootFindingMethod,
-		double ,
-		bool ,
-		double ,
-		int ,
-		int
+		double , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod , 
+		double , 
+		bool , 
+		double , 
+		int , 
+		int 
 	);
 
 	double calculatePressure(double );
@@ -87,15 +88,16 @@ public:
 	double getEntropyDensity(){ return entropyDensity; };
 
 	static void evaluateInMediumMassesAndThermodynamics(
-		SU3NJL3DCutoffParameters& ,                                    
-		double ,                                    
-		MultiRootFindingMethod ,                                    
+		SU3NJL3DCutoffParameters& , 
+		double , 
+		MultiRootFindingMethod , 
+		double , 
+		double , 
 		double , 
 		double ,
-		double ,
 		double , 
-		int ,
-		double ,
+		int , 
+		double , 
 		MultiRootFindingMethod 
 	);
 	
@@ -110,7 +112,14 @@ private:
 
 int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vector *, void *, gsl_vector *);
 
-std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffVacuum , double , int , double , MultiRootFindingMethod );
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    SU3NJL3DCutoffVacuum , 
+    double ,
+    double , 
+    int , 
+    double , 
+    MultiRootFindingMethod 
+);
 
 std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp , double , int , double , MultiRootFindingMethod );
 

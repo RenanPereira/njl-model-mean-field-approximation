@@ -39,6 +39,7 @@ int main()
     double downQuarkMassGuess = 0.3;
     double strangeQuarkMassGuess = 0.5;
 
+    double nearVacuumTemperature = 1E-4;
     double temperature = 0.500;
     int numberOfPoints = 2000; 
     double precisionVacToFinTemp = 1E-8;
@@ -51,6 +52,7 @@ int main()
         upQuarkMassGuess, 
         downQuarkMassGuess,
         strangeQuarkMassGuess,
+        nearVacuumTemperature,
         temperature, 
         numberOfPoints,
         precisionVacToFinTemp,

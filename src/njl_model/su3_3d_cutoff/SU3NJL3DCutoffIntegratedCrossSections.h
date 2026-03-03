@@ -640,33 +640,63 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTraject
 );
 
 void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
-    SU3NJL3DCutoffParameters& , 
+	SU3NJL3DCutoffParameters& , 
+    double , 
+    MultiRootFindingMethod , 
+    double , 
+    double , 
 	double , 
 	MultiRootFindingMethod , 
-	double , double , double , 
-    MultiRootFindingMethod , 
-    double , double , 
-    int , int , 
-    bool , 
-    IntegratedCrossSectionApproximationMethod ,
-    double , double , double , double ,
-    int
+	double , 
+	double , 
+	double , 
+	int , 
+	int , 
+	bool , 
+	IntegratedCrossSectionApproximationMethod , 
+	double , 
+	double , 
+	double , 
+	double , 
+	int 
 );
 
 void evaluateIntegratedCrossSectionsWithFixedTemperature(
-    SU3NJL3DCutoffVacuum ,
-    double , double , int , int , int , double , double , bool , 
-    IntegratedCrossSectionApproximationMethod ,
-    double , double , double , double ,
-    int 
+	SU3NJL3DCutoffVacuum ,
+	double ,
+	double ,
+	double , 
+	int , 
+	int , 
+	int , 
+	double ,
+	double ,
+	bool , 
+	IntegratedCrossSectionApproximationMethod ,
+	double ,
+	double ,
+	double ,
+	double ,
+	int 
 );
 
 void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
-    SU3NJL3DCutoffVacuum ,
-    double , double , double , double , int , int , int , bool , 
-    IntegratedCrossSectionApproximationMethod ,
-    double , double , double , double ,
-    int 
+	SU3NJL3DCutoffVacuum ,
+	double ,
+	double ,
+	double ,
+	double , 
+	double , 
+	int , 
+	int , 
+	int , 
+	bool , 
+	IntegratedCrossSectionApproximationMethod ,
+	double ,
+	double ,
+	double ,
+	double ,
+	int 
 );
 
 #endif

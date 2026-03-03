@@ -57,6 +57,7 @@ int main(int argc, char* argv[])
     double precisionVacToFinTemp = 1E-8;
     string methodVacToFinTemp = "HYBRIDS";
 
+    double nearVacuumTemperature = 1E-5;
     double minimumTemperature = 0.120;
     double maximumTemperature = 0.300;
     int numberOfPointsFromVacToMinTemp = 200; 
@@ -77,6 +78,7 @@ int main(int argc, char* argv[])
 		strangeQuarkMassGuess, 
         precisionVacToFinTemp,
         stringToMultiRootFindingMethod(methodVacToFinTemp), 
+        nearVacuumTemperature,
         minimumTemperature, 
         maximumTemperature, 
         numberOfPointsFromVacToMinTemp, 
@@ -182,38 +184,44 @@ int main(int argc, char* argv[])
     double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
     double integratedCrossSectionIntegralPrecision_dX = 1E-3;
     int numberOfThreads = 14;
-    evaluateIntegratedCrossSectionsWithFixedChemicalPotential(vacuum,
-                                                              1E-8,
-                                                              chemPot,
-                                                              minimumTemperature, 
-                                                              maximumTemperature, 
-                                                              numberOfPointsFromVacToMinTemp, 
-                                                              numberOfPointsMinTempToChemPot,
-                                                              numberOfPointsFromMinToMaxTemp, 
-                                                              largeAngleScatteringContribution, 
-                                                              approximationMethod,
-                                                              propagatorIntegralPrecision,
-                                                              crossSectionIntegralPrecision,
-                                                              integratedCrossSectionIntegralPrecision_dXdY,
-                                                              integratedCrossSectionIntegralPrecision_dX,
-                                                              numberOfThreads);
+    evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
+        vacuum, 
+        1E-8, 
+        chemPot, 
+        1E-5, 
+        minimumTemperature, 
+        maximumTemperature, 
+        numberOfPointsFromVacToMinTemp, 
+        numberOfPointsMinTempToChemPot, 
+        numberOfPointsFromMinToMaxTemp, 
+        largeAngleScatteringContribution, 
+        approximationMethod, 
+        propagatorIntegralPrecision, 
+        crossSectionIntegralPrecision, 
+        integratedCrossSectionIntegralPrecision_dXdY, 
+        integratedCrossSectionIntegralPrecision_dX, 
+        numberOfThreads
+    );
 
     largeAngleScatteringContribution = true;
-    evaluateIntegratedCrossSectionsWithFixedChemicalPotential(vacuum,
-                                                              1E-8,
-                                                              chemPot,
-                                                              minimumTemperature, 
-                                                              maximumTemperature, 
-                                                              numberOfPointsFromVacToMinTemp, 
-                                                              numberOfPointsMinTempToChemPot,
-                                                              numberOfPointsFromMinToMaxTemp, 
-                                                              largeAngleScatteringContribution, 
-                                                              approximationMethod,
-                                                              propagatorIntegralPrecision,
-                                                              crossSectionIntegralPrecision,
-                                                              integratedCrossSectionIntegralPrecision_dXdY,
-                                                              integratedCrossSectionIntegralPrecision_dX,
-                                                              numberOfThreads);
+    evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
+        vacuum, 
+        1E-8, 
+        chemPot, 
+        1E-5,
+        minimumTemperature, 
+        maximumTemperature, 
+        numberOfPointsFromVacToMinTemp, 
+        numberOfPointsMinTempToChemPot, 
+        numberOfPointsFromMinToMaxTemp, 
+        largeAngleScatteringContribution, 
+        approximationMethod, 
+        propagatorIntegralPrecision, 
+        crossSectionIntegralPrecision, 
+        integratedCrossSectionIntegralPrecision_dXdY, 
+        integratedCrossSectionIntegralPrecision_dX, 
+        numberOfThreads
+    );
 */
 /*
     double minimumTemperature = 0.120;

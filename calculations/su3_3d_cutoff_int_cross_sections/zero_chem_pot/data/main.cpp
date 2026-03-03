@@ -41,6 +41,7 @@ int main()
     double strangeQuarkMassGuess = 0.5;
     double precisionVacToFinTemp = 1E-8;
     string methodVacToFinTemp = "HYBRIDS";
+    double nearVacuumTemperature = 1E-5;
     double minimumTemperature = 0.120;
     double maximumTemperature = 0.300;
     int numberOfPointsFromVacToMinTemp = 200; 
@@ -61,6 +62,7 @@ int main()
 		strangeQuarkMassGuess, 
         precisionVacToFinTemp,
         stringToMultiRootFindingMethod(methodVacToFinTemp), 
+        nearVacuumTemperature,
         minimumTemperature, 
         maximumTemperature, 
         numberOfPointsFromVacToMinTemp, 

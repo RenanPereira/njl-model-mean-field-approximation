@@ -4,7 +4,6 @@
 #include "ini_file_parser/IniFileParser.h"
 #include "njl_model/NJLDimensionfulCouplings.h"
 
-
 namespace SU3NJL3DCutoffFileParserKeys 
 {
     namespace ModelParameters 
@@ -56,6 +55,7 @@ namespace SU3NJL3DCutoffFileParserKeys
     namespace VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters 
     {
         inline const std::string section = "VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters";
+        inline const std::string nearVacuumTemperature = "nearVacuumTemperature_GeV";
         inline const std::string temperature = "temperature_GeV";
         inline const std::string numberOfPointsFromVacToFinTemp = "numberOfPointsFromVacuumToFineteTemperature";
         inline const std::string precisionVacToFinTemp = "precisionVacuumToFiniteTemperature";

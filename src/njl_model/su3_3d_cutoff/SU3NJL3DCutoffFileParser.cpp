@@ -11,7 +11,6 @@
 
 using namespace std;
 
-
 NJLDimensionfulCouplings SU3NJL3DCutoffFileParser::Common::extractDimensionfulCouplings() const
 {	
 	double cutoff = config.getDouble(
@@ -310,6 +309,14 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteTemperatureAtZeroCh
 {
     namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
 
+    // Ensure nearVacuumTemperature>=0
+    bool isNearVacuumTemperatureValid = config.validateNonNegativeDouble(
+        VFTZCPP::section,
+        VFTZCPP::nearVacuumTemperature ,
+        invalidFileMessage + " Invalid value found in section " + VFTZCPP::section + ".", 
+        VFTZCPP::nearVacuumTemperature + " >= 0 must be satisfied."
+    );
+
     // Ensure temperature>0
     bool isTemperatureValid = config.validatePositiveDouble(
         VFTZCPP::section,
@@ -343,7 +350,8 @@ bool SU3NJL3DCutoffFileParser::Common::validateVacuumToFiniteTemperatureAtZeroCh
     if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
 
     // The function return true only if all tests passed
-    return isTemperatureValid && 
+    return isNearVacuumTemperatureValid &&
+           isTemperatureValid && 
            isNumberOfPointsFromVacToFinTempValid &&
            isPrecisionVacToFinTempValid &&
            isRootFindingMethodValid;
@@ -896,11 +904,13 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
     namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
     cout << "\n" << VFTZCPP::section << ": " << endl;
 
+    double nearVacuumTemperature = config.getDouble(VFTZCPP::section, VFTZCPP::nearVacuumTemperature);
     double temperature = config.getDouble(VFTZCPP::section, VFTZCPP::temperature);
     int numberOfPointsFromVacToFinTemp = config.getInt(VFTZCPP::section, VFTZCPP::numberOfPointsFromVacToFinTemp);
     double precisionVacToFinTemp = config.getDouble(VFTZCPP::section, VFTZCPP::precisionVacToFinTemp);
     string methodVacToFinTemp = config.getValue(VFTZCPP::section, VFTZCPP::methodVacToFinTemp);
 
+    cout << VFTZCPP::nearVacuumTemperature << " = " << nearVacuumTemperature << endl;
     cout << VFTZCPP::temperature << " = " << temperature << endl;
     cout << VFTZCPP::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
     cout << VFTZCPP::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
@@ -943,6 +953,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
 		stringToMultiRootFindingMethod(methodVacuum), 
 		upQuarkMassGuess, 
 		strangeQuarkMassGuess,
+        nearVacuumTemperature,
         temperature,
         numberOfPointsFromVacToFinTemp,
         precisionVacToFinTemp,
@@ -961,15 +972,15 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::
 
 bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSections::validateFileZeroChemicalPotential() const
 {
-    namespace VFT = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
     namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
     namespace ICS = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
 
-    bool areTemperaturesEqual = (config.getValue(VFT::section, VFT::temperature)==config.getValue(LHT::section, LHT::minimumTemp));
+    bool areTemperaturesEqual = (config.getValue(VFTZCPP::section, VFTZCPP::temperature)==config.getValue(LHT::section, LHT::minimumTemp));
     if ( !areTemperaturesEqual )
     {
-        cout << invalidFileMessage + " Invalid values found in sections " + VFT::section + " and " + LHT::section + ": \n";
-        cout << VFT::temperature << "==" << LHT::minimumTemp << " must be satisfied.\n";
+        cout << invalidFileMessage + " Invalid values found in sections " + VFTZCPP::section + " and " + LHT::section + ": \n";
+        cout << VFTZCPP::temperature << "==" << LHT::minimumTemp << " must be satisfied.\n";
     }
 
     bool areNumberOfPointsEqual = (config.getValue(LHT::section, LHT::numberOfPointsFromLowToHighTemp)==config.getValue(ICS::section, ICS::numberOfPointsIntegratedCrossSections));
@@ -1030,7 +1041,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
 {   
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
-    namespace VFT = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
     namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
     namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
 
@@ -1071,17 +1082,19 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
     cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
     
     // VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters
-    cout << "\n" << VFT::section << ": " << endl;
+    cout << "\n" << VFTZCPP::section << ": " << endl;
 
-    double temperature = config.getDouble(VFT::section, VFT::temperature);
-    int numberOfPointsFromVacToFinTemp = config.getInt(VFT::section, VFT::numberOfPointsFromVacToFinTemp);
-    double precisionVacToFinTemp = config.getDouble(VFT::section, VFT::precisionVacToFinTemp);
-    string methodVacToFinTemp = config.getValue(VFT::section, VFT::methodVacToFinTemp);
+    double nearVacuumTemperature = config.getDouble(VFTZCPP::section, VFTZCPP::nearVacuumTemperature);
+    double temperature = config.getDouble(VFTZCPP::section, VFTZCPP::temperature);
+    int numberOfPointsFromVacToFinTemp = config.getInt(VFTZCPP::section, VFTZCPP::numberOfPointsFromVacToFinTemp);
+    double precisionVacToFinTemp = config.getDouble(VFTZCPP::section, VFTZCPP::precisionVacToFinTemp);
+    string methodVacToFinTemp = config.getValue(VFTZCPP::section, VFTZCPP::methodVacToFinTemp);
 
-    cout << VFT::temperature << " = " << temperature << endl;
-    cout << VFT::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
-    cout << VFT::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
-    cout << VFT::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
+    cout << VFTZCPP::nearVacuumTemperature << " = " << nearVacuumTemperature << endl;
+    cout << VFTZCPP::temperature << " = " << temperature << endl;
+    cout << VFTZCPP::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
+    cout << VFTZCPP::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
+    cout << VFTZCPP::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
 
     // LowToHighTemperatureAtZeroChemicalPotentialParameters
     cout << "\n" << LHT::section << ": " << endl;
@@ -1138,6 +1151,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCross
             strangeQuarkMassGuess, 
             precisionVacToFinTemp,
             stringToMultiRootFindingMethod(methodVacToFinTemp), 
+            nearVacuumTemperature, 
             minimumTemp, 
             maximumTemp, 
             numberOfPointsFromVacToFinTemp, 
@@ -1167,7 +1181,8 @@ bool SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics
     bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
 
     // Validate individual sections
-    bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
+    bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = 
+    validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
 
     return vacuumValidations && 
            allRequiredSectionsPresent &&
@@ -1178,7 +1193,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics
 {   
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
-    namespace VFT = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
     namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
     namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
 
@@ -1219,17 +1234,19 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics
     cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
     
     // VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters
-    cout << "\n" << VFT::section << ": " << endl;
+    cout << "\n" << VFTZCPP::section << ": " << endl;
 
-    double temperature = config.getDouble(VFT::section, VFT::temperature);
-    int numberOfPointsFromVacToFinTemp = config.getInt(VFT::section, VFT::numberOfPointsFromVacToFinTemp);
-    double precisionVacToFinTemp = config.getDouble(VFT::section, VFT::precisionVacToFinTemp);
-    string methodVacToFinTemp = config.getValue(VFT::section, VFT::methodVacToFinTemp);
+    double nearVacuumTemperature = config.getDouble(VFTZCPP::section, VFTZCPP::nearVacuumTemperature);
+    double temperature = config.getDouble(VFTZCPP::section, VFTZCPP::temperature);
+    int numberOfPointsFromVacToFinTemp = config.getInt(VFTZCPP::section, VFTZCPP::numberOfPointsFromVacToFinTemp);
+    double precisionVacToFinTemp = config.getDouble(VFTZCPP::section, VFTZCPP::precisionVacToFinTemp);
+    string methodVacToFinTemp = config.getValue(VFTZCPP::section, VFTZCPP::methodVacToFinTemp);
 
-    cout << VFT::temperature << " = " << temperature << endl;
-    cout << VFT::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
-    cout << VFT::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
-    cout << VFT::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
+    cout << VFTZCPP::nearVacuumTemperature << " = " << nearVacuumTemperature << endl;
+    cout << VFTZCPP::temperature << " = " << temperature << endl;
+    cout << VFTZCPP::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
+    cout << VFTZCPP::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
+    cout << VFTZCPP::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
 
     // Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(
@@ -1249,6 +1266,7 @@ void SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics
         upQuarkMassGuess, 
         downQuarkMassGuess,
         strangeQuarkMassGuess,
+        nearVacuumTemperature,
         temperature, 
         numberOfPointsFromVacToFinTemp,
         precisionVacToFinTemp,

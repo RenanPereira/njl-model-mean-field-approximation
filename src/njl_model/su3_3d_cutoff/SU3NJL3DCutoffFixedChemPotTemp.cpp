@@ -190,9 +190,9 @@ SU3NJL3DCutoffMeson SU3NJL3DCutoffFixedChemPotTemp::calculateMesonMassAndWidth(m
     return mesonAux;
 }
 
-
 vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
     SU3NJL3DCutoffVacuum vacuumSol, 
+    double nearVacuumTemperature,
     double maxTemperature, 
     int numberOfPoints, 
     double precision, 
@@ -211,13 +211,12 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroC
     double effMassD = vacuumSol.getDownQuarkEffectiveMass();
     double effMassS = vacuumSol.getStrangeQuarkEffectiveMass();
 
-    double minTemperature = 1E-4; // 0.1 MeV
-    double deltaTemperature = (maxTemperature-minTemperature)/(numberOfPoints - 1);
+    double deltaTemperature = (maxTemperature-nearVacuumTemperature)/(numberOfPoints - 1);
 
     vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
     for (int i = 0; i < numberOfPoints; ++i)
     {   
-        double T = minTemperature + i*deltaTemperature;
+        double T = nearVacuumTemperature + i*deltaTemperature;
 
         SU3NJL3DCutoffFixedChemPotTemp inMediumSol(vacuumSol.getParametersNJL(), T, chemPotU, chemPotD, chemPotS);
         inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
@@ -483,23 +482,24 @@ SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum
 }
 
 void SU3NJL3DCutoffFixedChemPotTemp::evaluateIsospinSymmetricCrossSections(
-    SU3NJL3DCutoffParameters& parameters,                                    
-    double precisionVacuum,                                    
-    MultiRootFindingMethod methodVacuum,                                    
+    SU3NJL3DCutoffParameters& parameters, 
+    double precisionVacuum, 
+    MultiRootFindingMethod methodVacuum, 
     double lightQuarkMassGuess, 
-    double strangeQuarkMassGuess,
-    double temperature,
-    int numberOfPointsFromVacToFinTemp,
-    double precisionVacToFinTemp,
-    MultiRootFindingMethod methodVacToFinTemp,
-    double quarkChemicalPotential,
-    int numberOfPointsFromFinTempToFinChemPot,
-    double precisionFinTempToFinChemPot,
-    MultiRootFindingMethod methodFinTempToFinChemPot,
-    double propagatorIntegralPrecision,
-    bool largeAngleScatteringContribution,
-    double precisionCrossSections,
-    int numberOfPointsCrossSections,
+    double strangeQuarkMassGuess, 
+    double nearVacuumTemperature, 
+    double temperature, 
+    int numberOfPointsFromVacToFinTemp, 
+    double precisionVacToFinTemp, 
+    MultiRootFindingMethod methodVacToFinTemp, 
+    double quarkChemicalPotential, 
+    int numberOfPointsFromFinTempToFinChemPot, 
+    double precisionFinTempToFinChemPot, 
+    MultiRootFindingMethod methodFinTempToFinChemPot, 
+    double propagatorIntegralPrecision, 
+    bool largeAngleScatteringContribution, 
+    double precisionCrossSections, 
+    int numberOfPointsCrossSections, 
     int numberOfThreads
 )
 {
@@ -514,6 +514,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateIsospinSymmetricCrossSections(
 
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
         vacuum, 
+        nearVacuumTemperature, 
         temperature, 
         numberOfPointsFromVacToFinTemp, 
         precisionVacToFinTemp, 
@@ -685,15 +686,16 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedChemPotTemp> solutions, stri
 }
 
 void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
-	SU3NJL3DCutoffParameters& parameters,                                    
-    double precisionVacuum,                                    
-    MultiRootFindingMethod methodVacuum,                                    
+	SU3NJL3DCutoffParameters& parameters, 
+    double precisionVacuum, 
+    MultiRootFindingMethod methodVacuum, 
     double upQuarkMassGuess, 
-    double downQuarkMassGuess,
-    double strangeQuarkMassGuess,
+    double downQuarkMassGuess, 
+    double strangeQuarkMassGuess, 
+    double nearVacuumTemperature,
 	double temperature, 
-	int numberOfPoints,
-    double precisionVacToFinTemp,
+	int numberOfPoints, 
+    double precisionVacToFinTemp, 
     MultiRootFindingMethod methodVacToFinTemp
 )
 {
@@ -707,9 +709,9 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
     );
 
     //solve model at zero chemical potential up to some finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
         vacuum, 
+        nearVacuumTemperature,
         temperature, 
         numberOfPoints, 
         precisionVacToFinTemp, 
@@ -728,6 +730,9 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
         finiteTSolution[i].setEnergyDensity(-pressureVac);
         finiteTSolution[i].setEntropyDensity();
     }
+
+    //HERE!
+    // Only add vacumm to solution if near vacuum temperature is not zero!!!!
 
     //Add solution with vacuum solution to start of the vector
     SU3NJL3DCutoffFixedChemPotTemp auxVacuum(vacuum);
