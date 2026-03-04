@@ -132,6 +132,7 @@ namespace SU3NJL3DCutoffFileParser
         bool validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const;
         bool validateIntegratedCrossSectionsParameters() const;
         bool checkRequiredSections(const std::vector<std::string> ) const;
+        void printQualityCheckFailedMessage() const;
     };
 
     namespace Vacuum

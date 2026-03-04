@@ -300,3 +300,8 @@ void KlevanskyB0Integral3DCutoffFileParser::evaluateKlevanskyB0Integral3DCutoff(
             integralPrecision);
     }
 }
+
+void KlevanskyB0Integral3DCutoffFileParser::printQualityCheckFailedMessage() const
+{
+    cout << "The quality check failed for the " << config.getFilename() << " file."  << endl;
+}

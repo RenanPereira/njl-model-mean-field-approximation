@@ -586,6 +586,11 @@ bool Common::checkRequiredSections(const vector<string> requiredSections) const
     return allRequiredSectionsPresent;
 }
 
+void Common::printQualityCheckFailedMessage() const
+{
+    cout << "The quality check failed for the " << config.getFilename() << " file."  << endl;
+}
+
 }
 
 namespace SU3NJL3DCutoffFileParser::Vacuum

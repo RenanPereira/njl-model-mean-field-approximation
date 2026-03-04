@@ -64,7 +64,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{ 
-			printQualityCheckFailedMessage(configFile.getFilename());
+			config.printQualityCheckFailedMessage();
 		}
 	}
 	else if(fileTypeStr==KlevanskyB0Integral3DCutoffFileParser::klevanskyB0Integral3DCutoff)
@@ -76,7 +76,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			printQualityCheckFailedMessage(configFile.getFilename());
+			config.printQualityCheckFailedMessage();
 		}
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::firstOrderLine)
@@ -88,7 +88,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			printQualityCheckFailedMessage(configFile.getFilename());
+			config.printQualityCheckFailedMessage();
 		}
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::isospinSymmetricCrossSections)
@@ -100,7 +100,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			printQualityCheckFailedMessage(configFile.getFilename());
+			config.printQualityCheckFailedMessage();
 		}
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsZeroChemPot::zeroChemicalPotential )
@@ -112,7 +112,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			printQualityCheckFailedMessage(configFile.getFilename());
+			config.printQualityCheckFailedMessage();
 		}
 	}
 	else if (fileTypeStr==SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::fileType )
@@ -124,7 +124,7 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		}
 		else
 		{
-			printQualityCheckFailedMessage(configFile.getFilename());
+			config.printQualityCheckFailedMessage();
 		}
 	}
 	else

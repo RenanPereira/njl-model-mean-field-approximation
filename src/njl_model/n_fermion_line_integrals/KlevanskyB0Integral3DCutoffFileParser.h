@@ -62,6 +62,7 @@ class KlevanskyB0Integral3DCutoffFileParser
         bool validateSectionVsKParameters(std::string ) const;
         bool validateFileQualityEvaluateIntegral() const;
         void evaluateKlevanskyB0Integral3DCutoff() const;
+        void printQualityCheckFailedMessage() const;
 };
 
 #endif
