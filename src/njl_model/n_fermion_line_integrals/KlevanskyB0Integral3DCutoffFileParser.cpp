@@ -5,7 +5,7 @@
 using namespace std;
 
 
-bool KlevanskyB0Integral3DCutoffFileParser::validateFileQualityEvaluateIntegral() const 
+bool KlevanskyB0Integral3DCutoffFileParser::validateFile() const 
 {   
     // Check for missing sections
     vector<string> vsK0section = 
@@ -196,7 +196,7 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsKParameters(string 
     return true; // All validations passed
 }
 
-void KlevanskyB0Integral3DCutoffFileParser::evaluateKlevanskyB0Integral3DCutoff() const
+void KlevanskyB0Integral3DCutoffFileParser::evaluate() const
 {   
     vector<map<string, string>> vsK0ParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::vsK0section);
     for (int i = 0; i < int(vsK0ParametersData.size()); ++i) 

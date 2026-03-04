@@ -115,24 +115,42 @@ namespace SU3NJL3DCutoffFileParser
             const IniFileParser& config;    
             std::string invalidFileMessage;
 
-        public:
             Common(const IniFileParser& p)
                 : config(p),
                 invalidFileMessage("Error: Invalid configuration found in the " + p.getFilename() + " file.") {}
 
-        NJLDimensionfulCouplings extractDimensionfulCouplings() const;
-        bool validateModelParameters() const;
-        bool validateDimensionfulCouplings() const;
-        bool validateVacuumMassesParameters() const;
-        bool validateVacuumToFiniteBaryonDensityParameters() const;
-        bool validateFirstOrderLineParameters() const;
-        bool validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const;
-        bool validateFiniteTemperatureToFiniteChemicalPotentialParameters() const;
-        bool validateCrossSectionsParameters() const;
-        bool validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const;
-        bool validateIntegratedCrossSectionsParameters() const;
-        bool checkRequiredSections(const std::vector<std::string> ) const;
-        void printQualityCheckFailedMessage() const;
+            virtual ~Common() {}
+
+            // methods that need to be defined in children classes
+            virtual bool validateFile() const = 0;
+            virtual void evaluate() const = 0;
+            void run() const
+            {
+                if (validateFile())
+                {
+                    evaluate();
+                }
+                else
+                {
+                    printQualityCheckFailedMessage();
+                }
+            }
+
+            NJLDimensionfulCouplings extractDimensionfulCouplings() const;
+
+            bool validateModelParameters() const;
+            bool validateDimensionfulCouplings() const;
+            bool validateVacuumMassesParameters() const;
+            bool validateVacuumToFiniteBaryonDensityParameters() const;
+            bool validateFirstOrderLineParameters() const;
+            bool validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const;
+            bool validateFiniteTemperatureToFiniteChemicalPotentialParameters() const;
+            bool validateCrossSectionsParameters() const;
+            bool validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const;
+            bool validateIntegratedCrossSectionsParameters() const;
+
+            bool checkRequiredSections(const std::vector<std::string> ) const;
+            void printQualityCheckFailedMessage() const;
     };
 
     namespace Vacuum

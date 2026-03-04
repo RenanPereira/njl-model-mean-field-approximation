@@ -48,11 +48,9 @@ class KlevanskyB0Integral3DCutoffFileParser
     public:
         inline static const std::string klevanskyB0Integral3DCutoff = "KlevanskyB0Integral3DCutoff";
 
-    public:
         const IniFileParser& config;    
         std::string invalidFileMessage;
 
-    public:
         KlevanskyB0Integral3DCutoffFileParser(const IniFileParser& p)
             : config(p),
             invalidFileMessage("Error: Invalid configuration found in the " + p.getFilename() + " file.")
@@ -60,9 +58,21 @@ class KlevanskyB0Integral3DCutoffFileParser
 
         bool validateSectionVsK0Parameters(std::string ) const;
         bool validateSectionVsKParameters(std::string ) const;
-        bool validateFileQualityEvaluateIntegral() const;
-        void evaluateKlevanskyB0Integral3DCutoff() const;
+        bool validateFile() const;
+        void evaluate() const;
         void printQualityCheckFailedMessage() const;
+
+        void run() const
+        {
+            if (validateFile())
+            {
+                evaluate();
+            }
+            else
+            {
+                printQualityCheckFailedMessage();
+            }
+        }
 };
 
 #endif

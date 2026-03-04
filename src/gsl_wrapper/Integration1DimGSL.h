@@ -29,6 +29,8 @@ public:
 	size_t numberFunctionEvaluations;
 
 public:
+	virtual ~Integration1DimGSL() {}; // Polymorphic base classes must have virtual destructors
+	
 	void setVariables(double , double , GeneralIntegrandParameters* , double integrand(double, void*), double , double , int );
 
 	double getLowerBound(){ return lowerBound; }

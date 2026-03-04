@@ -5,8 +5,6 @@
 
 int commandLineArgsProcessor(int , char* []);
 
-void printQualityCheckFailedMessage(std::string );
-
 void selectPathBasedOnFileDetails(const IniFileParser& );
 
 #endif
