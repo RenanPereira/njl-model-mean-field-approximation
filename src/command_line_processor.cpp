@@ -50,9 +50,9 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	cout << "type = " << type << endl;
 
 	// Check if file is written correctly and then make calculation
-	if(type==SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::calculationType)
+	if(type==SU3NJL3DCutoffFileParser::Vacuum::Masses::calculationType)
 	{	
-		const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses config(configFile);
+		const SU3NJL3DCutoffFileParser::Vacuum::Masses config(configFile);
 		config.run();
 	}
 	else if(type==KlevanskyB0Integral3DCutoffFileParser::calculationType)

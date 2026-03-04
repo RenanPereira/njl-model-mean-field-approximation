@@ -157,13 +157,13 @@ namespace SU3NJL3DCutoffFileParser
     {   
         inline const std::string type = model + "Vacuum";
 
-        class VacuumMasses : public Common
+        class Masses : public Common
         {   
             public:
-                inline static const std::string calculationType = type + "VacuumMasses";
+                inline static const std::string calculationType = type + "Masses";
             
             public:
-                VacuumMasses(const IniFileParser& p) : Common(p) {}
+                Masses(const IniFileParser& p) : Common(p) {}
 
                 bool validateFile() const;
                 void evaluate() const;

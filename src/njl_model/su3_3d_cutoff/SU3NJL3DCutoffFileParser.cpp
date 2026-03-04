@@ -596,7 +596,7 @@ void Common::printQualityCheckFailedMessage() const
 namespace SU3NJL3DCutoffFileParser::Vacuum
 {
 
-bool VacuumMasses::validateFile() const
+bool Masses::validateFile() const
 {
     // Check for missing sections
     bool allRequiredSectionsPresent = true;
@@ -628,7 +628,7 @@ bool VacuumMasses::validateFile() const
            areVacuumMassesParametersValid;
 }
 
-void VacuumMasses::evaluate() const
+void Masses::evaluate() const
 {
     // Model Parameters
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
@@ -697,7 +697,7 @@ namespace SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot
 bool FirstOrderLine::validateFile() const
 {   
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
-    const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
+    const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
     bool vacuumValidations = configVacuum.validateFile();
 
     // Check for missing sections
@@ -837,7 +837,7 @@ namespace SU3NJL3DCutoffFileParser::FixedChemPotTemp
 bool IsospinSymmetricCrossSections::validateFile() const
 {
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
-    const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
+    const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
     bool vacuumValidations = configVacuum.validateFile();
 
     // Check for missing sections
@@ -1018,7 +1018,7 @@ bool IsospinSymmetricIntegratedCrossSectionsZeroChemPot::validateTemperatureAndG
 bool IsospinSymmetricIntegratedCrossSectionsZeroChemPot::validateFile() const
 {   
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
-	const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
+	const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
     bool vacuumValidations = configVacuum.validateFile();
 
     // Check for missing sections
@@ -1185,7 +1185,7 @@ void IsospinSymmetricIntegratedCrossSectionsZeroChemPot::evaluate() const
 bool InMediumMassesAndThermodynamics::validateFile() const
 {   
     // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
-	const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses configVacuum(config);
+	const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
     bool vacuumValidations = configVacuum.validateFile();
 
     // Check for missing sections
