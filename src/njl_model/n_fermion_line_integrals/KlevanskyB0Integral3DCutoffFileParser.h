@@ -46,7 +46,7 @@ namespace KlevanskyB0Integral3DCutoffFileParserKeys
 class KlevanskyB0Integral3DCutoffFileParser
 {
     public:
-        inline static const std::string klevanskyB0Integral3DCutoff = "KlevanskyB0Integral3DCutoff";
+        inline static const std::string calculationType = "KlevanskyB0Integral3DCutoff";
 
         const IniFileParser& config;    
         std::string invalidFileMessage;

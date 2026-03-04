@@ -160,7 +160,7 @@ namespace SU3NJL3DCutoffFileParser
         class VacuumMasses : public Common
         {   
             public:
-                inline static const std::string vacuumMasses = type + "VacuumMasses";
+                inline static const std::string calculationType = type + "VacuumMasses";
             
             public:
                 VacuumMasses(const IniFileParser& p) : Common(p) {}
@@ -177,7 +177,7 @@ namespace SU3NJL3DCutoffFileParser
         class FirstOrderLine : public Common
         {   
             public:
-                inline static const std::string firstOrderLine = type + "FirstOrderLine";
+                inline static const std::string calculationType = type + "FirstOrderLine";
 
             public:
                 FirstOrderLine(const IniFileParser& p) : Common(p) {}
@@ -194,7 +194,7 @@ namespace SU3NJL3DCutoffFileParser
         class IsospinSymmetricCrossSections : public Common
         {
             public:
-                inline static const std::string isospinSymmetricCrossSections = type + "IsospinSymmetricCrossSections";
+                inline static const std::string calculationType = type + "IsospinSymmetricCrossSections";
 
             public:
                 IsospinSymmetricCrossSections(const IniFileParser& p) : Common(p) {}
@@ -206,7 +206,7 @@ namespace SU3NJL3DCutoffFileParser
         class IsospinSymmetricIntegratedCrossSectionsZeroChemPot : public Common
         {   
             public:
-                inline static const std::string zeroChemicalPotential = type + "IsospinSymmetricIntegratedCrossSectionsZeroChemicalPotential";
+                inline static const std::string calculationType = type + "IsospinSymmetricIntegratedCrossSectionsZeroChemicalPotential";
 
             public:
                 IsospinSymmetricIntegratedCrossSectionsZeroChemPot(const IniFileParser& p) : Common(p) {}
@@ -219,7 +219,7 @@ namespace SU3NJL3DCutoffFileParser
         class InMediumMassesAndThermodynamics : public Common
         {   
             public:
-                inline static const std::string fileType = type + "InMediumMassesAndThermodynamics";
+                inline static const std::string calculationType = type + "InMediumMassesAndThermodynamics";
 
             public:
                 InMediumMassesAndThermodynamics(const IniFileParser& p) : Common(p) {}

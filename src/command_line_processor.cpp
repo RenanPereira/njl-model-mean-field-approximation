@@ -44,38 +44,38 @@ int commandLineArgsProcessor(int argc, char* argv[])
 void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 {	
     // Get the file type
-    string fileType = configFile.getValue("FileDetails", "type");
+    string type = configFile.getValue("FileDetails", "type");
 	
 	cout << "\nFileDetails:" << endl;
-	cout << "type = " << fileType << endl;
+	cout << "type = " << type << endl;
 
 	// Check if file is written correctly and then make calculation
-	if(fileType==SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::vacuumMasses)
+	if(type==SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses::calculationType)
 	{	
 		const SU3NJL3DCutoffFileParser::Vacuum::VacuumMasses config(configFile);
 		config.run();
 	}
-	else if(fileType==KlevanskyB0Integral3DCutoffFileParser::klevanskyB0Integral3DCutoff)
+	else if(type==KlevanskyB0Integral3DCutoffFileParser::calculationType)
 	{	
 		const KlevanskyB0Integral3DCutoffFileParser config(configFile);
 		config.run();
 	}
-	else if (fileType==SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::firstOrderLine)
+	else if (type==SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine::calculationType)
 	{
 		const SU3NJL3DCutoffFileParser::FixedTempRhoBEqualChemPot::FirstOrderLine config(configFile);
 		config.run();
 	}
-	else if (fileType==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::isospinSymmetricCrossSections)
+	else if (type==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections::calculationType)
 	{
 		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricCrossSections config(configFile);
 		config.run();
 	}
-	else if (fileType==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsZeroChemPot::zeroChemicalPotential )
+	else if (type==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsZeroChemPot::calculationType)
 	{	
 		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsZeroChemPot config(configFile);
 		config.run();
 	}
-	else if (fileType==SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::fileType )
+	else if (type==SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::calculationType)
 	{	
 		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics config(configFile);
 		config.run();
