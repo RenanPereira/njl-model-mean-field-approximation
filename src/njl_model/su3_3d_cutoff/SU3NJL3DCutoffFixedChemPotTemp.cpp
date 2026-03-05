@@ -11,17 +11,10 @@
 using namespace std;
 
 SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(void* auxiliar)
-{	
-	parametersNJL = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->parametersNJL;
-	temperature = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->temperature;
-	upQuarkChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->upQuarkChemicalPotential;
-	downQuarkChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->downQuarkChemicalPotential;
-	strangeQuarkChemicalPotential = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->strangeQuarkChemicalPotential;
-	upQuarkEffectiveMass = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->upQuarkEffectiveMass;
-	downQuarkEffectiveMass = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->downQuarkEffectiveMass;
-	strangeQuarkEffectiveMass = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->strangeQuarkEffectiveMass;
-    mesonID = ((class SU3NJL3DCutoffFixedChemPotTemp *)(auxiliar))->mesonID;
-};
+{
+    SU3NJL3DCutoffFixedChemPotTemp* solution = static_cast<SU3NJL3DCutoffFixedChemPotTemp*>(auxiliar);
+    *this = *solution;
+}
 
 SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(
     SU3NJL3DCutoffParameters parametersNJLAux, 
@@ -98,34 +91,34 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
     double mU = gsl_vector_get(x,0);
     double mD = gsl_vector_get(x,1);
     double mS = gsl_vector_get(x,2);
+    
+    //cast void* auxiliar into SU3NJL3DCutoffFixedChemPotTemp* and get necessary parameters
+    SU3NJL3DCutoffFixedChemPotTemp* solution = static_cast<SU3NJL3DCutoffFixedChemPotTemp*>(auxiliar);
 
+    NJLDimensionfulCouplings couplings = solution->getParametersNJL().getDimensionfulCouplings();
+    LagrangianInteractions lagrangianInteractions = solution->getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
 
-    //define parameters
-    SU3NJL3DCutoffFixedChemPotTemp solution(auxiliar);
+    NJL3DCutoffRegularizationScheme reguScheme = solution->getParametersNJL().getNJL3DCutoffRegularizationScheme();
+    double cutoff = solution->getParametersNJL().getThreeMomentumCutoff();
 
-    NJLDimensionfulCouplings couplings = solution.getParametersNJL().getDimensionfulCouplings();
+    double Nc = solution->getParametersNJL().getNumberOfColours();
 
-    NJL3DCutoffRegularizationScheme reguScheme = solution.getParametersNJL().getNJL3DCutoffRegularizationScheme();
-    double cutoff = solution.getParametersNJL().getThreeMomentumCutoff();
+    double sigmaIntegralPrecision = solution->getParametersNJL().getSigmaIntegralPrecision();
 
-    double Nc = solution.getParametersNJL().getNumberOfColours();
+    double m0U = solution->getParametersNJL().getUpQuarkCurrentMass();
+    double m0D = solution->getParametersNJL().getDownQuarkCurrentMass();
+    double m0S = solution->getParametersNJL().getStrangeQuarkCurrentMass();
 
-    double sigmaIntegralPrecision = solution.getParametersNJL().getSigmaIntegralPrecision();
-
-    double m0U = solution.getParametersNJL().getUpQuarkCurrentMass();
-    double m0D = solution.getParametersNJL().getDownQuarkCurrentMass();
-    double m0S = solution.getParametersNJL().getStrangeQuarkCurrentMass();
-
-    double T = solution.getTemperature();
-    double cPU = solution.getUpQuarkChemicalPotential();
-    double cPD = solution.getDownQuarkChemicalPotential();
-    double cPS = solution.getStrangeQuarkChemicalPotential();
+    double T = solution->getTemperature();
+    double cPU = solution->getUpQuarkChemicalPotential();
+    double cPD = solution->getDownQuarkChemicalPotential();
+    double cPS = solution->getStrangeQuarkChemicalPotential();
 
     //This solution does not take into account vector degrees of freedom
-    LagrangianInteractions lagrangianInteractionsAux = solution.getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractionsAux!=SP4Q_DET2NFQ && lagrangianInteractionsAux!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
     {   
-        cout << "Lagrangian interactions contain vector degrees of freedom! The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
+        cout << "Lagrangian interactions contain vector degrees of freedom! "
+             << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
         abort();
     }
 
@@ -138,19 +131,6 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
     double f0 = SU3NJLNulledGapEquation(couplings, mU-m0U, sigmaU, sigmaD, sigmaS, 0.0, 0.0, 0.0);
     double f1 = SU3NJLNulledGapEquation(couplings, mD-m0D, sigmaD, sigmaS, sigmaU, 0.0, 0.0, 0.0);
     double f2 = SU3NJLNulledGapEquation(couplings, mS-m0S, sigmaS, sigmaU, sigmaD, 0.0, 0.0, 0.0);
-    
-    /*
-    double thermoIntegralPrecision = solution.getParametersNJL().getThermoIntegralPrecision();
-
-    double rhoU = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCPU, mU, thermoIntegralPrecision);
-    double rhoD = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCPD, mD, thermoIntegralPrecision);
-    double rhoS = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effCPS, mS, thermoIntegralPrecision);
-
-   	//system of equations
-    double f0 = SU3NJLNulledGapEquation(couplings, mU-m0U, sigmaU, sigmaD, sigmaS, rhoU, rhoD, rhoS);
-    double f1 = SU3NJLNulledGapEquation(couplings, mD-m0D, sigmaD, sigmaS, sigmaU, rhoD, rhoS, rhoU);
-    double f2 = SU3NJLNulledGapEquation(couplings, mS-m0S, sigmaS, sigmaU, sigmaD, rhoS, rhoU, rhoD);
-	*/
 
 	gsl_vector_set (f, 0, f0);
 	gsl_vector_set (f, 1, f1);
