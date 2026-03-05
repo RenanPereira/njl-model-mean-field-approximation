@@ -73,7 +73,7 @@ As described before, there is a script that switches the `main.cpp` file from th
 
 To execute everything in one go:
 ```bash
-cd zero_chem_pot
+cd fixed_chem_pot_temp
 ./execute_calculations.sh
 ./build_plots.sh
 ```
@@ -82,18 +82,80 @@ cd zero_chem_pot
 
 In this section we present some thermodynamic quantities of the SU3 NJL model resulting from these calculations.
 
-### Set A, Zero chemical potential
+### Zero chemical potential: quark masses vs temperature
 
-![](fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setA_CP0.png)
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setB.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setC.png" width="32%">
+</p>
 
-![](fixed_chem_pot_temp/plots/pressure_vs_temp_setA_CP0.png)
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
+</p>
 
-![](fixed_chem_pot_temp/plots/pressure_vs_energy_setA_CP0.png)
+### Zero chemical potential: pressure vs temperature
 
-![](fixed_chem_pot_temp/plots/entropy_vs_temp_setA_CP0.png)
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setA.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setB.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setC.png" width="32%">
+</p>
 
-![](fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setA_CP0.png)
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setsABC.png" width="32%">
+</p>
 
-![](fixed_chem_pot_temp/plots/energy_vs_temp_setA_CP0.png)
 
-![](fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setA_CP0.png)
+
+### Zero chemical potential: entropy density vs temperature
+
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setA.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setB.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setsABC.png" width="32%">
+</p>
+
+In the plots below we also calculate the temperature derivative of the pressure at fixed chemical potential, which yields the entropy density. Hence, one can assess the compatibility of the results provided in the data file.
+
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setA.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setB.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+### Zero chemical potential: energy density vs temperature
+
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setA.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setB.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setsABC.png" width="32%">
+</p>
+
+In the plots below we also calculate the energy density via the Euler equation. Hence, one can assess the compatibility of the results provided in the data file.
+
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setA.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setB.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+### Zero chemical potential: pressure vs energy density
+
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setA.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setB.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setC.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setsABC.png" width="32%">
+</p>
