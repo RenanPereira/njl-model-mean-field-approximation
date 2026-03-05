@@ -99,7 +99,7 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
     double mS = gsl_vector_get(x,2);
     
     //cast void* auxiliar into SU3NJL3DCutoffFixedChemPotTemp* and get necessary parameters
-    SU3NJL3DCutoffFixedChemPotTemp* solution = static_cast<SU3NJL3DCutoffFixedChemPotTemp*>(auxiliar);
+    const SU3NJL3DCutoffFixedChemPotTemp* solution = static_cast<const SU3NJL3DCutoffFixedChemPotTemp*>(auxiliar);
 
     NJLDimensionfulCouplings couplings = solution->getParametersNJL().getDimensionfulCouplings();
     LagrangianInteractions lagrangianInteractions = solution->getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
