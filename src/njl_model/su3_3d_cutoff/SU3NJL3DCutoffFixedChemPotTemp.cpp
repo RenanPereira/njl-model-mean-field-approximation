@@ -27,7 +27,6 @@ SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(
 	parametersNJL = parametersNJLAux;
 
 	temperature = temperatureAux;
-
 	upQuarkChemicalPotential = upQuarkChemicalPotentialAux;
 	downQuarkChemicalPotential = downQuarkChemicalPotentialAux;
 	strangeQuarkChemicalPotential = strangeQuarkChemicalPotentialAux;
@@ -50,8 +49,8 @@ SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(
 SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(SU3NJL3DCutoffVacuum &vacuumSolution)
 {
     parametersNJL = vacuumSolution.getParametersNJL();
-    temperature = 0.0;
 
+    temperature = 0.0;
     upQuarkChemicalPotential = 0.0;
     downQuarkChemicalPotential = 0.0;
     strangeQuarkChemicalPotential = 0.0;
@@ -65,25 +64,32 @@ SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(SU3NJL3DCutoffVac
 	entropyDensity = 0.0;
 }
 
-
-void SU3NJL3DCutoffFixedChemPotTemp::solve(double precision, 
-										   MultiRootFindingMethod method, 
-                                           double upQuarkEffectiveMassGuess, 
-                                           double downQuarkEffectiveMassGuess, 
-                                           double strangeQuarkEffectiveMassGuess)
+void SU3NJL3DCutoffFixedChemPotTemp::solve(
+    double precision, 
+    MultiRootFindingMethod method, 
+    double upQuarkEffectiveMassGuess, 
+    double downQuarkEffectiveMassGuess, 
+    double strangeQuarkEffectiveMassGuess
+)
 {	
 	double x[3];
     x[0] = upQuarkEffectiveMassGuess; 
     x[1] = downQuarkEffectiveMassGuess; 
     x[2] = strangeQuarkEffectiveMassGuess;
     
-    multiDimensionalRootFind(3, precision, &x[0], this, &SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature, method);
+    multiDimensionalRootFind(
+        3, 
+        precision, 
+        &x[0], 
+        this, 
+        &SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature, 
+        method
+    );
 
 	setUpQuarkEffectiveMass(x[0]);
 	setDownQuarkEffectiveMass(x[1]);
 	setStrangeQuarkEffectiveMass(x[2]);
 }
-
 
 int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
@@ -139,7 +145,6 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
 	return GSL_SUCCESS;
 }
 
-
 bool SU3NJL3DCutoffFixedChemPotTemp::testSolution(double precision)
 {   
     double x[3];
@@ -148,22 +153,40 @@ bool SU3NJL3DCutoffFixedChemPotTemp::testSolution(double precision)
     x[2] = getStrangeQuarkEffectiveMass();
 
     //the test below (gsl) resturns 0 if the sum_i abs(residual_i) < precision
-    int gslTest = multiDimensionalRootFindTestResidual(3, precision, &x[0], this, &SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature);
+    int gslTest = multiDimensionalRootFindTestResidual(
+        3, 
+        precision, 
+        &x[0], 
+        this, 
+        &SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature
+    );
 
     if (gslTest==0){ return true; }
     else{ return false; }
 }
 
-
-
-SU3NJL3DCutoffMeson SU3NJL3DCutoffFixedChemPotTemp::calculateMesonMassAndWidth(mesonState mesonIDAux, double precision, MultiRootFindingMethod method, double mesonMassGuess, double mesonWidthGuess)
+SU3NJL3DCutoffMeson SU3NJL3DCutoffFixedChemPotTemp::calculateMesonMassAndWidth(
+    mesonState mesonIDAux, 
+    double precision, 
+    MultiRootFindingMethod method, 
+    double mesonMassGuess, 
+    double mesonWidthGuess
+)
 {   
     double mesonPropagatorPrecision = parametersNJL.getSigmaIntegralPrecision();
 
-    SU3NJL3DCutoffMeson mesonAux(parametersNJL, temperature, 
-                                 upQuarkChemicalPotential, downQuarkChemicalPotential, strangeQuarkChemicalPotential, 
-                                 upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                                 mesonPropagatorPrecision, mesonIDAux);
+    SU3NJL3DCutoffMeson mesonAux(
+        parametersNJL, 
+        temperature, 
+        upQuarkChemicalPotential, 
+        downQuarkChemicalPotential, 
+        strangeQuarkChemicalPotential, 
+        upQuarkEffectiveMass, 
+        downQuarkEffectiveMass, 
+        strangeQuarkEffectiveMass, 
+        mesonPropagatorPrecision, 
+        mesonIDAux
+    );
 
     mesonAux.calculateMesonMassAndWidth(precision, method, mesonMassGuess, mesonWidthGuess);
 
@@ -217,8 +240,13 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroC
     return solutions;
 }
 
-
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, double maxTemperature, int numberOfPoints, double precision, MultiRootFindingMethod method)
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemicalPotential(
+    SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, 
+    double maxTemperature, 
+    int numberOfPoints, 
+    double precision, 
+    MultiRootFindingMethod method
+)
 {
     double chemPotU = 0.0;
     double chemPotD = 0.0;
@@ -244,14 +272,22 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemic
         effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
 
         //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
-        if (inMediumSol.testSolution(precision)==true){ solutions.push_back(inMediumSol); }
+        if (inMediumSol.testSolution(precision)==true)
+        { 
+            solutions.push_back(inMediumSol); 
+        }
     }
 
     return solutions;
 }
 
-
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperature(SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, double maxTemperature, int numberOfPoints, double precision, MultiRootFindingMethod method)
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperature(
+    SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, 
+    double maxTemperature, 
+    int numberOfPoints, 
+    double precision, 
+    MultiRootFindingMethod method
+)
 {
     double chemPotU = minTemperatureSolution.getUpQuarkChemicalPotential();
     double chemPotD = minTemperatureSolution.getDownQuarkChemicalPotential();
@@ -277,14 +313,22 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperature(SU3NJL3DCut
         effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
 
         //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
-        if (inMediumSol.testSolution(precision)==true){ solutions.push_back(inMediumSol); }
+        if (inMediumSol.testSolution(precision)==true)
+        { 
+            solutions.push_back(inMediumSol); 
+        }
     }
 
     return solutions;
 }
 
-
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(SU3NJL3DCutoffFixedChemPotTemp finiteTSol, double maxChemPot, int numberOfPoints, double precision, MultiRootFindingMethod method)
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(
+    SU3NJL3DCutoffFixedChemPotTemp finiteTSol, 
+    double maxChemPot, 
+    int numberOfPoints, 
+    double precision, 
+    MultiRootFindingMethod method
+)
 {
     double effMassU = finiteTSol.getUpQuarkEffectiveMass();
     double effMassD = finiteTSol.getDownQuarkEffectiveMass();
@@ -313,12 +357,24 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemica
     return solutions;
 }
 
-
-vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential
-(SU3NJL3DCutoffVacuum vacuumSolution, vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, mesonState mesonID, double mesonPropertiesPrecision, MultiRootFindingMethod method, double mesonMassVacuumGuess, double mesonWidthVacuumGuess)
+vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    SU3NJL3DCutoffVacuum vacuumSolution, 
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, 
+    mesonState mesonID, 
+    double mesonPropertiesPrecision, 
+    MultiRootFindingMethod method, 
+    double mesonMassVacuumGuess, 
+    double mesonWidthVacuumGuess
+)
 {
     //calculate meson mass and width in the vacuum and add it to vector
-    SU3NJL3DCutoffMeson mesonVacuum = vacuumSolution.calculateMesonMassAndWidth(mesonID, mesonPropertiesPrecision, method, mesonMassVacuumGuess, mesonWidthVacuumGuess);
+    SU3NJL3DCutoffMeson mesonVacuum = vacuumSolution.calculateMesonMassAndWidth(
+        mesonID, 
+        mesonPropertiesPrecision, 
+        method, 
+        mesonMassVacuumGuess, 
+        mesonWidthVacuumGuess
+    );
 
     vector<SU3NJL3DCutoffMeson> mesonFiniteT;
     mesonFiniteT.push_back( mesonVacuum );
@@ -349,13 +405,18 @@ vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroCh
             mesonWidthGuess = linearFit(x, x1, y1, x2, y2);
         }
         
-        SU3NJL3DCutoffMeson mesonFiniteTAux = finiteTempSolution[i].calculateMesonMassAndWidth(mesonID, mesonPropertiesPrecision, method, mesonMassGuess, mesonWidthGuess);
+        SU3NJL3DCutoffMeson mesonFiniteTAux = finiteTempSolution[i].calculateMesonMassAndWidth(
+            mesonID, 
+            mesonPropertiesPrecision, 
+            method, 
+            mesonMassGuess, 
+            mesonWidthGuess
+        );
         mesonFiniteT.push_back( mesonFiniteTAux );
     }
 
     return mesonFiniteT;
 }
-
 
 int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
@@ -373,13 +434,21 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
     double mesonPropagatorPrecision = solution.getParametersNJL().getSigmaIntegralPrecision();
     mesonState mesonID = solution.getMesonID();
     double k0 = mesonStateMassAtMeltingPoint(mU, mD, mS, mesonID);
-    gsl_complex mesonPropagator =
-    nonDiagonalMesonPropagator(solution.getParametersNJL(), 
-                               mottTemp, 
-                               solution.getUpQuarkChemicalPotential(), 
-                               solution.getDownQuarkChemicalPotential(), 
-                               solution.getStrangeQuarkChemicalPotential(), 
-                               mU, mD, mS, k0, 0.0, 0.0, mesonPropagatorPrecision, mesonID);
+    gsl_complex mesonPropagator = nonDiagonalMesonPropagator(
+        solution.getParametersNJL(), 
+        mottTemp, 
+        solution.getUpQuarkChemicalPotential(), 
+        solution.getDownQuarkChemicalPotential(), 
+        solution.getStrangeQuarkChemicalPotential(), 
+        mU, 
+        mD, 
+        mS, 
+        k0, 
+        0.0, 
+        0.0, 
+        mesonPropagatorPrecision, 
+        mesonID
+    );
 
     //Systems of equations to solve
     SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(x, &solution, &f[0]); //use gap equations for this physical scenario
@@ -396,14 +465,15 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
     return GSL_SUCCESS;
 }
 
-
-void SU3NJL3DCutoffFixedChemPotTemp::findNondiagonalMesonMottTemperature(mesonState mesonIDAux,
-                                                                         double precision, 
-                                                                         MultiRootFindingMethod method, 
-                                                                         double upQuarkEffectiveMassGuess, 
-                                                                         double downQuarkEffectiveMassGuess, 
-                                                                         double strangeQuarkEffectiveMassGuess,
-                                                                         double mottTemperatureGuess)
+void SU3NJL3DCutoffFixedChemPotTemp::findNondiagonalMesonMottTemperature(
+    mesonState mesonIDAux,
+    double precision, 
+    MultiRootFindingMethod method, 
+    double upQuarkEffectiveMassGuess, 
+    double downQuarkEffectiveMassGuess, 
+    double strangeQuarkEffectiveMassGuess,
+    double mottTemperatureGuess
+)
 {   
     double x[4];
     x[0] = upQuarkEffectiveMassGuess; 
@@ -412,7 +482,14 @@ void SU3NJL3DCutoffFixedChemPotTemp::findNondiagonalMesonMottTemperature(mesonSt
     x[3] = mottTemperatureGuess;
     
     setMesonID(mesonIDAux);
-    multiDimensionalRootFind(4, precision, &x[0], this, &SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials, method);
+    multiDimensionalRootFind(
+        4, 
+        precision, 
+        &x[0], 
+        this, 
+        &SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials, 
+        method
+    );
 
     setUpQuarkEffectiveMass(x[0]);
     setDownQuarkEffectiveMass(x[1]);
@@ -420,23 +497,38 @@ void SU3NJL3DCutoffFixedChemPotTemp::findNondiagonalMesonMottTemperature(mesonSt
     setTemperature(x[3]);
 }
 
-
-SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum vacuumSolution, vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, mesonState mesonID, double mesonPropertiesPrecision, MultiRootFindingMethod method, double mesonMassVacuumGuess, double mesonWidthVacuumGuess)
+SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(
+    SU3NJL3DCutoffVacuum vacuumSolution, 
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, 
+    mesonState mesonID, 
+    double mesonPropertiesPrecision, 
+    MultiRootFindingMethod method, 
+    double mesonMassVacuumGuess, 
+    double mesonWidthVacuumGuess
+)
 {   
     //calculate the meson mass behaviour for the provided range of NJL solutions
-    vector<SU3NJL3DCutoffMeson> mesonFiniteT = 
-    mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuumSolution, finiteTempSolution, mesonID, mesonPropertiesPrecision, method, mesonMassVacuumGuess, mesonWidthVacuumGuess);
-
+    vector<SU3NJL3DCutoffMeson> mesonFiniteT = mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+        vacuumSolution, 
+        finiteTempSolution, 
+        mesonID, 
+        mesonPropertiesPrecision, 
+        method, 
+        mesonMassVacuumGuess, 
+        mesonWidthVacuumGuess
+    );
 
     //calculate Mott temperature of a given meson if it exists
     int meltingPointGuess = 0;
     double meltTest = 0;
     for (int i = 0; i < int(mesonFiniteT.size()); ++i)
     {   
-        double k0AtMeltingPoint = mesonStateMassAtMeltingPoint(mesonFiniteT[i].getUpQuarkEffectiveMass(), 
-                                                               mesonFiniteT[i].getDownQuarkEffectiveMass(), 
-                                                               mesonFiniteT[i].getStrangeQuarkEffectiveMass(), 
-                                                               mesonID);
+        double k0AtMeltingPoint = mesonStateMassAtMeltingPoint(
+            mesonFiniteT[i].getUpQuarkEffectiveMass(), 
+            mesonFiniteT[i].getDownQuarkEffectiveMass(), 
+            mesonFiniteT[i].getStrangeQuarkEffectiveMass(), 
+            mesonID
+        );
         meltTest = mesonFiniteT[i].getMesonMass() - k0AtMeltingPoint;
         if ( meltTest>0 )
         { 
@@ -450,11 +542,15 @@ SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(SU3NJL3DCutoffVacuum
     if ( meltTest>0 )
     {
         mottSolution = SU3NJL3DCutoffFixedChemPotTemp(vacuumSolution.getParametersNJL(), 0.0, 0.0, 0.0);
-        mottSolution.findNondiagonalMesonMottTemperature(mesonID, mesonPropertiesPrecision, HYBRIDS, 
-                                                         mesonFiniteT[meltingPointGuess].getUpQuarkEffectiveMass(), 
-                                                         mesonFiniteT[meltingPointGuess].getDownQuarkEffectiveMass(), 
-                                                         mesonFiniteT[meltingPointGuess].getStrangeQuarkEffectiveMass(), 
-                                                         mesonFiniteT[meltingPointGuess].getTemperature());
+        mottSolution.findNondiagonalMesonMottTemperature(
+            mesonID, 
+            mesonPropertiesPrecision, 
+            HYBRIDS, 
+            mesonFiniteT[meltingPointGuess].getUpQuarkEffectiveMass(), 
+            mesonFiniteT[meltingPointGuess].getDownQuarkEffectiveMass(), 
+            mesonFiniteT[meltingPointGuess].getStrangeQuarkEffectiveMass(), 
+            mesonFiniteT[meltingPointGuess].getTemperature()
+        );
         cout << mottSolution.getTemperature() << "\n";
     }
 
@@ -552,6 +648,14 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculatePressure(double vacuumPressure)
 {
     //Consider chemical potentials equal to effective chemical potentials
     //This holds if no vector interactions are considered
+    //If vector interactions are considered, abort until this is updated
+    LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
+    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    {   
+        cout << "Lagrangian interactions contain vector degrees of freedom! "
+             << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
+        abort();
+    }
     double upQuarkEffectiveChemicalPotential = upQuarkChemicalPotential;
     double downQuarkEffectiveChemicalPotential = downQuarkChemicalPotential;
     double strangeQuarkEffectiveChemicalPotential = strangeQuarkChemicalPotential;
@@ -576,6 +680,14 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEnergyDensity(double vacuumEnerg
 {
     //Consider chemical potentials equal to effective chemical potentials
     //This holds if no vector interactions are considered
+    //If vector interactions are considered, abort until this is updated
+    LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
+    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    {   
+        cout << "Lagrangian interactions contain vector degrees of freedom! "
+             << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
+        abort();
+    }
     double upQuarkEffectiveChemicalPotential = upQuarkChemicalPotential;
     double downQuarkEffectiveChemicalPotential = downQuarkChemicalPotential;
     double strangeQuarkEffectiveChemicalPotential = strangeQuarkChemicalPotential;
@@ -601,6 +713,14 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEntropyDensity()
 {
     //Consider chemical potentials equal to effective chemical potentials
     //This holds if no vector interactions are considered
+    //If vector interactions are considered, abort until this is updated
+    LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
+    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    {   
+        cout << "Lagrangian interactions contain vector degrees of freedom! "
+             << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
+        abort();
+    }
     double upQuarkEffectiveChemicalPotential = upQuarkChemicalPotential;
     double downQuarkEffectiveChemicalPotential = downQuarkChemicalPotential;
     double strangeQuarkEffectiveChemicalPotential = strangeQuarkChemicalPotential;
@@ -711,12 +831,12 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
         finiteTSolution[i].setEntropyDensity();
     }
 
-    //HERE!
-    // Only add vacumm to solution if near vacuum temperature is not zero!!!!
-
-    //Add solution with vacuum solution to start of the vector
-    SU3NJL3DCutoffFixedChemPotTemp auxVacuum(vacuum);
-    finiteTSolution.insert(finiteTSolution.begin(), auxVacuum);
+    //Add solution with vacuum solution to start of the vector if near vacuum temperature is not zero
+    if (nearVacuumTemperature>0)
+    {
+        SU3NJL3DCutoffFixedChemPotTemp auxVacuum(vacuum);
+        finiteTSolution.insert(finiteTSolution.begin(), auxVacuum);
+    }
 
     string fileName = "SU3NJL3DCutoffFixedChemPotTemp";
     fileName = fileName + "_" + finiteTSolution[0].getParametersNJL().getParameterSetName();
