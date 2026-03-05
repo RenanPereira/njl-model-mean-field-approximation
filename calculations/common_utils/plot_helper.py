@@ -6,7 +6,23 @@ def pos(min_val, max_val, factor):
     return min_val + factor * (max_val - min_val)
 
 
-def configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize, spine_width, tick_width, tick_length):
+def configure_axes(
+    ax, 
+    xmin: float, 
+    xmax: float, 
+    ymin: float, 
+    ymax: float, 
+    x_num_ticks: int, 
+    y_num_ticks: int, 
+    tick_fontsize: int, 
+    spine_width: float, 
+    tick_width: float, 
+    tick_length: float, 
+    x_tick_min: float | None = None,
+    x_tick_max: float | None = None,
+    y_tick_min: float | None = None,
+    y_tick_max: float | None = None
+) -> None:
     """
     Configures the axes of a matplotlib plot.
 
@@ -19,18 +35,32 @@ def configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fo
     - spine_width: Line width for the axes spines.
     - tick_width: Width of the ticks.
     - tick_length: Length of the ticks.
+    - x_tick_min: Minimum value for x-axis ticks.
+    - x_tick_max: Maximum value for x-axis ticks.
+    - y_tick_min: Minimum value for y-axis ticks.
+    - y_tick_max: Maximum value for y-axis ticks.
     """
     # Set x and y limits
     ax.set_xlim([xmin, xmax])
     ax.set_ylim([ymin, ymax])
 
     # Setup x-axis ticks
-    x_ticks = np.linspace(xmin, xmax, x_num_ticks)
+    # (minimum and maximum tick value can be different from ymin and ymax, default: ticks go to axis max)
+    if x_tick_min is None:
+        x_tick_min = xmin
+    if x_tick_max is None:
+        x_tick_max = xmax
+    x_ticks = np.linspace(x_tick_min, x_tick_max, x_num_ticks)
     ax.set_xticks(x_ticks)
     ax.set_xticklabels([f'{tick:.1f}' for tick in x_ticks], fontsize=tick_fontsize)
-
+    
     # Setup y-axis ticks
-    y_ticks = np.linspace(ymin, ymax, y_num_ticks)
+    # (minimum and maximum tick value can be different from ymin and ymax, default: ticks go to axis max)
+    if y_tick_min is None:
+        y_tick_min = ymin
+    if y_tick_max is None:
+        y_tick_max = ymax
+    y_ticks = np.linspace(y_tick_min, y_tick_max, y_num_ticks)
     ax.set_yticks(y_ticks)
     ax.set_yticklabels([f'{tick:.1f}' for tick in y_ticks], fontsize=tick_fontsize)
 
