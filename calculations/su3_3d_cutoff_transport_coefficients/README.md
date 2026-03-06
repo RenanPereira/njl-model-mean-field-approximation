@@ -88,5 +88,5 @@ In this section we present the results for some transport coefficients for diffe
 ### Shear Viscosity: Set A, Zero chemical potential
 
 #### Comparing different methods
-![Shear viscosity plot](plots/shear_viscosity_setA_CP0.png)
+![Shear viscosity plot](plots/shear_viscosity_CP0_setA.png)
 
