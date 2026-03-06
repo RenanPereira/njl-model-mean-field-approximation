@@ -310,8 +310,8 @@ int main(int argc, char* argv[])
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
 
-    double rhoi = 1E-5*pow(PhysicalConstants::hc_GeVfm, 3);
-    double rhof = 3.80*pow(PhysicalConstants::hc_GeVfm, 3);
+    double rhoi = 1E-5*pow(PhysicalConstants::hbarc_GeVfm, 3);
+    double rhof = 3.80*pow(PhysicalConstants::hbarc_GeVfm, 3);
     int NrhoB = 8000;
     writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, HYBRIDS, "eos.dat");
 

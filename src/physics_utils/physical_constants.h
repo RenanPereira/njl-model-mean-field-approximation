@@ -4,8 +4,9 @@
 
 namespace PhysicalConstants
 {
-    inline constexpr double hc_MeVfm = 197.3269804;
-    inline constexpr double hc_GeVfm = hc_MeVfm/1000.0;
+    // conversion between energy and distance made using reduced Planck constant
+    inline constexpr double hbarc_MeVfm = 197.3269804;
+    inline constexpr double hbarc_GeVfm = hbarc_MeVfm/1000.0;
 
     inline constexpr double electronMass_MeV = 0.511;
     inline constexpr double electronMass_GeV = electronMass_MeV/1000.0;

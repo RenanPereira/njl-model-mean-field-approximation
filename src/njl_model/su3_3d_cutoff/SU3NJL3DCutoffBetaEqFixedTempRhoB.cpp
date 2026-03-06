@@ -443,17 +443,17 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, s
         fileSol.width(colW); fileSol << "chemPotE[MeV]";
         fileSol.width(colW); fileSol << "pressure[MeVfm-3]";
         fileSol.width(colW); fileSol << "energyDensity[MeVfm-3]";
-        fileSol.width(colW); fileSol << "entropyDensity[MeVfm-3]";
+        fileSol.width(colW); fileSol << "entropyDensity[fm-3]";
         fileSol << "\n";
     }
 
     for (int i = 0; i < int(solutions.size()); ++i)
     {
-        fileSol.width(25);   fileSol << solutions[i].getBaryonDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-        fileSol.width(25);   fileSol << solutions[i].getUpQuarkDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-        fileSol.width(25);   fileSol << solutions[i].getDownQuarkDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-        fileSol.width(25);   fileSol << solutions[i].getStrangeQuarkDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-        fileSol.width(25);   fileSol << solutions[i].getElectronDensity()/pow(PhysicalConstants::hc_GeVfm,3);
+        fileSol.width(25);   fileSol << solutions[i].getBaryonDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        fileSol.width(25);   fileSol << solutions[i].getUpQuarkDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        fileSol.width(25);   fileSol << solutions[i].getDownQuarkDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        fileSol.width(25);   fileSol << solutions[i].getStrangeQuarkDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        fileSol.width(25);   fileSol << solutions[i].getElectronDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
 
         fileSol.width(25);   fileSol << solutions[i].getUpQuarkEffectiveMass()*1000;
         fileSol.width(25);   fileSol << solutions[i].getDownQuarkEffectiveMass()*1000;
@@ -470,9 +470,9 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, s
         fileSol.width(25);   fileSol << solutions[i].getBaryonChemicalPotential()*1000;
         fileSol.width(25);   fileSol << solutions[i].getElectronChemicalPotential()*1000;
 
-        fileSol.width(25);   fileSol << solutions[i].getBetaEqPressure()*(1000/pow(PhysicalConstants::hc_GeVfm,3));
-        fileSol.width(25);   fileSol << solutions[i].getBetaEqEnergyDensity()*(1000/pow(PhysicalConstants::hc_GeVfm,3));
-        fileSol.width(25);   fileSol << solutions[i].getBetaEqEntropyDensity()*(1000/pow(PhysicalConstants::hc_GeVfm,3));
+        fileSol.width(25);   fileSol << solutions[i].getBetaEqPressure()*(1000/pow(PhysicalConstants::hbarc_GeVfm,3));
+        fileSol.width(25);   fileSol << solutions[i].getBetaEqEnergyDensity()*(1000/pow(PhysicalConstants::hbarc_GeVfm,3));
+        fileSol.width(25);   fileSol << solutions[i].getBetaEqEntropyDensity()*(1000/pow(PhysicalConstants::hbarc_GeVfm,3));
 
         fileSol << "\n";
     }
@@ -502,9 +502,9 @@ void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string 
 
     for (int i = 0; i < int(solutions.size()); ++i)
     {
-        fileSol.width(25);   fileSol << solutions[i].getBaryonDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-        fileSol.width(25);   fileSol << solutions[i].getBetaEqEnergyDensity()*(1000/pow(PhysicalConstants::hc_GeVfm,3));
-        fileSol.width(25);   fileSol << solutions[i].getBetaEqPressure()*(1000/pow(PhysicalConstants::hc_GeVfm,3));
+        fileSol.width(25);   fileSol << solutions[i].getBaryonDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        fileSol.width(25);   fileSol << solutions[i].getBetaEqEnergyDensity()*(1000/pow(PhysicalConstants::hbarc_GeVfm,3));
+        fileSol.width(25);   fileSol << solutions[i].getBetaEqPressure()*(1000/pow(PhysicalConstants::hbarc_GeVfm,3));
         fileSol.width(25);   fileSol << solutions[i].getBaryonChemicalPotential()*1000;
         fileSol << "\n";
     }
@@ -535,9 +535,9 @@ void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string 
     {   
         if ( solutions[i].getBaryonDensity()>minimumBaryonDensity )
         {
-            fileSol.width(25);   fileSol << solutions[i].getBaryonDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-            fileSol.width(25);   fileSol << solutions[i].getBetaEqEnergyDensity()*(1000/pow(PhysicalConstants::hc_GeVfm,3));
-            fileSol.width(25);   fileSol << solutions[i].getBetaEqPressure()*(1000/pow(PhysicalConstants::hc_GeVfm,3));
+            fileSol.width(25);   fileSol << solutions[i].getBaryonDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+            fileSol.width(25);   fileSol << solutions[i].getBetaEqEnergyDensity()*(1000/pow(PhysicalConstants::hbarc_GeVfm,3));
+            fileSol.width(25);   fileSol << solutions[i].getBetaEqPressure()*(1000/pow(PhysicalConstants::hbarc_GeVfm,3));
             fileSol.width(25);   fileSol << solutions[i].getBaryonChemicalPotential()*1000;
             fileSol << "\n";
         }
@@ -908,7 +908,7 @@ calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum,
 
 
         //print to console
-        cout << rhoB/pow(PhysicalConstants::hc_GeVfm,3) << "\t"
+        cout << rhoB/pow(PhysicalConstants::hbarc_GeVfm,3) << "\t"
              << betaEq.getUpQuarkEffectiveMass() << "\t"
              << betaEq.getDownQuarkEffectiveMass() << "\t"
              << betaEq.getStrangeQuarkEffectiveMass() << "\t"

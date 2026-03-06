@@ -370,7 +370,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> SU3NJL3DCutoffFixedTempRhoBEqual
 
         //Print solution to console
         printf("rhoB=%.6f, mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n", 
-                rhoB/pow(PhysicalConstants::hc_GeVfm, 3),
+                rhoB/pow(PhysicalConstants::hbarc_GeVfm, 3),
                 inMediumSol.getUpQuarkEffectiveMass(), 
                 inMediumSol.getDownQuarkEffectiveMass(), 
                 inMediumSol.getStrangeQuarkEffectiveMass(),
@@ -382,8 +382,8 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> SU3NJL3DCutoffFixedTempRhoBEqual
         //Store calculation to file
         string filename = string("SU3NJL3DCutoffEqualChemPot_") + vacuum.getParametersNJL().getParameterSetName()
                                                                 + "T0.0"
-                                                                + "rhoBMin" + trim0ToDot0(minimumBaryonDensity/pow(PhysicalConstants::hc_GeVfm,3))
-                                                                + "rhoBMax" + trim0ToDot0(maximumBaryonDensity/pow(PhysicalConstants::hc_GeVfm,3))
+                                                                + "rhoBMin" + trim0ToDot0(minimumBaryonDensity/pow(PhysicalConstants::hbarc_GeVfm,3))
+                                                                + "rhoBMax" + trim0ToDot0(maximumBaryonDensity/pow(PhysicalConstants::hbarc_GeVfm,3))
                                                                 + "N" + to_string(numberOfPoints)
                                                                 + ".dat";
         
@@ -424,16 +424,16 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(vector<SU3NJL3DCutoffF
 
     for (int i = 0; i < int( solutions.size() ); ++i)
     {   
-        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getBaryonDensity()/pow(PhysicalConstants::hc_GeVfm,3);
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getBaryonDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getTemperature();
    		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getUpQuarkEffectiveMass();
    		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getDownQuarkEffectiveMass();
    		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getStrangeQuarkEffectiveMass();
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getQuarkEffectiveChemicalPotential();
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getBaryonChemicalPotential();
-   		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getPressure()/pow(PhysicalConstants::hc_GeVfm,3);
-        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getEnergyDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getEntropyDensity()/pow(PhysicalConstants::hc_GeVfm,3);
+   		aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getPressure()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getEnergyDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getEntropyDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getUpQuarkSigma();
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getDownQuarkSigma();
         aux_file_NJL.width(25);   aux_file_NJL << solutions[i].getStrangeQuarkSigma();
@@ -877,14 +877,14 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(
         file.width(25);   file << effCP_broken;
         file.width(25);   file << brokenPhase.getBaryonChemicalPotential();
         file.width(25);   file << T;
-        file.width(25);   file << brokenPhase.getPressure()/pow(PhysicalConstants::hc_GeVfm,3);
+        file.width(25);   file << brokenPhase.getPressure()/pow(PhysicalConstants::hbarc_GeVfm,3);
 
-        file.width(25);   file << brokenPhase.getBaryonDensity()/pow(PhysicalConstants::hc_GeVfm,3);
+        file.width(25);   file << brokenPhase.getBaryonDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
         file.width(25);   file << brokenPhase.getUpQuarkEffectiveMass();
         file.width(25);   file << brokenPhase.getDownQuarkEffectiveMass();
         file.width(25);   file << brokenPhase.getStrangeQuarkEffectiveMass();
-        file.width(30);   file << brokenPhase.getEnergyDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-        file.width(30);   file << brokenPhase.getEntropyDensity()/pow(PhysicalConstants::hc_GeVfm,3);
+        file.width(30);   file << brokenPhase.getEnergyDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        file.width(30);   file << brokenPhase.getEntropyDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
         file.width(25);   file << brokenPhase.getUpQuarkSigma();
         file.width(25);   file << brokenPhase.getDownQuarkSigma();
         file.width(25);   file << brokenPhase.getStrangeQuarkSigma();
@@ -892,12 +892,12 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(
         file.width(25);   file << brokenPhase.getDownQuarkDensity();
         file.width(25);   file << brokenPhase.getStrangeQuarkDensity();
 
-        file.width(25);   file << restoredPhase.getBaryonDensity()/pow(PhysicalConstants::hc_GeVfm,3);
+        file.width(25);   file << restoredPhase.getBaryonDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
         file.width(25);   file << restoredPhase.getUpQuarkEffectiveMass();
         file.width(25);   file << restoredPhase.getDownQuarkEffectiveMass();
         file.width(25);   file << restoredPhase.getStrangeQuarkEffectiveMass();
-        file.width(30);   file << restoredPhase.getEnergyDensity()/pow(PhysicalConstants::hc_GeVfm,3);
-        file.width(30);   file << restoredPhase.getEntropyDensity()/pow(PhysicalConstants::hc_GeVfm,3);
+        file.width(30);   file << restoredPhase.getEnergyDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
+        file.width(30);   file << restoredPhase.getEntropyDensity()/pow(PhysicalConstants::hbarc_GeVfm,3);
         file.width(25);   file << restoredPhase.getUpQuarkSigma();
         file.width(25);   file << restoredPhase.getDownQuarkSigma();
         file.width(25);   file << restoredPhase.getStrangeQuarkSigma();
@@ -940,8 +940,8 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::evaluateFirstOrderLine(
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firtOrderLine = 
     SU3NJL3DCutoffFixedTempRhoBEqualChemPot::calculateFirstOrderLine(
         vacuum, 
-        minimumBaryonDensity_fmMinus3*pow(PhysicalConstants::hc_GeVfm,3), 
-        maximumBaryonDensity_fmMinus3*pow(PhysicalConstants::hc_GeVfm,3), 
+        minimumBaryonDensity_fmMinus3*pow(PhysicalConstants::hbarc_GeVfm,3), 
+        maximumBaryonDensity_fmMinus3*pow(PhysicalConstants::hbarc_GeVfm,3), 
         numberOfPoints, 
         precisionZeroTempSol, 
         methodZeroTempSol, 
