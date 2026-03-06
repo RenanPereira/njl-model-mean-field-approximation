@@ -223,7 +223,7 @@ def plot_entropy_density_dPdT_vs_temperature(
         linestyle=linestyle_dPdT
     )
 
-    # # Axes labels
+    # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
     ax.set_ylabel(r'$s\, [\mathrm{GeV}^3]$', fontsize=20)
 
@@ -231,7 +231,7 @@ def plot_entropy_density_dPdT_vs_temperature(
     ax.grid(True, linestyle='--', alpha=0.5)
     plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
 
-    # # Configure axes using the helper function
+    # Configure axes using the helper function
     xmin = 0.000
     xmax = 0.300
     ymin = 0.0

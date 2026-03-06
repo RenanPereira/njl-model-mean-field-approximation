@@ -52,15 +52,15 @@ def plot_quark_masses_vs_temperature(
         linestyle=linestyle_s
     )
 
-    # # Axes labels
+    # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
     ax.set_ylabel(r'$M_q\, [\mathrm{GeV}]$', fontsize=20)
 
-    # # Grid and legend
+    # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
     plt.legend(loc="upper right", fontsize=16, frameon=False, title_fontsize=14)
 
-    # # Configure axes using the helper function
+    # Configure axes using the helper function
     xmin = 0.000
     xmax = 0.500
     ymin = 0.0

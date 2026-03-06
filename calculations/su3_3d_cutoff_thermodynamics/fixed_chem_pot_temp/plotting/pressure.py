@@ -49,7 +49,7 @@ def plot_pressure_vs_temperature(
     ax.grid(True, linestyle='--', alpha=0.5)
     plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
 
-    # # Configure axes using the helper function
+    # Configure axes using the helper function
     xmin = 0.000
     xmax = 0.300
     ymin = 0.0
@@ -138,7 +138,7 @@ def plot_pressure_vs_temperature_given_list(
     ax.grid(True, linestyle='--', alpha=0.5)
     plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
 
-    # # Configure axes using the helper function
+    # Configure axes using the helper function
     xmin = 0.1
     xmax = 0.2
     ymin = 0.0

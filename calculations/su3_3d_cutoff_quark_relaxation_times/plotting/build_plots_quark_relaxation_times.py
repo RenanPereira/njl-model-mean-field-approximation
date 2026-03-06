@@ -63,15 +63,15 @@ ax.plot(data_klevansky.get_temperature(), data_klevansky.get_rel_time_strange_qu
 ax.plot(data_zhuang.get_temperature(), data_zhuang.get_rel_time_up_quark(), label=r'$\tau_{l,\overline{l}}$  | Method III', color=color_zhuang_u, linewidth=2, linestyle=linestyle_zhuang_u)
 ax.plot(data_zhuang.get_temperature(), data_zhuang.get_rel_time_strange_quark(), label=r'$\tau_{s,\overline{s}}$ | Method III', color=color_zhuang_s, linewidth=2, linestyle=linestyle_zhuang_s)
 
-# # Axes labels
+# Axes labels
 ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
 ax.set_ylabel(r'$\tau\, [\mathrm{fm}]$', fontsize=20)
 
-# # Grid and legend
+# Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
 plt.legend(loc="upper right", fontsize=14, frameon=False, title_fontsize=14)
 
-# # Configure axes using the helper function
+# Configure axes using the helper function
 xmin = 0.120
 xmax = 0.300
 ymin = 0.0

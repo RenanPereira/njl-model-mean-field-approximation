@@ -73,21 +73,21 @@ def plot_integrated_cross_section_vs_temperature(
     ax.plot(data_klevansky.get_temperature(), data_klevansky.get_integrated_cross_section(), label=klevansky_label, color=color_klevansky, linewidth=2, linestyle=linestyle_klevansky)
     ax.plot(data_zhuang.get_temperature(), data_zhuang.get_integrated_cross_section(), label=zhuang_label, color=color_zhuang, linewidth=2, linestyle=linestyle_zhuang)
 
-    # # Axes labels
+    # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
     ax.set_ylabel(process_to_ylabel_latex(process), fontsize=20)
 
-    # # Grid and legend
+    # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
     plt.legend(loc=legend_loc, fontsize=14, frameon=False, title_fontsize=14)
 
-    # # Configure axes using the helper function
+    # Configure axes using the helper function
     configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
 
     ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 
-    # # Automatically adjust layout
+    # Automatically adjust layout
     fig.tight_layout()
 
     plotname = f'integrated_cross_section_{parameter_set}_{process.lower()}_CP0.png'
