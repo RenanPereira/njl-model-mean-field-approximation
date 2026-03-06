@@ -21,7 +21,7 @@ def plot_entropy_density_vs_temperature(
     plotname: str
 ) -> None:
     print("Building plot: entropy density versus temperature.")
-    print(f"Using datafile {parameter_set_annotation}.\n")
+    print(f"Using datafile {filename}.\n")
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -189,7 +189,7 @@ def plot_entropy_density_dPdT_vs_temperature(
     plotname: str
 ) -> None:
     print("Building plot: entropy density, dPdT versus temperature.")
-    print(f"Using datafile {parameter_set_annotation}.\n")
+    print(f"Using datafile {filename}.\n")
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)

@@ -21,7 +21,7 @@ def plot_energy_vs_temperature(
     plotname: str
 ) -> None:
     print("Building plot: energy versus temperature.")
-    print(f"Using datafile {parameter_set_annotation}.\n")
+    print(f"Using datafile {filename}.\n")
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -165,7 +165,7 @@ def plot_energy_euler_eq_vs_temperature(
     plotname: str
 ) -> None:
     print("Building plot: energy density, euler equation versus temperature.")
-    print(f"Using datafile {parameter_set_annotation}.\n")
+    print(f"Using datafile {filename}.\n")
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)

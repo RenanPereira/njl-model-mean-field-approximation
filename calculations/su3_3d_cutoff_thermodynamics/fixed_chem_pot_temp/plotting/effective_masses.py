@@ -20,7 +20,7 @@ def plot_quark_masses_vs_temperature(
     plotname: str
 ) -> None:
     print("Building plot: effective masses versus temperature.")
-    print(f"Using datafile {parameter_set_annotation}.\n")
+    print(f"Using datafile {filename}.\n")
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)

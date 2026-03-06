@@ -4,11 +4,27 @@ from common_utils.plot_helper import configure_axes, add_annotation_block
 from common_utils.shear_viscosity_data import ShearViscosityData
 
 
-####################################################################################################
 # Common configurations between plots
-
 #Select font that will be used for the different plots
 plt.rcParams['font.family'] = 'sans-serif'
+
+
+def plot_shear_viscosity_vs_temperature(
+    fig_dpi: int,
+    fig_x_size: int,
+    fig_y_size: int,
+    path_data_folder: str,
+    path_plots_folder: str,
+    filename: str,
+    parameter_set_annotation: str,
+    plotname: str
+) -> None:
+    print("Building plot: shear viscosity versus temperature.")
+    print(f"Using datafile {filename}.\n")
+    
+
+##########################################################################
+
 
 fig_dpi = 150
 fig_x_size = 6
