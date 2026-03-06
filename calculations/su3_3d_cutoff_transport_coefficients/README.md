@@ -85,8 +85,10 @@ To execute everything in one go:
 In this section we present the results for some transport coefficients for different physical scenarios, different NJL parameter sets and different methods to evaluate the integral over the differential cross sections.
 
 
-### Shear Viscosity: Set A, Zero chemical potential
+### Shear Viscosity - Zero chemical potential
 
-#### Comparing different methods
-![Shear viscosity plot](plots/shear_viscosity_CP0_setA.png)
+<p align="center">
+  <img src="plots/shear_viscosity_vs_temp_CP0_setA.png" width="32%">
+  <img src="plots/shear_viscosity_ratio_vs_temp_CP0_setA.png" width="32%">
+</p>
 

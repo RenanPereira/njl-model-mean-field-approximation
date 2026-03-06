@@ -109,7 +109,7 @@ add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, 
 
 fig.tight_layout()
 
-plotname = f'electrical_conductivity_{parameter_set}_CP0.png'
+plotname = f'electrical_conductivity_CP0_{parameter_set}.png'
 plt.savefig(path_plots_folder + plotname)
 
 # Clean up
@@ -215,7 +215,7 @@ add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, 
 
 fig.tight_layout()
 
-plotname = f'electrical_conductivity_temp_ratio_{parameter_set}_CP0.png'
+plotname = f'electrical_conductivity_temp_ratio_CP0_{parameter_set}.png'
 plt.savefig(path_plots_folder + plotname)
 
 # Clean up
