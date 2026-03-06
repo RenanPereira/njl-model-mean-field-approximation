@@ -4,6 +4,10 @@ from common_utils.plot_helper import configure_axes
 from common_utils.integrated_cross_section_data import IntegratedCrossSectionData
 
 
+#Select font that will be used for the different plots
+plt.rcParams['font.family'] = 'sans-serif'
+
+
 PROCESS_YLABELS = {
     "UUUU": r'$\overline{\sigma}_{uu \rightarrow uu} \, [\mathrm{GeV}^{-2}]$',
     "UUBarUUBar": r'$\overline{\sigma}_{u\bar{u} \rightarrow u\bar{u}} \, [\mathrm{GeV}^{-2}]$',
@@ -27,21 +31,21 @@ def process_to_ylabel_latex(process: str) -> str:
 
 
 def plot_integrated_cross_section_vs_temperature(
-    fig_dpi,
-    fig_x_size,
-    fig_y_size,
-    data_folder,
-    plots_folder,
-    set,
-    process,
-    legend_loc,
-    xmin,
-    xmax,
-    ymin,
-    ymax,
-    x_num_ticks,
-    y_num_ticks
-):
+    fig_dpi: int,
+    fig_x_size: int,
+    fig_y_size: int,
+    data_folder: str,
+    plots_folder: str,
+    parameter_set: str,
+    process: str,
+    legend_loc: str,
+    xmin: float,
+    xmax: float,
+    ymin: float,
+    ymax: float,
+    x_num_ticks: int,
+    y_num_ticks: int
+) -> None:
     complete_label = "Method I"
     klevansky_label = "Method II"
     zhuang_label = "Method III"
@@ -49,9 +53,9 @@ def plot_integrated_cross_section_vs_temperature(
     print(f'Building plot: integrated cross section as a function of temperature for {process} (zero chemical potential)')
 
     # Load data from the file
-    data_complete = IntegratedCrossSectionData.from_matching_files(data_folder, set, process, "COMPLETE_COV")
-    data_klevansky = IntegratedCrossSectionData.from_matching_files(data_folder, set, process, "KLEVANSKY")
-    data_zhuang = IntegratedCrossSectionData.from_matching_files(data_folder, set, process, "ZHUANG")
+    data_complete = IntegratedCrossSectionData.from_matching_files(data_folder, parameter_set, process, "COMPLETE_COV")
+    data_klevansky = IntegratedCrossSectionData.from_matching_files(data_folder, parameter_set, process, "KLEVANSKY")
+    data_zhuang = IntegratedCrossSectionData.from_matching_files(data_folder, parameter_set, process, "ZHUANG")
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -86,16 +90,13 @@ def plot_integrated_cross_section_vs_temperature(
     # # Automatically adjust layout
     fig.tight_layout()
 
-    plotname = f'integrated_cross_section_{set}_{process.lower()}_CP0.png'
+    plotname = f'integrated_cross_section_{parameter_set}_{process.lower()}_CP0.png'
     plt.savefig(plots_folder + plotname)
 
     # Clean up
     plt.clf()
     plt.close()
 
-
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
 
 # Common configurations between plots
 fig_dpi = 150
@@ -106,7 +107,6 @@ fig_y_size = 6
 data_folder = "su3_3d_cutoff_int_cross_sections/zero_chem_pot/data/"
 plots_folder = "su3_3d_cutoff_int_cross_sections/zero_chem_pot/plots/"
 
-
 plot_integrated_cross_section_vs_temperature(
     fig_dpi,
     fig_x_size,
@@ -115,7 +115,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "UUUU",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -132,7 +132,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "UUBarUUBar",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -149,7 +149,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "UUBarDDBar",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -166,7 +166,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "UUBarSSBar",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -183,7 +183,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "USUS",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -200,7 +200,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "USBarUSBar",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -217,7 +217,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "UDUD",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -234,7 +234,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "UDBarUDBar",
-    'upper left',
+    "upper left",
     0.120,
     0.300,
     0.0,
@@ -251,7 +251,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "SSSS",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -268,7 +268,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "SSBarUUBar",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
@@ -285,7 +285,7 @@ plot_integrated_cross_section_vs_temperature(
     plots_folder,
     "setA",
     "SSBarSSBar",
-    'upper right',
+    "upper right",
     0.120,
     0.300,
     0.0,
