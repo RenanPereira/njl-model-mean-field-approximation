@@ -33,8 +33,7 @@ def plot_shear_viscosity_vs_temperature_diff_methods(
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
-    # Plot data
-        
+    # Shear viscosity data
     data_complete = ShearViscosityData(path_data_folder + filename_complete)
     data_klevansky = ShearViscosityData(path_data_folder + filename_klevansky)
     data_zhuang = ShearViscosityData(path_data_folder + filename_zhuang)
@@ -75,15 +74,15 @@ def plot_shear_viscosity_vs_temperature_diff_methods(
         linestyle=linestyle_zhuang
     )
 
-    # # Axes labels
+    # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
     ax.set_ylabel(r'$\eta\, [\mathrm{GeV}^3]$', fontsize=20)
 
-    # # Grid and legend
+    # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
     plt.legend(loc="upper left", fontsize=16, frameon=False)
 
-    # # Configure axes using the helper function
+    # Configure axes using the helper function
     xmin = 0.120
     xmax = 0.300
     ymin = 0.0
@@ -121,6 +120,7 @@ def plot_eta_entropy_ratio_vs_temperature_diff_methods(
     filename_complete: str,
     filename_klevansky: str,
     filename_zhuang: str,
+    path_file_thermodynamics: str,
     parameter_set_annotation: str,
     plotname: str
 ) -> None:
@@ -132,19 +132,16 @@ def plot_eta_entropy_ratio_vs_temperature_diff_methods(
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
-    # Plot data
-        
+    # Shear viscosity data
     data_complete = ShearViscosityData(path_data_folder + filename_complete)
     data_klevansky = ShearViscosityData(path_data_folder + filename_klevansky)
     data_zhuang = ShearViscosityData(path_data_folder + filename_zhuang)
 
-    path_data_folder_thermo = "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/"
-    filename_thermo = "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat"
-    data_thermo = FixedChemPotTempData(path_data_folder_thermo + filename_thermo)
-    
+    # Get entropy from thermodynamics data (for this parameter set) and interpolate it
+    data_thermodynamics = FixedChemPotTempData(path_file_thermodynamics)
     entropy_dens_interpolation = interp1d(
-        data_thermo.get_temperature(), 
-        data_thermo.get_entropy_density(), 
+        data_thermodynamics.get_temperature(), 
+        data_thermodynamics.get_entropy_density(), 
         kind='linear'
     )
     entropy_dens = entropy_dens_interpolation(data_complete.get_temperature())
@@ -194,15 +191,15 @@ def plot_eta_entropy_ratio_vs_temperature_diff_methods(
         label=r'KSS'
     )
 
-    # # Axes labels
+    # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
     ax.set_ylabel(r'$\eta/s$', fontsize=20)
 
-    # # Grid and legend
+    # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
     plt.legend(loc="upper right", fontsize=16, frameon=False)
 
-    # # Configure axes using the helper function
+    # Configure axes using the helper function
     xmin = 0.120
     xmax = 0.300
     ymin = 0.0
@@ -276,6 +273,7 @@ plot_eta_entropy_ratio_vs_temperature_diff_methods(
     "ShearViscosity_setA_COMPLETE_COV.dat",
     "ShearViscosity_setA_KLEVANSKY.dat",
     "ShearViscosity_setA_ZHUANG.dat",
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
     "set A",
     "shear_viscosity_ratio_vs_temp_CP0_setA.png"
 )
