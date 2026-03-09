@@ -363,7 +363,7 @@ plot_eta_over_sigmae_temp2_vs_temp(
     ylim=(135, 140),
     x_num_ticks=6,
     y_num_ticks=6,
-    x_formatter="%.2f", 
+    x_formatter="%.3f", 
     y_formatter="%.0f",
     annotation_texts=[
         "set A",

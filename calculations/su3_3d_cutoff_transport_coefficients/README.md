@@ -4,7 +4,7 @@
 
 This folder contains the necessary scripts, data files, and configuration files to evaluate transport coefficients within the context of the SU(3) NJL model for different values of temperature and chemical potential. Additionally, different NJL parameter sets are used, as well as, different methods to evaluate the integral over the differential cross sections, necessary quantities to evaluate the quark relaxation time which are then used to evaluate the different transport coefficients.
 
-Regarding the parameter sets, we consider sets both without (Set A) and with 8-quark interactions at the Lagrangian level (Sets B and C). The NJL parameter set A, is the usual Klevansky parameter set. The NJL parameters given in Sets B and C contain 8-quark interactions. In these sets the coupling $g_1$ was fixed manually and the remaining six free parameters were found by requiring the model to reproduce the masses of the pion ($M_{\pi^\pm} = 0.140 \,\mathrm{GeV}$), the kaon ($M_{K^\pm} = 0.494 \,\mathrm{GeV}$), the eta prime ($M_\eta'= 0.958 \,\mathrm{GeV}$) and $a_0^\pm$ ( $M_{a_0^\pm}= 0.960 \,\mathrm{GeV}$) mesons, the leptonic decays of the pion ($f_{\pi^\pm} = 0.0924 \,\mathrm{GeV}$) and kaon ($f_{K^\pm}=0.094 \,\mathrm{GeV}$). For further details, see [Renan Camara Pereira PhD thesis](https://estudogeral.uc.pt/handle/10316/95294).
+Regarding the parameter sets, we consider sets both without (Set A) and with 8-quark interactions at the Lagrangian level (Sets B and C). For more details about the different parameter sets, see [here](../su3_3d_cutoff_phase_diagram/README.md).
 
 Regarding the different methods to evaluate the integral over the differential cross sections, 4 values are allowed in the code:
 - `COMPLETE_OG`
@@ -16,7 +16,8 @@ More details about these different methods can be found [here](../su3_3d_cutoff_
 
 ### Transport Coefficients
 
-The following transport coefficients are being calculated here: shear viscosity.
+
+#### Shear Viscosity
 
 The formula being used to evaluate the shear viscosity is given by:
 $
@@ -88,7 +89,25 @@ In this section we present the results for some transport coefficients for diffe
 ### Shear Viscosity - Zero chemical potential
 
 <p align="center">
-  <img src="plots/shear_viscosity_vs_temp_CP0_setA.png" width="32%">
-  <img src="plots/shear_viscosity_ratio_vs_temp_CP0_setA.png" width="32%">
+  <img src="plots/eta_vs_temp_CP0_setA.png" width="32%">
+  <img src="plots/eta_over_s_vs_temp_CP0_setA.png" width="32%">
 </p>
 
+### Electrical Conductivity - Zero chemical potential
+
+<p align="center">
+  <img src="plots/sigmae_vs_temp_CP0_setA.png" width="32%">
+  <img src="plots/sigmae_over_temp_vs_temp_CP0_setA.png" width="32%">
+</p>
+
+### Shear Viscosity and Electrical Conductivity Ratios - Zero chemical potential
+
+<p align="center">
+  <img src="plots/eta_temp_over_sigmae_s_vs_temp_methods_CP0_setA.png" width="32%">
+  <img src="plots/eta_temp_over_sigmae_s_vs_temp_methods_CP0_setA_zoom.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="plots/eta_over_sigmae_temp2_vs_temp_methods_CP0_setA.png" width="32%">
+  <img src="plots/eta_over_sigmae_temp2_vs_temp_methods_CP0_setA_zoom.png" width="32%">
+</p>
