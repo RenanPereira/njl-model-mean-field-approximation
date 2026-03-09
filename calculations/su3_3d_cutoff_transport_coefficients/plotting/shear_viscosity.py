@@ -123,6 +123,7 @@ def plot_eta_over_s_vs_temp(
     ratio_data_specs: list[tuple[str, str, str, int, str]],
     path_file_thermodynamics: str,
     path_output_plot: str,
+    include_kss_bound: bool = True,
     legend_loc: str | None = None,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
@@ -173,14 +174,15 @@ def plot_eta_over_s_vs_temp(
             linestyle=linestyle
         )
 
-    # Kovtun-Son-Starinets conformal limit (KSS), eta/s|KSS = 1/4*pi
-    ax.axhline(
-        y=1.0/(4.0*math.pi),
-        color='black',
-        linestyle='--',
-        linewidth=2,
-        label=r'KSS'
-    )
+    if include_kss_bound:
+        # Kovtun-Son-Starinets conformal limit (KSS), eta/s|KSS = 1/4*pi
+        ax.axhline(
+            y=1.0/(4.0*math.pi),
+            color='black',
+            linestyle='--',
+            linewidth=2,
+            label=r'KSS'
+        )
     
     # Grid
     ax.grid(True, linestyle='--', alpha=0.5)
@@ -299,7 +301,8 @@ plot_eta_over_s_vs_temp(
     ratio_datasets,
     "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
     path_output_plot_folder + "eta_over_s_vs_temp_CP0_setA.png",
-    "upper right",
+    include_kss_bound=True,
+    legend_loc="upper right",
     xlim=(0.120, 0.300),
     ylim=(0.0, 3.0),
     x_num_ticks=4,
