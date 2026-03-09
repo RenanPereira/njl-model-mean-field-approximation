@@ -16,7 +16,7 @@ def plot_sigmae_vs_temp(
     fig_dpi: int,
     fig_x_size: int,
     fig_y_size: int,
-    ratio_data_specs: list[tuple[str, str, str, int, str]],
+    data_specs: list[tuple[str, str, str, int, str]],
     path_output_plot: str,
     legend_loc: str | None = None,
     xlim: tuple[float, float] = (0.0 , 1.0),
@@ -30,20 +30,20 @@ def plot_sigmae_vs_temp(
     y_annotation: float = 0.05,
 ) -> tuple[Figure, Axes]:
     """
-    ratio_data_specs:
+    data_specs:
         List of tuples defining datasets and plot styles:
         (path_file_sigmae, label, color, linewidth, linestyle)
     """
     print("Building plot: electrical conductivity versus temperature.")
 
     print("Using datafiles:")
-    for path_file_sigmae, _, _, _, _ in ratio_data_specs:
+    for path_file_sigmae, _, _, _, _ in data_specs:
         print(path_file_sigmae)
     print()
     
     # Verify that the data provided have the same temperature grid
     datasets = []
-    for path_file_sigmae, label, color, linewidth, linestyle in ratio_data_specs:
+    for path_file_sigmae, label, color, linewidth, linestyle in data_specs:
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_sigmae, label, color, linewidth, linestyle))
 
@@ -122,7 +122,7 @@ def plot_sigmae_over_temp_vs_temp(
     fig_dpi: int,
     fig_x_size: int,
     fig_y_size: int,
-    ratio_data_specs: list[tuple[str, str, str, int, str]],
+    data_specs: list[tuple[str, str, str, int, str]],
     path_output_plot: str,
     legend_loc: str | None = None,
     xlim: tuple[float, float] = (0.0 , 1.0),
@@ -136,20 +136,20 @@ def plot_sigmae_over_temp_vs_temp(
     y_annotation: float = 0.05,
 ) -> tuple[Figure, Axes]:
     """
-    ratio_data_specs:
+    data_specs:
         List of tuples defining datasets and plot styles:
         (path_file_sigmae, label, color, linewidth, linestyle)
     """
     print("Building plot: electrical conductivity over temperature versus temperature.")
 
     print("Using datafiles:")
-    for path_file_sigmae, _, _, _, _ in ratio_data_specs:
+    for path_file_sigmae, _, _, _, _ in data_specs:
         print(path_file_sigmae)
     print()
     
     # Verify that the data provided have the same temperature grid
     datasets = []
-    for path_file_sigmae, label, color, linewidth, linestyle in ratio_data_specs:
+    for path_file_sigmae, label, color, linewidth, linestyle in data_specs:
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_sigmae, label, color, linewidth, linestyle))
 

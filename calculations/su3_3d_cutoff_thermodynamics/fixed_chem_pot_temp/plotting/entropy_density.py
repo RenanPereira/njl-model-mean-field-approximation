@@ -272,6 +272,85 @@ def plot_entropy_density_dPdT_vs_temperature(
     plt.close()
 
 
+def plot_s_over_temp3_vs_temp(
+    fig_dpi: int,
+    fig_x_size: int,
+    fig_y_size: int,
+    path_data_folder: str,
+    path_plots_folder: str,
+    filename: str,
+    parameter_set_annotation: str,
+    plotname: str
+) -> None:
+    print("Building plot: entropy density over temperature^3 versus temperature.")
+    print(f"Using datafile {filename}.\n")
+
+    # Create a new figure
+    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
+
+    # Plot data
+    data = FixedChemPotTempData(path_data_folder + filename)
+    
+    color = 'black'
+    linestyle = '-'
+
+    ax.plot(
+        data.get_temperature(), 
+        data.get_entropy_density(), 
+        label=parameter_set_annotation, 
+        color=color, 
+        linewidth=2, 
+        linestyle=linestyle
+    )
+
+    # Axes labels
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
+    ax.set_ylabel(r'$s\, [\mathrm{GeV}^3]$', fontsize=20)
+
+    # Grid and legend
+    ax.grid(True, linestyle='--', alpha=0.5)
+    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+
+    # Configure axes using the helper function
+    xmin = 0.000
+    xmax = 0.300
+    ymin = 0.0
+    ymax = 0.4
+    x_num_ticks = 4
+    y_num_ticks = 5
+    configure_axes(
+        ax, 
+        xmin, 
+        xmax, 
+        ymin, 
+        ymax, 
+        x_num_ticks, 
+        y_num_ticks, 
+        tick_fontsize=16, 
+        spine_width=1.5, 
+        tick_width=1.5, 
+        tick_length=6
+    )
+
+    ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+    ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+
+    # Add text annotations
+    auxH = 0.06; auxX = 0.68; auxY = 0.05
+    texts = [
+        r'$\mu = 0.0\ \mathrm{GeV}$',
+    ]
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+
+    fig.tight_layout()
+
+    plt.savefig(path_plots_folder + plotname)
+
+    # Clean up
+    plt.clf()
+    plt.close()
+
+
 ##########################################################################
 
 
