@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
-from common_utils.plot_helper import configure_axes, add_annotation_block
-from common_utils.shear_viscosity_data import ShearViscosityData
-from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
+from matplotlib.figure import Figure
+from matplotlib.axes import Axes
 from scipy.interpolate import interp1d
 import numpy as np
 import math
-from matplotlib.figure import Figure
-from matplotlib.axes import Axes
+from common_utils.plot_helper import configure_axes, add_annotation_block
+from common_utils.shear_viscosity_data import ShearViscosityData
+from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
 
 
 # Common configurations between plots
@@ -32,6 +32,11 @@ def plot_eta_vs_temp(
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
 ) -> tuple[Figure, Axes]:
+    """
+    ratio_data_specs:
+        List of tuples defining datasets and plot styles:
+        (path_file_eta, label, color, linewidth, linestyle)
+    """
     print("Building plot: shear viscosity versus temperature.")
     
     print("Using datafiles:")
@@ -135,6 +140,11 @@ def plot_eta_over_s_vs_temp(
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
 ) -> tuple[Figure, Axes]:
+    """
+    ratio_data_specs:
+        List of tuples defining datasets and plot styles:
+        (path_file_eta, label, color, linewidth, linestyle)
+    """
     print("Building plot: shear viscosity over entropy density ratio versus temperature.")
     
     print("Using datafiles:")
