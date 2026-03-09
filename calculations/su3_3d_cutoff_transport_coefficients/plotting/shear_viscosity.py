@@ -6,6 +6,8 @@ from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
 from scipy.interpolate import interp1d
 import numpy as np
 import math
+from matplotlib.figure import Figure
+from matplotlib.axes import Axes
 
 
 # Common configurations between plots
@@ -13,199 +15,69 @@ import math
 plt.rcParams['font.family'] = 'sans-serif'
 
 
-def plot_shear_viscosity_vs_temperature_diff_methods(
+def plot_eta_vs_temp(
     fig_dpi: int,
     fig_x_size: int,
     fig_y_size: int,
-    path_data_folder: str,
-    path_plots_folder: str,
-    filename_complete: str,
-    filename_klevansky: str,
-    filename_zhuang: str,
-    parameter_set_annotation: str,
-    plotname: str
-) -> None:
-    print("Building plot: shear viscosity versus temperature for different methods for the integrated cross section.")
-    print(f"Using datafile complete method: {filename_complete}")
-    print(f"Using datafile Klevansky method: {filename_klevansky}")
-    print(f"Using datafile Zhuang method: {filename_zhuang}\n")
+    ratio_data_specs: list[tuple[str, str, str, int, str]],
+    path_output_plot: str,
+    legend_loc: str | None = None,
+    xlim: tuple[float, float] = (0.0 , 1.0),
+    ylim: tuple[float, float] = (0.0 , 1.0),
+    x_num_ticks: int = 6,
+    y_num_ticks: int = 6,
+    x_formatter: str = "%.2f",
+    y_formatter: str = "%.1f",
+    annotation_texts: list[str] | None = None,
+    x_annotation: float = 0.05,
+    y_annotation: float = 0.05,
+) -> tuple[Figure, Axes]:
+    print("Building plot: shear viscosity versus temperature.")
+    
+    print("Using datafiles:")
+    for path_file_eta, _, _, _, _ in ratio_data_specs:
+        print(path_file_eta)
+    print()
+
+    # Verify that the data provided have the same temperature grid
+    datasets = []
+    for path_file_eta, label, color, linewidth, linestyle in ratio_data_specs:
+        data_eta = ShearViscosityData(path_file_eta)
+        datasets.append((data_eta, label, color, linewidth, linestyle))
+
+    for data_eta, label, color, linewidth, linestyle in datasets :
+        if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
+            raise ValueError("Temperature grids between datasets do not match.")
     
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
-    # Shear viscosity data
-    data_complete = ShearViscosityData(path_data_folder + filename_complete)
-    data_klevansky = ShearViscosityData(path_data_folder + filename_klevansky)
-    data_zhuang = ShearViscosityData(path_data_folder + filename_zhuang)
+    for data_eta, label, color, linewidth, linestyle in datasets:
+        ax.plot(
+            data_eta.get_temperature(), 
+            data_eta.get_shear_viscosity(), 
+            label=label, 
+            color=color, 
+            linewidth=linewidth, 
+            linestyle=linestyle
+        )
 
-    color_complete = 'black'
-    linestyle_complete = '-'
-
-    color_klevansky = 'red'
-    linestyle_klevansky = '-'
-
-    color_zhuang = 'blue'
-    linestyle_zhuang = '-'
-
-    ax.plot(
-        data_complete.get_temperature(), 
-        data_complete.get_shear_viscosity(), 
-        label=r'Method I', 
-        color=color_complete, 
-        linewidth=2, 
-        linestyle=linestyle_complete
-    )
-
-    ax.plot(
-        data_klevansky.get_temperature(), 
-        data_klevansky.get_shear_viscosity(), 
-        label=r'Method II', 
-        color=color_klevansky, 
-        linewidth=2, 
-        linestyle=linestyle_klevansky
-    )
-
-    ax.plot(
-        data_zhuang.get_temperature(), 
-        data_zhuang.get_shear_viscosity(), 
-        label=r'Method III', 
-        color=color_zhuang, 
-        linewidth=2, 
-        linestyle=linestyle_zhuang
-    )
-
+    # Grid
+    ax.grid(True, linestyle='--', alpha=0.5)
+    
+    # Legend
+    if legend_loc is not None:
+        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        
     # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
     ax.set_ylabel(r'$\eta\, [\mathrm{GeV}^3]$', fontsize=20)
 
-    # Grid and legend
-    ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False)
-
     # Configure axes using the helper function
-    xmin = 0.120
-    xmax = 0.300
-    ymin = 0.0
-    ymax = 0.4
-    x_num_ticks = 4
-    y_num_ticks = 5
-    configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
-
-    ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-    ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
-
-    # Add text annotations
-    auxH = 0.06; auxX = 0.03; auxY = 0.3
-    texts = [
-        parameter_set_annotation,
-        r'$\mu = 0.0\ \mathrm{GeV}$',
-    ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
-
-    fig.tight_layout()
-
-    plt.savefig(path_plots_folder + plotname)
-
-    # Clean up
-    plt.clf()
-    plt.close()
-
-
-def plot_eta_entropy_ratio_vs_temperature_diff_methods(
-    fig_dpi: int,
-    fig_x_size: int,
-    fig_y_size: int,
-    path_data_folder: str,
-    path_plots_folder: str,
-    filename_complete: str,
-    filename_klevansky: str,
-    filename_zhuang: str,
-    path_file_thermodynamics: str,
-    parameter_set_annotation: str,
-    plotname: str
-) -> None:
-    print("Building plot: shear viscosity to entropy density ratio versus temperature for different methods for the integrated cross section.")
-    print(f"Using datafile complete method: {filename_complete}")
-    print(f"Using datafile Klevansky method: {filename_klevansky}")
-    print(f"Using datafile Zhuang method: {filename_zhuang}\n")
-    
-    # Create a new figure
-    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
-    
-    # Shear viscosity data
-    data_complete = ShearViscosityData(path_data_folder + filename_complete)
-    data_klevansky = ShearViscosityData(path_data_folder + filename_klevansky)
-    data_zhuang = ShearViscosityData(path_data_folder + filename_zhuang)
-
-    # Get entropy from thermodynamics data (for this parameter set) and interpolate it
-    data_thermodynamics = FixedChemPotTempData(path_file_thermodynamics)
-    entropy_dens_interpolation = interp1d(
-        data_thermodynamics.get_temperature(), 
-        data_thermodynamics.get_entropy_density(), 
-        kind='linear'
-    )
-    entropy_dens = entropy_dens_interpolation(data_complete.get_temperature())
-
-    color_complete = 'black'
-    linestyle_complete = '-'
-
-    color_klevansky = 'red'
-    linestyle_klevansky = '-'
-
-    color_zhuang = 'blue'
-    linestyle_zhuang = '-'
-
-    ax.plot(
-        data_complete.get_temperature(), 
-        data_complete.get_shear_viscosity()/entropy_dens, 
-        label=r'Method I', 
-        color=color_complete, 
-        linewidth=2, 
-        linestyle=linestyle_complete
-    )
-
-    ax.plot(
-        data_klevansky.get_temperature(), 
-        data_klevansky.get_shear_viscosity()/entropy_dens, 
-        label=r'Method II', 
-        color=color_klevansky, 
-        linewidth=2, 
-        linestyle=linestyle_klevansky
-    )
-
-    ax.plot(
-        data_zhuang.get_temperature(), 
-        data_zhuang.get_shear_viscosity()/entropy_dens, 
-        label=r'Method III', 
-        color=color_zhuang, 
-        linewidth=2, 
-        linestyle=linestyle_zhuang
-    )
-    
-    # Kovtun-Son-Starinets conformal limit (KSS), eta/s|KSS = 1/4*pi
-    ax.axhline(
-        y=1.0/(4.0*math.pi),
-        color='black',
-        linestyle='--',
-        linewidth=2,
-        label=r'KSS'
-    )
-
-    # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\eta/s$', fontsize=20)
-
-    # Grid and legend
-    ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper right", fontsize=16, frameon=False)
-
-    # Configure axes using the helper function
-    xmin = 0.120
-    xmax = 0.300
-    ymin = 0.0
-    ymax = 3.0
-    x_num_ticks = 4
-    y_num_ticks = 7
+    xmin = xlim[0]
+    xmax = xlim[1]
+    ymin = ylim[0]
+    ymax = ylim[1]
     configure_axes(
         ax, 
         xmin, 
@@ -219,25 +91,149 @@ def plot_eta_entropy_ratio_vs_temperature_diff_methods(
         tick_width=1.5, 
         tick_length=6
     )
-
-    ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-    ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+    ax.xaxis.set_major_formatter(FormatStrFormatter(x_formatter))
+    ax.yaxis.set_major_formatter(FormatStrFormatter(y_formatter))
 
     # Add text annotations
-    auxH = 0.06; auxX = 0.05; auxY = 0.85
-    texts = [
-        parameter_set_annotation,
-        r'$\mu = 0.0\ \mathrm{GeV}$',
-    ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    if annotation_texts is not None:
+        add_annotation_block(
+            ax, 
+            xmin, 
+            xmax, 
+            ymin, 
+            ymax, 
+            x_annotation, 
+            y_annotation, 
+            auxH=0.06, 
+            texts=annotation_texts, 
+            fontsize=16
+        )
 
     fig.tight_layout()
 
-    plt.savefig(path_plots_folder + plotname)
+    plt.savefig(path_output_plot)
 
-    # Clean up
-    plt.clf()
-    plt.close()
+    return fig, ax
+
+
+def plot_eta_over_s_vs_temp(
+    fig_dpi: int,
+    fig_x_size: int,
+    fig_y_size: int,
+    ratio_data_specs: list[tuple[str, str, str, int, str]],
+    path_file_thermodynamics: str,
+    path_output_plot: str,
+    legend_loc: str | None = None,
+    xlim: tuple[float, float] = (0.0 , 1.0),
+    ylim: tuple[float, float] = (0.0 , 1.0),
+    x_num_ticks: int = 6,
+    y_num_ticks: int = 6,
+    x_formatter: str = "%.2f",
+    y_formatter: str = "%.1f",
+    annotation_texts: list[str] | None = None,
+    x_annotation: float = 0.05,
+    y_annotation: float = 0.05,
+) -> tuple[Figure, Axes]:
+    print("Building plot: shear viscosity over entropy density ratio versus temperature.")
+    
+    print("Using datafiles:")
+    for path_file_eta, _, _, _, _ in ratio_data_specs:
+        print(path_file_eta)
+    print()
+
+    # Verify that the data provided have the same temperature grid
+    datasets = []
+    for path_file_eta, label, color, linewidth, linestyle in ratio_data_specs:
+        data_eta = ShearViscosityData(path_file_eta)
+        datasets.append((data_eta, label, color, linewidth, linestyle))
+
+    for data_eta, label, color, linewidth, linestyle in datasets :
+        if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
+            raise ValueError("Temperature grids between datasets do not match.")
+
+    # Get entropy from thermodynamics data (for this parameter set) and interpolate it
+    data_thermodynamics = FixedChemPotTempData(path_file_thermodynamics)
+    entropy_dens_interpolation = interp1d(
+        data_thermodynamics.get_temperature(), 
+        data_thermodynamics.get_entropy_density(), 
+        kind='linear'
+    )
+    entropy_dens = entropy_dens_interpolation(datasets[0][0].get_temperature())
+    
+    # Create a new figure
+    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
+    
+    for data_eta, label, color, linewidth, linestyle in datasets:
+        ax.plot(
+            data_eta.get_temperature(), 
+            data_eta.get_shear_viscosity()/entropy_dens, 
+            label=label, 
+            color=color, 
+            linewidth=linewidth, 
+            linestyle=linestyle
+        )
+
+    # Kovtun-Son-Starinets conformal limit (KSS), eta/s|KSS = 1/4*pi
+    ax.axhline(
+        y=1.0/(4.0*math.pi),
+        color='black',
+        linestyle='--',
+        linewidth=2,
+        label=r'KSS'
+    )
+    
+    # Grid
+    ax.grid(True, linestyle='--', alpha=0.5)
+    
+    # Legend
+    if legend_loc is not None:
+        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        
+    # Axes labels
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
+    ax.set_ylabel(r'$\eta/s$', fontsize=20)
+
+    # Configure axes using the helper function
+    xmin = xlim[0]
+    xmax = xlim[1]
+    ymin = ylim[0]
+    ymax = ylim[1]
+    configure_axes(
+        ax, 
+        xmin, 
+        xmax, 
+        ymin, 
+        ymax, 
+        x_num_ticks, 
+        y_num_ticks, 
+        tick_fontsize=16, 
+        spine_width=1.5, 
+        tick_width=1.5, 
+        tick_length=6
+    )
+    ax.xaxis.set_major_formatter(FormatStrFormatter(x_formatter))
+    ax.yaxis.set_major_formatter(FormatStrFormatter(y_formatter))
+
+    # Add text annotations
+    if annotation_texts is not None:
+        add_annotation_block(
+            ax, 
+            xmin, 
+            xmax, 
+            ymin, 
+            ymax, 
+            x_annotation, 
+            y_annotation, 
+            auxH=0.06, 
+            texts=annotation_texts, 
+            fontsize=16
+        )
+
+    fig.tight_layout()
+
+    plt.savefig(path_output_plot)
+
+    return fig, ax
 
 
 ##########################################################################
@@ -248,32 +244,72 @@ fig_x_size = 6
 fig_y_size = 6
 
 # Location of the data and plots folder with respect to calculations folder
-path_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
-path_plots_folder = "su3_3d_cutoff_transport_coefficients/plots/"
+path_transport_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
+path_output_plot_folder = "su3_3d_cutoff_transport_coefficients/plots/"
 
-plot_shear_viscosity_vs_temperature_diff_methods(
+ratio_datasets = [
+    (
+        path_transport_data_folder + "ShearViscosity_setA_COMPLETE_COV.dat",  
+        r"Method I", 
+        "black", 
+        2, 
+        "-"
+    ),
+    (
+        path_transport_data_folder + "ShearViscosity_setA_KLEVANSKY.dat",  
+        r"Method II", 
+        "red", 
+        2, 
+        "-"
+    ),
+        (
+        path_transport_data_folder + "ShearViscosity_setA_ZHUANG.dat", 
+        r"Method III", 
+        "blue", 
+        2, 
+        "-"
+    ),
+]
+
+plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    path_data_folder,
-    path_plots_folder,
-    "ShearViscosity_setA_COMPLETE_COV.dat",
-    "ShearViscosity_setA_KLEVANSKY.dat",
-    "ShearViscosity_setA_ZHUANG.dat",
-    "set A",
-    "shear_viscosity_vs_temp_CP0_setA.png"
+    ratio_datasets,
+    path_output_plot_folder + "eta_vs_temp_CP0_setA.png",
+    "upper left",
+    xlim=(0.120, 0.300),
+    ylim=(0.0, 0.4),
+    x_num_ticks=4,
+    y_num_ticks=5,
+    x_formatter="%.2f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set A",
+        r"$\mu = 0.0\ \mathrm{GeV}$",
+    ],
+    x_annotation=0.03,
+    y_annotation=0.30,
 )
 
-plot_eta_entropy_ratio_vs_temperature_diff_methods(
+plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    path_data_folder,
-    path_plots_folder,
-    "ShearViscosity_setA_COMPLETE_COV.dat",
-    "ShearViscosity_setA_KLEVANSKY.dat",
-    "ShearViscosity_setA_ZHUANG.dat",
+    ratio_datasets,
     "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
-    "set A",
-    "shear_viscosity_ratio_vs_temp_CP0_setA.png"
+    path_output_plot_folder + "eta_over_s_vs_temp_CP0_setA.png",
+    "upper right",
+    xlim=(0.120, 0.300),
+    ylim=(0.0, 3.0),
+    x_num_ticks=4,
+    y_num_ticks=7,
+    x_formatter="%.2f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set A",
+        r"$\mu = 0.0\ \mathrm{GeV}$",
+    ],
+    x_annotation=0.05,
+    y_annotation=0.85,
 )

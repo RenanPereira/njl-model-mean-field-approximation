@@ -46,9 +46,6 @@ def plot_eta_temp_over_sigmae_s_vs_temp(
         print(path_file_sigmae)
     print()
 
-    # Create a new figure
-    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
-    
     # Verify that the data provided have the same temperature grid
     datasets = []
     for path_file_eta, path_file_sigmae, label, color, linewidth, linestyle in ratio_data_specs:
@@ -71,6 +68,9 @@ def plot_eta_temp_over_sigmae_s_vs_temp(
     )
     entropy_dens = entropy_dens_interpolation(datasets[0][0].get_temperature())
 
+    # Create a new figure
+    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
+    
     for data_eta, data_sigmae, label, color, linewidth, linestyle in datasets:
         eta = data_eta.get_shear_viscosity()
         temp = data_eta.get_temperature()
@@ -166,9 +166,6 @@ def plot_eta_over_sigmae_temp2_vs_temp(
         print(path_file_eta)
         print(path_file_sigmae)
     print()
-
-    # Create a new figure
-    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
     # Verify that the data provided have the same temperature grid
     datasets = []
@@ -183,6 +180,9 @@ def plot_eta_over_sigmae_temp2_vs_temp(
         if not np.array_equal(datasets[0][0].get_temperature(), data_sigmae.get_temperature()):
             raise ValueError("Temperature grids between datasets do not match.")
 
+    # Create a new figure
+    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
+    
     for data_eta, data_sigmae, label, color, linewidth, linestyle in datasets:
         eta = data_eta.get_shear_viscosity()
         temp = data_eta.get_temperature()
