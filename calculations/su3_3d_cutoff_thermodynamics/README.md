@@ -78,11 +78,11 @@ cd fixed_chem_pot_temp
 ./build_plots.sh
 ```
 
-## Results
+## Results Zero chemical potential
 
 In this section we present some thermodynamic quantities of the SU3 NJL model resulting from these calculations.
 
-### Zero chemical potential: quark masses vs temperature
+### Quark masses
 
 <p align="center">
   <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
@@ -94,7 +94,7 @@ In this section we present some thermodynamic quantities of the SU3 NJL model re
   <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
 </p>
 
-### Zero chemical potential: pressure vs temperature
+### Pressure
 
 <p align="center">
   <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setA.png" width="32%">
@@ -108,7 +108,7 @@ In this section we present some thermodynamic quantities of the SU3 NJL model re
 
 
 
-### Zero chemical potential: entropy density vs temperature
+### Entropy density
 
 <p align="center">
   <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setA.png" width="32%">
@@ -118,7 +118,9 @@ In this section we present some thermodynamic quantities of the SU3 NJL model re
 
 <p align="center">
   <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_CP0_setsABC.png" width="32%">
 </p>
+
 
 In the plots below we also calculate the temperature derivative of the pressure at fixed chemical potential, which yields the entropy density. Hence, one can assess the compatibility of the results provided in the data file.
 
@@ -128,7 +130,7 @@ In the plots below we also calculate the temperature derivative of the pressure 
   <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setC.png" width="32%">
 </p>
 
-### Zero chemical potential: energy density vs temperature
+### Energy density
 
 <p align="center">
   <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setA.png" width="32%">
@@ -148,7 +150,7 @@ In the plots below we also calculate the energy density via the Euler equation. 
   <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setC.png" width="32%">
 </p>
 
-### Zero chemical potential: pressure vs energy density
+### Pressure and Energy density
 
 <p align="center">
   <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setA.png" width="32%">

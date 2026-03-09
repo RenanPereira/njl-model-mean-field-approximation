@@ -44,12 +44,12 @@ def plot_eta_vs_temp(
         print(path_file_eta)
     print()
 
-    # Verify that the data provided have the same temperature grid
-    datasets = []
+    datasets: list[tuple[ShearViscosityData, str, str, int, str]] = []
     for path_file_eta, label, color, linewidth, linestyle in data_specs:
         data_eta = ShearViscosityData(path_file_eta)
         datasets.append((data_eta, label, color, linewidth, linestyle))
 
+    # Verify that the data provided have the same temperature grid
     for data_eta, label, color, linewidth, linestyle in datasets :
         if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
             raise ValueError("Temperature grids between datasets do not match.")
@@ -152,12 +152,12 @@ def plot_eta_over_s_vs_temp(
         print(path_file_eta)
     print()
 
-    # Verify that the data provided have the same temperature grid
-    datasets = []
+    datasets: list[tuple[ShearViscosityData, str, str, int, str]] = []
     for path_file_eta, label, color, linewidth, linestyle in data_specs:
         data_eta = ShearViscosityData(path_file_eta)
         datasets.append((data_eta, label, color, linewidth, linestyle))
 
+    # Verify that the data provided have the same temperature grid
     for data_eta, label, color, linewidth, linestyle in datasets :
         if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
             raise ValueError("Temperature grids between datasets do not match.")
@@ -259,7 +259,7 @@ fig_y_size = 6
 path_transport_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
 path_output_plot_folder = "su3_3d_cutoff_transport_coefficients/plots/"
 
-ratio_datasets = [
+datasets = [
     (
         path_transport_data_folder + "ShearViscosity_setA_COMPLETE_COV.dat",  
         r"Method I", 
@@ -287,7 +287,7 @@ plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    ratio_datasets,
+    datasets,
     path_output_plot_folder + "eta_vs_temp_CP0_setA.png",
     "upper left",
     xlim=(0.120, 0.300),
@@ -308,7 +308,7 @@ plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    ratio_datasets,
+    datasets,
     "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
     path_output_plot_folder + "eta_over_s_vs_temp_CP0_setA.png",
     include_kss_bound=True,

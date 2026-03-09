@@ -63,5 +63,5 @@ class FixedChemPotTempData:
     def get_entropy_density(self) -> np.ndarray:
         return self.entropy_density
 
-    def size(self):
+    def size(self) -> int:
         return len(self.temperature)

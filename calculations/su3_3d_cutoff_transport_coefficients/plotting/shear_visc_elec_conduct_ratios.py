@@ -19,7 +19,7 @@ def plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi: int,
     fig_x_size: int,
     fig_y_size: int,
-    ratio_data_specs: list[tuple[str, str, str, str, int, str]],
+    data_specs: list[tuple[str, str, str, str, int, str]],
     path_file_thermodynamics: str,
     path_output_plot: str,
     legend_loc: str | None = None,
@@ -34,25 +34,25 @@ def plot_eta_temp_over_sigmae_s_vs_temp(
     y_annotation: float = 0.05,
 ) -> tuple[Figure, Axes]:
     """
-    ratio_data_specs:
+    data_specs:
         List of tuples defining datasets and plot styles:
         (path_file_eta, path_file_sigmae, label, color, linewidth, linestyle)
     """
     print("Building plot: eta*temperature over sigmae*entropy versus temperature.")   
     
     print("Using datafiles:")
-    for path_file_eta, path_file_sigmae, _, _, _, _ in ratio_data_specs:
+    for path_file_eta, path_file_sigmae, _, _, _, _ in data_specs:
         print(path_file_eta)
         print(path_file_sigmae)
     print()
 
-    # Verify that the data provided have the same temperature grid
-    datasets = []
-    for path_file_eta, path_file_sigmae, label, color, linewidth, linestyle in ratio_data_specs:
+    datasets: list[tuple[ShearViscosityData, ElectricalConductivityData, str, str, int, str]] = []
+    for path_file_eta, path_file_sigmae, label, color, linewidth, linestyle in data_specs:
         data_eta = ShearViscosityData(path_file_eta)
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_eta, data_sigmae, label, color, linewidth, linestyle))
 
+    # Verify that the data provided have the same temperature grid
     for data_eta, data_sigmae, label, color, linewidth, linestyle in datasets :
         if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
             raise ValueError("Temperature grids between datasets do not match.")
@@ -141,7 +141,7 @@ def plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi: int,
     fig_x_size: int,
     fig_y_size: int,
-    ratio_data_specs: list[tuple[str, str, str, str, int, str]],
+    data_specs: list[tuple[str, str, str, str, int, str]],
     path_output_plot: str,
     legend_loc: str | None = None,
     xlim: tuple[float, float] = (0.0 , 1.0),
@@ -155,25 +155,25 @@ def plot_eta_over_sigmae_temp2_vs_temp(
     y_annotation: float = 0.05,
 ) -> tuple[Figure, Axes]:
     """
-    ratio_data_specs:
+    data_specs:
         List of tuples defining datasets and plot styles:
         (path_file_eta, path_file_sigmae, label, color, linewidth, linestyle)
     """
     print("Building plot: eta over sigmae*temperature^2 versus temperature.")   
     
     print("Using datafiles:")
-    for path_file_eta, path_file_sigmae, _, _, _, _ in ratio_data_specs:
+    for path_file_eta, path_file_sigmae, _, _, _, _ in data_specs:
         print(path_file_eta)
         print(path_file_sigmae)
     print()
     
-    # Verify that the data provided have the same temperature grid
-    datasets = []
-    for path_file_eta, path_file_sigmae, label, color, linewidth, linestyle in ratio_data_specs:
+    datasets: list[tuple[ShearViscosityData, ElectricalConductivityData, str, str, int, str]] = []
+    for path_file_eta, path_file_sigmae, label, color, linewidth, linestyle in data_specs:
         data_eta = ShearViscosityData(path_file_eta)
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_eta, data_sigmae, label, color, linewidth, linestyle))
 
+    # Verify that the data provided have the same temperature grid
     for data_eta, data_sigmae, label, color, linewidth, linestyle in datasets :
         if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
             raise ValueError("Temperature grids between datasets do not match.")
@@ -260,7 +260,7 @@ fig_y_size = 6
 path_transport_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
 path_output_plot_folder = "su3_3d_cutoff_transport_coefficients/plots/"
 
-ratio_datasets = [
+datasets = [
     (
         path_transport_data_folder + "ShearViscosity_setA_COMPLETE_COV.dat", 
         path_transport_data_folder + "ElectricalConductivity_setA_COMPLETE_COV.dat", 
@@ -291,7 +291,7 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    ratio_datasets,
+    datasets,
     "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
     path_output_plot_folder + "eta_temp_over_sigmae_s_vs_temp_methods_CP0_setA.png",
     "upper right",
@@ -313,7 +313,7 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    ratio_datasets,
+    datasets,
     "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
     path_output_plot_folder + "eta_temp_over_sigmae_s_vs_temp_methods_CP0_setA_zoom.png",
     "upper right",
@@ -335,7 +335,7 @@ plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    ratio_datasets,
+    datasets,
     path_output_plot_folder + "eta_over_sigmae_temp2_vs_temp_methods_CP0_setA.png",
     "upper right",
     xlim=(0.120, 0.300),
@@ -356,7 +356,7 @@ plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    ratio_datasets,
+    datasets,
     path_output_plot_folder + "eta_over_sigmae_temp2_vs_temp_methods_CP0_setA_zoom.png",
     "upper right",
     xlim=(0.200, 0.225),

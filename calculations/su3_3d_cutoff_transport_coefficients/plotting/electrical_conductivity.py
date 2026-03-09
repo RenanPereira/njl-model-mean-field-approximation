@@ -41,12 +41,12 @@ def plot_sigmae_vs_temp(
         print(path_file_sigmae)
     print()
     
-    # Verify that the data provided have the same temperature grid
-    datasets = []
+    datasets: list[tuple[ElectricalConductivityData, str, str, int, str]] = []
     for path_file_sigmae, label, color, linewidth, linestyle in data_specs:
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_sigmae, label, color, linewidth, linestyle))
 
+    # Verify that the data provided have the same temperature grid
     for data_sigmae, label, color, linewidth, linestyle in datasets :
         if not np.array_equal(datasets[0][0].get_temperature(), data_sigmae.get_temperature()):
             raise ValueError("Temperature grids between datasets do not match.")
@@ -147,12 +147,12 @@ def plot_sigmae_over_temp_vs_temp(
         print(path_file_sigmae)
     print()
     
-    # Verify that the data provided have the same temperature grid
-    datasets = []
+    datasets: list[tuple[ElectricalConductivityData, str, str, int, str]] = []
     for path_file_sigmae, label, color, linewidth, linestyle in data_specs:
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_sigmae, label, color, linewidth, linestyle))
 
+    # Verify that the data provided have the same temperature grid
     for data_sigmae, label, color, linewidth, linestyle in datasets :
         if not np.array_equal(datasets[0][0].get_temperature(), data_sigmae.get_temperature()):
             raise ValueError("Temperature grids between datasets do not match.")
@@ -235,7 +235,7 @@ fig_y_size = 6
 path_transport_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
 path_output_plot_folder = "su3_3d_cutoff_transport_coefficients/plots/"
 
-ratio_datasets = [
+datasets = [
     (
         path_transport_data_folder + "ElectricalConductivity_setA_COMPLETE_COV.dat",  
         r"Method I", 
@@ -263,7 +263,7 @@ plot_sigmae_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    ratio_datasets,
+    datasets,
     path_output_plot_folder + "sigmae_vs_temp_CP0_setA.png",
     "upper left",
     xlim=(0.120, 0.300),
@@ -284,7 +284,7 @@ plot_sigmae_over_temp_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    ratio_datasets,
+    datasets,
     path_output_plot_folder + "sigmae_over_temp_vs_temp_CP0_setA.png",
     "upper left",
     xlim=(0.120, 0.300),
