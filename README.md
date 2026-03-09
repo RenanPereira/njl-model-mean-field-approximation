@@ -95,15 +95,21 @@ Can be executed in the root folder using:
 
 ## Calculations
 
-One can execute the `scripts/tests/execute_calculations.sh` script to execute all the calulations configured inside the calculations folder in the root of the project. This can be used to test the code base and understand if the modification of the code or implementation of new features broke something unexpectedly. Executing this can be quite time consuming due to the cmplex nature of all the calculations. Thus, one can also find `scripts/tests/execute_calculations_lite.sh` which contains less calculations, while covering a similar part of the entire code base. These tests can be considered functional tests. Execute them with
+One can execute the `scripts/tests/execute_calculations.sh` script to execute all the calulations configured inside the calculations folder in the root of the project. This can be used to test the code base and understand if the modification of the code or implementation of new features broke something unexpectedly. Executing this can be quite time consuming due to the complex nature of all the calculations. Thus, one can also find `scripts/tests/execute_calculations_lite.sh` which contains less calculations, while covering a similar part of the entire code base. These tests can be considered functional tests. Execute them with
 ```bash
- (cd scripts/tests/ && ./execute_calculations.sh)
+(cd scripts/tests/ && ./execute_calculations.sh)
 ```
 or, for the lite version,
 ```bash
- (cd scripts/tests/ && ./execute_calculations_lite.sh)
+(cd scripts/tests/ && ./execute_calculations_lite.sh)
 ```
 
+## Plots
+
+One can execute the `scripts/tests/build_all_calculations_plots.sh` script to build all the plots defined inside the calculations folder in the root of the project. Similar to the calculations feature above, this can be used to assist in understanding if the inclusion of new features and calculations changed previous calculations and results. Execute it with:
+```bash
+(cd scripts/tests/ && ./build_all_calculations_plots.sh)
+```
 
 
 # Conventions
