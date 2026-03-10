@@ -7,7 +7,7 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 
 
-class CrossSectionIntegrand : public GeneralIntegrandParameters
+class SU3NJL3DCutoffCrossSectionIntegrand : public GeneralIntegrandParameters
 {
 private:
     std::string integralID = "notDefined";
@@ -25,7 +25,7 @@ private:
     bool largeAngleScatteringContribution = false;
 
 public:
-    CrossSectionIntegrand(
+    SU3NJL3DCutoffCrossSectionIntegrand(
         std::string integralIDAux, 
         SU3NJL3DCutoffParameters parametersNJLAux, 
         double temperatureAux, 
@@ -56,21 +56,21 @@ public:
         largeAngleScatteringContribution = largeAngleScatteringContributionAux;
     };
 
-    CrossSectionIntegrand(void* auxiliar)
+    SU3NJL3DCutoffCrossSectionIntegrand(void* auxiliar)
     {   
-        integralID = ((class CrossSectionIntegrand *)(auxiliar))->integralID;
-        parametersNJL = ((class CrossSectionIntegrand *)(auxiliar))->parametersNJL;
-        temperature = ((class CrossSectionIntegrand *)(auxiliar))->temperature;
-        upQuarkEffectiveChemicalPotential = ((class CrossSectionIntegrand *)(auxiliar))->upQuarkEffectiveChemicalPotential;
-        downQuarkEffectiveChemicalPotential = ((class CrossSectionIntegrand *)(auxiliar))->downQuarkEffectiveChemicalPotential;
-        strangeQuarkEffectiveChemicalPotential = ((class CrossSectionIntegrand *)(auxiliar))->strangeQuarkEffectiveChemicalPotential;
-        upQuarkEffectiveMass = ((class CrossSectionIntegrand *)(auxiliar))->upQuarkEffectiveMass;
-        downQuarkEffectiveMass = ((class CrossSectionIntegrand *)(auxiliar))->downQuarkEffectiveMass;
-        strangeQuarkEffectiveMass = ((class CrossSectionIntegrand *)(auxiliar))->strangeQuarkEffectiveMass;
-        centerOfMassEnergy = ((class CrossSectionIntegrand *)(auxiliar))->centerOfMassEnergy;
-        propagatorIntegralPrecision = ((class CrossSectionIntegrand *)(auxiliar))->propagatorIntegralPrecision;
-        process = ((class CrossSectionIntegrand *)(auxiliar))->process;
-        largeAngleScatteringContribution = ((class CrossSectionIntegrand *)(auxiliar))->largeAngleScatteringContribution;
+        integralID = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->integralID;
+        parametersNJL = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->parametersNJL;
+        temperature = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->temperature;
+        upQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->upQuarkEffectiveChemicalPotential;
+        downQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->downQuarkEffectiveChemicalPotential;
+        strangeQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->strangeQuarkEffectiveChemicalPotential;
+        upQuarkEffectiveMass = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->upQuarkEffectiveMass;
+        downQuarkEffectiveMass = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->downQuarkEffectiveMass;
+        strangeQuarkEffectiveMass = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->strangeQuarkEffectiveMass;
+        centerOfMassEnergy = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->centerOfMassEnergy;
+        propagatorIntegralPrecision = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->propagatorIntegralPrecision;
+        process = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->process;
+        largeAngleScatteringContribution = ((class SU3NJL3DCutoffCrossSectionIntegrand *)(auxiliar))->largeAngleScatteringContribution;
     };
 
     std::string getIntegralID(){ return integralID; }

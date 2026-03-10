@@ -147,7 +147,7 @@ double sMaximumKlevansky(double cutoff, double Mu, double Md, double Ms)
 
 double crossSectionProcess12To34Integrand(double x, void *parameters)
 {   
-    CrossSectionIntegrand aux(parameters);
+    SU3NJL3DCutoffCrossSectionIntegrand aux(parameters);
     SU3NJL3DCutoffParameters parametersNJL = aux.getParametersNJL();
     double T = aux.getTemperature();
     double effChemPotU = aux.getUpQuarkEffectiveChemicalPotential();
@@ -205,7 +205,7 @@ double crossSectionProcess12To34(
 )
 {   
     string integralID = "crossSectionProcess" + toString(process);
-    CrossSectionIntegrand aux(
+    SU3NJL3DCutoffCrossSectionIntegrand aux(
         integralID, 
         parametersNJL, 
         T, 
