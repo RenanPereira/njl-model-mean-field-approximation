@@ -1,12 +1,8 @@
 #ifndef SU3NJL3DCUTOFFINTEGRATEDCROSSSECTIONS_H
 #define SU3NJL3DCUTOFFINTEGRATEDCROSSSECTIONS_H
 
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
-
-using namespace std;
 
 
 class SU3NJL3DCutoffIntegratedCrossSectionIntegrand : public GeneralIntegrandParameters
@@ -35,11 +31,19 @@ private:
 
 public:
     SU3NJL3DCutoffIntegratedCrossSectionIntegrand(
-        string integralIDAux, SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
-        double upQuarkEffectiveChemicalPotentialAux, double downQuarkEffectiveChemicalPotentialAux, double strangeQuarkEffectiveChemicalPotentialAux, 
-        double upQuarkEffectiveMassAux, double downQuarkEffectiveMassAux, double strangeQuarkEffectiveMassAux, 
-        double propagatorIntegralPrecisionAux, scatteringProcess processAux, 
-        bool largeAngleScatteringContributionAux, double crossSectionIntegralPrecisionAux,
+        string integralIDAux, 
+        SU3NJL3DCutoffParameters parametersNJLAux, 
+        double temperatureAux, 
+        double upQuarkEffectiveChemicalPotentialAux, 
+        double downQuarkEffectiveChemicalPotentialAux, 
+        double strangeQuarkEffectiveChemicalPotentialAux, 
+        double upQuarkEffectiveMassAux, 
+        double downQuarkEffectiveMassAux, 
+        double strangeQuarkEffectiveMassAux, 
+        double propagatorIntegralPrecisionAux, 
+        scatteringProcess processAux, 
+        bool largeAngleScatteringContributionAux, 
+        double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXdYAux
     )
     {   
@@ -60,12 +64,21 @@ public:
     };
 
     SU3NJL3DCutoffIntegratedCrossSectionIntegrand(
-    	string integralIDAux, SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
-        double upQuarkEffectiveChemicalPotentialAux, double downQuarkEffectiveChemicalPotentialAux, double strangeQuarkEffectiveChemicalPotentialAux, 
-        double upQuarkEffectiveMassAux, double downQuarkEffectiveMassAux, double strangeQuarkEffectiveMassAux, 
-        double propagatorIntegralPrecisionAux, scatteringProcess processAux, 
-        bool largeAngleScatteringContributionAux, double crossSectionIntegralPrecisionAux,
-        double integratedCrossSectionIntegralPrecision_dXdYdZAux, double integratedCrossSectionIntegralPrecision_dXdYAux
+    	string integralIDAux, 
+        SU3NJL3DCutoffParameters parametersNJLAux, 
+        double temperatureAux, 
+        double upQuarkEffectiveChemicalPotentialAux, 
+        double downQuarkEffectiveChemicalPotentialAux, 
+        double strangeQuarkEffectiveChemicalPotentialAux, 
+        double upQuarkEffectiveMassAux, 
+        double downQuarkEffectiveMassAux, 
+        double strangeQuarkEffectiveMassAux, 
+        double propagatorIntegralPrecisionAux, 
+        scatteringProcess processAux, 
+        bool largeAngleScatteringContributionAux, 
+        double crossSectionIntegralPrecisionAux,
+        double integratedCrossSectionIntegralPrecision_dXdYdZAux, 
+        double integratedCrossSectionIntegralPrecision_dXdYAux
     )
     {   
         integralID = integralIDAux;
@@ -239,12 +252,20 @@ double integratedCrossSectionIntegrand_ds(double , void *);
 double integratedCrossSectionCOVNormalizedIntegrand_dx(double , void *);
 
 double integratedCrossSectionProcess12To34(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
-    double , scatteringProcess , 
-    bool , double , 
-    double , double 
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    scatteringProcess , 
+    bool , 
+    double , 
+    double , 
+    double 
 );
 
 double integratedCrossSectionOGIntegrand_dp1dp2dtheta(double , void *);
@@ -254,12 +275,21 @@ double integratedCrossSectionOGIntegrand_dp1dp2(double , void *);
 double integratedCrossSectionOGIntegrand_dp1(double , void *);
 
 double integratedCrossSectionOGProcess12To34(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
-    double , scatteringProcess , 
-    bool , double , 
-    double , double , double 
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    scatteringProcess , 
+    bool , 
+    double , 
+    double , 
+    double , 
+    double 
 );
 
 double probabilityKlevanskyHeavisideSolutionPlus(double , double , double , double );
@@ -269,10 +299,16 @@ double probabilityKlevanskyHeavisideSolutionMinus(double , double , double , dou
 double probabilityKlevanskyIntegrand_dx(double , void *);
 
 double probabilityKlevansky(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
-    double , scatteringProcess ,
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    scatteringProcess ,
     double 
 );
 
@@ -283,20 +319,33 @@ double integratedCrossSectionKlevanskyIntegrand_ds(double , void *);
 double integratedCrossSectionKlevanskyNormalizedIntegrand_dx(double , void *);
 
 double integratedCrossSectionProcess12To34Klevansky(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
-    double , scatteringProcess , 
-    bool , double , 
-    double , double 
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    scatteringProcess , 
+    bool , 
+    double , 
+    double , 
+    double 
 );
 
 double nonNormalizedProbabilityZhuangIntegrand_ds(double , void *);
 
 double probabilityNormalizationInverseZhuang(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
     scatteringProcess ,
     double 
 );
@@ -306,11 +355,18 @@ double integratedCrossSectionZhuangIntegrand_ds(double , void *);
 double integratedCrossSectionZhuangNormalizedIntegrand_dx(double , void *);
 
 double integratedCrossSectionProcess12To34Zhuang(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
-    double , scatteringProcess , 
-    bool , double , 
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    scatteringProcess , 
+    bool , 
+    double , 
     double 
 );
 
@@ -369,11 +425,18 @@ private:
 public:
     SU3NJL3DCutoffIntegratedCrossSection(){};
     SU3NJL3DCutoffIntegratedCrossSection(
-        SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
-        double effChemPotUAux, double effChemPotDAux, double effChemPotSAux, 
-        double effMassUAux, double effMassDAux, double effMassSAux, 
-        double propagatorIntegralPrecisionAux, scatteringProcess processAux, 
-        bool largeAngleScatteringContributionAux, double crossSectionIntegralPrecisionAux,
+        SU3NJL3DCutoffParameters parametersNJLAux, 
+        double temperatureAux, 
+        double effChemPotUAux, 
+        double effChemPotDAux, 
+        double effChemPotSAux, 
+        double effMassUAux, 
+        double effMassDAux, 
+        double effMassSAux, 
+        double propagatorIntegralPrecisionAux, 
+        scatteringProcess processAux, 
+        bool largeAngleScatteringContributionAux, 
+        double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXdYdZAux, 
         double integratedCrossSectionIntegralPrecision_dXdYAux, 
         double integratedCrossSectionIntegralPrecision_dXAux,
@@ -403,11 +466,18 @@ public:
         }
     }
     SU3NJL3DCutoffIntegratedCrossSection(
-        SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
-        double effChemPotUAux, double effChemPotDAux, double effChemPotSAux, 
-        double effMassUAux, double effMassDAux, double effMassSAux, 
-        double propagatorIntegralPrecisionAux, scatteringProcess processAux, 
-        bool largeAngleScatteringContributionAux, double crossSectionIntegralPrecisionAux,
+        SU3NJL3DCutoffParameters parametersNJLAux, 
+        double temperatureAux, 
+        double effChemPotUAux, 
+        double effChemPotDAux, 
+        double effChemPotSAux, 
+        double effMassUAux, 
+        double effMassDAux, 
+        double effMassSAux, 
+        double propagatorIntegralPrecisionAux, 
+        scatteringProcess processAux, 
+        bool largeAngleScatteringContributionAux, 
+        double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXdYAux, 
         double integratedCrossSectionIntegralPrecision_dXAux,
         IntegratedCrossSectionApproximationMethod approximationMethodAux
@@ -435,11 +505,18 @@ public:
         }
     }
     SU3NJL3DCutoffIntegratedCrossSection(
-        SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
-        double effChemPotUAux, double effChemPotDAux, double effChemPotSAux, 
-        double effMassUAux, double effMassDAux, double effMassSAux, 
-        double propagatorIntegralPrecisionAux, scatteringProcess processAux, 
-        bool largeAngleScatteringContributionAux, double crossSectionIntegralPrecisionAux,
+        SU3NJL3DCutoffParameters parametersNJLAux, 
+        double temperatureAux, 
+        double effChemPotUAux, 
+        double effChemPotDAux, 
+        double effChemPotSAux, 
+        double effMassUAux, 
+        double effMassDAux, 
+        double effMassSAux, 
+        double propagatorIntegralPrecisionAux, 
+        scatteringProcess processAux, 
+        bool largeAngleScatteringContributionAux, 
+        double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXAux,
         IntegratedCrossSectionApproximationMethod approximationMethodAux
     )
@@ -465,9 +542,14 @@ public:
         }
     }
     SU3NJL3DCutoffIntegratedCrossSection(
-        SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
-        double effChemPotUAux, double effChemPotDAux, double effChemPotSAux, 
-        double effMassUAux, double effMassDAux, double effMassSAux, 
+        SU3NJL3DCutoffParameters parametersNJLAux, 
+        double temperatureAux, 
+        double effChemPotUAux, 
+        double effChemPotDAux, 
+        double effChemPotSAux, 
+        double effMassUAux, 
+        double effMassDAux, 
+        double effMassSAux, 
         scatteringProcess processAux, 
         bool largeAngleScatteringContributionAux,
         IntegratedCrossSectionApproximationMethod approximationMethodAux
@@ -515,41 +597,58 @@ public:
         {   
             integratedCrossSection = 
             integratedCrossSectionProcess12To34(
-                parametersNJL, temperature, 
+                parametersNJL, 
+                temperature, 
                 upQuarkEffectiveChemicalPotential, 
                 downQuarkEffectiveChemicalPotential, 
                 strangeQuarkEffectiveChemicalPotential, 
-                upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                propagatorIntegralPrecision, process, 
-                largeAngleScatteringContribution, crossSectionIntegralPrecision,
-                integratedCrossSectionIntegralPrecision_dXdY, integratedCrossSectionIntegralPrecision_dX
+                upQuarkEffectiveMass, 
+                downQuarkEffectiveMass, 
+                strangeQuarkEffectiveMass, 
+                propagatorIntegralPrecision, 
+                process, 
+                largeAngleScatteringContribution, 
+                crossSectionIntegralPrecision,
+                integratedCrossSectionIntegralPrecision_dXdY, 
+                integratedCrossSectionIntegralPrecision_dX
             );
         }
         else if( approximationMethod==KLEVANSKY )
         {
             integratedCrossSection = 
             integratedCrossSectionProcess12To34Klevansky(
-                parametersNJL, temperature, 
+                parametersNJL, 
+                temperature, 
                 upQuarkEffectiveChemicalPotential, 
                 downQuarkEffectiveChemicalPotential, 
                 strangeQuarkEffectiveChemicalPotential, 
-                upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                propagatorIntegralPrecision, process, 
-                largeAngleScatteringContribution, crossSectionIntegralPrecision,
-                integratedCrossSectionIntegralPrecision_dXdY, integratedCrossSectionIntegralPrecision_dX
+                upQuarkEffectiveMass, 
+                downQuarkEffectiveMass, 
+                strangeQuarkEffectiveMass, 
+                propagatorIntegralPrecision, 
+                process, 
+                largeAngleScatteringContribution, 
+                crossSectionIntegralPrecision,
+                integratedCrossSectionIntegralPrecision_dXdY, 
+                integratedCrossSectionIntegralPrecision_dX
             );
         }
         else if( approximationMethod==ZHUANG )
         {
             integratedCrossSection = 
             integratedCrossSectionProcess12To34Zhuang(
-                parametersNJL, temperature, 
+                parametersNJL, 
+                temperature, 
                 upQuarkEffectiveChemicalPotential, 
                 downQuarkEffectiveChemicalPotential, 
                 strangeQuarkEffectiveChemicalPotential, 
-                upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                propagatorIntegralPrecision, process, 
-                largeAngleScatteringContribution, crossSectionIntegralPrecision,
+                upQuarkEffectiveMass, 
+                downQuarkEffectiveMass, 
+                strangeQuarkEffectiveMass, 
+                propagatorIntegralPrecision, 
+                process, 
+                largeAngleScatteringContribution, 
+                crossSectionIntegralPrecision,
                 integratedCrossSectionIntegralPrecision_dX
             );
         }
@@ -557,13 +656,18 @@ public:
         {
             integratedCrossSection = 
             integratedCrossSectionOGProcess12To34(
-                parametersNJL, temperature, 
+                parametersNJL, 
+                temperature, 
                 upQuarkEffectiveChemicalPotential, 
                 downQuarkEffectiveChemicalPotential, 
                 strangeQuarkEffectiveChemicalPotential, 
-                upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                propagatorIntegralPrecision, process, 
-                largeAngleScatteringContribution, crossSectionIntegralPrecision,
+                upQuarkEffectiveMass, 
+                downQuarkEffectiveMass, 
+                strangeQuarkEffectiveMass, 
+                propagatorIntegralPrecision, 
+                process, 
+                largeAngleScatteringContribution, 
+                crossSectionIntegralPrecision,
                 integratedCrossSectionIntegralPrecision_dXdYdZ, 
                 integratedCrossSectionIntegralPrecision_dXdY, 
                 integratedCrossSectionIntegralPrecision_dX
@@ -599,8 +703,12 @@ public:
 
 vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlongTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
-    scatteringProcess , double , bool , 
-    double , double , double , 
+    scatteringProcess , 
+    double , 
+    bool , 
+    double , 
+    double , 
+    double , 
     IntegratedCrossSectionApproximationMethod ,
     int 
 );
@@ -609,32 +717,46 @@ void writeIntegratedCrossSectionToFile(vector<SU3NJL3DCutoffIntegratedCrossSecti
 
 void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
-    scatteringProcess , double , bool , 
-    double , double , double , 
+    scatteringProcess , 
+    double , 
+    bool , 
+    double , 
+    double , 
+    double , 
     IntegratedCrossSectionApproximationMethod ,
     int 
 );
 
 void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
-    double , bool , 
-    double , double , double , 
+    double , 
+    bool , 
+    double , 
+    double , 
+    double , 
     IntegratedCrossSectionApproximationMethod ,
     int 
 );
 
 void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
-    scatteringProcess , double , bool , 
-    double , double , double , 
+    scatteringProcess , 
+    double , 
+    bool , 
+    double , 
+    double , 
+    double , 
     IntegratedCrossSectionApproximationMethod ,
     int 
 );
 
 void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTrajectory(
     vector<SU3NJL3DCutoffFixedChemPotTemp> ,
-    double , bool , 
-    double , double , double , 
+    double , 
+    bool , 
+    double , 
+    double , 
+    double , 
     IntegratedCrossSectionApproximationMethod ,
     int 
 );
