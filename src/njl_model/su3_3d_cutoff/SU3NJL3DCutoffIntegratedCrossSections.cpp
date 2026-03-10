@@ -1599,7 +1599,7 @@ void writeIntegratedCrossSectionToFile(vector<SU3NJL3DCutoffIntegratedCrossSecti
     fileTest.width(25);   fileTest << "nUBar[GeV^3]"; //u anti-quark number
     fileTest.width(25);   fileTest << "nDBar[GeV^3]"; //d anti-quark number
     fileTest.width(25);   fileTest << "nSBbar[GeV^3]"; //s anti-quark number
-    fileTest.width(25);   fileTest << "W[Gev^-2]"; //integrated cross section
+    fileTest.width(25);   fileTest << "W[GeV^-2]"; //integrated cross section
     fileTest.width(25);   fileTest << "effMU[GeV]"; //u-quark effective mass
     fileTest.width(25);   fileTest << "effMD[GeV]"; //d-quark effective mass
     fileTest.width(25);   fileTest << "effMS[GeV]"; //s-quark effective mass
