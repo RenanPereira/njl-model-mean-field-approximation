@@ -493,7 +493,7 @@ double dsdEdepsilon_EMax(double cutoff, double M1, double M2, double s)
 
 double integratedCrossSectionCOVVolumeIntegrand_dsdE(double E, void *parameters)
 {
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
     double cutoff = aux.getParametersNJL().getThreeMomentumCutoff();
 	double M1 = aux.getUpQuarkEffectiveMass();
 	double M2 = aux.getDownQuarkEffectiveMass();
@@ -507,7 +507,7 @@ double integratedCrossSectionCOVVolumeIntegrand_dsdE(double E, void *parameters)
 
 double integratedCrossSectionCOVVolumeIntegrand_ds(double s, void *parameters)
 {
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
     double cutoff = aux.getParametersNJL().getThreeMomentumCutoff();
 	double M1 = aux.getUpQuarkEffectiveMass();
 	double M2 = aux.getDownQuarkEffectiveMass();
@@ -530,7 +530,7 @@ double integratedCrossSectionCOVVolumeIntegrand_ds(double s, void *parameters)
 double integratedCrossSectionCOVVolume(double cutoff, double M1, double M2, double integralPrecision_dsdE, double integralPrecision_ds)
 {	
 	SU3NJL3DCutoffParameters parametersNJL(cutoff);
-	IntegratedCrossSectionIntegrand aux(
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
 		"integratedCrossSectionCOVVolumeIntegral", parametersNJL, 0.0, 
         0.0, 0.0, 0.0, 
         M1, M2, 0.0, 
@@ -552,7 +552,7 @@ double integratedCrossSectionCOVVolume(double cutoff, double M1, double M2, doub
 
 double integratedCrossSectionOGVolumeIntegrand_dp1dp2dtheta(double theta, void *parameters)
 {
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double M1 = aux.getUpQuarkEffectiveMass();
 	double M2 = aux.getDownQuarkEffectiveMass();
 	double p1 = aux.getMomentumParticle1();
@@ -569,7 +569,7 @@ double integratedCrossSectionOGVolumeIntegrand_dp1dp2dtheta(double theta, void *
 
 double integratedCrossSectionOGVolumeIntegrand_dp1dp2(double p2, void *parameters)
 {
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double integralPrecision = aux.getIntegratedCrossSectionIntegralPrecision_dXdYdZ();
 
 	aux.setIntegralID("integratedCrossSectionIntegral_dp1dp2dtheta");
@@ -582,7 +582,7 @@ double integratedCrossSectionOGVolumeIntegrand_dp1dp2(double p2, void *parameter
 	return volumeIntegrand;
 
 	/*
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 
 	double M1 = aux.getUpQuarkEffectiveMass();
 	double M2 = aux.getDownQuarkEffectiveMass();
@@ -600,7 +600,7 @@ double integratedCrossSectionOGVolumeIntegrand_dp1dp2(double p2, void *parameter
 
 double integratedCrossSectionOGVolumeIntegrand_dp1(double p1, void *parameters)
 {
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double cutoff = aux.getParametersNJL().getThreeMomentumCutoff();
 	double integralPrecision = aux.getIntegratedCrossSectionIntegralPrecision_dXdY();
 
@@ -618,7 +618,7 @@ double integratedCrossSectionOGVolumeIntegrand_dp1(double p1, void *parameters)
 double integratedCrossSectionOGVolume(double cutoff, double M1, double M2, double integralPrecision_dp1dp2dtheta, double integralPrecision_dp1dp2, double integralPrecision_dp1)
 {
 	SU3NJL3DCutoffParameters parametersNJL(cutoff);
-	IntegratedCrossSectionIntegrand aux(
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
 		"integratedCrossSectionOGVolumeIntegral", parametersNJL, 0.0, 
         0.0, 0.0, 0.0, 
         M1, M2, 0.0, 
@@ -703,7 +703,7 @@ double nEta(double T, double effCP1, double effCP2, double cutoff, double M1, do
 
 double integratedCrossSectionIntegrand_dsdE(double E, void *parameters)
 {	
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double cutoff = aux.getParametersNJL().getThreeMomentumCutoff();
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
@@ -731,7 +731,7 @@ double integratedCrossSectionIntegrand_dsdE(double E, void *parameters)
 
 double integratedCrossSectionIntegrand_ds(double s, void *parameters)
 {
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double cutoff = aux.getParametersNJL().getThreeMomentumCutoff();
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
@@ -850,7 +850,7 @@ double integratedCrossSectionIntegrand_ds(double s, void *parameters)
 
 double integratedCrossSectionCOVNormalizedIntegrand_dx(double x, void *parameters)
 {	
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double normalization = aux.getNormalizationRiemannSum_ds();
 
 	//change of variables
@@ -875,7 +875,7 @@ double integratedCrossSectionProcess12To34(
 	double integralPrecision_dsdE, double integralPrecision_ds
 )
 {	
-	IntegratedCrossSectionIntegrand aux(
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
 		"integratedCrossSectionIntegral_dx", parametersNJL, T, 
         effChemPotU, effChemPotD, effChemPotS, 
         effMassU, effMassD, effMassS, 
@@ -918,7 +918,7 @@ double integratedCrossSectionProcess12To34(
 
 double integratedCrossSectionOGIntegrand_dp1dp2dtheta(double theta, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
 	double effCPD = aux.getDownQuarkEffectiveChemicalPotential();
@@ -963,7 +963,7 @@ double integratedCrossSectionOGIntegrand_dp1dp2dtheta(double theta, void *parame
 
 double integratedCrossSectionOGIntegrand_dp1dp2(double p2, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
 	scatteringProcess process = aux.getProcess();
@@ -990,7 +990,7 @@ double integratedCrossSectionOGIntegrand_dp1dp2(double p2, void *parameters)
 
 double integratedCrossSectionOGIntegrand_dp1(double p1, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double cutoff = aux.getParametersNJL().getThreeMomentumCutoff();
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
@@ -1025,7 +1025,7 @@ double integratedCrossSectionOGProcess12To34(
 	double integralPrecision_dp1dp2dtheta, double integralPrecision_dp1dp2, double integralPrecision_dp1
 )
 {   
-	IntegratedCrossSectionIntegrand aux(
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
 		"integratedCrossSectionOGIntegral_dp1", parametersNJL, T, 
         effChemPotU, effChemPotD, effChemPotS, 
         effMassU, effMassD, effMassS, 
@@ -1087,7 +1087,7 @@ double probabilityKlevanskyHeavisideSolutionMinus(double m1, double m2, double s
 
 double probabilityKlevanskyIntegrand_dx(double x, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
 	double effCPD = aux.getDownQuarkEffectiveChemicalPotential();
@@ -1128,7 +1128,7 @@ double probabilityKlevansky(
 	double integralPrecision_dE1
 )
 {   
-	IntegratedCrossSectionIntegrand aux(
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
 		"probabilityKlevanskyIntegral_dx", parametersNJL, T, 
         effChemPotU, effChemPotD, effChemPotS, 
     	effMassU, effMassD, effMassS, 
@@ -1162,7 +1162,7 @@ double probabilityKlevansky(
 
 double probabilityKlevansky(double s, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
 	double effCPD = aux.getDownQuarkEffectiveChemicalPotential();
@@ -1187,7 +1187,7 @@ double probabilityKlevansky(double s, void *parameters)
 
 double integratedCrossSectionKlevanskyIntegrand_ds(double s, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
 	double effCPD = aux.getDownQuarkEffectiveChemicalPotential();
@@ -1235,7 +1235,7 @@ double integratedCrossSectionKlevanskyIntegrand_ds(double s, void *parameters)
 
 double integratedCrossSectionKlevanskyNormalizedIntegrand_dx(double x, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double normalization = aux.getNormalizationRiemannSum_ds();
 
     //change of variables
@@ -1260,7 +1260,7 @@ double integratedCrossSectionProcess12To34Klevansky(
 	double integralPrecision_dsdE, double integralPrecision_ds
 )
 {	
-	IntegratedCrossSectionIntegrand aux(
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
 		"integratedCrossSectionKlevasnkyIntegral_dx", parametersNJL, T, 
         effChemPotU, effChemPotD, effChemPotS, 
     	effMassU, effMassD, effMassS, 
@@ -1307,7 +1307,7 @@ double integratedCrossSectionProcess12To34Klevansky(
 //temperature and chemical potential dependent constant that normalizes the probability to produce a quark-quark or quark-antiquark pair in the medium 
 double nonNormalizedProbabilityZhuangIntegrand_ds(double s, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
 	double effCPD = aux.getDownQuarkEffectiveChemicalPotential();
@@ -1346,7 +1346,7 @@ double probabilityNormalizationInverseZhuang(
 	double integralPrecision_ds
 )
 {
-	IntegratedCrossSectionIntegrand aux(
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
 		"nonNormalizedProbabilityZhuangIntegral_ds", parametersNJL, T, 
         effChemPotU, effChemPotD, effChemPotS, 
         effMassU, effMassD, effMassS, 
@@ -1375,7 +1375,7 @@ double probabilityNormalizationInverseZhuang(
 
 double integratedCrossSectionZhuangIntegrand_ds(double s, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
 	double effCPD = aux.getDownQuarkEffectiveChemicalPotential();
@@ -1420,7 +1420,7 @@ double integratedCrossSectionZhuangIntegrand_ds(double s, void *parameters)
 
 double integratedCrossSectionZhuangNormalizedIntegrand_dx(double x, void *parameters)
 {   
-	IntegratedCrossSectionIntegrand aux(parameters);
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double normalization = aux.getNormalizationRiemannSum_ds();
 
     //change of variables
@@ -1445,7 +1445,7 @@ double integratedCrossSectionProcess12To34Zhuang(
 	double integralPrecision_ds
 )
 {	
-	IntegratedCrossSectionIntegrand aux(
+	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
 		"integratedCrossSectionZhuangNormalizedIntegral_dx", parametersNJL, T, 
         effChemPotU, effChemPotD, effChemPotS, 
         effMassU, effMassD, effMassS, 

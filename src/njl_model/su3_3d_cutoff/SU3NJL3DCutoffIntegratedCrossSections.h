@@ -9,7 +9,7 @@
 using namespace std;
 
 
-class IntegratedCrossSectionIntegrand : public GeneralIntegrandParameters
+class SU3NJL3DCutoffIntegratedCrossSectionIntegrand : public GeneralIntegrandParameters
 {
 private:
     string integralID = "notDefined";
@@ -34,7 +34,7 @@ private:
     double normalizationRiemannSum_ds = 1.0;
 
 public:
-    IntegratedCrossSectionIntegrand(
+    SU3NJL3DCutoffIntegratedCrossSectionIntegrand(
         string integralIDAux, SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
         double upQuarkEffectiveChemicalPotentialAux, double downQuarkEffectiveChemicalPotentialAux, double strangeQuarkEffectiveChemicalPotentialAux, 
         double upQuarkEffectiveMassAux, double downQuarkEffectiveMassAux, double strangeQuarkEffectiveMassAux, 
@@ -59,7 +59,7 @@ public:
         integratedCrossSectionIntegralPrecision_dXdY = integratedCrossSectionIntegralPrecision_dXdYAux;
     };
 
-    IntegratedCrossSectionIntegrand(
+    SU3NJL3DCutoffIntegratedCrossSectionIntegrand(
     	string integralIDAux, SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
         double upQuarkEffectiveChemicalPotentialAux, double downQuarkEffectiveChemicalPotentialAux, double strangeQuarkEffectiveChemicalPotentialAux, 
         double upQuarkEffectiveMassAux, double downQuarkEffectiveMassAux, double strangeQuarkEffectiveMassAux, 
@@ -85,28 +85,28 @@ public:
         integratedCrossSectionIntegralPrecision_dXdY = integratedCrossSectionIntegralPrecision_dXdYAux;
     };
 
-    IntegratedCrossSectionIntegrand(void* auxiliar)
+    SU3NJL3DCutoffIntegratedCrossSectionIntegrand(void* auxiliar)
     {   
-        integralID = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->integralID;
-        parametersNJL = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->parametersNJL;
-        temperature = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->temperature;
-        upQuarkEffectiveChemicalPotential = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->upQuarkEffectiveChemicalPotential;
-        downQuarkEffectiveChemicalPotential = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->downQuarkEffectiveChemicalPotential;
-        strangeQuarkEffectiveChemicalPotential = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->strangeQuarkEffectiveChemicalPotential;
-        upQuarkEffectiveMass = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->upQuarkEffectiveMass;
-        downQuarkEffectiveMass = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->downQuarkEffectiveMass;
-        strangeQuarkEffectiveMass = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->strangeQuarkEffectiveMass;
-        propagatorIntegralPrecision = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->propagatorIntegralPrecision;
-        process = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->process;
-        largeAngleScatteringContribution = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->largeAngleScatteringContribution;
-        crossSectionIntegralPrecision = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->crossSectionIntegralPrecision;
-        integratedCrossSectionIntegralPrecision_dXdYdZ = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->integratedCrossSectionIntegralPrecision_dXdYdZ;
-        integratedCrossSectionIntegralPrecision_dXdY = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->integratedCrossSectionIntegralPrecision_dXdY;
-        centerOfMassEnergy = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->centerOfMassEnergy;
-        energy = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->energy;
-        momentumParticle1 = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->momentumParticle1;
-        momentumParticle2 = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->momentumParticle2;
-        normalizationRiemannSum_ds = ((class IntegratedCrossSectionIntegrand *)(auxiliar))->normalizationRiemannSum_ds;
+        integralID = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->integralID;
+        parametersNJL = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->parametersNJL;
+        temperature = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->temperature;
+        upQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->upQuarkEffectiveChemicalPotential;
+        downQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->downQuarkEffectiveChemicalPotential;
+        strangeQuarkEffectiveChemicalPotential = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->strangeQuarkEffectiveChemicalPotential;
+        upQuarkEffectiveMass = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->upQuarkEffectiveMass;
+        downQuarkEffectiveMass = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->downQuarkEffectiveMass;
+        strangeQuarkEffectiveMass = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->strangeQuarkEffectiveMass;
+        propagatorIntegralPrecision = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->propagatorIntegralPrecision;
+        process = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->process;
+        largeAngleScatteringContribution = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->largeAngleScatteringContribution;
+        crossSectionIntegralPrecision = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->crossSectionIntegralPrecision;
+        integratedCrossSectionIntegralPrecision_dXdYdZ = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->integratedCrossSectionIntegralPrecision_dXdYdZ;
+        integratedCrossSectionIntegralPrecision_dXdY = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->integratedCrossSectionIntegralPrecision_dXdY;
+        centerOfMassEnergy = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->centerOfMassEnergy;
+        energy = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->energy;
+        momentumParticle1 = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->momentumParticle1;
+        momentumParticle2 = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->momentumParticle2;
+        normalizationRiemannSum_ds = ((class SU3NJL3DCutoffIntegratedCrossSectionIntegrand *)(auxiliar))->normalizationRiemannSum_ds;
     };
 
     string getIntegralID(){ return integralID; }
