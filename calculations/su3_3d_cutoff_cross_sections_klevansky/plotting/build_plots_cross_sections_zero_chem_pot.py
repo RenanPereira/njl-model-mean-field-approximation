@@ -24,10 +24,10 @@ plots_folder = "su3_3d_cutoff_cross_sections_klevansky/plots/"
 print("Building plot: cross section for uu->uu , ud->ud (T[GeV]=0.215, zero chemical potential)")
 
 # Load data from the file
-filename = "crossSectionUUUU_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUUUU_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_uuuu_T0215 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionUDUD_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUDUD_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_udud_T0215 = CrossSectionData(data_folder + filename)
 
 # Create a new figure
@@ -85,10 +85,10 @@ del fig, ax, xmin, xmax, ymin, ymax
 print("Building plot: cross section for uu->uu , ud->ud (T[GeV]=0.250, zero chemical potential)")
 
 # Load data from the file
-filename = "crossSectionUUUU_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUUUU_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_uuuu_T0250 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionUDUD_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUDUD_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_udud_T0250 = CrossSectionData(data_folder + filename)
 
 # Create a new figure
@@ -146,10 +146,10 @@ del fig, ax, xmin, xmax, ymin, ymax
 print("Building plot: cross section for us->us , ss->ss (T[GeV]=0.215, zero chemical potential)")
 
 # Load data from the file
-filename = "crossSectionUSUS_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUSUS_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_usus_T0215 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionSSSS_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionSSSS_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_ssss_T0215 = CrossSectionData(data_folder + filename)
 
 # Create a new figure
@@ -207,10 +207,10 @@ del fig, ax, xmin, xmax, ymin, ymax
 print("Building plot: cross section for us->us , ss->ss (T[GeV]=0.250, zero chemical potential)")
 
 # Load data from the file
-filename = "crossSectionUSUS_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUSUS_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_usus_T0250 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionSSSS_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionSSSS_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_ssss_T0250 = CrossSectionData(data_folder + filename)
 
 # Create a new figure
@@ -268,16 +268,16 @@ del fig, ax, xmin, xmax, ymin, ymax
 print("Building plot: cross section for udbar->udbar , uubar->uubar, uubar->ddbar, uubar->ssbar (T[GeV]=0.215, zero chemical potential)")
 
 # Load data from the file
-filename = "crossSectionUDBARUDBAR_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUDBARUDBAR_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_udbarudbar_T0215 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionUUBARUUBAR_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUUBARUUBAR_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_uubaruubar_T0215 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionUUBARDDBAR_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUUBARDDBAR_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_uubarddbar_T0215 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionUUBARSSBAR_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUUBARSSBAR_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_uubarssbar_T0215 = CrossSectionData(data_folder + filename)
 
 # Create a new figure
@@ -345,16 +345,16 @@ del fig, ax, xmin, xmax, ymin, ymax
 print("Building plot: cross section for udbar->udbar , uubar->uubar, uubar->ddbar, uubar->ssbar (T[GeV]=0.250, zero chemical potential)")
 
 # Load data from the file
-filename = "crossSectionUDBARUDBAR_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUDBARUDBAR_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_udbarudbar_T0250 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionUUBARUUBAR_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUUBARUUBAR_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_uubaruubar_T0250 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionUUBARDDBAR_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUUBARDDBAR_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_uubarddbar_T0250 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionUUBARSSBAR_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUUBARSSBAR_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_uubarssbar_T0250 = CrossSectionData(data_folder + filename)
 
 # Create a new figure
@@ -421,13 +421,13 @@ del fig, ax, xmin, xmax, ymin, ymax
 print("Building plot: cross section for usbar->usbar , ssbar->uubar, ssbar->ssbar (T[GeV]=0.215, zero chemical potential)")
 
 # Load data from the file
-filename = "crossSectionUSBARUSBAR_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUSBARUSBAR_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_usbarusbar_T0215 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionSSBARUUBAR_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionSSBARUUBAR_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_ssbaruubar_T0215 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionSSBARSSBAR_T0.215000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionSSBARSSBAR_T0p215000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_ssbarssbar_T0215 = CrossSectionData(data_folder + filename)
 
 # Create a new figure
@@ -490,13 +490,13 @@ del fig, ax, xmin, xmax, ymin, ymax
 print("Building plot: cross section for usbar->usbar , ssbar->uubar, ssbar->ssbar (T[GeV]=0.250, zero chemical potential)")
 
 # Load data from the file
-filename = "crossSectionUSBARUSBAR_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionUSBARUSBAR_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_usbarusbar_T0250 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionSSBARUUBAR_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionSSBARUUBAR_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_ssbaruubar_T0250 = CrossSectionData(data_folder + filename)
 
-filename = "crossSectionSSBARSSBAR_T0.250000_CPU0.000000_CPD0.000000_CPS0.000000.dat"
+filename = "crossSectionSSBARSSBAR_T0p250000_CPU0p000000_CPD0p000000_CPS0p000000.dat"
 data_ssbarssbar_T0250 = CrossSectionData(data_folder + filename)
 
 # Create a new figure

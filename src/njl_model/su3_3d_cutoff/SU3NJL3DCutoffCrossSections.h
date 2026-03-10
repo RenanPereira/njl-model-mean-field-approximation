@@ -6,13 +6,11 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 
-using namespace std;
-
 
 class CrossSectionIntegrand : public GeneralIntegrandParameters
 {
 private:
-    string integralID = "notDefined";
+    std::string integralID = "notDefined";
     SU3NJL3DCutoffParameters parametersNJL;
     double temperature = 0.0/0.0;
     double upQuarkEffectiveChemicalPotential = 0.0/0.0;
@@ -28,10 +26,18 @@ private:
 
 public:
     CrossSectionIntegrand(
-        string integralIDAux, SU3NJL3DCutoffParameters parametersNJLAux, double temperatureAux, 
-        double upQuarkEffectiveChemicalPotentialAux, double downQuarkEffectiveChemicalPotentialAux, double strangeQuarkEffectiveChemicalPotentialAux, 
-        double upQuarkEffectiveMassAux, double downQuarkEffectiveMassAux, double strangeQuarkEffectiveMassAux, 
-        double centerOfMassEnergyAux, double propagatorIntegralPrecisionAux, scatteringProcess processAux, 
+        std::string integralIDAux, 
+        SU3NJL3DCutoffParameters parametersNJLAux, 
+        double temperatureAux, 
+        double upQuarkEffectiveChemicalPotentialAux, 
+        double downQuarkEffectiveChemicalPotentialAux, 
+        double strangeQuarkEffectiveChemicalPotentialAux, 
+        double upQuarkEffectiveMassAux, 
+        double downQuarkEffectiveMassAux, 
+        double strangeQuarkEffectiveMassAux, 
+        double centerOfMassEnergyAux, 
+        double propagatorIntegralPrecisionAux, 
+        scatteringProcess processAux, 
         bool largeAngleScatteringContributionAux
     )
     {   
@@ -67,7 +73,7 @@ public:
         largeAngleScatteringContribution = ((class CrossSectionIntegrand *)(auxiliar))->largeAngleScatteringContribution;
     };
 
-    string getIntegralID(){ return integralID; }
+    std::string getIntegralID(){ return integralID; }
     SU3NJL3DCutoffParameters getParametersNJL(){ return parametersNJL; };
     double getTemperature(){ return temperature; };
     double getUpQuarkEffectiveMass(){ return upQuarkEffectiveMass; };
@@ -81,7 +87,7 @@ public:
     scatteringProcess getProcess(){ return process; }
     bool getLargeAngleScatteringContribution(){ return largeAngleScatteringContribution; }
 
-    void setIntegralID(string integralIDAux){ integralID = integralIDAux; }
+    void setIntegralID(std::string integralIDAux){ integralID = integralIDAux; }
 
     void printIntegrandVariables() override
     {   
@@ -101,7 +107,6 @@ public:
         cout << "scatteringProcess = " << toString(process) << "\n";
     }
 };
-
 
 double momentumCM(double , double , double );
 
@@ -130,40 +135,68 @@ double sMaximumKlevansky(double , double , double , double );
 double crossSectionProcess12To34Integrand(double x, void *parameters);
 
 double crossSectionProcess12To34(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
-    double , double , scatteringProcess ,
-    bool , double 
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    scatteringProcess ,
+    bool , 
+    double 
 );
 
 void evaluateCrossSectionProcess12To34ToFile(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
-    double , scatteringProcess , 
-    bool , double , 
-    int , int 
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    scatteringProcess , 
+    bool , 
+    double , 
+    int , 
+    int 
 );
 
 void evaluateCrossSectionsKlevanskyPaper(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
+    SU3NJL3DCutoffParameters , 
     double , 
-    bool , double , 
-    int , int 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    bool , 
+    double , 
+    int , 
+    int 
 );
 
 void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
-    SU3NJL3DCutoffParameters , double , 
-    double , double , double , 
-    double , double , double , 
+    SU3NJL3DCutoffParameters , 
     double , 
-    bool , double ,
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    bool , 
+    double ,
     int ,
     int
 );
-
 
 #endif
