@@ -336,17 +336,17 @@ void evaluateCrossSectionProcess12To34ToFile(
     }
 
     //create filename
-    string fileName = "crossSection" 
+    string filename = "crossSection" 
         + toString(process) 
         + "_T"   + to_string(T) 
         + "_CPU" + to_string(effChemPotU)
         + "_CPD" + to_string(effChemPotD)
         + "_CPS" + to_string(effChemPotS); 
-    replaceChar(fileName, '.', 'p');
-    fileName = fileName + ".dat";
+    replaceChar(filename, '.', 'p');
+    filename = filename + ".dat";
 
     std::ofstream fileCrossSection;
-    fileCrossSection.open(fileName, std::ofstream::out | std::ios::trunc);
+    fileCrossSection.open(filename, std::ofstream::out | std::ios::trunc);
     fileCrossSection.precision(15);
 
     fileCrossSection.precision(15);

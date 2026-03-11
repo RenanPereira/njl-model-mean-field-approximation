@@ -394,11 +394,15 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> SU3NJL3DCutoffFixedTempRhoBEqual
 }
 
 
-void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solutions, string fileName, bool columnsDescription)
+void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(
+    vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solutions, 
+    string filename, 
+    bool columnsDescription
+)
 {
     //Create file to store solution
     std::ofstream aux_file_NJL;
-    aux_file_NJL.open(fileName, std::ofstream::out | std::ios::trunc);
+    aux_file_NJL.open(filename, std::ofstream::out | std::ios::trunc);
     aux_file_NJL.precision(15);
 
     if ( columnsDescription )
@@ -770,7 +774,7 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
 void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(
     SU3NJL3DCutoffVacuum vacuum,
     vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> firstOrderLine,
-    string fileName, 
+    string filename, 
     bool columnsDescription
 )
 {
@@ -779,7 +783,7 @@ void SU3NJL3DCutoffFixedTempRhoBEqualChemPot::writeToFile(
 
     //Create file to store first order line
     std::ofstream file;
-    file.open(fileName, std::ofstream::out | std::ios::trunc);
+    file.open(filename, std::ofstream::out | std::ios::trunc);
     file.precision(15);
 
     if ( columnsDescription )

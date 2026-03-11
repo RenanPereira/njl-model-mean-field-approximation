@@ -1586,10 +1586,10 @@ vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlong
 }
 
 
-void writeIntegratedCrossSectionToFile(vector<SU3NJL3DCutoffIntegratedCrossSection> integratedCrossSection, string fileName)
+void writeIntegratedCrossSectionToFile(vector<SU3NJL3DCutoffIntegratedCrossSection> integratedCrossSection, string filename)
 {
     std::ofstream fileTest;
-    fileTest.open(fileName, std::ofstream::out | std::ios::trunc);
+    fileTest.open(filename, std::ofstream::out | std::ios::trunc);
     fileTest.precision(15);
     fileTest.width(25);   fileTest << "T[GeV]"; //temperature
     fileTest.width(25);   fileTest << "nU[GeV^3]"; //u quark number
@@ -1657,18 +1657,21 @@ void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
 	);
 
 
-    string fileName = "IntegratedCrossSection";
-    fileName = fileName + "_" + integratedCrossSectionFiniteTemperature[0].getParametersNJL().getParameterSetName();
-    fileName = fileName + "_" + toString(integratedCrossSectionFiniteTemperature[0].getProcess());
-    if ( integratedCrossSectionFiniteTemperature[0].getLargeAngleScatteringContribution() ){ fileName = fileName + "_LargeAngleScat"; }
-    fileName = fileName + "_" + toString(approximationMethod);
-    fileName = fileName + "_TMin" + to_string(integratedCrossSectionFiniteTemperature[0].getTemperature());
-    fileName = fileName + "_TMax" + to_string(integratedCrossSectionFiniteTemperature[integratedCrossSectionFiniteTemperature.size()-1].getTemperature());
-    fileName = fileName + "_CPU" + to_string(integratedCrossSectionFiniteTemperature[0].getUpQuarkEffectiveChemicalPotential());
-	replaceChar(fileName, '.', 'p');
-    fileName =  fileName +".dat";
+    string filename = "IntegratedCrossSection";
+    filename = filename + "_" + integratedCrossSectionFiniteTemperature[0].getParametersNJL().getParameterSetName();
+    filename = filename + "_" + toString(integratedCrossSectionFiniteTemperature[0].getProcess());
+    if ( integratedCrossSectionFiniteTemperature[0].getLargeAngleScatteringContribution() )
+	{ 
+		filename = filename + "_LargeAngleScat"; 
+	}
+    filename = filename + "_" + toString(approximationMethod);
+    filename = filename + "_TMin" + to_string(integratedCrossSectionFiniteTemperature[0].getTemperature());
+    filename = filename + "_TMax" + to_string(integratedCrossSectionFiniteTemperature[integratedCrossSectionFiniteTemperature.size()-1].getTemperature());
+    filename = filename + "_CPU" + to_string(integratedCrossSectionFiniteTemperature[0].getUpQuarkEffectiveChemicalPotential());
+	replaceChar(filename, '.', 'p');
+    filename =  filename +".dat";
 
-    writeIntegratedCrossSectionToFile(integratedCrossSectionFiniteTemperature, fileName);
+    writeIntegratedCrossSectionToFile(integratedCrossSectionFiniteTemperature, filename);
 }
 
 
@@ -1757,18 +1760,21 @@ void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
 	);
 
 
-    string fileName = "IntegratedCrossSection";
-    fileName = fileName + "_" + integratedCrossSectionFiniteTemperature[0].getParametersNJL().getParameterSetName();
-    fileName = fileName + "_" + toString(integratedCrossSectionFiniteTemperature[0].getProcess());
-    if ( integratedCrossSectionFiniteTemperature[0].getLargeAngleScatteringContribution() ){ fileName = fileName + "_LargeAngleScat"; }
-    fileName = fileName + "_" + toString(approximationMethod);
-    fileName = fileName + "_CPQMin" + to_string(integratedCrossSectionFiniteTemperature[0].getUpQuarkEffectiveChemicalPotential());
-    fileName = fileName + "_CPQMax" + to_string(integratedCrossSectionFiniteTemperature[integratedCrossSectionFiniteTemperature.size()-1].getUpQuarkEffectiveChemicalPotential());
-    fileName = fileName + "_T" + to_string(integratedCrossSectionFiniteTemperature[0].getTemperature());
-    replaceChar(fileName, '.', 'p');
-    fileName =  fileName +".dat";
+    string filename = "IntegratedCrossSection";
+    filename = filename + "_" + integratedCrossSectionFiniteTemperature[0].getParametersNJL().getParameterSetName();
+    filename = filename + "_" + toString(integratedCrossSectionFiniteTemperature[0].getProcess());
+    if ( integratedCrossSectionFiniteTemperature[0].getLargeAngleScatteringContribution() )
+	{ 
+		filename = filename + "_LargeAngleScat"; 
+	}
+    filename = filename + "_" + toString(approximationMethod);
+    filename = filename + "_CPQMin" + to_string(integratedCrossSectionFiniteTemperature[0].getUpQuarkEffectiveChemicalPotential());
+    filename = filename + "_CPQMax" + to_string(integratedCrossSectionFiniteTemperature[integratedCrossSectionFiniteTemperature.size()-1].getUpQuarkEffectiveChemicalPotential());
+    filename = filename + "_T" + to_string(integratedCrossSectionFiniteTemperature[0].getTemperature());
+    replaceChar(filename, '.', 'p');
+    filename =  filename +".dat";
 
-    writeIntegratedCrossSectionToFile(integratedCrossSectionFiniteTemperature, fileName);
+    writeIntegratedCrossSectionToFile(integratedCrossSectionFiniteTemperature, filename);
 }
 
 

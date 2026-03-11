@@ -739,13 +739,13 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEntropyDensity()
     return entropyNJL;
 }
 
-void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedChemPotTemp> solutions, string fileName)
+void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedChemPotTemp> solutions, string filename)
 {
     int dataPrecision = 15;
     int colW = 25;
 
     std::ofstream file;
-    file.open(fileName, std::fstream::in | std::ofstream::out | std::ios::trunc);
+    file.open(filename, std::fstream::in | std::ofstream::out | std::ios::trunc);
     file.precision(dataPrecision);
 
     file.width(colW); file << "temperature[GeV]";
@@ -838,12 +838,12 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
         finiteTSolution.insert(finiteTSolution.begin(), auxVacuum);
     }
 
-    string fileName = "SU3NJL3DCutoffFixedChemPotTemp";
-    fileName = fileName + "_" + finiteTSolution[0].getParametersNJL().getParameterSetName();
-    fileName = fileName + "_TMin" + to_string(finiteTSolution[0].getTemperature());
-    fileName = fileName + "_TMax" + to_string(finiteTSolution[finiteTSolution.size()-1].getTemperature());
-    fileName = fileName + "_CP0";
-    replaceChar(fileName, '.', 'p');
-    fileName =  fileName +".dat";
-    writeSolutionsToFile(finiteTSolution, fileName);
+    string filename = "SU3NJL3DCutoffFixedChemPotTemp";
+    filename = filename + "_" + finiteTSolution[0].getParametersNJL().getParameterSetName();
+    filename = filename + "_TMin" + to_string(finiteTSolution[0].getTemperature());
+    filename = filename + "_TMax" + to_string(finiteTSolution[finiteTSolution.size()-1].getTemperature());
+    filename = filename + "_CP0";
+    replaceChar(filename, '.', 'p');
+    filename =  filename +".dat";
+    writeSolutionsToFile(finiteTSolution, filename);
 }

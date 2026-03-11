@@ -414,13 +414,13 @@ void SU3NJL3DCutoffBetaEqFixedTempRhoB::setBetaEqThermodynamics(double vacuumPre
 }
 
 
-void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string fileName, bool columnsDescription)
+void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string filename, bool columnsDescription)
 {
     int dataPrecision = 15;
     int colW = 25;
 
     std::ofstream fileSol;
-    fileSol.open(fileName, std::fstream::in | std::ofstream::out | std::ios::trunc);
+    fileSol.open(filename, std::fstream::in | std::ofstream::out | std::ios::trunc);
     fileSol.precision(dataPrecision);
 
     if ( columnsDescription )
@@ -482,13 +482,13 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, s
 
 
 
-void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string fileName, bool columnsDescription)
+void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string filename, bool columnsDescription)
 {
     int dataPrecision = 15;
     int colW = 25;
 
     std::ofstream fileSol;
-    fileSol.open(fileName, std::fstream::in | std::ofstream::out | std::ios::trunc);
+    fileSol.open(filename, std::fstream::in | std::ofstream::out | std::ios::trunc);
     fileSol.precision(dataPrecision);
 
     if ( columnsDescription )
@@ -513,13 +513,13 @@ void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string 
 }
 
 
-void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string fileName, bool columnsDescription, double minimumBaryonDensity)
+void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string filename, bool columnsDescription, double minimumBaryonDensity)
 {
     int dataPrecision = 15;
     int colW = 25;
 
     std::ofstream fileSol;
-    fileSol.open(fileName, std::fstream::in | std::ofstream::out | std::ios::trunc);
+    fileSol.open(filename, std::fstream::in | std::ofstream::out | std::ios::trunc);
     fileSol.precision(dataPrecision);
 
     if ( columnsDescription )
@@ -926,10 +926,15 @@ calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum,
 }
 
 
-void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum vacuum, 
-                                                    double minimumBaryonDensity, double maximumBaryonDensity, int numberOfPoints, 
-                                                    double gapPrecision, MultiRootFindingMethod method,
-                                                    string fileName)
+void writeBetaEquilibriumEOSAtZeroTemperatureToFile(
+    SU3NJL3DCutoffVacuum vacuum, 
+    double minimumBaryonDensity, 
+    double maximumBaryonDensity, 
+    int numberOfPoints, 
+    double gapPrecision, 
+    MultiRootFindingMethod method,
+    string filename
+)
 {
     vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> betaEqSolutions = 
     calculateZeroTemperatureSolutions(vacuum, minimumBaryonDensity, maximumBaryonDensity, numberOfPoints, gapPrecision, method);
@@ -947,10 +952,10 @@ void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum vacuum,
     if ( int(transitionPoints.size())>0 )
     {   
         double minRhoB = transitionPoints[1].getBaryonDensity();
-        writeEOSToFile(betaEqSolutions, fileName, true, minRhoB);
+        writeEOSToFile(betaEqSolutions, filename, true, minRhoB);
     }
     else
     {
-        writeEOSToFile(betaEqSolutions, fileName, true);
+        writeEOSToFile(betaEqSolutions, filename, true);
     }
 }
