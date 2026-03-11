@@ -76,66 +76,100 @@ In this section we present the results of numerical results for the two fermion 
 ### Different pole shifts
 
 #### External momentum shift vs mass shift
-![B0 plot](plots/B0_vs_k0_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.0_k0Shift.png)
-![B0 plot](plots/B0_vs_k0_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.0.png)
+
+<p align="center">
+  <img src="plots/B0_vs_k0_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k0p0_k0Shift.png" width="32%">
+  <img src="plots/B0_vs_k0_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k0p0.png" width="32%">
+</p>
 
 
 #### $B_0$ vs $|\bold{k}|$ different $k_0$
 
-![B0 plot](plots/B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4_diff_k0.png)
+<p align="center">
+  <img src="plots/B0_vs_k_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4_diff_k0.png" width="32%">
+</p>
 
 
 ### $B_0$ vs $|\bold{k}|$ different $k_0$ and temperature
 
-![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.0_diff_T.png)
-![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.5_diff_T.png)
-![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.0_diff_T.png)
-![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.5_diff_T.png)
-![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.0_diff_T.png)
-![B0 plot](plots/B0_vs_k_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.5_diff_T.png)
+<p align="center">
+  <img src="plots/B0_vs_k_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k00p0_diff_T.png" width="32%">
+  <img src="plots/B0_vs_k_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k00p5_diff_T.png" width="32%">
+  <img src="plots/B0_vs_k_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k01p0_diff_T.png" width="32%">
+</p>
 
+<p align="center">
+  <img src="plots/B0_vs_k_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k01p5_diff_T.png" width="32%">
+  <img src="plots/B0_vs_k_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k02p0_diff_T.png" width="32%">
+  <img src="plots/B0_vs_k_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k02p5_diff_T.png" width="32%">
+</p>
 
 ### $B_0$ vs $|\bold{k}|$ different $k_0$ and chemical potential
 
-![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k00.0_diff_mu.png)
-![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k00.5_diff_mu.png)
-![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k01.0_diff_mu.png)
-![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k01.5_diff_mu.png)
-![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k02.0_diff_mu.png)
-![B0 plot](plots/B0_vs_k_T0.0L1.0Mi0.4Mj0.4k02.5_diff_mu.png)
+<p align="center">
+  <img src="plots/B0_vs_k_T0p0L1p0Mi0p4Mj0p4k00p0_diff_mu.png" width="32%">
+  <img src="plots/B0_vs_k_T0p0L1p0Mi0p4Mj0p4k00p5_diff_mu.png" width="32%">
+  <img src="plots/B0_vs_k_T0p0L1p0Mi0p4Mj0p4k01p0_diff_mu.png" width="32%">
+</p>
 
+<p align="center">
+  <img src="plots/B0_vs_k_T0p0L1p0Mi0p4Mj0p4k01p5_diff_mu.png" width="32%">
+  <img src="plots/B0_vs_k_T0p0L1p0Mi0p4Mj0p4k02p0_diff_mu.png" width="32%">
+  <img src="plots/B0_vs_k_T0p0L1p0Mi0p4Mj0p4k02p5_diff_mu.png" width="32%">
+</p>
 
 ### $B_0$ vs $|\bold{k}|$ different $k_0$, temperature and chemical potential
 
-![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k00.0_diff_T_mu.png)
-![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k00.5_diff_T_mu.png)
-![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k01.0_diff_T_mu.png)
-![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k01.5_diff_T_mu.png)
-![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k02.0_diff_T_mu.png)
-![B0 plot](plots/B0_vs_k_L1.0Mi0.4Mj0.4k02.5_diff_T_mu.png)
+<p align="center">
+  <img src="plots/B0_vs_k_L1p0Mi0p4Mj0p4k00p0_diff_T_mu.png" width="32%">
+  <img src="plots/B0_vs_k_L1p0Mi0p4Mj0p4k00p5_diff_T_mu.png" width="32%">
+  <img src="plots/B0_vs_k_L1p0Mi0p4Mj0p4k01p0_diff_T_mu.png" width="32%">
+</p>
 
+<p align="center">
+  <img src="plots/B0_vs_k_L1p0Mi0p4Mj0p4k01p5_diff_T_mu.png" width="32%">
+  <img src="plots/B0_vs_k_L1p0Mi0p4Mj0p4k02p0_diff_T_mu.png" width="32%">
+  <img src="plots/B0_vs_k_L1p0Mi0p4Mj0p4k02p5_diff_T_mu.png" width="32%">
+</p>
 
 #### $B_0$ vs $k_0$ different $|\bold{k}|$
 
-![B0 plot](plots/B0_vs_k0_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4_diff_k.png)
+<p align="center">
+  <img src="plots/B0_vs_k0_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4_diff_k.png" width="32%">
+</p>
 
 ### $B_0$ vs $k_0$ different $|\bold{k}|$ and temperature
 
-![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.0_diff_T.png)
-![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k0.5_diff_T.png)
-![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k1.0_diff_T.png)
-![B0 plot](plots/B0_vs_k0_Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k1.5_diff_T.png)
+<p align="center">
+  <img src="plots/B0_vs_k0_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k0p0_diff_T.png" width="32%">
+  <img src="plots/B0_vs_k0_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k0p5_diff_T.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="plots/B0_vs_k0_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k1p0_diff_T.png" width="32%">
+  <img src="plots/B0_vs_k0_Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k1p5_diff_T.png" width="32%">
+</p>
 
 ### $B_0$ vs $k_0$ different $|\bold{k}|$ and chemical potential
 
-![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k0.0_diff_mu.png)
-![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k0.5_diff_mu.png)
-![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k1.0_diff_mu.png)
-![B0 plot](plots/B0_vs_k0_T0.0L1.0Mi0.4Mj0.4k1.5_diff_mu.png)
+<p align="center">
+  <img src="plots/B0_vs_k0_T0p0L1p0Mi0p4Mj0p4k0p0_diff_mu.png" width="32%">
+  <img src="plots/B0_vs_k0_T0p0L1p0Mi0p4Mj0p4k0p5_diff_mu.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="plots/B0_vs_k0_T0p0L1p0Mi0p4Mj0p4k1p0_diff_mu.png" width="32%">
+  <img src="plots/B0_vs_k0_T0p0L1p0Mi0p4Mj0p4k1p5_diff_mu.png" width="32%">
+</p>
 
 ### $B_0$ vs $k_0$ different $|\bold{k}|$, temperature and chemical potential
 
-![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k0.0_diff_T_mu.png)
-![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k0.5_diff_T_mu.png)
-![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k1.0_diff_T_mu.png)
-![B0 plot](plots/B0_vs_k0_L1.0Mi0.4Mj0.4k1.5_diff_T_mu.png)
+<p align="center">
+  <img src="plots/B0_vs_k0_L1p0Mi0p4Mj0p4k0p0_diff_T_mu.png" width="32%">
+  <img src="plots/B0_vs_k0_L1p0Mi0p4Mj0p4k0p5_diff_T_mu.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="plots/B0_vs_k0_L1p0Mi0p4Mj0p4k1p0_diff_T_mu.png" width="32%">
+  <img src="plots/B0_vs_k0_L1p0Mi0p4Mj0p4k1p5_diff_T_mu.png" width="32%">
+</p>

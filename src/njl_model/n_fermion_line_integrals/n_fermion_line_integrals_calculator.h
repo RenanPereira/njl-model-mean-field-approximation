@@ -15,7 +15,8 @@ void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(
     const double ,
     const double ,
     const double ,
-    const double );
+    const double 
+);
 
 void evaluateKlevanskyB0Integral3DCutoffVsThreeMomentumToFile(
     const int , 
@@ -29,6 +30,7 @@ void evaluateKlevanskyB0Integral3DCutoffVsThreeMomentumToFile(
     const double ,
     const double ,
     const double ,
-    const double );
+    const double 
+);
 
 #endif

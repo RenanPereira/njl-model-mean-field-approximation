@@ -23,10 +23,10 @@ plots_folder = "two_fermion_line_integral_3d_cutoff/plots/"
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=0.0 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.0.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k00.0.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k00.0.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k00.0.dat")
+data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k00p0.dat")
+data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p3Cpi0p6Cpj0p6L1p0Mi0p4Mj0p4k00p0.dat")
+data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p5Cpi0p8Cpj0p8L1p0Mi0p4Mj0p4k00p0.dat")
+data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1p0Cpi1p0Cpj1p0L1p0Mi0p4Mj0p4k00p0.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -134,7 +134,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k00.0_diff_T_mu.png"
+plotname = "B0_vs_k_L1p0Mi0p4Mj0p4k00p0_diff_T_mu.png"
 plt.savefig(plots_folder + plotname)
 
 # Clean up
@@ -152,10 +152,10 @@ del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=0.5 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k00.5.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k00.5.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k00.5.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k00.5.dat")
+data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k00p5.dat")
+data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p3Cpi0p6Cpj0p6L1p0Mi0p4Mj0p4k00p5.dat")
+data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p5Cpi0p8Cpj0p8L1p0Mi0p4Mj0p4k00p5.dat")
+data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1p0Cpi1p0Cpj1p0L1p0Mi0p4Mj0p4k00p5.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -263,7 +263,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k00.5_diff_T_mu.png"
+plotname = "B0_vs_k_L1p0Mi0p4Mj0p4k00p5_diff_T_mu.png"
 plt.savefig(plots_folder + plotname)
 
 # Clean up
@@ -281,10 +281,10 @@ del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.0.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k01.0.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k01.0.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k01.0.dat")
+data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k01p0.dat")
+data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p3Cpi0p6Cpj0p6L1p0Mi0p4Mj0p4k01p0.dat")
+data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p5Cpi0p8Cpj0p8L1p0Mi0p4Mj0p4k01p0.dat")
+data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1p0Cpi1p0Cpj1p0L1p0Mi0p4Mj0p4k01p0.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -392,7 +392,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k01.0_diff_T_mu.png"
+plotname = "B0_vs_k_L1p0Mi0p4Mj0p4k01p0_diff_T_mu.png"
 plt.savefig(plots_folder + plotname)
 
 # Clean up
@@ -410,10 +410,10 @@ del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k01.5.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k01.5.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k01.5.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k01.5.dat")
+data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k01p5.dat")
+data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p3Cpi0p6Cpj0p6L1p0Mi0p4Mj0p4k01p5.dat")
+data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p5Cpi0p8Cpj0p8L1p0Mi0p4Mj0p4k01p5.dat")
+data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1p0Cpi1p0Cpj1p0L1p0Mi0p4Mj0p4k01p5.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -521,7 +521,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k01.5_diff_T_mu.png"
+plotname = "B0_vs_k_L1p0Mi0p4Mj0p4k01p5_diff_T_mu.png"
 plt.savefig(plots_folder + plotname)
 
 # Clean up
@@ -539,10 +539,10 @@ del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.0.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k02.0.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k02.0.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k02.0.dat")
+data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k02p0.dat")
+data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p3Cpi0p6Cpj0p6L1p0Mi0p4Mj0p4k02p0.dat")
+data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p5Cpi0p8Cpj0p8L1p0Mi0p4Mj0p4k02p0.dat")
+data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1p0Cpi1p0Cpj1p0L1p0Mi0p4Mj0p4k02p0.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -650,7 +650,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k02.0_diff_T_mu.png"
+plotname = "B0_vs_k_L1p0Mi0p4Mj0p4k02p0_diff_T_mu.png"
 plt.savefig(plots_folder + plotname)
 
 # Clean up
@@ -668,10 +668,10 @@ del fig, ax, auxH, auxX, auxY, xmin, xmax, ymin, ymax
 print("Building plot: B0 vs k, M1=M2, T=0.0 GeV, k0=1.0 GeV, different mu1=mu2 with Mass Shift")
 
 # Load data from the files
-data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.0Cpi0.0Cpj0.0L1.0Mi0.4Mj0.4k02.5.dat")
-data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.3Cpi0.6Cpj0.6L1.0Mi0.4Mj0.4k02.5.dat")
-data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0.5Cpi0.8Cpj0.8L1.0Mi0.4Mj0.4k02.5.dat")
-data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1.0Cpi1.0Cpj1.0L1.0Mi0.4Mj0.4k02.5.dat")
+data_B0_vs_k_T00_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p0Cpi0p0Cpj0p0L1p0Mi0p4Mj0p4k02p5.dat")
+data_B0_vs_k_T03_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p3Cpi0p6Cpj0p6L1p0Mi0p4Mj0p4k02p5.dat")
+data_B0_vs_k_T05_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T0p5Cpi0p8Cpj0p8L1p0Mi0p4Mj0p4k02p5.dat")
+data_B0_vs_k_T10_mu00 = B03DCutoffVsMomentumData(data_folder + "B0_vs_k_T1p0Cpi1p0Cpj1p0L1p0Mi0p4Mj0p4k02p5.dat")
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -779,7 +779,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
 fig.tight_layout()
 
 # Replace .dat with .png
-plotname = "B0_vs_k_L1.0Mi0.4Mj0.4k02.5_diff_T_mu.png"
+plotname = "B0_vs_k_L1p0Mi0p4Mj0p4k02p5_diff_T_mu.png"
 plt.savefig(plots_folder + plotname)
 
 # Clean up

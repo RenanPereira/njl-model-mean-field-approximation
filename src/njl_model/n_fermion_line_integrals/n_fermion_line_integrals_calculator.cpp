@@ -1,7 +1,7 @@
+#include <fstream>
 #include "njl_model/n_fermion_line_integrals/n_fermion_line_integrals_calculator.h"
 #include "njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h"
 #include "utils/format_utils.h"
-#include <fstream>
 
 using namespace std;
 
@@ -52,14 +52,22 @@ void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(
 
     //Create file
     string filename = string("B0_vs_k0_") 
-                    + "T"   + trim0ToDot0(temperature) 
-    				+ "Cpi" + trim0ToDot0(effectiveChemicalPotential1) 
-				    + "Cpj" + trim0ToDot0(effectiveChemicalPotential2)
-    			    + "L"   + trim0ToDot0(threeMomentumCutoff)
-    			    + "Mi"  + trim0ToDot0(effectiveMass1) 
-    			    + "Mj"  + trim0ToDot0(effectiveMass2) 
-    			    + "k"   + trim0ToDot0(threeMomentum) 
-    			    + ".dat";
+        + "T"   
+        + trim0ToDot0(temperature) 
+        + "Cpi" 
+        + trim0ToDot0(effectiveChemicalPotential1) 
+		+ "Cpj" 
+        + trim0ToDot0(effectiveChemicalPotential2)
+        + "L"   
+        + trim0ToDot0(threeMomentumCutoff)
+        + "Mi"  
+        + trim0ToDot0(effectiveMass1) 
+        + "Mj"  
+        + trim0ToDot0(effectiveMass2) 
+        + "k"   
+        + trim0ToDot0(threeMomentum);
+    replaceChar(filename, '.', 'p');
+    filename = filename + ".dat";
     ofstream fileB0;
     fileB0.open(filename, ofstream::out | ios::trunc);
 
@@ -131,17 +139,24 @@ void evaluateKlevanskyB0Integral3DCutoffVsThreeMomentumToFile(
         ImagB0[i] = GSL_IMAG(complexB0);
 	}
 
-
     //Create file
     string filename = string("B0_vs_k_") 
-                    + "T"   + trim0ToDot0(temperature) 
-    				+ "Cpi" + trim0ToDot0(effectiveChemicalPotential1) 
-				    + "Cpj" + trim0ToDot0(effectiveChemicalPotential2)
-    			    + "L"   + trim0ToDot0(threeMomentumCutoff)
-    			    + "Mi"  + trim0ToDot0(effectiveMass1) 
-    			    + "Mj"  + trim0ToDot0(effectiveMass2) 
-    			    + "k0"  + trim0ToDot0(k0) 
-    			    + ".dat";
+        + "T"   
+        + trim0ToDot0(temperature) 
+        + "Cpi" 
+        + trim0ToDot0(effectiveChemicalPotential1)    
+        + "Cpj" 
+        + trim0ToDot0(effectiveChemicalPotential2)
+        + "L"   
+        + trim0ToDot0(threeMomentumCutoff)
+        + "Mi"  
+        + trim0ToDot0(effectiveMass1) 
+        + "Mj"  
+        + trim0ToDot0(effectiveMass2) 
+        + "k0"  
+        + trim0ToDot0(k0);
+    replaceChar(filename, '.', 'p');
+    filename = filename + ".dat";
     ofstream fileB0;
     fileB0.open(filename, ofstream::out | ios::trunc);
 
