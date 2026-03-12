@@ -177,13 +177,13 @@ SU3NJL3DCutoffMeson SU3NJL3DCutoffVacuum::calculateMesonMassAndWidth(mesonState 
 }
 
 
-void SU3NJL3DCutoffVacuum::logVacuumSolutionToFile(string fileName)
+void SU3NJL3DCutoffVacuum::logVacuumSolutionToFile(string filename)
 {	
 	int dataPrecision = 15;
 	int colW = 25;
 
     std::ofstream fileVacuumSolution;
-    fileVacuumSolution.open(fileName, std::fstream::in | std::ofstream::out | std::ios::trunc);
+    fileVacuumSolution.open(filename, std::fstream::in | std::ofstream::out | std::ios::trunc);
     fileVacuumSolution.precision(dataPrecision);
 
 	fileVacuumSolution.width(colW); fileVacuumSolution << "Mu[GeV]";

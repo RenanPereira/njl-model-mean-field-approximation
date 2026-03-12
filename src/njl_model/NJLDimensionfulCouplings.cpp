@@ -6,7 +6,7 @@
 using namespace std;
 
 
-string toStringLagrangianInteractions(LagrangianInteractions interaction) 
+string toString(LagrangianInteractions interaction) 
 {
 	// Check if the method exists in the map using count
     if (LagrangianInteractionsMap.count(interaction))

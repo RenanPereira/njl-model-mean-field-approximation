@@ -1,11 +1,8 @@
 #ifndef COMPLEXSQUAREMATRIXGSL_H
 #define COMPLEXSQUAREMATRIXGSL_H
 
-#include <vector> 
 #include <iostream>
 #include <gsl/gsl_matrix.h>
-
-using namespace std;
 
 
 class ComplexSquareMatrixGSL

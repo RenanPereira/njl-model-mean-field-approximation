@@ -1,16 +1,14 @@
-#include <iostream>
+#include "gsl_wrapper/root_solver_gsl.h"
 #include <tuple>
 #include <algorithm>
 #include <gsl/gsl_multiroots.h>
 #include <gsl/gsl_roots.h>
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
-#include "gsl_wrapper/root_solver_gsl.h"
 
 using namespace std;
 
-
-string toStringMultiRootFindingMethod(MultiRootFindingMethod method) 
+string toString(MultiRootFindingMethod method) 
 {
     // Check if the method exists in the map using count
     if (MultiRootFindingMethodMap.count(method))

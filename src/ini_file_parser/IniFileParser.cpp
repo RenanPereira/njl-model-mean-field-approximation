@@ -1,4 +1,5 @@
 #include "ini_file_parser/IniFileParser.h"
+#include <iostream>
 
 
 IniFileParser::IniFileParser(const std::string& filenameAux) 
@@ -408,4 +409,22 @@ bool IniFileParser::getBool(const std::string& section, const std::string& key, 
 bool IniFileParser::getBool(const std::string& section, const std::string& key) const 
 {
     return getBool(section, key, false);
+}
+
+bool IniFileParser::validateBool(
+    const std::string& section, const std::string& key, 
+    const std::string& invalidFileMessage, const std::string& conditionMessage) const 
+{
+    std::string value = trim(getValue(section, key));
+
+    if ( value == "true" || value == "1" || value == "yes" || value == "on" ||
+         value == "false" || value == "0" || value == "no" || value == "off" ) 
+    {
+        return true;
+    } 
+    else
+    {   
+        std::cout << invalidFileMessage << "\n" << conditionMessage << std::endl;
+        return false;
+    }
 }

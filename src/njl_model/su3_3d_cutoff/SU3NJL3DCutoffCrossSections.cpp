@@ -1,10 +1,10 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
-#include <algorithm>
 #include <omp.h>
 #include "physics_utils/distribution_functions.h"
 #include "physics_utils/physical_constants.h"
+#include "utils/format_utils.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
 
@@ -24,7 +24,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //kinematics
 
-
 //momentum in the center of mass
 double momentumCM(double s, double m1, double m2)
 {   
@@ -35,14 +34,12 @@ double momentumCM(double s, double m1, double m2)
     return pCM;
 }
 
-
 double energyOutParticle1(double s, double m1, double m2)
 {
     double E1 = (1.0/2.0)*sqrt( pow(+pow(m1,2) - pow(m2,2) + s, 2)/s );
 
     return E1;
 }
-
 
 double energyOutParticle2(double s, double m1, double m2)
 {
@@ -51,7 +48,6 @@ double energyOutParticle2(double s, double m1, double m2)
     return E2;
 }
 
-
 double energyOutParticle3(double s, double m3, double m4)
 {
     double E3 = (1.0/2.0)*sqrt( pow(+pow(m3,2) - pow(m4,2) + s, 2)/s );
@@ -59,14 +55,12 @@ double energyOutParticle3(double s, double m3, double m4)
     return E3;
 }
 
-
 double energyOutParticle4(double s, double m3, double m4)
 {
     double E4 = (1.0/2.0)*sqrt( pow(-pow(m3,2) + pow(m4,2) + s, 2)/s );
 
     return E4;
 }
-
 
 //relative velocity between two particles in the initial state (in the center of mass)
 double relativeVelocityCM(double s, double m1, double m2)
@@ -80,7 +74,6 @@ double relativeVelocityCM(double s, double m1, double m2)
     return vRel;
 }
 
-
 //relative velocity between two particles in the initial state
 double relativeVelocity(double p1, double p2, double E1, double E2, double theta)
 {   
@@ -93,10 +86,8 @@ double relativeVelocity(double p1, double p2, double E1, double E2, double theta
     return vRel;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //minimum and maximum values for the t channel
-
 
 double tChannelMin(double s, double m1, double m2, double m3, double m4)
 {   
@@ -108,7 +99,6 @@ double tChannelMin(double s, double m1, double m2, double m3, double m4)
     return tMin;
 }
 
-
 double tChannelMax(double s, double m1, double m2, double m3, double m4)
 {   
     double sqrt12 = sqrt( pow(s + pow(m1,2) - pow(m2,2), 2)/( 4.0*s ) - pow(m1,2) );
@@ -118,7 +108,6 @@ double tChannelMax(double s, double m1, double m2, double m3, double m4)
 
     return tMax;
 }
-
 
 double centerOfMassEnergyThreshold(double m1, double m2, double m3, double m4)
 {
@@ -131,7 +120,6 @@ double centerOfMassEnergyThreshold(double m1, double m2, double m3, double m4)
 
     return sMin;
 }
-
 
 double sMaximum(double cutoff, double m1, double m2, double m3, double m4)
 {
@@ -157,10 +145,9 @@ double sMaximumKlevansky(double cutoff, double Mu, double Md, double Ms)
     return sMax;
 }
 
-
 double crossSectionProcess12To34Integrand(double x, void *parameters)
 {   
-    CrossSectionIntegrand aux(parameters);
+    SU3NJL3DCutoffCrossSectionIntegrand aux(parameters);
     SU3NJL3DCutoffParameters parametersNJL = aux.getParametersNJL();
     double T = aux.getTemperature();
     double effChemPotU = aux.getUpQuarkEffectiveChemicalPotential();
@@ -174,12 +161,19 @@ double crossSectionProcess12To34Integrand(double x, void *parameters)
     scatteringProcess process = aux.getProcess();
     bool largeAngleScatteringContribution = aux.getLargeAngleScatteringContribution();
 
-    double integrand = 
-    differentialCrossSectionProcess12To34(
-        parametersNJL, T, 
-        effChemPotU, effChemPotD, effChemPotS, 
-        effMassU,    effMassD,    effMassS, 
-        s, x*s, integralPrecision, process
+    double integrand = differentialCrossSectionProcess12To34(
+        parametersNJL, 
+        T, 
+        effChemPotU, 
+        effChemPotD, 
+        effChemPotS, 
+        effMassU, 
+        effMassD, 
+        effMassS, 
+        s, 
+        x*s, 
+        integralPrecision, 
+        process
     );
 
     if ( largeAngleScatteringContribution==true )
@@ -195,19 +189,36 @@ double crossSectionProcess12To34Integrand(double x, void *parameters)
 
 
 double crossSectionProcess12To34(
-    SU3NJL3DCutoffParameters parametersNJL, double T, 
-    double effChemPotU, double effChemPotD, double effChemPotS, 
-    double effMassU, double effMassD, double effMassS, 
-    double s, double propIntPrecision, scatteringProcess process, 
-    bool largeAngleScatteringContribution, double crossSecIntPrecision
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double propIntPrecision, 
+    scatteringProcess process, 
+    bool largeAngleScatteringContribution, 
+    double crossSecIntPrecision
 )
 {   
     string integralID = "crossSectionProcess" + toString(process);
-    CrossSectionIntegrand aux(
-        integralID, parametersNJL, T, 
-        effChemPotU, effChemPotD, effChemPotS, 
-        effMassU, effMassD, effMassS, 
-        s, propIntPrecision, process, largeAngleScatteringContribution
+    SU3NJL3DCutoffCrossSectionIntegrand aux(
+        integralID, 
+        parametersNJL, 
+        T, 
+        effChemPotU, 
+        effChemPotD, 
+        effChemPotS, 
+        effMassU, 
+        effMassD, 
+        effMassS, 
+        s, 
+        propIntPrecision, 
+        process, 
+        largeAngleScatteringContribution
     );
 
     //set incoming and outgoing masses
@@ -237,7 +248,15 @@ double crossSectionProcess12To34(
     double tMax = tChannelMax(s, m1, m2, m3, m4);
 
     int integrationWorkspace = 1000;
-    Integration1DimGSLQAGS crossSectionIntegral(tMin/s, tMax/s, &aux, crossSectionProcess12To34Integrand, crossSecIntPrecision, crossSecIntPrecision, integrationWorkspace);
+    Integration1DimGSLQAGS crossSectionIntegral(
+        tMin/s, 
+        tMax/s, 
+        &aux, 
+        crossSectionProcess12To34Integrand, 
+        crossSecIntPrecision, 
+        crossSecIntPrecision, 
+        integrationWorkspace
+    );
 
     double crossSection = crossSectionIntegral.evaluate();
     crossSection = s*crossSection;
@@ -246,8 +265,14 @@ double crossSectionProcess12To34(
     crossSection = crossSection*( 1.0 - fermiDistribution(T, E3 - cP3) )*( 1.0 - fermiDistribution(T, E4 - cP4) );
 
     //for processes involving completely identical particles, we have to remove extra counting
-    if ( process==UUUU || process==DDDD || process==SSSS ||
-         process==UBarUBarUBarUBar || process==DBarDBarDBarDBar || process==SBarSBarSBarSBar )
+    if ( 
+        process==UUUU || 
+        process==DDDD || 
+        process==SSSS ||
+        process==UBarUBarUBarUBar || 
+        process==DBarDBarDBarDBar || 
+        process==SBarSBarSBarSBar 
+    )
     { 
         crossSection = 0.5*crossSection; 
     }
@@ -257,29 +282,34 @@ double crossSectionProcess12To34(
 
 
 void evaluateCrossSectionProcess12To34ToFile(
-    SU3NJL3DCutoffParameters parametersNJL, double T, 
-    double effChemPotU, double effChemPotD, double effChemPotS, 
-    double effMassU, double effMassD, double effMassS, 
-    double propIntPrecision, scatteringProcess process, 
-    bool largeAngleScatteringContribution, double crossSecIntPrecision,
-    int numberOfPoints, int numberOfThreads
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double propIntPrecision, 
+    scatteringProcess process, 
+    bool largeAngleScatteringContribution, 
+    double crossSecIntPrecision,
+    int numberOfPoints, 
+    int numberOfThreads
 )
 {   
     //create arrays to save the calculation of the cross sections as a function of the center of mass energy
     vector<double> sqrtCenterOfMassEnergy(numberOfPoints);
     vector<double> crossSection(numberOfPoints);
 
-
     //set incoming and outgoing masses
     double m1, m2, m3, m4;
     inOutMassesGivenScatteringProcess(effMassU, effMassD, effMassS, process, m1, m2, m3, m4);
-
 
     //calculate quantities for iteration
     double sqrtCenterOfMassMin = sqrt( centerOfMassEnergyThreshold( m1, m2, m3, m4) + 1E-8 );
     double sqrtCenterOfMassMax = sqrt( sMaximumKlevansky(parametersNJL.getThreeMomentumCutoff(), effMassU, effMassD, effMassS) );
     double sqrtDelta = (sqrtCenterOfMassMax - sqrtCenterOfMassMin)/(numberOfPoints-1);
-
 
     cout << "Number of threads being used: " << numberOfThreads << "\n";
     #pragma omp parallel for schedule(dynamic) num_threads(numberOfThreads)
@@ -288,29 +318,35 @@ void evaluateCrossSectionProcess12To34ToFile(
         sqrtCenterOfMassEnergy[i] = sqrtCenterOfMassMin + i*sqrtDelta;
         double s = pow(sqrtCenterOfMassEnergy[i],2);
         crossSection[i] = crossSectionProcess12To34(
-            parametersNJL, T, 
-            effChemPotU, effChemPotD, effChemPotS, 
-            effMassU, effMassD, effMassS, 
-            s, propIntPrecision, process, 
-            largeAngleScatteringContribution, crossSecIntPrecision
+            parametersNJL, 
+            T, 
+            effChemPotU, 
+            effChemPotD, 
+            effChemPotS, 
+            effMassU, 
+            effMassD, 
+            effMassS, 
+            s, 
+            propIntPrecision, 
+            process, 
+            largeAngleScatteringContribution, 
+            crossSecIntPrecision
         );
-        crossSection[i] = inverseGeVSquaredToMiliBarn*crossSection[i];
+        crossSection[i] = PhysicalConstants::inverseGeVSquaredToMiliBarn*crossSection[i];
     }
 
-
     //create filename
-    string fileName = "crossSection" 
+    string filename = "crossSection" 
         + toString(process) 
         + "_T"   + to_string(T) 
         + "_CPU" + to_string(effChemPotU)
         + "_CPD" + to_string(effChemPotD)
-        + "_CPS" + to_string(effChemPotS);
-    //std::replace( fileName.begin(), fileName.end(), '.', ','); 
-    fileName = fileName + ".dat";
-
+        + "_CPS" + to_string(effChemPotS); 
+    replaceChar(filename, '.', 'p');
+    filename = filename + ".dat";
 
     std::ofstream fileCrossSection;
-    fileCrossSection.open(fileName, std::ofstream::out | std::ios::trunc);
+    fileCrossSection.open(filename, std::ofstream::out | std::ios::trunc);
     fileCrossSection.precision(15);
 
     fileCrossSection.precision(15);
@@ -328,14 +364,20 @@ void evaluateCrossSectionProcess12To34ToFile(
 
 }
 
-
 void evaluateCrossSectionsKlevanskyPaper(
-    SU3NJL3DCutoffParameters parametersNJL, double T, 
-    double effChemPotU, double effChemPotD, double effChemPotS, 
-    double effMassU, double effMassD, double effMassS, 
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
     double propIntPrecision, 
-    bool largeAngleScatteringContribution, double crossSecIntPrecision, 
-    int numberOfPoints, int numberOfThreads
+    bool largeAngleScatteringContribution, 
+    double crossSecIntPrecision, 
+    int numberOfPoints, 
+    int numberOfThreads
 )
 {   
     ////////////////////////////////////////////////////////////
@@ -344,34 +386,53 @@ void evaluateCrossSectionsKlevanskyPaper(
     // uubar->uubar, uubar->ddbar, uubar->ssbar, udbar->udbar, usbar->usbar, ssbar->uubar, ssbar->ssbar
 
     vector<scatteringProcess> processes = { 
-        UDUD, USUS, UUUU, SSSS, 
-        UDBarUDBar, USBarUSBar, 
-        UUBarUUBar, UUBarDDBar, UUBarSSBar, 
-        SSBarUUBar, SSBarSSBar 
+        UDUD, 
+        USUS, 
+        UUUU, 
+        SSSS, 
+        UDBarUDBar, 
+        USBarUSBar, 
+        UUBarUUBar, 
+        UUBarDDBar, 
+        UUBarSSBar, 
+        SSBarUUBar, 
+        SSBarSSBar 
     };
 
     for (int i = 0; i < int(processes.size()); ++i)
     {
         cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
         evaluateCrossSectionProcess12To34ToFile(
-            parametersNJL, T, 
-            effChemPotU, effChemPotD, effChemPotS, 
-            effMassU, effMassD, effMassS, 
-            propIntPrecision, processes[i], 
-            largeAngleScatteringContribution, crossSecIntPrecision, 
-            numberOfPoints, numberOfThreads
+            parametersNJL, 
+            T, 
+            effChemPotU, 
+            effChemPotD, 
+            effChemPotS, 
+            effMassU, 
+            effMassD, 
+            effMassS, 
+            propIntPrecision, 
+            processes[i], 
+            largeAngleScatteringContribution, 
+            crossSecIntPrecision, 
+            numberOfPoints, 
+            numberOfThreads
         );   
     }
-
 }
 
-
 void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
-    SU3NJL3DCutoffParameters parametersNJL, double T,                                                    
-    double effChemPotU, double effChemPotD, double effChemPotS, 
-    double effMassU, double effMassD, double effMassS, 
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T,                                                    
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
     double propIntPrecision, 
-    bool largeAngleScatteringContribution, double crossSecIntPrecision,
+    bool largeAngleScatteringContribution, 
+    double crossSecIntPrecision,
     int numberOfPoints,
     int numberOfThreads
 )
@@ -382,26 +443,42 @@ void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
     // ubarubar->ubarubar, sbarsbar->sbarsbar, ubardbar->ubardbar, ubarsbar->ubarsbar
 
     vector<scatteringProcess> processes = { 
-        UDUD, USUS, UUUU, SSSS, 
-        UDBarUDBar, USBarUSBar, 
-        UUBarUUBar, UUBarDDBar, UUBarSSBar, 
-        SSBarUUBar, SSBarSSBar, 
-        SUBarSUBar, UBarUBarUBarUBar, SBarSBarSBarSBar, 
-        UBarDBarUBarDBar, UBarSBarUBarSBar 
+        UDUD, 
+        USUS, 
+        UUUU, 
+        SSSS, 
+        UDBarUDBar, 
+        USBarUSBar, 
+        UUBarUUBar, 
+        UUBarDDBar, 
+        UUBarSSBar, 
+        SSBarUUBar, 
+        SSBarSSBar, 
+        SUBarSUBar, 
+        UBarUBarUBarUBar, 
+        SBarSBarSBarSBar, 
+        UBarDBarUBarDBar, 
+        UBarSBarUBarSBar 
     };
 
     for (int i = 0; i < int(processes.size()); ++i)
     {
         cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
         evaluateCrossSectionProcess12To34ToFile(
-            parametersNJL, T,
-            effChemPotU, effChemPotD, effChemPotS, 
-            effMassU, effMassD, effMassS, 
-            propIntPrecision, processes[i], 
-            largeAngleScatteringContribution, crossSecIntPrecision, 
+            parametersNJL, 
+            T,
+            effChemPotU, 
+            effChemPotD, 
+            effChemPotS, 
+            effMassU, 
+            effMassD, 
+            effMassS, 
+            propIntPrecision, 
+            processes[i], 
+            largeAngleScatteringContribution, 
+            crossSecIntPrecision, 
             numberOfPoints,
             numberOfThreads
         );   
     }
-
 }

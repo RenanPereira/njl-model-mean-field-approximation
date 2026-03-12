@@ -1,11 +1,7 @@
 #ifndef UNITARYGROUP3DIMENSIONS_H
 #define UNITARYGROUP3DIMENSIONS_H
 
-#include <vector> 
-#include <iostream>
 #include "gsl_wrapper/ComplexSquareMatrixGSL.h"
-
-using namespace std;
 
 ComplexSquareMatrixGSL unitaryGroup3DGenerator0();
 

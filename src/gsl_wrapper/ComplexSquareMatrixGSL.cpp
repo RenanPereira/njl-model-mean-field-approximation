@@ -1,6 +1,6 @@
+#include "gsl_wrapper/ComplexSquareMatrixGSL.h"
 #include <gsl/gsl_complex_math.h>
 #include <gsl/gsl_linalg.h>
-#include "gsl_wrapper/ComplexSquareMatrixGSL.h"
 
 
 void ComplexSquareMatrixGSL::setValue(int a, int b, gsl_complex value)
@@ -11,7 +11,7 @@ void ComplexSquareMatrixGSL::setValue(int a, int b, gsl_complex value)
     }
     else
     {
-        cout << "Index set using setValue in ComplexSquareMatrixGSL out of range! Aborting!\n";
+        std::cout << "Index set using setValue in ComplexSquareMatrixGSL out of range! Aborting!\n";
         abort();
     }
 }
@@ -27,7 +27,7 @@ gsl_complex ComplexSquareMatrixGSL::getValue(int a, int b)
     }
     else
     {
-        cout << "Index get using getValue in ComplexSquareMatrixGSL out of range! Aborting!\n";
+        std::cout << "Index get using getValue in ComplexSquareMatrixGSL out of range! Aborting!\n";
         abort();
     }
 
@@ -96,7 +96,7 @@ ComplexSquareMatrixGSL add(ComplexSquareMatrixGSL matrixA, ComplexSquareMatrixGS
     int dimensionB = matrixB.getDimension();
     if ( dimensionA!=dimensionB )
     {
-        cout << "Trying to add ComplexSquareMatrixGSL of different dimensions! Aborting!\n"; 
+        std::cout << "Trying to add ComplexSquareMatrixGSL of different dimensions! Aborting!\n"; 
         abort();
     }
 
@@ -124,7 +124,7 @@ ComplexSquareMatrixGSL subtract(ComplexSquareMatrixGSL matrixA, ComplexSquareMat
 	int dimensionB = matrixB.getDimension();
 	if ( dimensionA!=dimensionB )
 	{
-		cout << "Trying to subtract ComplexSquareMatrixGSL of different dimensions! Aborting!\n"; 
+		std::cout << "Trying to subtract ComplexSquareMatrixGSL of different dimensions! Aborting!\n"; 
 		abort();
 	}
 
@@ -152,7 +152,7 @@ ComplexSquareMatrixGSL multiply(ComplexSquareMatrixGSL matrixA, ComplexSquareMat
     int dimensionB = matrixB.getDimension();
     if ( dimensionA!=dimensionB )
     {
-        cout << "Trying to multiply ComplexSquareMatrixGSL of different dimensions! Aborting!\n"; 
+        std::cout << "Trying to multiply ComplexSquareMatrixGSL of different dimensions! Aborting!\n"; 
         abort();
     }
 

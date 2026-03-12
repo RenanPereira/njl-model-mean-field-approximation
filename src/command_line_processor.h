@@ -3,10 +3,8 @@
 
 #include "ini_file_parser/IniFileParser.h"
 
-
 int commandLineArgsProcessor(int , char* []);
 
 void selectPathBasedOnFileDetails(const IniFileParser& );
-
 
 #endif

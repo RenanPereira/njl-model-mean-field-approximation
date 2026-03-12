@@ -29,7 +29,7 @@ enum LagrangianInteractions
 };
 
 // Create the mapping between the enum and its string representation
-static const map<LagrangianInteractions, string> LagrangianInteractionsMap = 
+inline const map<LagrangianInteractions, string> LagrangianInteractionsMap = 
 {
     {SP4Q_DET2NFQ, "SP4Q_DET2NFQ"},
     {SP4Q_DET2NFQ_VP4Q, "SP4Q_DET2NFQ_VP4Q"},
@@ -48,7 +48,7 @@ static const map<LagrangianInteractions, string> LagrangianInteractionsMap =
     {SP4Q_DET2NFQ_VPMULTIQ, "SP4Q_DET2NFQ_VPMULTIQ"}
 };
 
-string toStringLagrangianInteractions(LagrangianInteractions );
+string toString(LagrangianInteractions );
 
 LagrangianInteractions stringToLagrangianInteractions(const string& );
 

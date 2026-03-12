@@ -1,3 +1,37 @@
+/*
+    //parameter set A (Klevansky parameter set)
+    double cutoff = 0.6023;
+    double gs = 10.116734156126128;
+    double kappa = -155.93878816540243;
+    double m0u = 0.0055;
+    double m0d = 0.0055;
+    double m0s = 0.1407;
+
+    
+
+    //Fix Lagrangian dimensionful couplings
+    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
+
+    //Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    parameters.setParameterSetName("setA");
+
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
+        mUGuess, 
+        mDGuess, 
+        mSGuess
+    );
+
+    cout << "Vacuum effective masses: \n";
+    cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
+    cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Md=" << vacuum.getDownQuarkEffectiveMass() << "GeV" << "\t" 
+         << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
+*/
+
 
 /*
     double pressureVac = vacuum.calculatePressure();
@@ -5,7 +39,7 @@
     cout << "pressure=" << pressureVac << "\n";
     cout << "energyDensity=" << energyVac << "\n";
 
-    double pressureVacElec = vacuum.calculateVacuumPressureElectrons(electronMass_GeV);
+    double pressureVacElec = vacuum.calculateVacuumPressureElectrons(PhysicalConstants::electronMass_GeV);
     cout << "pressureElec=" << pressureVacElec << "\n";
 */
 
@@ -20,8 +54,8 @@
     double MsGuess = vacuum.getStrangeQuarkEffectiveMass();
     double effectiveCPGuess = vacuum.getUpQuarkEffectiveMass()*(1+1E-4);
 
-    double rhoi = 1E-4*pow(hc_GeVfm,3);
-    double rhof = 2.00*pow(hc_GeVfm,3);
+    double rhoi = 1E-4*pow(PhysicalConstants::hbarc_GeVfm,3);
+    double rhof = 2.00*pow(PhysicalConstants::hbarc_GeVfm,3);
     int NrhoB = 1000;
     double drhoB = (rhof-rhoi)/(NrhoB-1);
     for (int i = 0; i < NrhoB; ++i)
@@ -40,7 +74,7 @@
         effectiveCPGuess = inMedium.getQuarkEffectiveChemicalPotential();  
 
         //cout << "testSolution=" << inMedium.testSolution() << "\n";
-        cout << rho_B/pow(hc_GeVfm,3) << "\t" 
+        cout << rho_B/pow(PhysicalConstants::hbarc_GeVfm,3) << "\t" 
              << inMedium.getUpQuarkEffectiveMass() << "\t"
              << inMedium.getDownQuarkEffectiveMass() << "\t"
              << inMedium.getStrangeQuarkEffectiveMass() << "\n";  
@@ -58,7 +92,7 @@
 
 /*
     vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> betaEqSolutions;
-    addVacuumSolution(vacuum, electronMass_GeV, pressureVac, pressureVacElec, betaEqSolutions);
+    addVacuumSolution(vacuum, PhysicalConstants::electronMass_GeV, pressureVac, pressureVacElec, betaEqSolutions);
 
 
     //guesses for i=0
@@ -69,8 +103,8 @@
     double effCPDGuess = mUGuess + 1E-3;
     double effCPSGuess = mUGuess + 1E-3;
 
-    double rhoi = 1E-5*pow(hc_GeVfm,3);
-    double rhof = 2.00*pow(hc_GeVfm,3);
+    double rhoi = 1E-5*pow(PhysicalConstants::hbarc_GeVfm,3);
+    double rhof = 2.00*pow(PhysicalConstants::hbarc_GeVfm,3);
     int NrhoB = 5000;
     double temperature = 0.0;
 
@@ -81,7 +115,7 @@
         double rhoB = rhoi + i*drhoB;
 
         //create object
-        SU3NJL3DCutoffBetaEqFixedTempRhoB betaEq(parameters, electronMass_GeV, temperature, rhoB);
+        SU3NJL3DCutoffBetaEqFixedTempRhoB betaEq(parameters, PhysicalConstants::electronMass_GeV, temperature, rhoB);
 
         //find quark masses and effective chemical potential
         betaEq.solve(1E-8, HYBRIDS, mUGuess, mDGuess, mSGuess, effCPUGuess, effCPDGuess, effCPSGuess);
@@ -99,7 +133,7 @@
 
 
         //print to console
-        cout << rhoB/pow(hc_GeVfm,3) << "\t"
+        cout << rhoB/pow(PhysicalConstants::hbarc_GeVfm,3) << "\t"
              << betaEq.getUpQuarkEffectiveMass() << "\t"
              << betaEq.getDownQuarkEffectiveMass() << "\t"
              << betaEq.getStrangeQuarkEffectiveMass() << "\t"
@@ -203,8 +237,8 @@
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
 
-    double rhoi = 1E-5*pow(hc_GeVfm, 3);
-    double rhof = 2.50*pow(hc_GeVfm, 3);
+    double rhoi = 1E-5*pow(PhysicalConstants::hbarc_GeVfm, 3);
+    double rhof = 2.50*pow(PhysicalConstants::hbarc_GeVfm, 3);
     int NrhoB = 5000;
     writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, HYBRIDS);
 

@@ -1,6 +1,7 @@
 #ifndef INTEGRATION1DIMNEWTONCOTES_H
 #define INTEGRATION1DIMNEWTONCOTES_H
 
+#include <iostream>
 
 using namespace std;
 
@@ -13,12 +14,12 @@ class GeneralIntegrandParameters
 public:
     virtual void printIntegrandVariables()
     {
-        cout << "The method 'printIntegrandVariables' is using the default method from the class GeneralIntegrandParameters!" << "\n";
+        std::cout << "The method 'printIntegrandVariables' is using the default method from the class GeneralIntegrandParameters!" << "\n";
     }
 
     virtual void behaviourAfterFailedIntegration()
     { 
-    	cout << "Using the default behaviour after a failed integration: abort!" << "\n";
+    	std::cout << "Using the default behaviour after a failed integration: abort!" << "\n";
     	abort(); 
     };
 };
@@ -55,15 +56,15 @@ public:
 class TestIntegrandParameters : public GeneralIntegrandParameters
 {
 public:
-    string integralID;
+    std::string integralID;
 
 public:
     TestIntegrandParameters(){};
-    TestIntegrandParameters(string integralIDAux){ integralID = integralIDAux; };
+    TestIntegrandParameters(std::string integralIDAux){ integralID = integralIDAux; };
 
     void printIntegrandVariables() override
     {   
-        cout << integralID << "\n";
+        std::cout << integralID << "\n";
     }
     
 };

@@ -1,7 +1,6 @@
 #ifndef INIFILEPARSER_H
 #define INIFILEPARSER_H
 
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <map>
@@ -61,6 +60,7 @@ public:
 
     bool getBool(const std::string& , const std::string& , bool ) const;
     bool getBool(const std::string& , const std::string& ) const;
+    bool validateBool(const std::string& , const std::string& , const std::string& , const std::string& ) const;
 };
 
 

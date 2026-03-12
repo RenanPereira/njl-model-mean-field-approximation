@@ -1,18 +1,22 @@
 #ifndef PHYSICAL_CONSTANTS_H
 #define PHYSICAL_CONSTANTS_H
 
-#include <cmath>
 
-const double hc_MeVfm = 197.3269804;
-const double hc_GeVfm = hc_MeVfm/1000.0;
+namespace PhysicalConstants
+{
+    // conversion between energy and distance made using reduced Planck constant
+    inline constexpr double hbarc_MeVfm = 197.3269804;
+    inline constexpr double hbarc_GeVfm = hbarc_MeVfm/1000.0;
 
-const double electronMass_MeV = 0.511;
-const double electronMass_GeV = electronMass_MeV/1000.0;
+    inline constexpr double electronMass_MeV = 0.511;
+    inline constexpr double electronMass_GeV = electronMass_MeV/1000.0;
 
-// 1 bn = 2568 GeV^{−2} 
-// 1 GeV^{−2} = 3.894x10^{−4} bn
-const double barnToInverseGeVSquared = 2568.0;
-const double inverseGeVSquaredToBarn = 3.894*pow(10.0,-4.0);
-const double inverseGeVSquaredToMiliBarn = 0.3894;
+    // 1 bn = 2568 GeV^{−2} 
+    // 1 GeV^{−2} = 3.894x10^{−4} bn
+    inline constexpr double barnToInverseGeVSquared = 2568.0;
+    inline constexpr double inverseGeVSquaredToMiliBarn = 0.3894;
+    inline constexpr double inverseGeVSquaredToBarn = inverseGeVSquaredToMiliBarn*1E-3;
+}
+
 
 #endif

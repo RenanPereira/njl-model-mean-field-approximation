@@ -1,6 +1,6 @@
+#include "group_theory/UnitaryGroup3Dimensions.h"
 #include <gsl/gsl_complex_math.h>
 #include <gsl/gsl_linalg.h>
-#include "group_theory/UnitaryGroup3Dimensions.h"
 
 
 //Gell-Mann Matrices, Identity and Group Structure constants
@@ -208,7 +208,7 @@ ComplexSquareMatrixGSL unitaryGroup3DGenerator(int n)
     else if ( n==8 ){ return unitaryGroup3DGenerator8(); }
     else
     {
-        cout << "The requested index for the unitaryGroup3DGenerator does not exist! It must be in the set: [0,8]! Aborting!\n";
+        std::cout << "The requested index for the unitaryGroup3DGenerator does not exist! It must be in the set: [0,8]! Aborting!\n";
         abort();
         return ComplexSquareMatrixGSL(0);
     }

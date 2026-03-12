@@ -14,7 +14,7 @@ This folder contains the necessary scripts, data files, and configuration files 
 │   ├── *.ini                # Configuration files for the calculations
 │   ├── *.dat                # Generated data files
 ├── execute_calculations.sh  # Shell script to execute the calculations
-├── plots_scripts            # Python scripts for generating plots
+├── plotting                 # Python scripts for generating plots
 │   ├── build_plots_*.py     # Specific plot scripts for various scenarios
 │   ├── __init__.py          # Python file necessary to modularize
 ├── plots                    # Directory to store the generated plot images
@@ -124,7 +124,7 @@ In this section we present the results of the cross sections for different proce
 #### uubar $\rightarrow$ uubar (T[GeV]=0.250, finite chemical potential)
 ![Cross section plot](plots/cross_section_uubaruubar_T0250_CP.png)
 
-#### uudbar $\rightarrow$ udbar (T[GeV]=0.250, finite chemical potential)
+#### udbar $\rightarrow$ udbar (T[GeV]=0.250, finite chemical potential)
 ![Cross section plot](plots/cross_section_udbarudbar_T0250_CP.png)
 
 #### uubar $\rightarrow$ ddbar (T[GeV]=0.250, finite chemical potential)
