@@ -2,11 +2,9 @@
 #define INTERPOLATIONGSL1DIM_H
 
 #include <vector> 
-#include <iostream>
 #include <gsl/gsl_spline.h>
 #include "math_utils/OneVariableFunction.h"
 #include "gsl_wrapper/root_solver_gsl.h"
-
 
 enum InterpolationGSL1DimMethod { linear, steffen, cubic, akima, polynomial };
 

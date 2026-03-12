@@ -1,13 +1,9 @@
 #ifndef INTEGRATION1DIMGSL_H
 #define INTEGRATION1DIMGSL_H
 
-
 #include "integration_methods/Integration1DimNewtonCotes.h"
 #include <gsl/gsl_integration.h>
 #include <vector>
-
-using namespace std;
-
 
 class Integration1DimGSL
 {	
@@ -47,7 +43,7 @@ public:
 
 	virtual double evaluate();
 
-	void errorHandler(int , string );
+	void errorHandler(int , std::string );
 };
 
 
@@ -136,10 +132,10 @@ by the integration region and locations of the singularities.
 class Integration1DimGSLQAGP : public Integration1DimGSL
 {	
 public:
-	vector<double> singularities;
+	std::vector<double> singularities;
 
 public:
-	Integration1DimGSLQAGP(double , double , vector<double>, GeneralIntegrandParameters* , double (double, void*), double , double , int );
+	Integration1DimGSLQAGP(double , double , std::vector<double>, GeneralIntegrandParameters* , double (double, void*), double , double , int );
 
 	double evaluate() override;
 };
@@ -265,7 +261,7 @@ public:
 	void printIntegrandVariables() override
     {   
     	numeratorParameters->printIntegrandVariables();
-        cout << "singularity = " << singularity << "\n";
+        std::cout << "singularity = " << singularity << "\n";
     }
 };
 

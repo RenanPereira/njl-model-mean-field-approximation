@@ -1,4 +1,5 @@
 #include "ini_file_parser/IniFileParser.h"
+#include <iostream>
 
 
 IniFileParser::IniFileParser(const std::string& filenameAux) 

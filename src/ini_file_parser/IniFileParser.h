@@ -1,7 +1,6 @@
 #ifndef INIFILEPARSER_H
 #define INIFILEPARSER_H
 
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <map>

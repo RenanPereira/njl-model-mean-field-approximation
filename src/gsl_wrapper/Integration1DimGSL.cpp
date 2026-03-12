@@ -1,7 +1,7 @@
+#include "gsl_wrapper/Integration1DimGSL.h"
 #include <iostream>
 #include <algorithm>
 #include <gsl/gsl_errno.h>
-#include "gsl_wrapper/Integration1DimGSL.h"
 
 using namespace std;
 
