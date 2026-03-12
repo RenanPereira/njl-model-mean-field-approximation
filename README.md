@@ -1,4 +1,26 @@
-This file is a work in progress...
+# Nambu-Jona-Lasinio model in the mean field approximation
+
+THIS FILE IS WORK IN PROGRESS...
+
+This project provides computational tools for studying the Nambu–Jona-Lasinio (NJL) model in the mean-field approximation.
+
+$
+\begin{equation}
+\mathcal{L} [ \psi, \bar{\psi} ] =  \bar{\psi} ( i\gamma^\mu \partial_\mu-\hat{m}) \psi + 
+\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
+\end{equation}
+$
+
+Here, $\psi$ is the quark field and $\hat{m}= \mathrm{diag}  \{ m_1, m_2, \ldots , m_{N_f} \} $ is the quark current mass matrix (with $N_f$ the number of quark flavors). The different quark-quark interactions are contained in the term $\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]$ and, for our purposes, its exact definite form is not important. This interaction term includes the dynamical chiral symmetry breaking 4-quark scalar-pseudoscalar interaction, $\mathcal{L} \supset (\bar{\psi} \lambda_a \psi)^2 + (\bar{\psi} i \gamma_5 \lambda_a \psi)^2$, but it also includes other multi-quark interactions, like the 't Hooft determinant, eight quark-quark interactions, explicit chiral symmetry breaking interactions, vector interactions, etc. In these interaction terms, $\lambda_a$ are the generators of the $U(N_f)$ algebra.
+
+The code allows for numerical investigations of several properties of the model, including:
+
+- calculation of quark effective masses at finite temperature and baryon density;
+- calculation of meson masses at finite temperature and baryon density (to be completed);
+- calculation of the NJL model phase diagram at finite temperature and chemical potential;
+
+
+# How to build and run
 
 Compile main code:
 ```bash
@@ -114,8 +136,7 @@ One can execute the `scripts/tests/build_all_calculations_plots.sh` script to bu
 
 # Conventions
 
-
-This code was written by a Physicist without the most in-depth knowledge about the standards and structures of `Clean Code`. The following conventions are being used in the code (at least trying to...): 
+As a disclaimer, the reader must be warned: this code was written by a physicist without the most in-depth knowledge about the standards and structures of `Clean Code`. Improvements to structure, formatting and logic are always being considered and developed. The following conventions are being used in the code (at least trying to...): 
 
 C++ code:
 - classes  → PascalCase
@@ -123,6 +144,9 @@ C++ code:
 - methods → camelCase
 - member variables → camelCase
 - header guard → UPPER_CASE with underscores
+- enums → PascalCase except where, for readability, UPPER_CASE is used
 
 Python code:
-- 
+- classes  → PascalCase
+- functions, variables → snake_case
+
