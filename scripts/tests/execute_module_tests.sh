@@ -2,7 +2,7 @@
 
 # This script runs tests for the modules which contain tests (akin to unitary tests and functional tests).
 
-cd ../../
+cd ../.. || exit
 
 (cd src/ini_file_parser/ && ./execute_tests.sh)
 

@@ -4,7 +4,7 @@
 # This can be used to test the code base and understand if the modification of the 
 # code or implementation of new features broke something unexpectedly.
 
-cd ../../
+cd ../.. || exit
 
 
 # B0 Integral Study

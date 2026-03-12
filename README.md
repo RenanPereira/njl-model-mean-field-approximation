@@ -89,7 +89,7 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 
 Can be executed in the root folder using:
 ```bash
-(cd scripts/tests/ && ./execute_tests.sh)
+(cd scripts/tests/ && ./execute_module_tests.sh)
 ```
 
 
