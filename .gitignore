@@ -10,3 +10,5 @@ bin/*.dat
 src/*/*.o*
 
 calculations/**/__pycache__/
+
+tests/**/*.out

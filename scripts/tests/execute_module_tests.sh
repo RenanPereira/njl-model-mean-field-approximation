@@ -6,6 +6,6 @@ cd ../.. || exit
 
 (cd src/ini_file_parser/ && ./execute_tests.sh)
 
-(cd src/integration_methods/ && ./execute_tests.sh)
+(cd tests/integration_methods/ && ./execute_tests.sh)
 
 (cd src/gsl_wrapper/ && ./execute_tests.sh)

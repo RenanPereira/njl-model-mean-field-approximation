@@ -38,7 +38,7 @@ To test the `ini_file_parser` module, one can execute the `execute_tests.sh` scr
 
 To test the `integration_methods` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
 ```bash
-(cd src/integration_methods/ && ./execute_tests.sh)
+(cd tests/integration_methods/ && ./execute_tests.sh)
 ```
 
 To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
