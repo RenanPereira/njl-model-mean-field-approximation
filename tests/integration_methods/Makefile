@@ -22,6 +22,8 @@ $(TARGET): $(OBJ)
 
 -include $(DEP)
 
+.PHONY: run clean
+
 run: $(TARGET)
 	./$(TARGET)
 
