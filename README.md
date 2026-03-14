@@ -33,17 +33,17 @@ make clean
 
 To test the `ini_file_parser` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
 ```bash
-(cd src/ini_file_parser/ && ./execute_tests.sh)
+(cd tests/ini_file_parser/ && ./execute_tests.sh)
 ```
 
-To test the `integration_methods` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
+To test the `integration_methods` module, one can execute the `execute_tests.sh` script present in the folder `tests/integration_methods/`. For that, use:
 ```bash
 (cd tests/integration_methods/ && ./execute_tests.sh)
 ```
 
-To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
+To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script present in the folder `tests/gsl_wrapper/`. For that, use:
 ```bash
-(cd src/gsl_wrapper/ && ./execute_tests.sh)
+(cd tests/gsl_wrapper/ && ./execute_tests.sh)
 ```
 
 # Calculations
@@ -109,7 +109,7 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 
 Can be executed in the root folder using:
 ```bash
-(cd scripts/tests/ && ./execute_module_tests.sh)
+(cd scripts/tests/ && ./execute_tests.sh)
 ```
 
 
