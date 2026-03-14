@@ -1,8 +1,9 @@
 SHELL := /bin/bash
 
 CXX = g++
-CXXFLAGS = -O3 -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++11 -fopenmp
-LDFLAGS = -L/usr/local/lib -lgsl -lgslcblas
+CXXFLAGS = -O3 -Wall -Wextra -Wfloat-equal -Wundef -Wlogical-op -Wmissing-declarations -Wredundant-decls -Wshadow -std=c++17 -fopenmp
+LDFLAGS = -fopenmp -L/usr/local/lib
+LDLIBS = -lgsl -lgslcblas
 INCLUDE = -I../../src
 
 SRC = $(wildcard *.cpp) \
@@ -15,7 +16,7 @@ DEP = $(OBJ:.o=.d)
 TARGET = test.out
 
 $(TARGET): $(OBJ)
-	$(CXX) $(OBJ) $(INCLUDE) $(LDFLAGS) -o $(TARGET)
+	$(CXX) $(OBJ) $(LDFLAGS) $(LDLIBS) -o $(TARGET)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
