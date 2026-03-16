@@ -1,16 +1,7 @@
 #include <iostream>
 #include <cmath>
-#include "IniFileParser.h"
-
-
-// Test functions return true if the test passes, false if it fails
-bool check(bool , const std::string& );
-bool testGetValue();
-bool testGetInt();
-bool testGetDouble(double );
-bool testGetSectionData();
-bool testGetSections();
-
+#include "ini_file_parser/IniFileParser.h"
+#include "TestIniFileParser.h"
 
 // Check function that simply prints an error message and returns false on failure
 bool check(bool condition, const std::string& message) 
@@ -219,28 +210,4 @@ bool testGetSections()
     std::remove(testIniFile.c_str());
 
     return passed;
-}
-
-
-int main() 
-{
-    bool allTestsPassed = true;
-
-    // Run each test and collect the result
-    allTestsPassed &= testGetValue();
-    allTestsPassed &= testGetInt();
-    allTestsPassed &= testGetDouble(1E-10);
-    allTestsPassed &= testGetSectionData();
-    allTestsPassed &= testGetSections();
-
-    if (allTestsPassed) 
-    {
-        std::cout << "All tests passed!" << std::endl;
-        return 0;
-    } 
-    else 
-    {
-        std::cout << "Some tests failed!" << std::endl;
-        return 1;
-    }
 }

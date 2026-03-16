@@ -1,14 +1,8 @@
 #include <iostream>
 #include <cmath>
-#include "Integration1DimNewtonCotes.h"
 
-
-double integrandTestNewtonCotes(double , void *);
-
-double integrandTestNewtonCotesCPV(double , void *);
-
-bool testIntegration1DimNewtonCotes(double );
-
+#include "TestIntegration1DimNewtonCotes.h"
+#include "integration_methods/Integration1DimNewtonCotes.h"
 
 double integrandTestNewtonCotes(double x, void *parameters)
 {   
@@ -18,7 +12,6 @@ double integrandTestNewtonCotes(double x, void *parameters)
     return integrand;
 }
 
-
 double integrandTestNewtonCotesCPV(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
@@ -27,7 +20,6 @@ double integrandTestNewtonCotesCPV(double x, void *parameters)
 
     return integrand;
 }
-
 
 bool testIntegration1DimNewtonCotes(double relativeDifference)
 {   
@@ -61,24 +53,4 @@ bool testIntegration1DimNewtonCotes(double relativeDifference)
     }
 
     return testNewtonCotesSum && testNewtonCotesSumCPV;
-}
-
-
-int main() 
-{
-    bool allTestsPassed = true;
-
-    // Run each test and collect the result
-    allTestsPassed &= testIntegration1DimNewtonCotes(1E-3);
-
-    if (allTestsPassed) 
-    {
-        std::cout << "All tests passed!" << std::endl;
-        return 0;
-    } 
-    else 
-    {
-        std::cout << "Some tests failed!" << std::endl;
-        return 1;
-    }
 }

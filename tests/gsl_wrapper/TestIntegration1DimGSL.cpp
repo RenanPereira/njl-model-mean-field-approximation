@@ -1,20 +1,5 @@
-#include <iostream>
-#include <cmath>
-#include "Integration1DimGSL.h"
-
-
-double integrandTestGSL(double , void *);
-
-double integrandTestGSLCauchy(double , void *);
-
-double integrandTestGSLQAGP(double , void *);
-
-double integrandTestGSLQAGI(double , void *);
-
-double integrandTestGSLQAWS(double , void *);
-
-bool hardcodedTestIntegration1DimGSL(double );
-
+#include "gsl_wrapper/Integration1DimGSL.h"
+#include "TestIntegration1DimGSL.h"
 
 double integrandTestGSL(double x, void *parameters)
 {   
@@ -23,7 +8,6 @@ double integrandTestGSL(double x, void *parameters)
 
     return integrand;
 }
-
 
 double integrandTestGSLCauchy(double x, void *parameters)
 {   
@@ -35,7 +19,6 @@ double integrandTestGSLCauchy(double x, void *parameters)
     return integrand;
 }
 
-
 double integrandTestGSLQAGP(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
@@ -44,7 +27,6 @@ double integrandTestGSLQAGP(double x, void *parameters)
 
     return integrand;
 }
-
 
 double integrandTestGSLQAGI(double x, void *parameters)
 {   
@@ -55,7 +37,6 @@ double integrandTestGSLQAGI(double x, void *parameters)
     return integrand;
 }
 
-
 double integrandTestGSLQAWS(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
@@ -64,7 +45,6 @@ double integrandTestGSLQAWS(double x, void *parameters)
 
     return integrand;
 }
-
 
 bool hardcodedTestIntegration1DimGSL(double relativeDifference)
 {   
@@ -238,24 +218,4 @@ bool hardcodedTestIntegration1DimGSL(double relativeDifference)
            testIntegralQAWS &&
            testIntegralQAWCQAGSIn &&
            testIntegralQAWCQAGSOut;
-}
-
-
-int main() 
-{
-    bool allTestsPassed = true;
-
-    // Run each test and collect the result
-    allTestsPassed &= hardcodedTestIntegration1DimGSL(1E-8);
-
-    if (allTestsPassed) 
-    {
-        std::cout << "All tests passed!" << std::endl;
-        return 0;
-    } 
-    else 
-    {
-        std::cout << "Some tests failed!" << std::endl;
-        return 1;
-    }
 }

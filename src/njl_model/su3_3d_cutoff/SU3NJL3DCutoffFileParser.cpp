@@ -1,9 +1,12 @@
 #include <iostream>
 #include <cmath>
+
 #include "gsl_wrapper/root_solver_gsl.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
+
 #include "njl_model/njl_regularization_schemes.h"
 #include "njl_model/NJLDimensionlessCouplings.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParserKeys.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"

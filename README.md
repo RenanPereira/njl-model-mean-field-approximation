@@ -1,23 +1,72 @@
 # Nambu-Jona-Lasinio model in the mean field approximation
 
-THIS FILE IS WORK IN PROGRESS...
+**THIS FILE IS A WORK IN PROGRESS...**
 
-This project provides computational tools for studying the Nambu–Jona-Lasinio (NJL) model in the mean-field approximation.
-
-$
-\begin{equation}
-\mathcal{L} [ \psi, \bar{\psi} ] =  \bar{\psi} ( i\gamma^\mu \partial_\mu-\hat{m}) \psi + 
+This project provides computational tools for studying the Nambu–Jona-Lasinio (NJL) model in the mean-field approximation. The Lagrangian density of the model can be written as:
+$$
+\mathcal{L} [ \psi, \bar{\psi} ] =  \bar{\psi} ( i \gamma^\mu \partial_\mu - \hat{m} ) \psi + 
 \mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
-\end{equation}
-$
+$$
 
-Here, $\psi$ is the quark field and $\hat{m}= \mathrm{diag}  \{ m_1, m_2, \ldots , m_{N_f} \} $ is the quark current mass matrix (with $N_f$ the number of quark flavors). The different quark-quark interactions are contained in the term $\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]$ and, for our purposes, its exact definite form is not important. This interaction term includes the dynamical chiral symmetry breaking 4-quark scalar-pseudoscalar interaction, $\mathcal{L} \supset (\bar{\psi} \lambda_a \psi)^2 + (\bar{\psi} i \gamma_5 \lambda_a \psi)^2$, but it also includes other multi-quark interactions, like the 't Hooft determinant, eight quark-quark interactions, explicit chiral symmetry breaking interactions, vector interactions, etc. In these interaction terms, $\lambda_a$ are the generators of the $U(N_f)$ algebra.
+Here, $\psi$ is the quark field and $\hat{m}= \mathrm{diag}  \{ m_1, m_2, \ldots , m_{N_f} \} $ is the quark current mass matrix (with $N_f$ the number of quark flavors). The different quark-quark interactions are contained in the term $\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]$ and, for our purposes, its exact definite form is not important. This interaction term includes the dynamical chiral symmetry breaking 4-quark scalar-pseudoscalar interaction, $\mathcal{L} \supset (\bar{\psi} \lambda_a \psi)^2 + (\bar{\psi} i \gamma_5 \lambda_a \psi)^2$, but it also includes other multi-quark interactions, like the 't Hooft determinant, eight quark-quark interactions, explicit chiral symmetry breaking interactions, vector interactions, etc (in these interaction terms, $\lambda_a$ are the generators of the $U(N_f)$ algebra). 
 
-The code allows for numerical investigations of several properties of the model, including:
+Within the code the mean field quark interactions are considered via the `enum` `LagrangianInteractions`. Taking different values for this quantity implies selecting different mean field quark interactions at the Lagrangian level. The type of quark interactions supported in the code and their internal designation, are listed below:
+- SP4Q_DET2NFQ
+- SP4Q_DET2NFQ_VP4Q
+- SP4Q_DET2NFQ_VP4Q_VP8Q
+- SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q
+- SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q
+- SP4Q_DET2NFQ_VP4Q_VIPI4Q
+- SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q
+- SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q
+- SP4Q_DET2NFQ_VP4Q_VP8Q_SPVP8Q
+- SP4Q_DET2NFQ_SP8Q
+- SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q
+- SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q_SPVP8Q
+- SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q
+- SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q
+- SP4Q_DET2NFQ_VPMULTIQ
 
+Here, 
+- SP4Q: Scalar-Pseudoscalar 4-quark interaction;
+- SP8Q: Scalar-Pseudoscalar 8-quark interaction;
+- DET2NFQ: t'Hooft determinant interactions 2$N_f$-quark interaction;
+- VP4Q: Vector and Pseudovector 4-quark interaction;
+- VP8Q: Vector and Pseudovector 8-quark interaction;
+- VP12Q: Vector and Pseudovector 12-quark interaction;
+- VP16Q: Vector and Pseudovector 16-quark interaction;
+- VIPI4Q: Vector-Isovector and Pseudovector-Isovector 4-quark interaction;
+- VIPI8Q: Vector-Isovector and Pseudovector-Isovector 8-quark interaction;
+- VPVIPI8Q: Vector and Pseudovector 4-quark interaction times Vector-Isovector and Pseudovector-Isovector 4-quark interaction;
+- SPVP8Q: Scalar-Pseudoscalar 4-quark interaction times Vector and Pseudovector 4-quark interaction;
+- SPVIPI8Q: Scalar-Pseudoscalar 4-quark interaction times Vector-Isovector and Pseudovector-Isovector 4-quark interaction;
+- VPMULTIQ: Vector and Pseudovector N-quark interaction;
+
+For example, considering the interaction `SP4Q_DET2NFQ` means that, at the Lagrangian level, the chosen quark interaction is:
+
+$$
+\mathrm{SP4Q\_DET2NFQ} \rightarrow
+\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
+=
+\frac{G}{2}
+\Big(
+(\bar{\psi} \lambda_a \psi)^2 + 
+(\bar{\psi} i \gamma^5 \lambda_a \psi)^2 
+\Big)
++ 8 \kappa 
+\Big(
+\mathrm [ \bar{\psi} P_R \psi ] 
++ 
+\mathrm [ \bar{\psi} P_L \psi ]  
+\Big)
+$$
+
+
+The code allows for numerical investigations of several properties of the model, including (not all type of quark interactions are available to all types of interactions):
 - calculation of quark effective masses at finite temperature and baryon density;
 - calculation of meson masses at finite temperature and baryon density (to be completed);
 - calculation of the NJL model phase diagram at finite temperature and chemical potential;
+
 
 
 # How to build and run
@@ -35,17 +84,17 @@ make clean
 
 To test the `ini_file_parser` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
 ```bash
-(cd src/ini_file_parser/ && ./execute_tests.sh)
+(cd tests/ini_file_parser/ && ./execute_tests.sh)
 ```
 
-To test the `integration_methods` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
+To test the `integration_methods` module, one can execute the `execute_tests.sh` script present in the folder `tests/integration_methods/`. For that, use:
 ```bash
-(cd src/integration_methods/ && ./execute_tests.sh)
+(cd tests/integration_methods/ && ./execute_tests.sh)
 ```
 
-To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script present in that folder. For that, use:
+To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script present in the folder `tests/gsl_wrapper/`. For that, use:
 ```bash
-(cd src/gsl_wrapper/ && ./execute_tests.sh)
+(cd tests/gsl_wrapper/ && ./execute_tests.sh)
 ```
 
 # Calculations
@@ -111,7 +160,7 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 
 Can be executed in the root folder using:
 ```bash
-(cd scripts/tests/ && ./execute_module_tests.sh)
+(cd scripts/tests/ && ./execute_tests.sh)
 ```
 
 
@@ -150,3 +199,99 @@ Python code:
 - classes  → PascalCase
 - functions, variables → snake_case
 
+
+# Some Results
+
+Some of the results that can be obtained using this code are shown below. For more information regarding the parameter sets used in these plots, see [here](../su3_3d_cutoff_phase_diagram/README.md).
+
+### Quark masses
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setB.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
+</p>
+
+### Pressure
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setB.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+
+### Entropy density
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setB.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_CP0_setsABC.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setB.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+### Energy density
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setB.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setsABC.png" width="32%">
+</p>
+
+
+### Pressure and Energy density
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setB.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setC.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setsABC.png" width="32%">
+</p>
+
+
+### Shear Viscosity - Zero chemical potential
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_vs_temp_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_s_vs_temp_CP0_setA.png" width="32%">
+</p>
+
+### Electrical Conductivity - Zero chemical potential
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_vs_temp_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_over_temp_vs_temp_CP0_setA.png" width="32%">
+</p>
+
+### Shear Viscosity and Electrical Conductivity Ratios - Zero chemical potential
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_CP0_setA_zoom.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_CP0_setA_zoom.png" width="32%">
+</p>

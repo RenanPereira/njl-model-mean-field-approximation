@@ -1,12 +1,16 @@
 .vscode/
 
-obj/*.o
-obj/*/*.o
-obj/*/*/*.o
+obj/**/*.d
+obj/**/*.o
 
 bin/nambuJonaLasinioModel.out
 bin/*.dat
 
 src/*/*.o*
+src/*/*.d
 
 calculations/**/__pycache__/
+
+tests/**/*.d
+tests/**/*.o
+tests/**/*.out
