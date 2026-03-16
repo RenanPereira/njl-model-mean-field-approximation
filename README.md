@@ -8,10 +8,61 @@ $$
 \mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
 $$
 
-Here, $\psi$ is the quark field and $\hat{m}= \mathrm{diag}  \{ m_1, m_2, \ldots , m_{N_f} \} $ is the quark current mass matrix (with $N_f$ the number of quark flavors). The different quark-quark interactions are contained in the term $\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]$ and, for our purposes, its exact definite form is not important. This interaction term includes the dynamical chiral symmetry breaking 4-quark scalar-pseudoscalar interaction, $\mathcal{L} \supset (\bar{\psi} \lambda_a \psi)^2 + (\bar{\psi} i \gamma_5 \lambda_a \psi)^2$, but it also includes other multi-quark interactions, like the 't Hooft determinant, eight quark-quark interactions, explicit chiral symmetry breaking interactions, vector interactions, etc (in these interaction terms, $\lambda_a$ are the generators of the $U(N_f)$ algebra).
+Here, $\psi$ is the quark field and $\hat{m}= \mathrm{diag}  \{ m_1, m_2, \ldots , m_{N_f} \} $ is the quark current mass matrix (with $N_f$ the number of quark flavors). The different quark-quark interactions are contained in the term $\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]$ and, for our purposes, its exact definite form is not important. This interaction term includes the dynamical chiral symmetry breaking 4-quark scalar-pseudoscalar interaction, $\mathcal{L} \supset (\bar{\psi} \lambda_a \psi)^2 + (\bar{\psi} i \gamma_5 \lambda_a \psi)^2$, but it also includes other multi-quark interactions, like the 't Hooft determinant, eight quark-quark interactions, explicit chiral symmetry breaking interactions, vector interactions, etc (in these interaction terms, $\lambda_a$ are the generators of the $U(N_f)$ algebra). 
+
+Within the code the mean field quark interactions are considered via the `enum` `LagrangianInteractions`. Taking different values for this quantity implies selecting different mean field quark interactions at the Lagrangian level. The type of quark interactions supported in the code and their internal designation, are listed below:
+- SP4Q_DET2NFQ
+- SP4Q_DET2NFQ_VP4Q
+- SP4Q_DET2NFQ_VP4Q_VP8Q
+- SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q
+- SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q
+- SP4Q_DET2NFQ_VP4Q_VIPI4Q
+- SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q
+- SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q
+- SP4Q_DET2NFQ_VP4Q_VP8Q_SPVP8Q
+- SP4Q_DET2NFQ_SP8Q
+- SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q
+- SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q_SPVP8Q
+- SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q
+- SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q
+- SP4Q_DET2NFQ_VPMULTIQ
+
+Here, 
+- SP4Q: Scalar-Pseudoscalar 4-quark interaction;
+- SP8Q: Scalar-Pseudoscalar 8-quark interaction;
+- DET2NFQ: t'Hooft determinant interactions 2$N_f$-quark interaction;
+- VP4Q: Vector and Pseudovector 4-quark interaction;
+- VP8Q: Vector and Pseudovector 8-quark interaction;
+- VP12Q: Vector and Pseudovector 12-quark interaction;
+- VP16Q: Vector and Pseudovector 16-quark interaction;
+- VIPI4Q: Vector-Isovector and Pseudovector-Isovector 4-quark interaction;
+- VIPI8Q: Vector-Isovector and Pseudovector-Isovector 8-quark interaction;
+- VPVIPI8Q: Vector and Pseudovector 4-quark interaction times Vector-Isovector and Pseudovector-Isovector 4-quark interaction;
+- SPVP8Q: Scalar-Pseudoscalar 4-quark interaction times Vector and Pseudovector 4-quark interaction;
+- SPVIPI8Q: Scalar-Pseudoscalar 4-quark interaction times Vector-Isovector and Pseudovector-Isovector 4-quark interaction;
+- VPMULTIQ: Vector and Pseudovector N-quark interaction;
+
+For example, considering the interaction `SP4Q_DET2NFQ` means that, at the Lagrangian level, the chosen quark interaction is:
+
+$$
+\mathrm{SP4Q\_DET2NFQ} \rightarrow
+\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
+=
+\frac{G}{2}
+\Big(
+(\bar{\psi} \lambda_a \psi)^2 + 
+(\bar{\psi} i \gamma^5 \lambda_a \psi)^2 
+\Big)
++ 8 \kappa 
+\Big(
+\mathrm [ \bar{\psi} P_R \psi ] 
++ 
+\mathrm [ \bar{\psi} P_L \psi ]  
+\Big)
+$$
 
 
-The code allows for numerical investigations of several properties of the model, including:
+The code allows for numerical investigations of several properties of the model, including (not all type of quark interactions are available to all types of interactions):
 - calculation of quark effective masses at finite temperature and baryon density;
 - calculation of meson masses at finite temperature and baryon density (to be completed);
 - calculation of the NJL model phase diagram at finite temperature and chemical potential;
