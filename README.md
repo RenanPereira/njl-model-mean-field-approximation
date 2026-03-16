@@ -4,8 +4,7 @@
 
 This project provides computational tools for studying the Nambu–Jona-Lasinio (NJL) model in the mean-field approximation. The Lagrangian density of the model can be written as:
 $$
-\mathcal{L} [ \psi, \bar{\psi} ] =  \bar{\psi} ( i \gamma^\mu \partial_\mu - \hat{m} ) \psi + 
-\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
+\mathcal{L} [ \psi, \bar{\psi} ] =  \bar{\psi} ( i \gamma^\mu \partial_\mu - \hat{m} ) \psi + \mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
 $$
 
 Here, $\psi$ is the quark field and $\hat{m}= \mathrm{diag}  \{ m_1, m_2, \ldots , m_{N_f} \} $ is the quark current mass matrix (with $N_f$ the number of quark flavors). The different quark-quark interactions are contained in the term $\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]$ and, for our purposes, its exact definite form is not important. This interaction term includes the dynamical chiral symmetry breaking 4-quark scalar-pseudoscalar interaction, $\mathcal{L} \supset (\bar{\psi} \lambda_a \psi)^2 + (\bar{\psi} i \gamma_5 \lambda_a \psi)^2$, but it also includes other multi-quark interactions, like the 't Hooft determinant, eight quark-quark interactions, explicit chiral symmetry breaking interactions, vector interactions, etc (in these interaction terms, $\lambda_a$ are the generators of the $U(N_f)$ algebra). 
@@ -45,20 +44,9 @@ Here,
 For example, considering the interaction `SP4Q_DET2NFQ` means that, at the Lagrangian level, the chosen quark interaction is:
 
 $$
-\mathrm{SP4Q\_DET2NFQ} \rightarrow
-\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
-=
-\frac{G}{2}
-\Big(
-(\bar{\psi} \lambda_a \psi)^2 + 
-(\bar{\psi} i \gamma^5 \lambda_a \psi)^2 
-\Big)
-+ 8 \kappa 
-\Big(
-\mathrm [ \bar{\psi} P_R \psi ] 
-+ 
-\mathrm [ \bar{\psi} P_L \psi ]  
-\Big)
+\mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ] =
+\frac{G}{2} ( (\bar{\psi} \lambda_a \psi)^2 + (\bar{\psi} i \gamma^5 \lambda_a \psi)^2 ) + 
+8 \kappa ( \mathrm [ \bar{\psi} P_R \psi ] + \mathrm [ \bar{\psi} P_L \psi ]  ) .
 $$
 
 
