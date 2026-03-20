@@ -90,7 +90,7 @@ def plot_integrated_cross_section_vs_temperature(
     # Automatically adjust layout
     fig.tight_layout()
 
-    plotname = f'integrated_cross_section_{parameter_set}_{process.lower()}_CP0.png'
+    plotname = f'integrated_cross_section_{parameter_set}_{process}_CP0.png'
     plt.savefig(plots_folder + plotname)
 
     # Clean up
