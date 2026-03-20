@@ -114,6 +114,19 @@ namespace SU3NJL3DCutoffFileParser
                 bool validateFile() const;
                 void evaluate() const;
         };
+    
+        class IsospinSymmetricIntegratedCrossSectionsFiniteChemPot : public Common
+        {   
+            public:
+                inline static const std::string calculationType = type + "IsospinSymmetricIntegratedCrossSectionsFiniteChemicalPotential";
+
+            public:
+                IsospinSymmetricIntegratedCrossSectionsFiniteChemPot(const IniFileParser& p) : Common(p) {}
+                
+                bool validateTemperatureAndGridConsistency() const;
+                bool validateFile() const;
+                void evaluate() const;
+        };
 
         class InMediumMassesAndThermodynamics : public Common
         {   

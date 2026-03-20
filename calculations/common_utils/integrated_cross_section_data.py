@@ -127,6 +127,7 @@ class IntegratedCrossSectionData:
     def get_strange_quark_effective_chemical_potential(self) -> np.ndarray:
         return self.strange_quark_effective_chemical_potential
 
+    # TODO: in this method, add prefix as variable
     @classmethod
     def from_matching_files(
         cls, folder: str, parameter_set: str, process: str, method: str
@@ -140,48 +141,3 @@ class IntegratedCrossSectionData:
         ]
 
         return cls(files)
-
-
-def read_integrated_cross_section_data(
-    folder: str, set: str, process: str, method: str
-) -> IntegratedCrossSectionData:
-
-    prefix = f'IntegratedCrossSection_{set}_{process}_{method}_'
-
-    files = [
-        (folder + f) for f in os.listdir(folder)
-        if f.startswith(prefix)
-    ]
-
-    return IntegratedCrossSectionData(files)
-
-
-
-class IntegratedCrossSectionDataFromSingleFile:
-    def __init__(self, filepath: str) -> None:
-        self.filepath = filepath
-        self.data = np.empty((0, 14))
-        
-        self.temperature = np.array([])
-        self.integrated_cross_section = np.array([])
-
-        self._load_data()
-
-    def _load_data(self) -> None:
-        try:
-            self.data = np.loadtxt(self.filepath, skiprows=1)
-
-            if self.data.shape[1] == 14:
-                self.temperature = self.data[:, 0]
-                self.integrated_cross_section = self.data[:, 7]
-            else:
-                raise ValueError(f"Error loading data from {self.filepath}: data file must have 14 columns!")
-
-        except Exception as e:
-            raise ValueError(f"Error loading data from {self.filepath}: {e}")
-
-    def get_temperature(self) -> np.ndarray:
-        return self.temperature
-    
-    def get_integrated_cross_section(self) -> np.ndarray:
-        return self.integrated_cross_section

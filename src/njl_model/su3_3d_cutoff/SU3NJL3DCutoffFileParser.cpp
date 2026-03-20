@@ -591,7 +591,7 @@ bool Common::checkRequiredSections(const vector<string> requiredSections) const
 
 void Common::printQualityCheckFailedMessage() const
 {
-    cout << "The quality check failed for the " << config.getFilename() << " file."  << endl;
+    cout << "The quality check failed for the file: " << config.getFilename() << endl;
 }
 
 }
@@ -1175,6 +1175,221 @@ void IsospinSymmetricIntegratedCrossSectionsZeroChemPot::evaluate() const
         maximumTemp, 
         numberOfPointsFromVacToFinTemp, 
         numberOfPointsFromLowToHighTemp, 
+        largeAngleScatteringContribution, 
+        stringToIntegratedCrossSectionApproximationMethod(approximationMethod),
+        propagatorIntegralPrecision,
+        crossSectionIntegralPrecision,
+        integratedCrossSectionIntegralPrecision_dXdY,
+        integratedCrossSectionIntegralPrecision_dX,
+        numberOfThreads
+    );
+}
+
+bool IsospinSymmetricIntegratedCrossSectionsFiniteChemPot::validateTemperatureAndGridConsistency() const
+{
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    namespace ICS = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
+
+    bool areTemperaturesEqual = (config.getValue(VFTZCPP::section, VFTZCPP::temperature)==config.getValue(LHT::section, LHT::minimumTemp));
+    if ( !areTemperaturesEqual )
+    {
+        cout << invalidFileMessage + " Invalid values found in sections " + VFTZCPP::section + " and " + LHT::section + ": \n";
+        cout << VFTZCPP::temperature << "==" << LHT::minimumTemp << " must be satisfied.\n";
+    }
+
+    bool areNumberOfPointsEqual = (config.getValue(LHT::section, LHT::numberOfPointsFromLowToHighTemp)==config.getValue(ICS::section, ICS::numberOfPointsIntegratedCrossSections));
+    if ( !areNumberOfPointsEqual )
+    {
+        cout << invalidFileMessage + " Invalid values found in sections " + LHT::section + " and " + ICS::section + ": \n";
+        cout << LHT::numberOfPointsFromLowToHighTemp << "==" << ICS::numberOfPointsIntegratedCrossSections << " must be satisfied.\n";
+    }
+    
+    return areTemperaturesEqual && areNumberOfPointsEqual;
+}
+
+bool IsospinSymmetricIntegratedCrossSectionsFiniteChemPot::validateFile() const
+{   
+    // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
+	const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
+    bool vacuumValidations = configVacuum.validateFile();
+
+    // Check for missing sections
+    bool allRequiredSectionsPresent = true;
+    vector<string> requiredSections = 
+    {
+        SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters::section
+    };  
+    for (int i = 0; i < int(requiredSections.size()); ++i) 
+    {
+        string section = requiredSections[i];
+        if (config.getSectionsData(section).empty()) 
+        {   
+            allRequiredSectionsPresent = false;
+            cout << "Missing required section: " << section << endl;
+        }
+    }
+
+    // Validate individual sections
+    bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
+    bool areFiniteTemperatureToFiniteChemicalPotentialParametersValid = validateFiniteTemperatureToFiniteChemicalPotentialParameters();
+    bool areLowToHighTemperatureAtZeroChemicalPotentialParametersValid = validateLowToHighTemperatureAtZeroChemicalPotentialParameters();
+    bool areIntegratedCrossSectionsParametersValid = validateIntegratedCrossSectionsParameters();
+
+    // Other validations
+    bool areTemperatureAndGridValid = validateTemperatureAndGridConsistency();
+
+    return vacuumValidations && 
+           allRequiredSectionsPresent &&
+           areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid &&
+           areFiniteTemperatureToFiniteChemicalPotentialParametersValid &&
+           areLowToHighTemperatureAtZeroChemicalPotentialParametersValid &&
+           areIntegratedCrossSectionsParametersValid &&
+           areTemperatureAndGridValid;
+}
+
+void IsospinSymmetricIntegratedCrossSectionsFiniteChemPot::evaluate() const
+{   
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace FTFCPP = SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
+    namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
+
+    // Model Parameters
+    cout << "\n" << MP::section << ": " << endl;
+
+    string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
+    string regularizationScheme = config.getValue(MP::section, MP::regularizationScheme);
+    double cutoff = config.getDouble(MP::section, MP::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MP::section, MP::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MP::section, MP::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
+
+    cout << MP::parameterSetName << " = " << parameterSetName << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::cutoff << " = " << cutoff << endl;
+    cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
+
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
+
+    // VacuumMassesParameters
+    cout << "\n" << VMP::section << ": " << endl;
+
+    double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
+    string methodVacuum = config.getValue(VMP::section, VMP::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMP::section, VMP::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMP::section, VMP::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
+
+    cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
+    
+    // VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters
+    cout << "\n" << VFTZCPP::section << ": " << endl;
+
+    double nearVacuumTemperature = config.getDouble(VFTZCPP::section, VFTZCPP::nearVacuumTemperature);
+    double temperature = config.getDouble(VFTZCPP::section, VFTZCPP::temperature);
+    int numberOfPointsFromVacToFinTemp = config.getInt(VFTZCPP::section, VFTZCPP::numberOfPointsFromVacToFinTemp);
+    double precisionVacToFinTemp = config.getDouble(VFTZCPP::section, VFTZCPP::precisionVacToFinTemp);
+    string methodVacToFinTemp = config.getValue(VFTZCPP::section, VFTZCPP::methodVacToFinTemp);
+
+    cout << VFTZCPP::nearVacuumTemperature << " = " << nearVacuumTemperature << endl;
+    cout << VFTZCPP::temperature << " = " << temperature << endl;
+    cout << VFTZCPP::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
+    cout << VFTZCPP::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
+    cout << VFTZCPP::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
+
+    // FiniteTemperatureToFiniteChemicalPotentialParameters
+    cout << "\n" << FTFCPP::section << ": " << endl;
+    
+    double chemPot = config.getDouble(FTFCPP::section, FTFCPP::chemPot);
+    int numberOfPointsFromFinTempToFinChemPot = config.getInt(FTFCPP::section, FTFCPP::numberOfPointsFromFinTempToFinChemPot);
+    double precisionFinTempToFinChemPot = config.getDouble(FTFCPP::section, FTFCPP::precisionFinTempToFinChemPot);
+    string methodFinTempToFinChemPot = config.getValue(FTFCPP::section, FTFCPP::methodFinTempToFinChemPot);
+
+    cout << FTFCPP::chemPot << " = " << chemPot << endl;
+    cout << FTFCPP::numberOfPointsFromFinTempToFinChemPot << " = " << numberOfPointsFromFinTempToFinChemPot << endl;
+    cout << FTFCPP::precisionFinTempToFinChemPot << " = " << precisionFinTempToFinChemPot << endl;
+    cout << FTFCPP::methodFinTempToFinChemPot << " = " << methodFinTempToFinChemPot << endl;
+    
+    // LowToHighTemperatureAtZeroChemicalPotentialParameters
+    cout << "\n" << LHT::section << ": " << endl;
+    
+    double minimumTemp = config.getDouble(LHT::section, LHT::minimumTemp);
+    double maximumTemp = config.getDouble(LHT::section, LHT::maximumTemp);
+    double numberOfPointsFromLowToHighTemp = config.getInt(LHT::section, LHT::numberOfPointsFromLowToHighTemp);
+    double precisionLowToHighTemp = config.getDouble(LHT::section, LHT::precisionLowToHighTemp);
+    string methodLowToHighTemp = config.getValue(LHT::section, LHT::methodLowToHighTemp);  
+
+    cout << LHT::minimumTemp << " = " << minimumTemp << endl;
+    cout << LHT::maximumTemp << " = " << maximumTemp << endl;
+    cout << LHT::numberOfPointsFromLowToHighTemp << " = " << numberOfPointsFromLowToHighTemp << endl;
+    cout << LHT::precisionLowToHighTemp << " = " << precisionLowToHighTemp << endl;
+    cout << LHT::methodLowToHighTemp << " = " << methodLowToHighTemp << endl;
+
+    // IntegratedCrossSectionsParameters
+    cout << "\n" << ICSP::section << ": " << endl;
+    
+    int numberOfPointsIntegratedCrossSections = config.getInt(ICSP::section, ICSP::numberOfPointsIntegratedCrossSections);
+    double propagatorIntegralPrecision = config.getDouble(ICSP::section, ICSP::propagatorIntegralPrecision);
+    bool largeAngleScatteringContribution = config.getBool(ICSP::section, ICSP::largeAngleScatteringContribution);
+    double crossSectionIntegralPrecision = config.getDouble(ICSP::section, ICSP::crossSectionIntegralPrecision);
+    double integratedCrossSectionIntegralPrecision_dXdY = config.getDouble(ICSP::section, ICSP::integratedCrossSectionIntegralPrecision_dXdY);
+    double integratedCrossSectionIntegralPrecision_dX = config.getDouble(ICSP::section, ICSP::integratedCrossSectionIntegralPrecision_dX);
+    string approximationMethod = config.getValue(ICSP::section, ICSP::approximationMethod);
+    int numberOfThreads = config.getInt(ICSP::section, ICSP::numberOfThreads);
+  
+    cout << ICSP::numberOfPointsIntegratedCrossSections << " = " << numberOfPointsIntegratedCrossSections << endl;
+    cout << ICSP::propagatorIntegralPrecision << " = " << propagatorIntegralPrecision << endl;
+    cout << ICSP::largeAngleScatteringContribution << " = " << largeAngleScatteringContribution << endl;
+    cout << ICSP::crossSectionIntegralPrecision << " = " << crossSectionIntegralPrecision << endl;
+    cout << ICSP::integratedCrossSectionIntegralPrecision_dXdY << " = " << integratedCrossSectionIntegralPrecision_dXdY << endl;
+    cout << ICSP::integratedCrossSectionIntegralPrecision_dX << " = " << integratedCrossSectionIntegralPrecision_dX << endl;
+    cout << ICSP::approximationMethod << " = " << approximationMethod << endl;
+    cout << ICSP::numberOfThreads << " = " << numberOfThreads << endl;
+
+    // Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoff, 
+        couplings, 
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
+    );
+    parameters.setParameterSetName(parameterSetName);
+    
+    evaluateIsospinSymmetricIntegratedCrossSectionsWithFixedChemicalPotential(
+        parameters, 
+        precisionVacuum, 
+        stringToMultiRootFindingMethod(methodVacuum), 
+        upQuarkMassGuess, 
+        strangeQuarkMassGuess,
+        nearVacuumTemperature,
+        minimumTemp,
+        numberOfPointsFromVacToFinTemp, 
+        precisionVacToFinTemp, 
+        stringToMultiRootFindingMethod(methodVacToFinTemp), 
+        chemPot,
+        numberOfPointsFromFinTempToFinChemPot,
+        precisionFinTempToFinChemPot, 
+        stringToMultiRootFindingMethod(methodFinTempToFinChemPot),
+        maximumTemp, 
+        numberOfPointsFromLowToHighTemp, 
+        precisionLowToHighTemp, 
+        stringToMultiRootFindingMethod(methodLowToHighTemp),
         largeAngleScatteringContribution, 
         stringToIntegratedCrossSectionApproximationMethod(approximationMethod),
         propagatorIntegralPrecision,

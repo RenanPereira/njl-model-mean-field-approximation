@@ -115,12 +115,23 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 ```
 
 ## SU3 NJL Integrated Cross Section Study (su3_3d_cutoff_int_cross_sections)
+
+### Zero chemical potential
 ```bash
 (cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_COMPLETE_COV.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_KLEVANSKY.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_ZHUANG.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_local_main.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./build_plots.sh)
+```
+
+### CEP chemical potential
+```bash
+(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_calculations_COMPLETE_COV.sh)
+(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_calculations_KLEVANSKY.sh)
+(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_calculations_ZHUANG.sh)
+(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_local_main.sh)
+(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./build_plots.sh)
 ```
 
 ## SU3 NJL Quark Relaxation Time Study (su3_3d_cutoff_quark_relaxation_times)

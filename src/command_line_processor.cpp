@@ -75,6 +75,11 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsZeroChemPot config(configFile);
 		config.run();
 	}
+	else if (type==SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsFiniteChemPot::calculationType)
+	{	
+		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::IsospinSymmetricIntegratedCrossSectionsFiniteChemPot config(configFile);
+		config.run();
+	}
 	else if (type==SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics::calculationType)
 	{	
 		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics config(configFile);
