@@ -48,24 +48,24 @@ In this section we present the results of the quark relaxation time for differen
 ### Set A, Zero chemical potential
 
 <p align="center">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_uuuu_CP0.png" width="32%">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_uubaruubar_CP0.png" width="32%">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_uubarssbar_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_UUUU_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_UUBarUUBar_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_UUBarSSBar_CP0.png" width="32%">
 </p>
 
 <p align="center">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_uubarddbar_CP0.png" width="32%">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_usus_CP0.png" width="32%">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_usbarusbar_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_UUBarDDBar_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_USUS_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_USBarUSBar_CP0.png" width="32%">
 </p>
 
 <p align="center">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_udud_CP0.png" width="32%">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_udbarudbar_CP0.png" width="32%">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_ssss_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_UDUD_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_UDBarUDBar_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_SSSS_CP0.png" width="32%">
 </p>
 
 <p align="center">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_ssbaruubar_CP0.png" width="32%">
-  <img src="zero_chem_pot/plots/integrated_cross_section_setA_ssbarssbar_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_SSBarUUBar_CP0.png" width="32%">
+  <img src="zero_chem_pot/plots/integrated_cross_section_setA_SSBarSSBar_CP0.png" width="32%">
 </p>
