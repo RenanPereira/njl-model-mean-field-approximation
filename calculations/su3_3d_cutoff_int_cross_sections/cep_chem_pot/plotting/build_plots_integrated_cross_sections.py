@@ -58,8 +58,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.08,
+    y_annotation=0.88,
     annotation_vert_space=0.06
 )
 
@@ -110,8 +110,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.88,
     annotation_vert_space=0.06
 )
 
@@ -163,8 +163,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -216,8 +216,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -269,8 +269,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -321,8 +321,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -373,8 +373,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.08,
+    y_annotation=0.88,
     annotation_vert_space=0.06
 )
 
@@ -425,8 +425,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -477,8 +477,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.85,
     annotation_vert_space=0.06
 )
 
@@ -529,8 +529,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -581,8 +581,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -634,8 +634,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -686,8 +686,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.88,
     annotation_vert_space=0.06
 )
 
@@ -739,8 +739,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -791,8 +791,8 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )
 
@@ -843,7 +843,7 @@ plot_integrated_cross_section_vs_temperature(
         "set A",
         r"$\mu = \mu_{\mathrm{CEP}}$",
     ],
-    x_annotation=0.78,
-    y_annotation=0.55,
+    x_annotation=0.05,
+    y_annotation=0.05,
     annotation_vert_space=0.06
 )

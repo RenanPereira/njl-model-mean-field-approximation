@@ -3,6 +3,7 @@
 **THIS FILE IS A WORK IN PROGRESS...**
 
 This project provides computational tools for studying the Nambu–Jona-Lasinio (NJL) model in the mean-field approximation. The Lagrangian density of the model can be written as:
+
 $$
 \mathcal{L} [ \psi, \bar{\psi} ] =  \bar{\psi} ( i \gamma^\mu \partial_\mu - \hat{m} ) \psi + \mathcal{L}_\mathrm{int} [\psi, \bar{\psi} ]
 $$
