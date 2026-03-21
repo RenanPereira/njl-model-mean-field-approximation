@@ -15,7 +15,7 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat'
 )
 
 method = "KLEVANSKY"
@@ -24,7 +24,7 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat'
 )
 
 method = "ZHUANG"
@@ -33,5 +33,5 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat'
 )

@@ -26,13 +26,13 @@ print("Building plot: quark relaxation time with set A, at zero chemical potenti
 parameter_set = "setA"
 
 method = "COMPLETE_COV"
-data_complete = QuarkRelaxationTimesData(path_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat')
+data_complete = QuarkRelaxationTimesData(path_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat')
 
 method = "KLEVANSKY"
-data_klevansky = QuarkRelaxationTimesData(path_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat')
+data_klevansky = QuarkRelaxationTimesData(path_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat')
 
 method = "ZHUANG"
-data_zhuang = QuarkRelaxationTimesData(path_data_folder + f'RelaxationTimes_{parameter_set}_{method}.dat')
+data_zhuang = QuarkRelaxationTimesData(path_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat')
 
 # Create a new figure
 fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
@@ -87,7 +87,7 @@ ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 auxH = 0.06; auxX = 0.03; auxY = 0.03
 texts = [
     r'set A',
-    r'$\mu = 0.0\ \mathrm{GeV}$',
+    r"$\mu [\mathrm{GeV}] = 0.0$",
 ]
 add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
 
