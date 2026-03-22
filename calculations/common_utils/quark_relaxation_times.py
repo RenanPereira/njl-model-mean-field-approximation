@@ -14,8 +14,12 @@ class QuarkRelaxationTimes:
         physical_scenario: str,
         output_data_filepath: str
     ):
-        if physical_scenario=="zero_chemical_potential_isospin_symmetric":
+        print(f"Calculating quark relaxation times using integrated cross section files in found in path: {path_input_data_folder}")
+        
+        if (physical_scenario=="zero_chemical_potential_isospin_symmetric"):
             self._load_data_zero_mu_isospin_symmetric(path_input_data_folder, parameter_set, method)
+        elif (physical_scenario=="finite_chemical_potential_isospin_symmetric"):
+            self._load_data_finite_mu_isospin_symmetric(path_input_data_folder, parameter_set, method)
         else:
             raise ValueError(f"Unknown physical_scenario: {physical_scenario}")
         
@@ -23,8 +27,13 @@ class QuarkRelaxationTimes:
         self._calculate_quark_relaxation_times()
         self._save_to_file(output_data_filepath)
 
-    def _load_data_zero_mu_isospin_symmetric(self, path_data_folder: str, parameter_set: str, method: str):
-        # read data files for the specific scenario of zero chemical potential
+    def _load_data_zero_mu_isospin_symmetric(
+        self, 
+        path_data_folder: str, 
+        parameter_set: str, 
+        method: str
+    ) -> None:
+        # read data files for the specific scenario of zero chemical potential and isospin symmetry
         loader = IntegratedCrossSectionData.from_matching_files
         
         # 1) ud->ud
@@ -108,6 +117,95 @@ class QuarkRelaxationTimes:
         # 27) sbarsbar->sbarsbar (equal to ss->ss by charge symmetry at CP=0)
         self.data_sbarsbarsbarsbar = self.data_ssss
 
+    def _load_data_finite_mu_isospin_symmetric(
+        self, 
+        path_data_folder: str, 
+        parameter_set: str, 
+        method: str
+    ) -> None:
+        # read data files for the specific scenario of finite chemical potential and isospin symmetry
+        loader = IntegratedCrossSectionData.from_matching_files
+        
+        # 1) ud->ud
+        self.data_udud = loader(path_data_folder, parameter_set, "UDUD", method)
+
+        # 2) us->us
+        self.data_usus = loader(path_data_folder, parameter_set, "USUS", method)
+
+        # 3) ds->ds (equal to us->us by isospin symmetry)
+        self.data_dsds = self.data_usus
+
+        # 4) uu->uu
+        self.data_uuuu = loader(path_data_folder, parameter_set, "UUUU", method)
+
+        # 5) dd->dd    (equal to uu->uu by isospin symmetry)
+        self.data_dddd = self.data_uuuu
+
+        # 6) ss->ss
+        self.data_ssss = loader(path_data_folder, parameter_set, "SSSS", method)
+
+        # 7) udbar->udbar
+        self.data_udbarudbar = loader(path_data_folder, parameter_set, "UDBarUDBar", method)
+
+        # 8) dubar->dubar (equal to udbar-> udbar by isospin symmetry)
+        self.data_dubardubar = self.data_udbarudbar
+
+        # 9) usbar->usbar
+        self.data_usbarusbar = loader(path_data_folder, parameter_set, "USBarUSBar", method)
+
+        # 10) subar->subar
+        self.data_subarsubar = loader(path_data_folder, parameter_set, "SUBarSUBar", method)
+
+        # 11) dsbar->dsbar (equal to usbar->usbar by isospin symmetry)
+        self.data_dsbardsbar = self.data_usbarusbar
+
+        # 12) sdbar->sdbar (equal to subar->subar by isospin symmetry)
+        self.data_sdbarsdbar = self.data_subarsubar
+
+        # 13) uubar->uubar
+        self.data_uubaruubar = loader(path_data_folder, parameter_set, "UUBarUUBar", method)
+
+        # 14) uubar->ddbar
+        self.data_uubarddbar = loader(path_data_folder, parameter_set, "UUBarDDBar", method)
+
+        # 15) uubar-> ssbar
+        self.data_uubarssbar = loader(path_data_folder, parameter_set, "UUBarSSBar", method)
+
+        # 16) ddbar->uubar (equal to uubar->ddbar by isospin symmetry)
+        self.data_ddbaruubar = self.data_uubarddbar
+
+        # 17) ddbar->ddbar (equal to uubar->uubar by isospin symmetry)
+        self.data_ddbarddbar = self.data_uubaruubar
+
+        # 18) ddbar->ssbar (equal to uubar->ssbar by isospin symmetry)
+        self.data_ddbarssbar = self.data_uubarssbar
+
+        # 19) ssbar->uubar
+        self.data_ssbaruubar = loader(path_data_folder, parameter_set, "SSBarUUBar", method)
+
+        # 20) ssbar->ddbar (equal to ssbar->uubar by isospin symmetry)
+        self.data_ssbarddbar = self.data_ssbaruubar
+
+        # 21) ssbar->ssbar
+        self.data_ssbarssbar = loader(path_data_folder, parameter_set, "SSBarSSBar", method)
+
+        # 22) ubardbar->ubardbar
+        self.data_ubardbarubardbar = loader(path_data_folder, parameter_set, "UBarDBarUBarDBar", method)
+
+        # 23) ubarsbar-> ubarsbar
+        self.data_ubarsbarubarsbar = loader(path_data_folder, parameter_set, "UBarSBarUBarSBar", method)
+
+        # 24) dbarsbar->dbarsbar (equal to ubarsbar->ubarsbar by isospin symmetry)
+        self.data_dbarsbardbarsbar = self.data_ubarsbarubarsbar
+
+        # 25) ubarubar->ubarubar
+        self.data_ubarubarubarubar = loader(path_data_folder, parameter_set, "UBarUBarUBarUBar", method)
+
+        # 26) dbardbar->dbardbar (equal to ubarubar->ubarubar by isospin symmetry)
+        self.data_dbardbardbardbar = self.data_ubarubarubarubar
+
+        # 27) sbarsbar->sbarsbar
+        self.data_sbarsbarsbarsbar = loader(path_data_folder, parameter_set, "SBarSBarSBarSBar", method)
 
     def _test_data_mismatch(
         self,
@@ -185,7 +283,7 @@ class QuarkRelaxationTimes:
                         f"the same in all data! Mismatch found between data indexes {i} and {i+1}"
                     )
 
-    def _calculate_quark_relaxation_times(self):
+    def _calculate_quark_relaxation_times(self) -> None:
 
         # Extract quark numbers from single data source
         nu = self.data_uuuu.get_up_quark_number()
