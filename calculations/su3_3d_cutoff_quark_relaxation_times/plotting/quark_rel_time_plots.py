@@ -61,7 +61,7 @@ def plot_quark_rel_time_vs_temperature(
     
     # Legend
     if legend_loc is not None:
-        ax.legend(loc=legend_loc, fontsize=14, frameon=False)
+        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
 
     # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
