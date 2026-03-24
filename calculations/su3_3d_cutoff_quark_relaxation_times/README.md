@@ -67,9 +67,23 @@ To execute everything in one go:
 
 In this section we present the results of the quark relaxation time for different physical scenarios, different NJL parameter sets and different methods to evaluate the integral over the differential cross sections.
 
-
 ### Set A, Zero chemical potential
 
-#### Comparing different methods
-![Quark relaxation time plot](plots/quark_relaxation_time_setA_CP0.png)
+<p align="center">
+  <img src="plots/quarks_rel_time_setA_CP0.png" width="32%">
+</p>
 
+### Set A, CEP chemical potential
+
+<p align="center">
+  <img src="plots/quarks_rel_time_setA_methodI_CPCEP.png" width="32%">
+  <img src="plots/quarks_rel_time_setA_methodII_CPCEP.png" width="32%">
+  <img src="plots/quarks_rel_time_setA_methodIII_CPCEP.png" width="32%">
+</p>
+
+<p align="center">
+  <img src="plots/l_quark_rel_time_setA_CPCEP.png" width="24%">
+  <img src="plots/s_quark_rel_time_setA_CPCEP.png" width="24%">
+  <img src="plots/l_antiquark_rel_time_setA_CPCEP.png" width="24%">
+  <img src="plots/s_antiquark_rel_time_setA_CPCEP.png" width="24%">
+</p>

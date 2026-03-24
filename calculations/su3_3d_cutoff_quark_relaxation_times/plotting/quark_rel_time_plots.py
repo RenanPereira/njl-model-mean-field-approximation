@@ -17,6 +17,7 @@ def plot_quark_rel_time_vs_temperature(
     data_specs: list[tuple[str, str, str, str, int, str]],
     path_output_plot: str,
     legend_loc: str | None = None,
+    label_rel_time: str | None = None,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
     x_num_ticks: int = 6,
@@ -65,7 +66,10 @@ def plot_quark_rel_time_vs_temperature(
 
     # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\tau\, [\mathrm{fm}]$', fontsize=20)
+    if label_rel_time is None:
+        ax.set_ylabel(r'$\tau\, [\mathrm{fm}]$', fontsize=20)
+    else: 
+        ax.set_ylabel(label_rel_time, fontsize=20)
     
     # Configure axes using the helper function
     xmin = xlim[0]

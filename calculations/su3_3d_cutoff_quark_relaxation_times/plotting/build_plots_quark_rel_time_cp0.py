@@ -64,7 +64,7 @@ plot_quark_rel_time_vs_temperature(
             ":"
         ),
     ],
-    path_output_plot=path_plots_folder + f"quark_relaxation_time_setA_CP0.png",
+    path_output_plot=path_plots_folder + f"quarks_rel_time_setA_CP0.png",
     legend_loc="upper right",
     xlim=(0.120, 0.300),
     ylim=(0.0, 10.0),

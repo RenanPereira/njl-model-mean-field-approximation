@@ -50,13 +50,13 @@ class QuarkRelaxationTimesData:
         return self.rel_time_strange_quark
 
     def get_rel_time_up_antiquark(self) -> np.ndarray:
-        return self.rel_time_up_quark
+        return self.rel_time_up_antiquark
 
     def get_rel_time_down_antiquark(self) -> np.ndarray:
-        return self.rel_time_down_quark
+        return self.rel_time_down_antiquark
 
     def get_rel_time_strange_antiquark(self) -> np.ndarray:
-        return self.rel_time_strange_quark
+        return self.rel_time_strange_antiquark
 
     def get_rel_time(self, quark_species: str) -> np.ndarray:        
         if quark_species == "up_quark":
