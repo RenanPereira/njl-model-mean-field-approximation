@@ -1,4 +1,4 @@
-from su3_3d_cutoff_int_cross_sections.plotting_utils import plot_integrated_cross_section_vs_temperature
+from su3_3d_cutoff_int_cross_sections.integrated_cross_section_plots import plot_integrated_cross_section_vs_temperature
 from common_utils.cross_section_data import process_to_ylabel_latex
 
 # Common configurations between plots
