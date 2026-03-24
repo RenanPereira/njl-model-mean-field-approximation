@@ -34,34 +34,34 @@ class QuarkRelaxationTimes:
         method: str
     ) -> None:
         # read data files for the specific scenario of zero chemical potential and isospin symmetry
-        loader = IntegratedCrossSectionData.from_matching_files
+        loader = IntegratedCrossSectionData.from_matching_prefix
         
         # 1) ud->ud
-        self.data_udud = loader(path_data_folder, parameter_set, "UDUD", method)
+        self.data_udud = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UDUD_{method}_')
 
         # 2) us->us
-        self.data_usus = loader(path_data_folder, parameter_set, "USUS", method)
+        self.data_usus = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_USUS_{method}_')
 
         # 3) ds->ds (equal to us->us by isospin symmetry)
         self.data_dsds = self.data_usus
 
         # 4) uu->uu
-        self.data_uuuu = loader(path_data_folder, parameter_set, "UUUU", method)
+        self.data_uuuu = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UUUU_{method}_')
 
         # 5) dd->dd    (equal to uu->uu by isospin symmetry)
         self.data_dddd = self.data_uuuu
 
         # 6) ss->ss
-        self.data_ssss = loader(path_data_folder, parameter_set, "SSSS", method)
+        self.data_ssss = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_SSSS_{method}_')
 
         # 7) udbar->udbar
-        self.data_udbarudbar = loader(path_data_folder, parameter_set, "UDBarUDBar", method)
+        self.data_udbarudbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UDBarUDBar_{method}_')
 
         # 8) dubar->dubar (equal to udbar-> udbar by isospin symmetry)
         self.data_dubardubar = self.data_udbarudbar
 
         # 9) usbar->usbar
-        self.data_usbarusbar = loader(path_data_folder, parameter_set, "USBarUSBar", method)
+        self.data_usbarusbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_USBarUSBar_{method}_')
 
         # 10) subar->subar (equal to usbar->usbar by charge symmetry at CP=0)
         self.data_subarsubar = self.data_usbarusbar
@@ -73,13 +73,13 @@ class QuarkRelaxationTimes:
         self.data_sdbarsdbar = self.data_dsbardsbar
 
         # 13) uubar->uubar
-        self.data_uubaruubar = loader(path_data_folder, parameter_set, "UUBarUUBar", method)
+        self.data_uubaruubar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UUBarUUBar_{method}_')
 
         # 14) uubar->ddbar
-        self.data_uubarddbar = loader(path_data_folder, parameter_set, "UUBarDDBar", method)
+        self.data_uubarddbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UUBarDDBar_{method}_')
 
         # 15) uubar-> ssbar
-        self.data_uubarssbar = loader(path_data_folder, parameter_set, "UUBarSSBar", method)
+        self.data_uubarssbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UUBarSSBar_{method}_')
 
         # 16) ddbar->uubar (equal to uubar->ddbar by isospin symmetry)
         self.data_ddbaruubar = self.data_uubarddbar
@@ -91,13 +91,13 @@ class QuarkRelaxationTimes:
         self.data_ddbarssbar = self.data_uubarssbar
 
         # 19) ssbar->uubar
-        self.data_ssbaruubar = loader(path_data_folder, parameter_set, "SSBarUUBar", method)
+        self.data_ssbaruubar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_SSBarUUBar_{method}_')
 
         # 20) ssbar->ddbar (equal to ssbar->uubar by isospin symmetry)
         self.data_ssbarddbar = self.data_ssbaruubar
 
         # 21) ssbar->ssbar
-        self.data_ssbarssbar = loader(path_data_folder, parameter_set, "SSBarSSBar", method)
+        self.data_ssbarssbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_SSBarSSBar_{method}_')
 
         # 22) ubardbar->ubardbar (equal to ud->ud by charge symmetry at CP=0)
         self.data_ubardbarubardbar = self.data_udud
@@ -124,37 +124,37 @@ class QuarkRelaxationTimes:
         method: str
     ) -> None:
         # read data files for the specific scenario of finite chemical potential and isospin symmetry
-        loader = IntegratedCrossSectionData.from_matching_files
+        loader = IntegratedCrossSectionData.from_matching_prefix
         
         # 1) ud->ud
-        self.data_udud = loader(path_data_folder, parameter_set, "UDUD", method)
+        self.data_udud = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UDUD_{method}_')
 
         # 2) us->us
-        self.data_usus = loader(path_data_folder, parameter_set, "USUS", method)
+        self.data_usus = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_USUS_{method}_')
 
         # 3) ds->ds (equal to us->us by isospin symmetry)
         self.data_dsds = self.data_usus
 
         # 4) uu->uu
-        self.data_uuuu = loader(path_data_folder, parameter_set, "UUUU", method)
+        self.data_uuuu = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UUUU_{method}_')
 
         # 5) dd->dd    (equal to uu->uu by isospin symmetry)
         self.data_dddd = self.data_uuuu
 
         # 6) ss->ss
-        self.data_ssss = loader(path_data_folder, parameter_set, "SSSS", method)
+        self.data_ssss = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_SSSS_{method}_')
 
         # 7) udbar->udbar
-        self.data_udbarudbar = loader(path_data_folder, parameter_set, "UDBarUDBar", method)
+        self.data_udbarudbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UDBarUDBar_{method}_')
 
         # 8) dubar->dubar (equal to udbar-> udbar by isospin symmetry)
         self.data_dubardubar = self.data_udbarudbar
 
         # 9) usbar->usbar
-        self.data_usbarusbar = loader(path_data_folder, parameter_set, "USBarUSBar", method)
+        self.data_usbarusbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_USBarUSBar_{method}_')
 
         # 10) subar->subar
-        self.data_subarsubar = loader(path_data_folder, parameter_set, "SUBarSUBar", method)
+        self.data_subarsubar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_SUBarSUBar_{method}_')
 
         # 11) dsbar->dsbar (equal to usbar->usbar by isospin symmetry)
         self.data_dsbardsbar = self.data_usbarusbar
@@ -163,13 +163,13 @@ class QuarkRelaxationTimes:
         self.data_sdbarsdbar = self.data_subarsubar
 
         # 13) uubar->uubar
-        self.data_uubaruubar = loader(path_data_folder, parameter_set, "UUBarUUBar", method)
+        self.data_uubaruubar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UUBarUUBar_{method}_')
 
         # 14) uubar->ddbar
-        self.data_uubarddbar = loader(path_data_folder, parameter_set, "UUBarDDBar", method)
+        self.data_uubarddbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UUBarDDBar_{method}_')
 
         # 15) uubar-> ssbar
-        self.data_uubarssbar = loader(path_data_folder, parameter_set, "UUBarSSBar", method)
+        self.data_uubarssbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UUBarSSBar_{method}_')
 
         # 16) ddbar->uubar (equal to uubar->ddbar by isospin symmetry)
         self.data_ddbaruubar = self.data_uubarddbar
@@ -181,31 +181,31 @@ class QuarkRelaxationTimes:
         self.data_ddbarssbar = self.data_uubarssbar
 
         # 19) ssbar->uubar
-        self.data_ssbaruubar = loader(path_data_folder, parameter_set, "SSBarUUBar", method)
+        self.data_ssbaruubar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_SSBarUUBar_{method}_')
 
         # 20) ssbar->ddbar (equal to ssbar->uubar by isospin symmetry)
         self.data_ssbarddbar = self.data_ssbaruubar
 
         # 21) ssbar->ssbar
-        self.data_ssbarssbar = loader(path_data_folder, parameter_set, "SSBarSSBar", method)
+        self.data_ssbarssbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_SSBarSSBar_{method}_')
 
         # 22) ubardbar->ubardbar
-        self.data_ubardbarubardbar = loader(path_data_folder, parameter_set, "UBarDBarUBarDBar", method)
+        self.data_ubardbarubardbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UBarDBarUBarDBar_{method}_')
 
         # 23) ubarsbar-> ubarsbar
-        self.data_ubarsbarubarsbar = loader(path_data_folder, parameter_set, "UBarSBarUBarSBar", method)
+        self.data_ubarsbarubarsbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UBarSBarUBarSBar_{method}_')
 
         # 24) dbarsbar->dbarsbar (equal to ubarsbar->ubarsbar by isospin symmetry)
         self.data_dbarsbardbarsbar = self.data_ubarsbarubarsbar
 
         # 25) ubarubar->ubarubar
-        self.data_ubarubarubarubar = loader(path_data_folder, parameter_set, "UBarUBarUBarUBar", method)
+        self.data_ubarubarubarubar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_UBarUBarUBarUBar_{method}_')
 
         # 26) dbardbar->dbardbar (equal to ubarubar->ubarubar by isospin symmetry)
         self.data_dbardbardbardbar = self.data_ubarubarubarubar
 
         # 27) sbarsbar->sbarsbar
-        self.data_sbarsbarsbarsbar = loader(path_data_folder, parameter_set, "SBarSBarSBarSBar", method)
+        self.data_sbarsbarsbarsbar = loader(path_data_folder, f'IntegratedCrossSection_{parameter_set}_SBarSBarSBarSBar_{method}_')
 
     def _test_data_mismatch(
         self,

@@ -127,17 +127,18 @@ class IntegratedCrossSectionData:
     def get_strange_quark_effective_chemical_potential(self) -> np.ndarray:
         return self.strange_quark_effective_chemical_potential
 
-    # TODO: in this method, add prefix as variable
     @classmethod
-    def from_matching_files(
-        cls, folder: str, parameter_set: str, process: str, method: str
+    def from_matching_prefix(
+        cls, 
+        path_data_folder: str, 
+        prefix: str
     ) -> "IntegratedCrossSectionData":
-
-        prefix = f'IntegratedCrossSection_{parameter_set}_{process}_{method}_'
-
-        files = [
-            (folder + f) for f in os.listdir(folder)
-            if f.startswith(prefix)
-        ]
+        files = []
+        for file in os.listdir(path_data_folder):
+            if file.startswith(prefix):
+                files.append(path_data_folder + file)
+        
+        if not files:
+            raise ValueError(f"No files found with prefix '{prefix}' in folder {path_data_folder}")
 
         return cls(files)
