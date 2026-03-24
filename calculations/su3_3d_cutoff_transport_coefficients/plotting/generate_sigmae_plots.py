@@ -12,7 +12,7 @@ fig_y_size = 6
 path_transport_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
 path_output_plot_folder = "su3_3d_cutoff_transport_coefficients/plots/"
 
-datasets = [
+datasets_cp0 = [
     (
         path_transport_data_folder + "ElectricalConductivity_setA_COMPLETE_COV_CP0.dat",  
         r"Method I", 
@@ -40,7 +40,7 @@ plot_sigmae_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    datasets,
+    datasets_cp0,
     path_output_plot_folder + "sigmae_vs_temp_setA_CP0.png",
     "upper left",
     xlim=(0.120, 0.300),
@@ -61,7 +61,7 @@ plot_sigmae_over_temp_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    datasets,
+    datasets_cp0,
     path_output_plot_folder + "sigmae_over_temp_vs_temp_setA_CP0.png",
     "upper left",
     xlim=(0.120, 0.300),

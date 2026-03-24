@@ -12,27 +12,15 @@ electrical_conductivity = ElectricalConductivity(
     path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat', 
     path_output_data_folder + f'ElectricalConductivity_{parameter_set}_{method}_CP0.dat'
 )
-electrical_conductivity = ElectricalConductivity(
-    path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat', 
-    path_output_data_folder + f'ElectricalConductivity_{parameter_set}_{method}_CPCEP.dat'
-)
 
 method = "KLEVANSKY"
 electrical_conductivity = ElectricalConductivity(
     path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat', 
     path_output_data_folder + f'ElectricalConductivity_{parameter_set}_{method}_CP0.dat'
 )
-electrical_conductivity = ElectricalConductivity(
-    path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat', 
-    path_output_data_folder + f'ElectricalConductivity_{parameter_set}_{method}_CPCEP.dat'
-)
 
 method = "ZHUANG"
 electrical_conductivity = ElectricalConductivity(
     path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat', 
     path_output_data_folder + f'ElectricalConductivity_{parameter_set}_{method}_CP0.dat'
-)
-electrical_conductivity = ElectricalConductivity(
-    path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat', 
-    path_output_data_folder + f'ElectricalConductivity_{parameter_set}_{method}_CPCEP.dat'
 )

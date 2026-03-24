@@ -9,7 +9,7 @@ fig_y_size = 6
 path_transport_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
 path_output_plot_folder = "su3_3d_cutoff_transport_coefficients/plots/"
 
-datasets = [
+datasets_cp0 = [
     (
         path_transport_data_folder + "ShearViscosity_setA_COMPLETE_COV_CP0.dat",  
         r"Method I", 
@@ -33,13 +33,11 @@ datasets = [
     ),
 ]
 
-path_file_thermo = "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat"
-
 plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    datasets,
+    datasets_cp0,
     path_output_plot_folder + "eta_vs_temp_setA_CP0.png",
     "upper left",
     xlim=(0.120, 0.300),
@@ -60,8 +58,8 @@ plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
-    datasets,
-    path_file_thermo,
+    datasets_cp0,
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
     path_output_plot_folder + "eta_over_s_vs_temp_setA_CP0.png",
     include_kss_bound=True,
     legend_loc="upper right",

@@ -12,27 +12,15 @@ shear_viscosity = ShearViscosity(
     path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat', 
     path_output_data_folder + f'ShearViscosity_{parameter_set}_{method}_CP0.dat'
 )
-shear_viscosity = ShearViscosity(
-    path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat', 
-    path_output_data_folder + f'ShearViscosity_{parameter_set}_{method}_CPCEP.dat'
-)
 
 method = "KLEVANSKY"
 shear_viscosity = ShearViscosity(
     path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat', 
     path_output_data_folder + f'ShearViscosity_{parameter_set}_{method}_CP0.dat'
 )
-shear_viscosity = ShearViscosity(
-    path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat', 
-    path_output_data_folder + f'ShearViscosity_{parameter_set}_{method}_CPCEP.dat'
-)
 
 method = "ZHUANG"
 shear_viscosity = ShearViscosity(
     path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat', 
     path_output_data_folder + f'ShearViscosity_{parameter_set}_{method}_CP0.dat'
-)
-shear_viscosity = ShearViscosity(
-    path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat', 
-    path_output_data_folder + f'ShearViscosity_{parameter_set}_{method}_CPCEP.dat'
 )
