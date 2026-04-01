@@ -85,6 +85,11 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::InMediumMassesAndThermodynamics config(configFile);
 		config.run();
 	}
+	else if (type==SU3NJL3DCutoffFileParser::FixedChemPotTemp::ThermoFixedChemPotTrajectory::calculationType)
+	{	
+		const SU3NJL3DCutoffFileParser::FixedChemPotTemp::ThermoFixedChemPotTrajectory config(configFile);
+		config.run();
+	}
 	else
 	{
 		cout << "The file " << configFile.getFilename() << " does not match any known configuration! Check the FileDetails.\n";

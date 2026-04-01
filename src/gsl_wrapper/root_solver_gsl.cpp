@@ -39,7 +39,7 @@ MultiRootFindingMethod stringToMultiRootFindingMethod(const std::string& methodS
 }
 
 
-bool isValidMultiRootFindingMethod(const string& methodString)
+bool isValidMultiRootFindingMethod(const string& methodString, const string& invalidMessage)
 {
     bool isMultiRootFindingMethodValid = false;
     // Iterate over the map with explicit type
@@ -53,13 +53,21 @@ bool isValidMultiRootFindingMethod(const string& methodString)
     }
 
     if( isMultiRootFindingMethodValid==false )
-    {
+    {   
+        if( !invalidMessage.empty() )
+        {
+            cout << invalidMessage << endl;
+        }
         cout << "The value " + methodString + " is not a MultiRootFindingMethod!\n";
     }
 
     return isMultiRootFindingMethodValid;
 }
 
+bool isValidMultiRootFindingMethod(const string& methodString)
+{
+    return isValidMultiRootFindingMethod(methodString, "");
+}
 
 //Multi-dimensional root-finding
 void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void* params, int placeholder_f(const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod method)

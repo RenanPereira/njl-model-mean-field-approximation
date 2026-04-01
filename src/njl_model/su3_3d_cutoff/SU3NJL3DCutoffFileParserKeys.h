@@ -61,6 +61,24 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string methodVacToFinTemp = "methodVacuumToFiniteTemperature";
     }
 
+    namespace VacuumToFiniteChemicalPotentialParameters
+    {
+        inline const std::string section = "VacuumToFiniteChemicalPotentialParameters";
+        inline const std::string chemicalPotential = "chemicalPotential_GeV";
+        inline const std::string numberOfPointsVacToChemPot = "numberOfPointsVacuumToChemicalPotential";
+        inline const std::string precisionVacToChemPot = "precisionVacuumToChemicalPotential";
+        inline const std::string methodVacToChemPot = "methodVacuumToChemicalPotential";  
+    }
+
+    namespace UpToTemperatureParameters
+    {
+        inline const std::string section = "UpToTemperatureParameters";
+        inline const std::string temperature = "temperature_GeV";
+        inline const std::string numberOfPointsUpToTemp = "numberOfPointsUpToTemperature";
+        inline const std::string precisionUpToTemp = "precisionUpToTemperature";
+        inline const std::string methodUpToTemp = "methodUpToTemperature";
+    }
+
     namespace LowToHighTemperatureAtZeroChemicalPotentialParameters 
     {
         inline const std::string section = "LowToHighTemperatureAtZeroChemicalPotentialParameters";
@@ -101,6 +119,12 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string integratedCrossSectionIntegralPrecision_dX = "integratedCrossSectionIntegralPrecision_dX";
         inline const std::string approximationMethod = "approximationMethod";
         inline const std::string numberOfThreads = "numberOfThreads";
+    }
+
+    namespace OutputFileParameters
+    {
+        inline const std::string section = "OutputFileParameters";
+        inline const std::string customSuffix = "customSuffix";
     }
 }
 

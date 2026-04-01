@@ -116,6 +116,24 @@ public:
 		double , 
 		MultiRootFindingMethod 
 	);
+
+	static void computeThermoFixedChemPotTrajectory(
+		SU3NJL3DCutoffParameters& , 
+		double ,
+		MultiRootFindingMethod ,
+		double ,
+		double ,
+		double ,
+		double ,
+		int ,
+		double ,
+		MultiRootFindingMethod ,
+		double ,
+		int ,
+		double ,
+		MultiRootFindingMethod ,
+		std::string 
+	);
 	
 private:
 	void setUpQuarkEffectiveMass(double upQuarkEffectiveMassAux){ upQuarkEffectiveMass = upQuarkEffectiveMassAux; }
@@ -162,6 +180,22 @@ std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteCh
 	MultiRootFindingMethod 
 );
 
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
+    SU3NJL3DCutoffVacuum& , 
+    double , 
+    int , 
+    double , 
+    MultiRootFindingMethod 
+);
+
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveUpToTemperature(
+    SU3NJL3DCutoffFixedChemPotTemp , 
+    double , 
+    int , 
+    double , 
+    MultiRootFindingMethod 
+);
+
 std::vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 	SU3NJL3DCutoffVacuum , 
 	std::vector<SU3NJL3DCutoffFixedChemPotTemp> , 
@@ -185,5 +219,7 @@ SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(
 );
 
 void writeSolutionsToFile(std::vector<SU3NJL3DCutoffFixedChemPotTemp> , std::string );
+
+void calculateThermodynamics(SU3NJL3DCutoffVacuum& , std::vector<SU3NJL3DCutoffFixedChemPotTemp>& );
 
 #endif

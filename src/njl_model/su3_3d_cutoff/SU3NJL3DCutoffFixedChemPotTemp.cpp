@@ -10,6 +10,7 @@
 
 using namespace std;
 
+// Constructor that takes generic pointer (void*), casts it into class object and copy it to the current instance
 SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(void* auxiliar)
 {
     SU3NJL3DCutoffFixedChemPotTemp* solution = static_cast<SU3NJL3DCutoffFixedChemPotTemp*>(auxiliar);
@@ -161,8 +162,14 @@ bool SU3NJL3DCutoffFixedChemPotTemp::testSolution(double precision)
         &SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature
     );
 
-    if (gslTest==0){ return true; }
-    else{ return false; }
+    if ( gslTest == 0 )
+    { 
+        return true; 
+    }
+    else
+    { 
+        return false; 
+    }
 }
 
 SU3NJL3DCutoffMeson SU3NJL3DCutoffFixedChemPotTemp::calculateMesonMassAndWidth(
@@ -352,6 +359,109 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemica
         //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
 
         if (inMediumSol.testSolution(precision)==true){ solutions.push_back(inMediumSol); }
+    }
+
+    return solutions;
+}
+
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
+    SU3NJL3DCutoffVacuum& vacuumSolution, 
+    double maxChemPot, 
+    int numberOfPoints, 
+    double precision, 
+    MultiRootFindingMethod method
+)
+{
+    if (numberOfPoints < 2)
+    {
+        cout << "The parameter numberOfPoints must be >= 2 when calling function: " << __func__  << endl;
+        abort();
+    }
+
+    SU3NJL3DCutoffParameters parameters = vacuumSolution.getParametersNJL();
+    double effMassU = vacuumSolution.getUpQuarkEffectiveMass();
+    double effMassD = vacuumSolution.getDownQuarkEffectiveMass();
+    double effMassS = vacuumSolution.getStrangeQuarkEffectiveMass();
+
+    double minChemPot = 0.0;
+    double delta = (maxChemPot-minChemPot)/(numberOfPoints - 1);
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        double chemPot = minChemPot + i*delta;
+        
+        // create instance with temperature set to zero and equal chemical potentials
+        SU3NJL3DCutoffFixedChemPotTemp inMediumSol(parameters, 0.0, chemPot, chemPot, chemPot);
+        inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
+
+        effMassU = inMediumSol.getUpQuarkEffectiveMass();
+        effMassD = inMediumSol.getDownQuarkEffectiveMass();
+        effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
+
+        //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
+
+        if (inMediumSol.testSolution(precision)==true)
+        { 
+            solutions.push_back(inMediumSol); 
+        }
+        else
+        {
+            cout << "Failed to reach desired precision when solving the model in function: "  << __func__  << endl;
+            abort();
+        }
+    }
+
+    return solutions;
+}
+
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveUpToTemperature(
+    SU3NJL3DCutoffFixedChemPotTemp solution, 
+    double temperature, 
+    int numberOfPoints, 
+    double precision, 
+    MultiRootFindingMethod method
+)
+{
+    if (numberOfPoints < 2)
+    {
+        cout << "The parameter numberOfPoints must be >= 2 when calling function: " << __func__  << endl;
+        abort();
+    }
+
+    SU3NJL3DCutoffParameters parameters = solution.getParametersNJL();
+    double chemPotU = solution.getUpQuarkChemicalPotential();
+    double chemPotD = solution.getDownQuarkChemicalPotential();
+    double chemPotS = solution.getStrangeQuarkChemicalPotential();
+    double effMassU = solution.getUpQuarkEffectiveMass();
+    double effMassD = solution.getDownQuarkEffectiveMass();
+    double effMassS = solution.getStrangeQuarkEffectiveMass();
+
+    double minTemperature = solution.getTemperature();
+    double deltaTemperature = (temperature-minTemperature)/(numberOfPoints - 1);
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        double T = minTemperature + i*deltaTemperature;
+
+        SU3NJL3DCutoffFixedChemPotTemp inMediumSol(parameters, T, chemPotU, chemPotD, chemPotS);
+        inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
+
+        effMassU = inMediumSol.getUpQuarkEffectiveMass();
+        effMassD = inMediumSol.getDownQuarkEffectiveMass();
+        effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
+
+        //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
+        if (inMediumSol.testSolution(precision)==true)
+        { 
+            solutions.push_back(inMediumSol); 
+        }
+        else
+        {
+            cout << "Failed to reach desired precision when solving the model in function: "  << __func__  << endl;
+            abort();
+        }
     }
 
     return solutions;
@@ -846,4 +956,86 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
     replaceChar(filename, '.', 'p');
     filename =  filename +".dat";
     writeSolutionsToFile(finiteTSolution, filename);
+}
+
+void calculateThermodynamics(
+    SU3NJL3DCutoffVacuum& vacuum, 
+    vector<SU3NJL3DCutoffFixedChemPotTemp>& solution
+)
+{
+    //calculate vacuum pressure
+    cout << "\nCalculating the vacuum pressure...\n";
+    double vacuumPressure = vacuum.calculatePressure();
+    //cout << "vacuumPressure[GeV^4]=" << vacuumPressure << "\n";
+
+    cout << "\nCalculating thermodynamics for the provided solutions...\n";
+    for (int i = 0; i < int(solution.size()); ++i)
+    {   
+        solution[i].setPressure(vacuumPressure);
+        solution[i].setEnergyDensity(-vacuumPressure);
+        solution[i].setEntropyDensity();
+    }
+}
+
+void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
+    SU3NJL3DCutoffParameters& parameters, 
+    double precisionVacuum,
+    MultiRootFindingMethod methodVacuum,
+    double upQuarkMassGuess,
+    double downQuarkMassGuess,
+    double strangeQuarkMassGuess,
+    double chemicalPotential,
+    int numberOfPointsVacToChemPot,
+    double precisionVacToChemPot,
+    MultiRootFindingMethod methodVacToChemPot,
+    double temperature,
+    int numberOfPointsUpToTemp,
+	double precisionUpToTemp,
+	MultiRootFindingMethod methodUpToTemp,
+    string customSuffix
+)
+{
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveVacuumToFiniteChemicalPotential(
+        vacuum, 
+        chemicalPotential, 
+        numberOfPointsVacToChemPot, 
+        precisionVacToChemPot, 
+        methodVacToChemPot
+    );
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution = solveUpToTemperature(
+        finiteChemPotSolution[finiteChemPotSolution.size()-1], 
+        temperature, 
+        numberOfPointsUpToTemp, 
+        precisionUpToTemp, 
+        methodUpToTemp
+    );
+
+    calculateThermodynamics(vacuum, finiteTempSolution);
+
+    // coutput to file
+    string filename = "SU3NJL3DCutoffFixedChemPotTemp";
+    if( !customSuffix.empty() )
+    {
+        filename = filename + "_" + customSuffix;
+    }
+    else
+    {
+        filename = filename + "_" + vacuum.getParametersNJL().getParameterSetName();
+        filename = filename + "_TMin" + trim0ToDot0(finiteTempSolution[0].getTemperature());
+        filename = filename + "_TMax" + trim0ToDot0(finiteTempSolution[finiteTempSolution.size()-1].getTemperature());
+        filename = filename + "_CPU"  + trim0ToDot0(finiteTempSolution[0].getUpQuarkChemicalPotential());
+    }
+    replaceChar(filename, '.', 'p');
+    filename =  filename + ".dat";
+    writeSolutionsToFile(finiteTempSolution, filename);
 }

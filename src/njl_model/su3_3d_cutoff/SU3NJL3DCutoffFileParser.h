@@ -42,6 +42,8 @@ namespace SU3NJL3DCutoffFileParser
             bool validateVacuumMassesParameters() const;
             bool validateVacuumToFiniteBaryonDensityParameters() const;
             bool validateFirstOrderLineParameters() const;
+            bool validateVacuumToFiniteChemicalPotentialParameters() const;
+            bool validateUpToTemperatureParameters() const;
             bool validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const;
             bool validateFiniteTemperatureToFiniteChemicalPotentialParameters() const;
             bool validateCrossSectionsParameters() const;
@@ -135,6 +137,18 @@ namespace SU3NJL3DCutoffFileParser
 
             public:
                 InMediumMassesAndThermodynamics(const IniFileParser& p) : Common(p) {}
+                
+                bool validateFile() const;
+                void evaluate() const;
+        };
+
+        class ThermoFixedChemPotTrajectory : public Common
+        {   
+            public:
+                inline static const std::string calculationType = type + "ThermodynamicsFixedChemicalPotentialTrajectory";
+
+            public:
+                ThermoFixedChemPotTrajectory(const IniFileParser& p) : Common(p) {}
                 
                 bool validateFile() const;
                 void evaluate() const;
