@@ -70,13 +70,13 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string methodVacToChemPot = "methodVacuumToChemicalPotential";  
     }
 
-    namespace UpToTemperatureParameters
+    namespace ToTemperatureParameters
     {
-        inline const std::string section = "UpToTemperatureParameters";
+        inline const std::string section = "ToTemperatureParameters";
         inline const std::string temperature = "temperature_GeV";
-        inline const std::string numberOfPointsUpToTemp = "numberOfPointsUpToTemperature";
-        inline const std::string precisionUpToTemp = "precisionUpToTemperature";
-        inline const std::string methodUpToTemp = "methodUpToTemperature";
+        inline const std::string numberOfPointsUpToTemp = "numberOfPointsToTemperature";
+        inline const std::string precisionUpToTemp = "precisionToTemperature";
+        inline const std::string methodUpToTemp = "methodToTemperature";
     }
 
     namespace LowToHighTemperatureAtZeroChemicalPotentialParameters 

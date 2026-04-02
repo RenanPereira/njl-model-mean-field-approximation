@@ -415,7 +415,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
     return solutions;
 }
 
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveUpToTemperature(
+vector<SU3NJL3DCutoffFixedChemPotTemp> solveToTemperature(
     SU3NJL3DCutoffFixedChemPotTemp solution, 
     double temperature, 
     int numberOfPoints, 
@@ -989,9 +989,9 @@ void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
     double precisionVacToChemPot,
     MultiRootFindingMethod methodVacToChemPot,
     double temperature,
-    int numberOfPointsUpToTemp,
-	double precisionUpToTemp,
-	MultiRootFindingMethod methodUpToTemp,
+    int numberOfPointsToTemp,
+	double precisionToTemp,
+	MultiRootFindingMethod methodToTemp,
     string customSuffix
 )
 {
@@ -1012,12 +1012,12 @@ void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
         methodVacToChemPot
     );
 
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution = solveUpToTemperature(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution = solveToTemperature(
         finiteChemPotSolution[finiteChemPotSolution.size()-1], 
         temperature, 
-        numberOfPointsUpToTemp, 
-        precisionUpToTemp, 
-        methodUpToTemp
+        numberOfPointsToTemp, 
+        precisionToTemp, 
+        methodToTemp
     );
 
     calculateThermodynamics(vacuum, finiteTempSolution);

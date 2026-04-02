@@ -188,7 +188,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
     MultiRootFindingMethod 
 );
 
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveUpToTemperature(
+std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveToTemperature(
     SU3NJL3DCutoffFixedChemPotTemp , 
     double , 
     int , 

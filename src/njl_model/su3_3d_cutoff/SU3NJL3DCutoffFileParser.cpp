@@ -354,39 +354,39 @@ bool Common::validateVacuumToFiniteChemicalPotentialParameters() const
            isRootFindingMethodValid;
 }
 
-bool Common::validateUpToTemperatureParameters() const
+bool Common::validateToTemperatureParameters() const
 {
-    namespace UTTP = SU3NJL3DCutoffFileParserKeys::UpToTemperatureParameters;
-    const string sectionError = invalidFileMessage + " Invalid value found in section " + UTTP::section + ".";
+    namespace TTP = SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + TTP::section + ".";
 
     // Ensure temperature>0
     bool isTemperatureValid = config.validatePositiveDouble(
-        UTTP::section,
-        UTTP::temperature,
+        TTP::section,
+        TTP::temperature,
         sectionError, 
-        UTTP::temperature + " > 0 must be satisfied."
+        TTP::temperature + " > 0 must be satisfied."
     );
 
     // Ensure numberOfPointsUpToTemp>0
     bool isNumberOfPointsUpToTempValid = config.validatePositiveInteger(
-        UTTP::section,
-        UTTP::numberOfPointsUpToTemp, 
+        TTP::section,
+        TTP::numberOfPointsUpToTemp, 
         sectionError, 
-        UTTP::numberOfPointsUpToTemp + " > 0 must be satisfied."
+        TTP::numberOfPointsUpToTemp + " > 0 must be satisfied."
     );
 
     // Ensure precisionUpToTemp>0
     bool isPrecisionUpToTempValid = config.validatePositiveDouble(
-        UTTP::section,
-        UTTP::precisionUpToTemp,
+        TTP::section,
+        TTP::precisionUpToTemp,
         sectionError, 
-        UTTP::precisionUpToTemp + " > 0 must be satisfied."
+        TTP::precisionUpToTemp + " > 0 must be satisfied."
     );
 
     // Ensure methodUpToTemp is valid
     string methodUpToTemp = config.getValue(
-        UTTP::section, 
-        UTTP::methodUpToTemp
+        TTP::section, 
+        TTP::methodUpToTemp
     );
     bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodUpToTemp, sectionError);
 
@@ -1496,19 +1496,19 @@ bool ThermoFixedChemPotTrajectory::validateFile() const
     vector<string> requiredSections = 
     {
         SU3NJL3DCutoffFileParserKeys::VacuumToFiniteChemicalPotentialParameters::section,
-        SU3NJL3DCutoffFileParserKeys::UpToTemperatureParameters::section,
+        SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters::section,
         SU3NJL3DCutoffFileParserKeys::OutputFileParameters::section,
     };
     bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
 
     // Validate individual sections
     bool areVacuumToFiniteChemicalPotentialParametersValid = validateVacuumToFiniteChemicalPotentialParameters();
-    bool areUpToTemperatureParametersValid = validateUpToTemperatureParameters();
+    bool areToTemperatureParametersValid = validateToTemperatureParameters();
 
     return vacuumValidations && 
            allRequiredSectionsPresent &&
            areVacuumToFiniteChemicalPotentialParametersValid &&
-           areUpToTemperatureParametersValid;
+           areToTemperatureParametersValid;
 }
 
 void ThermoFixedChemPotTrajectory::evaluate() const
@@ -1516,7 +1516,7 @@ void ThermoFixedChemPotTrajectory::evaluate() const
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
     namespace VTFCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteChemicalPotentialParameters;
-    namespace UTTP = SU3NJL3DCutoffFileParserKeys::UpToTemperatureParameters;
+    namespace TTP = SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters;
     namespace OFP = SU3NJL3DCutoffFileParserKeys::OutputFileParameters;
 
     // Model Parameters
@@ -1565,17 +1565,17 @@ void ThermoFixedChemPotTrajectory::evaluate() const
     cout << VTFCPP::precisionVacToChemPot << " = " << precisionVacToChemPot << endl;
     cout << VTFCPP::methodVacToChemPot << " = " << methodVacToChemPot << endl;
     
-    // UpToTemperatureParameters
-    double temperature = config.getDouble(UTTP::section, UTTP::temperature);
-    int numberOfPointsUpToTemp = config.getInt(UTTP::section, UTTP::numberOfPointsUpToTemp);
-	double precisionUpToTemp = config.getDouble(UTTP::section, UTTP::precisionUpToTemp);
-	string methodUpToTemp = config.getValue(UTTP::section, UTTP::methodUpToTemp);
+    // ToTemperatureParameters
+    double temperature = config.getDouble(TTP::section, TTP::temperature);
+    int numberOfPointsUpToTemp = config.getInt(TTP::section, TTP::numberOfPointsUpToTemp);
+	double precisionUpToTemp = config.getDouble(TTP::section, TTP::precisionUpToTemp);
+	string methodUpToTemp = config.getValue(TTP::section, TTP::methodUpToTemp);
 
-    cout << "\n" << UTTP::section << ": " << endl;
-    cout << UTTP::temperature << " = " << temperature << endl;
-    cout << UTTP::numberOfPointsUpToTemp << " = " << numberOfPointsUpToTemp << endl;
-    cout << UTTP::precisionUpToTemp << " = " << precisionUpToTemp << endl;
-    cout << UTTP::methodUpToTemp << " = " << methodUpToTemp << endl;
+    cout << "\n" << TTP::section << ": " << endl;
+    cout << TTP::temperature << " = " << temperature << endl;
+    cout << TTP::numberOfPointsUpToTemp << " = " << numberOfPointsUpToTemp << endl;
+    cout << TTP::precisionUpToTemp << " = " << precisionUpToTemp << endl;
+    cout << TTP::methodUpToTemp << " = " << methodUpToTemp << endl;
 
     // OutputFileParameters    
     string customSuffix = config.getValue(OFP::section, OFP::customSuffix);

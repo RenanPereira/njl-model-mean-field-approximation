@@ -43,7 +43,7 @@ namespace SU3NJL3DCutoffFileParser
             bool validateVacuumToFiniteBaryonDensityParameters() const;
             bool validateFirstOrderLineParameters() const;
             bool validateVacuumToFiniteChemicalPotentialParameters() const;
-            bool validateUpToTemperatureParameters() const;
+            bool validateToTemperatureParameters() const;
             bool validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const;
             bool validateFiniteTemperatureToFiniteChemicalPotentialParameters() const;
             bool validateCrossSectionsParameters() const;
