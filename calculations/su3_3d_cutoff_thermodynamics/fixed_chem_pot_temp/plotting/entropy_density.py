@@ -432,7 +432,7 @@ plot_entropy_density_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
     "set A",
     "entropy_vs_temp_CP0_setA.png"
 )
@@ -443,7 +443,7 @@ plot_entropy_density_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
     "set B",
     "entropy_vs_temp_CP0_setB.png"
 )
@@ -454,7 +454,7 @@ plot_entropy_density_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
     "set C",
     "entropy_vs_temp_CP0_setC.png"
 )
@@ -466,9 +466,9 @@ plot_entropy_density_vs_temperature_given_list(
     path_data_folder,
     path_plots_folder,
     [
-        "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
-        "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p000000_TMax0p500000_CP0.dat",
-        "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p000000_TMax0p500000_CP0.dat",
+        "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
+        "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
+        "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
     ],
     [
         "set A",
@@ -494,7 +494,7 @@ plot_entropy_density_dPdT_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
     "set A",
     "entropy_dPdT_vs_temp_CP0_setA.png"
 )
@@ -505,7 +505,7 @@ plot_entropy_density_dPdT_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
     "set B",
     "entropy_dPdT_vs_temp_CP0_setB.png"
 )
@@ -516,28 +516,28 @@ plot_entropy_density_dPdT_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
     "set C",
     "entropy_dPdT_vs_temp_CP0_setC.png"
 )
 
 datasets = [
     (
-        path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",  
+        path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",  
         r"set A", 
         "black", 
         2, 
         "-"
     ),
     (
-        path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p000000_TMax0p500000_CP0.dat",  
+        path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",  
         r"set B", 
         "red", 
         2, 
         "-"
     ),
         (
-        path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p000000_TMax0p500000_CP0.dat", 
+        path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat", 
         r"set C", 
         "blue", 
         2, 

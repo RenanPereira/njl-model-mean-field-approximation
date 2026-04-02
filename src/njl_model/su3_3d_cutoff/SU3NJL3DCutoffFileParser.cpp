@@ -317,11 +317,11 @@ bool Common::validateVacuumToFiniteChemicalPotentialParameters() const
     const string sectionError = invalidFileMessage + " Invalid value found in section " + VTFCPP::section + ".";
 
     // Ensure chemicalPotential>0
-    bool isChemicalPotentialValid = config.validatePositiveDouble(
+    bool isChemicalPotentialValid = config.validateNonNegativeDouble(
         VTFCPP::section,
         VTFCPP::chemicalPotential,
         sectionError, 
-        VTFCPP::chemicalPotential + " > 0 must be satisfied."
+        VTFCPP::chemicalPotential + " >= 0 must be satisfied."
     );
 
     // Ensure numberOfPointsVacToChemPot>0

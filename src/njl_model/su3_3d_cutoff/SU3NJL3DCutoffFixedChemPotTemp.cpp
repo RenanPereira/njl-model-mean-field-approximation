@@ -992,9 +992,11 @@ void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
     int numberOfPointsToTemp,
 	double precisionToTemp,
 	MultiRootFindingMethod methodToTemp,
-    string customSuffix
+    string& customSuffix
 )
-{
+{   
+    cout << "Solving SU3NJL3DCutoff thermodynamics (fixed chemical potential, varying temperature)\n";
+
     SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
         parameters,                                    
         precisionVacuum,                                    
@@ -1003,17 +1005,28 @@ void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
         downQuarkMassGuess, 
         strangeQuarkMassGuess
     );
-
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveVacuumToFiniteChemicalPotential(
-        vacuum, 
-        chemicalPotential, 
-        numberOfPointsVacToChemPot, 
-        precisionVacToChemPot, 
-        methodVacToChemPot
-    );
+    
+    // If chemical potential is non zero, trigger the chemical potential solver
+    SU3NJL3DCutoffFixedChemPotTemp initialStateForTemperature;
+    if ( chemicalPotential>0 )
+    {
+        vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveVacuumToFiniteChemicalPotential(
+            vacuum, 
+            chemicalPotential, 
+            numberOfPointsVacToChemPot, 
+            precisionVacToChemPot, 
+            methodVacToChemPot
+        );
+        initialStateForTemperature = finiteChemPotSolution[finiteChemPotSolution.size()-1];   
+    }
+    else
+    {   
+        cout << "Skipping the chemical potential solver...\n";
+        initialStateForTemperature = SU3NJL3DCutoffFixedChemPotTemp(vacuum);
+    }
 
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution = solveToTemperature(
-        finiteChemPotSolution[finiteChemPotSolution.size()-1], 
+        initialStateForTemperature, 
         temperature, 
         numberOfPointsToTemp, 
         precisionToTemp, 
@@ -1022,7 +1035,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
 
     calculateThermodynamics(vacuum, finiteTempSolution);
 
-    // coutput to file
+    // output to file
     string filename = "SU3NJL3DCutoffFixedChemPotTemp";
     if( !customSuffix.empty() )
     {
