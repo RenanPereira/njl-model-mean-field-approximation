@@ -200,7 +200,7 @@ SU3NJL3DCutoffMeson SU3NJL3DCutoffFixedChemPotTemp::calculateMesonMassAndWidth(
     return mesonAux;
 }
 
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
     SU3NJL3DCutoffVacuum vacuumSol, 
     double nearVacuumTemperature,
     double maxTemperature, 
@@ -247,7 +247,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroC
     return solutions;
 }
 
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemicalPotential(
+vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveFromLowToHighTemperatureAtZeroChemicalPotential(
     SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, 
     double maxTemperature, 
     int numberOfPoints, 
@@ -288,7 +288,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemic
     return solutions;
 }
 
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperature(
+vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveFromLowToHighTemperature(
     SU3NJL3DCutoffFixedChemPotTemp minTemperatureSolution, 
     double maxTemperature, 
     int numberOfPoints, 
@@ -329,7 +329,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperature(
     return solutions;
 }
 
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(
+vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
     SU3NJL3DCutoffFixedChemPotTemp finiteTSol, 
     double maxChemPot, 
     int numberOfPoints, 
@@ -364,7 +364,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemica
     return solutions;
 }
 
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
+vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveVacuumToFiniteChemicalPotential(
     SU3NJL3DCutoffVacuum& vacuumSolution, 
     double maxChemPot, 
     int numberOfPoints, 
@@ -415,7 +415,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
     return solutions;
 }
 
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveToTemperature(
+vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveToTemperature(
     SU3NJL3DCutoffFixedChemPotTemp solution, 
     double temperature, 
     int numberOfPoints, 
@@ -698,7 +698,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateIsospinSymmetricCrossSections(
         strangeQuarkMassGuess
     );
 
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
         vacuum, 
         nearVacuumTemperature, 
         temperature, 
@@ -721,7 +721,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateIsospinSymmetricCrossSections(
 
     if ( quarkChemicalPotential>0.0 )
     {
-        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(
+        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
             finiteTempSol[int(finiteTempSol.size()-1)], 
             quarkChemicalPotential, 
             numberOfPointsFromFinTempToFinChemPot, 
@@ -919,7 +919,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
     );
 
     //solve model at zero chemical potential up to some finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
         vacuum, 
         nearVacuumTemperature,
         temperature, 
@@ -1010,7 +1010,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
     SU3NJL3DCutoffFixedChemPotTemp initialStateForTemperature;
     if ( chemicalPotential>0 )
     {
-        vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveVacuumToFiniteChemicalPotential(
+        vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveVacuumToFiniteChemicalPotential(
             vacuum, 
             chemicalPotential, 
             numberOfPointsVacToChemPot, 
@@ -1025,7 +1025,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
         initialStateForTemperature = SU3NJL3DCutoffFixedChemPotTemp(vacuum);
     }
 
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution = solveToTemperature(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution = SU3NJL3DCutoffFixedChemPotTemp::solveToTemperature(
         initialStateForTemperature, 
         temperature, 
         numberOfPointsToTemp, 

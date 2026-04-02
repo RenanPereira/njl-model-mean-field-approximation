@@ -117,6 +117,55 @@ public:
 		MultiRootFindingMethod 
 	);
 
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(
+		SU3NJL3DCutoffFixedChemPotTemp , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod 
+	);
+
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemicalPotential(
+		SU3NJL3DCutoffFixedChemPotTemp , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod 
+	);
+
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+		SU3NJL3DCutoffVacuum , 
+		double ,
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod 
+	);
+
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperature(
+		SU3NJL3DCutoffFixedChemPotTemp , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod 
+	);
+
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveToTemperature(
+		SU3NJL3DCutoffFixedChemPotTemp , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod 
+	);
+
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
+		SU3NJL3DCutoffVacuum& , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod 
+	);
+
 	static void computeThermoFixedChemPotTrajectory(
 		SU3NJL3DCutoffParameters& , 
 		double ,
@@ -146,55 +195,6 @@ private:
 };
 
 int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vector *, void *, gsl_vector *);
-
-std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
-    SU3NJL3DCutoffVacuum , 
-    double ,
-    double , 
-    int , 
-    double , 
-    MultiRootFindingMethod 
-);
-
-std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperatureAtZeroChemicalPotential(
-	SU3NJL3DCutoffFixedChemPotTemp , 
-	double , 
-	int , 
-	double , 
-	MultiRootFindingMethod 
-);
-
-std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromLowToHighTemperature(
-	SU3NJL3DCutoffFixedChemPotTemp , 
-	double , 
-	int , 
-	double , 
-	MultiRootFindingMethod 
-);
-
-std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveFromFiniteTemperatureToFiniteChemicalPotential(
-	SU3NJL3DCutoffFixedChemPotTemp , 
-	double , 
-	int , 
-	double , 
-	MultiRootFindingMethod 
-);
-
-vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
-    SU3NJL3DCutoffVacuum& , 
-    double , 
-    int , 
-    double , 
-    MultiRootFindingMethod 
-);
-
-std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveToTemperature(
-    SU3NJL3DCutoffFixedChemPotTemp , 
-    double , 
-    int , 
-    double , 
-    MultiRootFindingMethod 
-);
 
 std::vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 	SU3NJL3DCutoffVacuum , 

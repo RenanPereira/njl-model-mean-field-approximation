@@ -327,7 +327,7 @@
     double effMassU, effMassD, effMassS;
 
     double T = 0.250;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, HYBRIDS);
 
     effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
     effMassD = finiteTempSol[int(finiteTempSol.size()-1)].getDownQuarkEffectiveMass();
@@ -339,7 +339,7 @@
 
 
     double chemPot = 0.100;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, HYBRIDS);
 
     effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
     effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();

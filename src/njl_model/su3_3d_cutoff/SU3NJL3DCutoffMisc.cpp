@@ -57,7 +57,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     double maximumTemperature = 0.400;
     int numberOfPoints = 400;
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
         vacuum, 
         nearVacuumTemperature,
         maximumTemperature, 
@@ -140,7 +140,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(
          << "Ms=" << vacuum.getStrangeQuarkEffectiveMass() << "GeV" << "\n";
 
     //solve gap equation from the vacuum up to finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
         vacuum, 
         nearVacuumTemperature,
         T, 
@@ -161,7 +161,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(
     //solve gap equation from the finite temperature up to finite chemical potential
     if( chemPot>0.0 )
     {
-        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = solveFromFiniteTemperatureToFiniteChemicalPotential(
+        vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
             finiteTempSol[int(finiteTempSol.size()-1)], 
             chemPot, 
             100, 

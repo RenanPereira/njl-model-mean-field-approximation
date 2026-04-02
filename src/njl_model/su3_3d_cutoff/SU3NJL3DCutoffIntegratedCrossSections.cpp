@@ -1866,7 +1866,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
     );
 
     //solve model at zero chemical potential up to some finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 		vacuum, 
 		nearVacuumTemperature,
 		minimumTemperature, 
@@ -1882,7 +1882,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
         	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-    finiteTSolution = solveFromLowToHighTemperatureAtZeroChemicalPotential(
+    finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromLowToHighTemperatureAtZeroChemicalPotential(
 		finiteTSolution[finiteTSolution.size()-1], 
 		maximumTemperature, 
 		numberOfPointsFromMinToMaxTemp, 
@@ -1930,7 +1930,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 )
 {
     //solve model at zero chemical potential up to some finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 		vacuum, 
 		nearVacuumTemperature, 
 		fixedTemperature, 
@@ -1953,7 +1953,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution;
     if ( minChemPot>0 )
     {
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(
+    	finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
 			finiteTSolution[finiteTSolution.size()-1], 
 			minChemPot, 
 			numberOfPointsFromMinTempToMinChemPot, 
@@ -1971,7 +1971,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 	             << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
 	    }
 
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(
+    	finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
 			finiteChemPotSolution[finiteChemPotSolution.size()-1], 
 			maxChemPot, 
 			numberOfPointsFromMinToMaxChemPot, 
@@ -1991,7 +1991,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
     }
     else
     {
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(
+    	finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
 			finiteTSolution[finiteTSolution.size()-1], 
 			maxChemPot, 
 			numberOfPointsFromMinTempToMinChemPot, 
@@ -2061,7 +2061,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithFixedChemicalPotential(
     );
 
     //solve model at zero chemical potential up to some finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 		vacuum, 
 		nearVacuumTemperature,
 		minimumTemperature, 
@@ -2077,7 +2077,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithFixedChemicalPotential(
         	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
 		finiteTSolution[finiteTSolution.size()-1], 
 		chemicalPotential, 
 		numberOfPointsMinTempToChemPot, 
@@ -2095,7 +2095,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithFixedChemicalPotential(
              << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-    finiteTSolution = solveFromLowToHighTemperature(
+    finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromLowToHighTemperature(
 		finiteChemPotSolution[finiteChemPotSolution.size()-1], 
 		maximumTemperature, 
 		numberOfPointsFromMinToMaxTemp, 
