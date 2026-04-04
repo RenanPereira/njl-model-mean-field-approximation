@@ -59,7 +59,7 @@ plot_eta_over_s_vs_temp(
     fig_x_size,
     fig_y_size,
     datasets_cp0,
-    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
     path_output_plot_folder + "eta_over_s_vs_temp_setA_CP0.png",
     include_kss_bound=True,
     legend_loc="upper right",
