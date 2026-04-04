@@ -311,9 +311,9 @@ bool Common::validateFirstOrderLineParameters() const
            isMassDifferenceCEPValid;
 }
 
-bool Common::validateVacuumToFiniteChemicalPotentialParameters() const
+bool Common::validateVacuumToChemicalPotentialParameters() const
 {
-    namespace VTFCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteChemicalPotentialParameters;
+    namespace VTFCPP = SU3NJL3DCutoffFileParserKeys::VacuumToChemicalPotentialParameters;
     const string sectionError = invalidFileMessage + " Invalid value found in section " + VTFCPP::section + ".";
 
     // Ensure chemicalPotential>0
@@ -1581,19 +1581,19 @@ bool ThermoFixedChemPotTrajectory::validateFile() const
     // Check for missing sections
     vector<string> requiredSections = 
     {
-        SU3NJL3DCutoffFileParserKeys::VacuumToFiniteChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::VacuumToChemicalPotentialParameters::section,
         SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters::section,
         SU3NJL3DCutoffFileParserKeys::OutputFileParameters::section,
     };
     bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
 
     // Validate individual sections
-    bool areVacuumToFiniteChemicalPotentialParametersValid = validateVacuumToFiniteChemicalPotentialParameters();
+    bool areVacuumToChemicalPotentialParametersValid = validateVacuumToChemicalPotentialParameters();
     bool areToTemperatureParametersValid = validateToTemperatureParameters();
 
     return vacuumValidations && 
            allRequiredSectionsPresent &&
-           areVacuumToFiniteChemicalPotentialParametersValid &&
+           areVacuumToChemicalPotentialParametersValid &&
            areToTemperatureParametersValid;
 }
 
@@ -1601,7 +1601,7 @@ void ThermoFixedChemPotTrajectory::evaluate() const
 {   
     namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
     namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
-    namespace VTFCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteChemicalPotentialParameters;
+    namespace VTFCPP = SU3NJL3DCutoffFileParserKeys::VacuumToChemicalPotentialParameters;
     namespace TTP = SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters;
     namespace OFP = SU3NJL3DCutoffFileParserKeys::OutputFileParameters;
 
@@ -1639,7 +1639,7 @@ void ThermoFixedChemPotTrajectory::evaluate() const
     cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
     cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
     
-    // VacuumToFiniteChemicalPotentialParameters
+    // VacuumToChemicalPotentialParameters
     double chemicalPotential = config.getDouble(VTFCPP::section, VTFCPP::chemicalPotential);
     int numberOfPointsVacToChemPot = config.getInt(VTFCPP::section, VTFCPP::numberOfPointsVacToChemPot);
     double precisionVacToChemPot = config.getDouble(VTFCPP::section, VTFCPP::precisionVacToChemPot);

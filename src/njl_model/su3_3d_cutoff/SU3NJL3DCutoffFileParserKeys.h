@@ -61,9 +61,9 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string methodVacToFinTemp = "methodVacuumToFiniteTemperature";
     }
 
-    namespace VacuumToFiniteChemicalPotentialParameters
+    namespace VacuumToChemicalPotentialParameters
     {
-        inline const std::string section = "VacuumToFiniteChemicalPotentialParameters";
+        inline const std::string section = "VacuumToChemicalPotentialParameters";
         inline const std::string chemicalPotential = "chemicalPotential_GeV";
         inline const std::string numberOfPointsVacToChemPot = "numberOfPointsVacuumToChemicalPotential";
         inline const std::string precisionVacToChemPot = "precisionVacuumToChemicalPotential";

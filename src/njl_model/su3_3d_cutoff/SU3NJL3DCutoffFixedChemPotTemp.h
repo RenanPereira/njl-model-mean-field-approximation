@@ -166,7 +166,7 @@ public:
 		MultiRootFindingMethod 
 	);
 
-	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToChemicalPotential(
 		SU3NJL3DCutoffVacuum& , 
 		double , 
 		int , 
