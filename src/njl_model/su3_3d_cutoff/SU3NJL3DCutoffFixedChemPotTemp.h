@@ -158,7 +158,23 @@ public:
 		MultiRootFindingMethod 
 	);
 
+	static vector<SU3NJL3DCutoffFixedChemPotTemp> solveToChemicalPotentialSymmetric(
+		SU3NJL3DCutoffFixedChemPotTemp , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod 
+	);
+
 	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToFiniteChemicalPotential(
+		SU3NJL3DCutoffVacuum& , 
+		double , 
+		int , 
+		double , 
+		MultiRootFindingMethod 
+	);
+	
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveVacuumToTemperature(
 		SU3NJL3DCutoffVacuum& , 
 		double , 
 		int , 
@@ -182,6 +198,24 @@ public:
 		double ,
 		MultiRootFindingMethod ,
 		std::string& 
+	);
+
+	static void computeThermoFixedTemperatureTrajectory(
+		SU3NJL3DCutoffParameters& , 
+		double ,
+		MultiRootFindingMethod ,
+		double ,
+		double ,
+		double ,
+		double ,
+		int ,
+		double ,
+		MultiRootFindingMethod ,
+		double ,
+		int ,
+		double ,
+		MultiRootFindingMethod ,
+		string& 
 	);
 	
 private:

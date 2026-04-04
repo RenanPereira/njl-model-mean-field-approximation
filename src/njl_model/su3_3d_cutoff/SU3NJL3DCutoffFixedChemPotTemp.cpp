@@ -374,7 +374,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveVacu
 {
     if (numberOfPoints < 2)
     {
-        cout << "The parameter numberOfPoints must be >= 2 when calling function: " << __func__  << endl;
+        cout << "The parameter numberOfPoints must be >= 2 when calling the function: " << __func__  << endl;
         abort();
     }
 
@@ -415,6 +415,57 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveVacu
     return solutions;
 }
 
+vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveVacuumToTemperature(
+    SU3NJL3DCutoffVacuum& vacuumSolution, 
+    double maxTemperature, 
+    int numberOfPoints, 
+    double precision, 
+    MultiRootFindingMethod method
+)
+{
+    if (numberOfPoints < 2)
+    {
+        cout << "The parameter numberOfPoints must be >= 2 when calling the function: " << __func__  << endl;
+        abort();
+    }
+
+    SU3NJL3DCutoffParameters parameters = vacuumSolution.getParametersNJL();
+    double effMassU = vacuumSolution.getUpQuarkEffectiveMass();
+    double effMassD = vacuumSolution.getDownQuarkEffectiveMass();
+    double effMassS = vacuumSolution.getStrangeQuarkEffectiveMass();
+
+    double minTemperature = 0.0;
+    double delta = (maxTemperature-minTemperature)/(numberOfPoints - 1);
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        double temperature = minTemperature + i*delta;
+        
+        // create instance with chemical potentials set to zero and finite temperature
+        SU3NJL3DCutoffFixedChemPotTemp inMediumSol(parameters, temperature, 0.0, 0.0, 0.0);
+        inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
+
+        effMassU = inMediumSol.getUpQuarkEffectiveMass();
+        effMassD = inMediumSol.getDownQuarkEffectiveMass();
+        effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
+
+        //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
+
+        if (inMediumSol.testSolution(precision)==true)
+        { 
+            solutions.push_back(inMediumSol); 
+        }
+        else
+        {
+            cout << "Failed to reach desired precision when solving the model in function: "  << __func__  << endl;
+            abort();
+        }
+    }
+
+    return solutions;
+}
+
 vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveToTemperature(
     SU3NJL3DCutoffFixedChemPotTemp solution, 
     double temperature, 
@@ -425,7 +476,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveToTe
 {
     if (numberOfPoints < 2)
     {
-        cout << "The parameter numberOfPoints must be >= 2 when calling function: " << __func__  << endl;
+        cout << "The parameter numberOfPoints must be >= 2 when calling the function: " << __func__  << endl;
         abort();
     }
 
@@ -446,6 +497,65 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveToTe
         double T = minTemperature + i*deltaTemperature;
 
         SU3NJL3DCutoffFixedChemPotTemp inMediumSol(parameters, T, chemPotU, chemPotD, chemPotS);
+        inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
+
+        effMassU = inMediumSol.getUpQuarkEffectiveMass();
+        effMassD = inMediumSol.getDownQuarkEffectiveMass();
+        effMassS = inMediumSol.getStrangeQuarkEffectiveMass();
+
+        //cout << "Mu=" << effMassU << "GeV" << "\t" << "Md=" << effMassD << "GeV" << "\t" << "Ms=" << effMassS << "GeV" << "\n";
+        if (inMediumSol.testSolution(precision)==true)
+        { 
+            solutions.push_back(inMediumSol); 
+        }
+        else
+        {
+            cout << "Failed to reach desired precision when solving the model in function: "  << __func__  << endl;
+            abort();
+        }
+    }
+
+    return solutions;
+}
+
+vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveToChemicalPotentialSymmetric(
+    SU3NJL3DCutoffFixedChemPotTemp solution, 
+    double chemicalPotential, 
+    int numberOfPoints, 
+    double precision, 
+    MultiRootFindingMethod method
+)
+{
+    if (numberOfPoints < 2)
+    {
+        cout << "The parameter numberOfPoints must be >= 2 when calling the function: " << __func__  << endl;
+        abort();
+    }
+
+    SU3NJL3DCutoffParameters parameters = solution.getParametersNJL();
+    double T = solution.getTemperature();
+    double chemPotU = solution.getUpQuarkChemicalPotential();
+    double chemPotD = solution.getDownQuarkChemicalPotential();
+    double chemPotS = solution.getStrangeQuarkChemicalPotential();
+    double effMassU = solution.getUpQuarkEffectiveMass();
+    double effMassD = solution.getDownQuarkEffectiveMass();
+    double effMassS = solution.getStrangeQuarkEffectiveMass();
+
+    if ( fabs(chemPotU - chemPotD) > precision || fabs(chemPotU - chemPotS) > precision )
+    {
+        cout << "The quark chemical potentials are not symmetric when calling the function: " << __func__  << endl;
+        abort();
+    }
+
+    double minChemicalPotential = chemPotU;
+    double delta = (chemicalPotential - minChemicalPotential)/(numberOfPoints - 1);
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> solutions;
+    for (int i = 0; i < numberOfPoints; ++i)
+    {   
+        double chemPot = minChemicalPotential + i*delta;
+
+        SU3NJL3DCutoffFixedChemPotTemp inMediumSol(parameters, T, chemPot, chemPot, chemPot);
         inMediumSol.solve(precision, method, effMassU, effMassD, effMassS);
 
         effMassU = inMediumSol.getUpQuarkEffectiveMass();
@@ -1051,4 +1161,81 @@ void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
     replaceChar(filename, '.', 'p');
     filename =  filename + ".dat";
     writeSolutionsToFile(finiteTempSolution, filename);
+}
+
+void SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedTemperatureTrajectory(
+    SU3NJL3DCutoffParameters& parameters, 
+    double precisionVacuum,
+    MultiRootFindingMethod methodVacuum,
+    double upQuarkMassGuess,
+    double downQuarkMassGuess,
+    double strangeQuarkMassGuess,
+    double temperature,
+    int numberOfPointsVacToTemp,
+	double precisionVacToTemp,
+	MultiRootFindingMethod methodVacToTemp,
+    double chemicalPotential,
+    int numberOfPointsToChemPot,
+    double precisionToChemPot,
+    MultiRootFindingMethod methodToChemPot,
+    string& customSuffix
+)
+{   
+    cout << "Solving SU3NJL3DCutoff thermodynamics (fixed temperature, varying chemical potential)\n";
+
+    SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
+        upQuarkMassGuess, 
+        downQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+    
+    // If temperature is non zero, trigger the temperature solver
+    SU3NJL3DCutoffFixedChemPotTemp initialStateForChemicalPotential;
+    if ( temperature>0 )
+    {
+        vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution = SU3NJL3DCutoffFixedChemPotTemp::solveVacuumToTemperature(
+            vacuum, 
+            temperature, 
+            numberOfPointsVacToTemp, 
+            precisionVacToTemp, 
+            methodVacToTemp
+        );
+        initialStateForChemicalPotential = finiteTempSolution[finiteTempSolution.size()-1];   
+    }
+    else
+    {   
+        cout << "Skipping the temperature solver...\n";
+        initialStateForChemicalPotential = SU3NJL3DCutoffFixedChemPotTemp(vacuum);
+    }
+
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = 
+    SU3NJL3DCutoffFixedChemPotTemp::solveToChemicalPotentialSymmetric(
+        initialStateForChemicalPotential, 
+        chemicalPotential, 
+        numberOfPointsToChemPot, 
+        precisionToChemPot, 
+        methodToChemPot
+    );
+
+    calculateThermodynamics(vacuum, finiteChemPotSolution);
+
+    // output to file
+    string filename = "SU3NJL3DCutoffFixedChemPotTemp";
+    if( !customSuffix.empty() )
+    {
+        filename = filename + "_" + customSuffix;
+    }
+    else
+    {
+        filename = filename + "_" + vacuum.getParametersNJL().getParameterSetName();
+        filename = filename + "_T"  + trim0ToDot0(finiteChemPotSolution[0].getTemperature());
+        filename = filename + "_CPUMin" + trim0ToDot0(finiteChemPotSolution[0].getUpQuarkChemicalPotential());
+        filename = filename + "_CPUMax" + trim0ToDot0(finiteChemPotSolution[finiteChemPotSolution.size()-1].getUpQuarkChemicalPotential());
+    }
+    replaceChar(filename, '.', 'p');
+    filename =  filename + ".dat";
+    writeSolutionsToFile(finiteChemPotSolution, filename);
 }

@@ -354,6 +354,49 @@ bool Common::validateVacuumToFiniteChemicalPotentialParameters() const
            isRootFindingMethodValid;
 }
 
+bool Common::validateVacuumToTemperatureParameters() const
+{
+    namespace VTTP = SU3NJL3DCutoffFileParserKeys::VacuumToTemperatureParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + VTTP::section + ".";
+
+    // Ensure temperature>0
+    bool isTemperatureValid = config.validateNonNegativeDouble(
+        VTTP::section,
+        VTTP::temperature,
+        sectionError, 
+        VTTP::temperature + " >= 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsVacToTemp>0
+    bool isNumberOfPointsVacToTemp = config.validatePositiveInteger(
+        VTTP::section,
+        VTTP::numberOfPointsVacToTemp, 
+        sectionError, 
+        VTTP::numberOfPointsVacToTemp + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionVacToTemp>0
+    bool isPrecisionVacToTempValid = config.validatePositiveDouble(
+        VTTP::section,
+        VTTP::precisionVacToTemp,
+        sectionError, 
+        VTTP::precisionVacToTemp + " > 0 must be satisfied."
+    );
+
+    // Ensure methodVacToTemp is valid
+    string methodVacToTemp = config.getValue(
+        VTTP::section, 
+        VTTP::methodVacToTemp
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacToTemp, sectionError);
+
+    // The function return true only if all tests passed
+    return isTemperatureValid && 
+           isNumberOfPointsVacToTemp &&
+           isPrecisionVacToTempValid &&
+           isRootFindingMethodValid;
+}
+
 bool Common::validateToTemperatureParameters() const
 {
     namespace TTP = SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters;
@@ -394,6 +437,49 @@ bool Common::validateToTemperatureParameters() const
     return isTemperatureValid && 
            isNumberOfPointsUpToTempValid &&
            isPrecisionUpToTempValid &&
+           isRootFindingMethodValid;
+}
+
+bool Common::validateToChemicalPotentialSymmetricParameters() const
+{
+    namespace TCPSP = SU3NJL3DCutoffFileParserKeys::ToChemicalPotentialSymmetricParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + TCPSP::section + ".";
+
+    // Ensure chemicalPotential>0
+    bool isChemicalPotentialValid = config.validatePositiveDouble(
+        TCPSP::section,
+        TCPSP::chemicalPotential,
+        sectionError, 
+        TCPSP::chemicalPotential + " > 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsToChemPot>0
+    bool isNumberOfPointsToChemPotValid = config.validatePositiveInteger(
+        TCPSP::section,
+        TCPSP::numberOfPointsToChemPot, 
+        sectionError, 
+        TCPSP::numberOfPointsToChemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionToChemPot>0
+    bool isPrecisionToChemPotValid = config.validatePositiveDouble(
+        TCPSP::section,
+        TCPSP::precisionToChemPot,
+        sectionError, 
+        TCPSP::precisionToChemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure methodToChemPot is valid
+    string methodToChemPot = config.getValue(
+        TCPSP::section, 
+        TCPSP::methodToChemPot
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodToChemPot, sectionError);
+
+    // The function return true only if all tests passed
+    return isChemicalPotentialValid && 
+           isNumberOfPointsToChemPotValid &&
+           isPrecisionToChemPotValid &&
            isRootFindingMethodValid;
 }
 
@@ -1609,6 +1695,133 @@ void ThermoFixedChemPotTrajectory::evaluate() const
         numberOfPointsUpToTemp,
         precisionUpToTemp,
         stringToMultiRootFindingMethod(methodUpToTemp),
+        customSuffix
+    );
+}
+
+bool ThermoFixedTemperatureTrajectory::validateFile() const
+{   
+    // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters
+	const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
+    bool vacuumValidations = configVacuum.validateFile();
+
+    // Check for missing sections
+    vector<string> requiredSections = 
+    {
+        SU3NJL3DCutoffFileParserKeys::VacuumToTemperatureParameters::section,
+        SU3NJL3DCutoffFileParserKeys::ToChemicalPotentialSymmetricParameters::section,
+        SU3NJL3DCutoffFileParserKeys::OutputFileParameters::section,
+    };
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
+
+    // Validate individual sections
+    bool areVacuumToTemperatureParametersValid = validateVacuumToTemperatureParameters();
+    bool areToChemicalPotentialSymmetricParametersValid = validateToChemicalPotentialSymmetricParameters();
+
+    return vacuumValidations && 
+           allRequiredSectionsPresent &&
+           areVacuumToTemperatureParametersValid &&
+           areToChemicalPotentialSymmetricParametersValid;
+}
+
+void ThermoFixedTemperatureTrajectory::evaluate() const
+{   
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
+    namespace VTTP = SU3NJL3DCutoffFileParserKeys::VacuumToTemperatureParameters;
+    namespace TCPSP = SU3NJL3DCutoffFileParserKeys::ToChemicalPotentialSymmetricParameters;
+    namespace OFP = SU3NJL3DCutoffFileParserKeys::OutputFileParameters;
+
+    // Model Parameters
+    string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
+    string regularizationScheme = config.getValue(MP::section, MP::regularizationScheme);
+    double cutoff = config.getDouble(MP::section, MP::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MP::section, MP::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MP::section, MP::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
+
+    cout << "\n" << MP::section << ": " << endl;
+    cout << MP::parameterSetName << " = " << parameterSetName << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::cutoff << " = " << cutoff << endl;
+    cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
+
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
+
+    // VacuumMassesParameters
+    double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
+    string methodVacuum = config.getValue(VMP::section, VMP::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMP::section, VMP::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMP::section, VMP::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
+
+    cout << "\n" << VMP::section << ": " << endl;
+    cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
+
+    // VacuumToTemperatureParameters
+    double temperature = config.getDouble(VTTP::section, VTTP::temperature);
+    int numberOfPointsVacToTemp = config.getInt(VTTP::section, VTTP::numberOfPointsVacToTemp);
+    double precisionVacToTemp = config.getDouble(VTTP::section, VTTP::precisionVacToTemp);
+    string methodVacToTemp = config.getValue(VTTP::section, VTTP::methodVacToTemp);
+
+    cout << "\n" << VTTP::section << ": " << endl;
+    cout << VTTP::temperature << " = " << temperature << endl;
+    cout << VTTP::numberOfPointsVacToTemp << " = " << numberOfPointsVacToTemp << endl;
+    cout << VTTP::precisionVacToTemp << " = " << precisionVacToTemp << endl;
+    cout << VTTP::methodVacToTemp << " = " << methodVacToTemp << endl;
+    
+    // ToChemicalPotentialSymmetricParameters
+    double chemicalPotential = config.getDouble(TCPSP::section, TCPSP::chemicalPotential);
+    int numberOfPointsToChemPot = config.getInt(TCPSP::section, TCPSP::numberOfPointsToChemPot);
+	double precisionToChemPot = config.getDouble(TCPSP::section, TCPSP::precisionToChemPot);
+	string methodToChemPot = config.getValue(TCPSP::section, TCPSP::methodToChemPot);
+
+    cout << "\n" << TCPSP::section << ": " << endl;
+    cout << TCPSP::chemicalPotential << " = " << chemicalPotential << endl;
+    cout << TCPSP::numberOfPointsToChemPot << " = " << numberOfPointsToChemPot << endl;
+    cout << TCPSP::precisionToChemPot << " = " << precisionToChemPot << endl;
+    cout << TCPSP::methodToChemPot << " = " << methodToChemPot << endl;
+
+    // OutputFileParameters    
+    string customSuffix = config.getValue(OFP::section, OFP::customSuffix);
+    
+    cout << "\n" << OFP::section << ": " << endl;
+    cout << OFP::customSuffix << " = " << customSuffix << endl;
+
+    // Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoff, 
+        couplings, 
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
+    );
+    parameters.setParameterSetName(parameterSetName);
+
+    SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedTemperatureTrajectory(
+        parameters, 
+        precisionVacuum,
+        stringToMultiRootFindingMethod(methodVacuum),
+        upQuarkMassGuess,
+        downQuarkMassGuess,
+        strangeQuarkMassGuess,
+        temperature,
+        numberOfPointsVacToTemp,
+        precisionVacToTemp,
+        stringToMultiRootFindingMethod(methodVacToTemp),
+        chemicalPotential,
+        numberOfPointsToChemPot,
+        precisionToChemPot,
+        stringToMultiRootFindingMethod(methodToChemPot),
         customSuffix
     );
 }

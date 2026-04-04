@@ -70,6 +70,15 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string methodVacToChemPot = "methodVacuumToChemicalPotential";  
     }
 
+    namespace VacuumToTemperatureParameters
+    {
+        inline const std::string section = "VacuumToTemperatureParameters";
+        inline const std::string temperature = "temperature_GeV";
+        inline const std::string numberOfPointsVacToTemp = "numberOfPointsVacuumToTemperature";
+        inline const std::string precisionVacToTemp = "precisionVacuumToTemperature";
+        inline const std::string methodVacToTemp = "methodVacuumToTemperature";  
+    }
+
     namespace ToTemperatureParameters
     {
         inline const std::string section = "ToTemperatureParameters";
@@ -77,6 +86,15 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string numberOfPointsUpToTemp = "numberOfPointsToTemperature";
         inline const std::string precisionUpToTemp = "precisionToTemperature";
         inline const std::string methodUpToTemp = "methodToTemperature";
+    }
+
+    namespace ToChemicalPotentialSymmetricParameters
+    {
+        inline const std::string section = "ToChemicalPotentialSymmetricParameters";
+        inline const std::string chemicalPotential = "chemicalPotential_GeV";
+        inline const std::string numberOfPointsToChemPot = "numberOfPointsToChemicalPotential";
+        inline const std::string precisionToChemPot = "precisionToChemicalPotential";
+        inline const std::string methodToChemPot = "methodToChemicalPotential";  
     }
 
     namespace LowToHighTemperatureAtZeroChemicalPotentialParameters 
