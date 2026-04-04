@@ -77,7 +77,7 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = 0.0\ \mathrm{GeV}$",
+        r"$\mu [\mathrm{GeV}] = 0.0$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
