@@ -48,19 +48,16 @@ def plot_eta_vs_temp(
     for path_file_eta, label, color, linewidth, linestyle in data_specs:
         data_eta = ShearViscosityData(path_file_eta)
         datasets.append((data_eta, label, color, linewidth, linestyle))
-
-    # Verify that the data provided have the same temperature grid
-    for data_eta, label, color, linewidth, linestyle in datasets :
-        if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
-            raise ValueError("Temperature grids between datasets do not match.")
     
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
     for data_eta, label, color, linewidth, linestyle in datasets:
+        temp = data_eta.get_temperature()
+        eta = data_eta.get_shear_viscosity()
         ax.plot(
-            data_eta.get_temperature(), 
-            data_eta.get_shear_viscosity(), 
+            temp, 
+            eta, 
             label=label, 
             color=color, 
             linewidth=linewidth, 
@@ -157,11 +154,6 @@ def plot_eta_over_s_vs_temp(
         data_eta = ShearViscosityData(path_file_eta)
         datasets.append((data_eta, label, color, linewidth, linestyle))
 
-    # Verify that the data provided have the same temperature grid
-    for data_eta, label, color, linewidth, linestyle in datasets :
-        if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
-            raise ValueError("Temperature grids between datasets do not match.")
-
     # Get entropy from thermodynamics data (for this parameter set) and interpolate it
     data_thermodynamics = FixedChemPotTempData(path_file_thermodynamics)
     entropy_dens_interpolation = interp1d(
@@ -169,15 +161,17 @@ def plot_eta_over_s_vs_temp(
         data_thermodynamics.get_entropy_density(), 
         kind='linear'
     )
-    entropy_dens = entropy_dens_interpolation(datasets[0][0].get_temperature())
     
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
     for data_eta, label, color, linewidth, linestyle in datasets:
+        temp = data_eta.get_temperature()
+        eta = data_eta.get_shear_viscosity()
+        entropy_dens = entropy_dens_interpolation(temp)
         ax.plot(
-            data_eta.get_temperature(), 
-            data_eta.get_shear_viscosity()/entropy_dens, 
+            temp, 
+            eta/entropy_dens, 
             label=label, 
             color=color, 
             linewidth=linewidth, 

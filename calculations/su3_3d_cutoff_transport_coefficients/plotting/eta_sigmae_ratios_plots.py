@@ -52,12 +52,10 @@ def plot_eta_temp_over_sigmae_s_vs_temp(
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_eta, data_sigmae, label, color, linewidth, linestyle))
 
-    # Verify that the data provided have the same temperature grid
+    # Verify that the eta and sigmae paired data provided have the same temperature grid
     for data_eta, data_sigmae, label, color, linewidth, linestyle in datasets :
-        if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
-            raise ValueError("Temperature grids between datasets do not match.")
-        if not np.array_equal(datasets[0][0].get_temperature(), data_sigmae.get_temperature()):
-            raise ValueError("Temperature grids between datasets do not match.")
+        if not np.array_equal(data_eta.get_temperature(), data_sigmae.get_temperature()):
+            raise ValueError("Temperature grids between paired eta and sigmae do not match.")
     
     # Get entropy from thermodynamics data (for this parameter set) and interpolate it
     data_thermodynamics = FixedChemPotTempData(path_file_thermodynamics)
@@ -66,8 +64,7 @@ def plot_eta_temp_over_sigmae_s_vs_temp(
         data_thermodynamics.get_entropy_density(), 
         kind='linear'
     )
-    entropy_dens = entropy_dens_interpolation(datasets[0][0].get_temperature())
-
+    
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
@@ -75,8 +72,9 @@ def plot_eta_temp_over_sigmae_s_vs_temp(
         eta = data_eta.get_shear_viscosity()
         temp = data_eta.get_temperature()
         sigma_e = data_sigmae.get_electrical_conductivity()
+        entropy_dens = entropy_dens_interpolation(temp)
         ax.plot(
-            data_eta.get_temperature(), 
+            temp, 
             eta*temp/( sigma_e*entropy_dens ), 
             label=label, 
             color=color, 
@@ -173,12 +171,10 @@ def plot_eta_over_sigmae_temp2_vs_temp(
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_eta, data_sigmae, label, color, linewidth, linestyle))
 
-    # Verify that the data provided have the same temperature grid
+    # Verify that the eta and sigmae paired data provided have the same temperature grid
     for data_eta, data_sigmae, label, color, linewidth, linestyle in datasets :
-        if not np.array_equal(datasets[0][0].get_temperature(), data_eta.get_temperature()):
-            raise ValueError("Temperature grids between datasets do not match.")
-        if not np.array_equal(datasets[0][0].get_temperature(), data_sigmae.get_temperature()):
-            raise ValueError("Temperature grids between datasets do not match.")
+        if not np.array_equal(data_eta.get_temperature(), data_sigmae.get_temperature()):
+            raise ValueError("Temperature grids between paired eta and sigmae do not match.")
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)

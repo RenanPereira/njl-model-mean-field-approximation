@@ -46,18 +46,15 @@ def plot_sigmae_vs_temp(
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_sigmae, label, color, linewidth, linestyle))
 
-    # Verify that the data provided have the same temperature grid
-    for data_sigmae, label, color, linewidth, linestyle in datasets :
-        if not np.array_equal(datasets[0][0].get_temperature(), data_sigmae.get_temperature()):
-            raise ValueError("Temperature grids between datasets do not match.")
-
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
     for data_sigmae, label, color, linewidth, linestyle in datasets:
+        temp = data_sigmae.get_temperature()
+        sigmae = data_sigmae.get_electrical_conductivity()
         ax.plot(
-            data_sigmae.get_temperature(), 
-            data_sigmae.get_electrical_conductivity(), 
+            temp, 
+            sigmae, 
             label=label, 
             color=color, 
             linewidth=linewidth, 
@@ -152,18 +149,15 @@ def plot_sigmae_over_temp_vs_temp(
         data_sigmae = ElectricalConductivityData(path_file_sigmae)
         datasets.append((data_sigmae, label, color, linewidth, linestyle))
 
-    # Verify that the data provided have the same temperature grid
-    for data_sigmae, label, color, linewidth, linestyle in datasets :
-        if not np.array_equal(datasets[0][0].get_temperature(), data_sigmae.get_temperature()):
-            raise ValueError("Temperature grids between datasets do not match.")
-
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
     for data_sigmae, label, color, linewidth, linestyle in datasets:
+        temp = data_sigmae.get_temperature()
+        sigmae = data_sigmae.get_electrical_conductivity()
         ax.plot(
-            data_sigmae.get_temperature(), 
-            data_sigmae.get_electrical_conductivity()/data_sigmae.get_temperature(), 
+            temp, 
+            sigmae/temp, 
             label=label, 
             color=color, 
             linewidth=linewidth, 
