@@ -220,6 +220,28 @@ double fermionParticleDensityIntegrand(double k, void *parameters)
     return integrand;
 }
 
+//CTmu term that correctly reproduces the Stefan–Boltzmann limit (particle density)
+double fermionParticleDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T, double effChemPot, double integralPrecision)
+{   
+    int integralWorkspace = 1000;
+    ThermodynamicsIntegrandParameters params("fermionParticleDensityCTmuIntegral", T, effChemPot, 0.0);
+
+    double particleDensity = 0.0;
+    if ( T>0.0 )
+    {   
+    	//finite T
+        Integration1DimGSLQAGIU fermionParticleDensityCTmu(cutoff, &params, fermionParticleDensityIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+        particleDensity = fermionParticleDensityCTmu.evaluate();
+    }
+    else
+    {   
+        //T=0 limit
+        particleDensity = 0.0;
+    }
+    particleDensity = ( 1.0/(M_PI*M_PI) )*particleDensity;
+
+    return particleDensity;
+}
 
 double fermionParticleDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double effChemPot, double effMass, double integralPrecision)
 {   
@@ -246,6 +268,12 @@ double fermionParticleDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme
         //T=0 limit
         fermionDensity = pow(fermiMomentum(effChemPot,effMass),3)/( 3.0*M_PI*M_PI );
     }
+
+    //if the chosen regularization includes the CTmu term, add it to the fermion density
+	if ( reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+	{
+		fermionDensity = fermionDensity + fermionParticleDensity3DCutoffStefanBoltzmannCTmu(cutoff, T, effChemPot, integralPrecision);
+	}
 
     return fermionDensity;
 }
@@ -636,4 +664,19 @@ double SU3NJL3DCutoffEntropyDensity(SU3NJL3DCutoffParameters parametersNJL, doub
     return entropy;
 }
 
+double SU3NJL3DCutoffQuarkFlavourDensity(
+    SU3NJL3DCutoffParameters& parametersNJL, 
+    double T, 
+    double effMass, 
+    double effChemPot
+)
+{
+    NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
+    double cutoff = parametersNJL.getThreeMomentumCutoff();
+    double Nc = parametersNJL.getNumberOfColours();    
+    double thermoIntegralPrecision = parametersNJL.getThermoIntegralPrecision();
 
+    double rho = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effChemPot, effMass, thermoIntegralPrecision);
+
+    return rho;
+}

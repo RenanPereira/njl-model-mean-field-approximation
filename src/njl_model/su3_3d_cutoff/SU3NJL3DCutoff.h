@@ -139,6 +139,8 @@ double SU3NJLInteractionPotential(NJLDimensionfulCouplings , double , double , d
 
 double fermionParticleDensityIntegrand(double , void *);
 
+double fermionParticleDensity3DCutoffStefanBoltzmannCTmu(double , double , double , double );
+
 double fermionParticleDensity3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double );
 
 
@@ -171,7 +173,11 @@ double SU3NJL3DCutoffEnergyDensity(SU3NJL3DCutoffParameters , double , double , 
 
 double SU3NJL3DCutoffEntropyDensity(SU3NJL3DCutoffParameters , double , double , double , double , double , double , double );
 
-
-
+double SU3NJL3DCutoffQuarkFlavourDensity(
+    SU3NJL3DCutoffParameters& , 
+    double , 
+    double , 
+    double 
+);
 
 #endif

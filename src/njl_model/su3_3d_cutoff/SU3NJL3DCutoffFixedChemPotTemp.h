@@ -24,6 +24,9 @@ private:
 	double pressure = 0.0/0.0;
 	double energyDensity = 0.0/0.0;
 	double entropyDensity = 0.0/0.0;
+	double upQuarkDensity = 0.0/0.0;
+	double downQuarkDensity = 0.0/0.0;
+	double strangeQuarkDensity = 0.0/0.0; 
 
 public:
 	SU3NJL3DCutoffFixedChemPotTemp(){}
@@ -98,10 +101,14 @@ public:
 	void setPressure(double pressureVacuum){ pressure = calculatePressure(pressureVacuum); }
 	void setEnergyDensity(double energyVacuum){ energyDensity = calculateEnergyDensity(energyVacuum); }
 	void setEntropyDensity(){ entropyDensity = calculateEntropyDensity(); }
+	void setQuarkDensities();
 
 	double getPressure() const { return pressure; }
 	double getEnergyDensity() const { return energyDensity; }
 	double getEntropyDensity() const { return entropyDensity; }
+	double getUpQuarkDensity() const { return upQuarkDensity; }
+	double getDownQuarkDensity() const { return downQuarkDensity; }
+	double getStrangeQuarkDensity() const { return strangeQuarkDensity; }
 
 	static void evaluateInMediumMassesAndThermodynamics(
 		SU3NJL3DCutoffParameters& , 

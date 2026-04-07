@@ -32,6 +32,9 @@ filename="SU3NJL3DCutoffFixedChemPotTempThermo_setC_CP0.ini"
 filename="SU3NJL3DCutoffFixedChemPotTempThermo_setA_CPCEP.ini"
 ./nambuJonaLasinioModel.out use-config-file $filename
 
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setA_T0p075.ini"
+./nambuJonaLasinioModel.out use-config-file $filename
+
 rm nambuJonaLasinioModel.out
 
 cd ..

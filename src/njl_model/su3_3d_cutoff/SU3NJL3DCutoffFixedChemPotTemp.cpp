@@ -959,6 +959,44 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEntropyDensity()
     return entropyNJL;
 }
 
+void SU3NJL3DCutoffFixedChemPotTemp::setQuarkDensities()
+{
+    //Consider chemical potentials equal to effective chemical potentials
+    //This holds if no vector interactions are considered
+    //If vector interactions are considered, abort until this is updated
+    LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
+    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    {   
+        cout << "Lagrangian interactions contain vector degrees of freedom! "
+             << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
+        abort();
+    }
+    double upQuarkEffectiveChemicalPotential = upQuarkChemicalPotential;
+    double downQuarkEffectiveChemicalPotential = downQuarkChemicalPotential;
+    double strangeQuarkEffectiveChemicalPotential = strangeQuarkChemicalPotential;
+
+    upQuarkDensity = SU3NJL3DCutoffQuarkFlavourDensity(
+        parametersNJL, 
+        temperature, 
+        upQuarkEffectiveMass, 
+        upQuarkEffectiveChemicalPotential
+    );
+
+    downQuarkDensity = SU3NJL3DCutoffQuarkFlavourDensity(
+        parametersNJL, 
+        temperature, 
+        downQuarkEffectiveMass, 
+        downQuarkEffectiveChemicalPotential
+    );
+
+    strangeQuarkDensity = SU3NJL3DCutoffQuarkFlavourDensity(
+        parametersNJL, 
+        temperature, 
+        strangeQuarkEffectiveMass, 
+        strangeQuarkEffectiveChemicalPotential
+    );
+}
+
 void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedChemPotTemp> solutions, string filename)
 {
     int dataPrecision = 15;
@@ -981,6 +1019,10 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedChemPotTemp> solutions, stri
     file.width(colW); file << "pressure[GeV^4]";
     file.width(colW); file << "energyDensity[GeV^4]";
     file.width(colW); file << "entropyDensity[GeV^3]";
+    
+    file.width(colW); file << "quarkDensityU[GeV^3]";
+    file.width(colW); file << "quarkDensityD[GeV^3]";
+    file.width(colW); file << "quarkDensityS[GeV^3]";
     file << "\n";
 
     for (int i = 0; i < int(solutions.size()); ++i)
@@ -998,6 +1040,10 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffFixedChemPotTemp> solutions, stri
         file.width(25);   file << solutions[i].getPressure();
         file.width(25);   file << solutions[i].getEnergyDensity();
         file.width(25);   file << solutions[i].getEntropyDensity();
+
+        file.width(25);   file << solutions[i].getUpQuarkDensity();
+        file.width(25);   file << solutions[i].getDownQuarkDensity();
+        file.width(25);   file << solutions[i].getStrangeQuarkDensity();
 
         file << "\n";
     }
@@ -1084,6 +1130,7 @@ void calculateThermodynamics(
         solution[i].setPressure(vacuumPressure);
         solution[i].setEnergyDensity(-vacuumPressure);
         solution[i].setEntropyDensity();
+        solution[i].setQuarkDensities();
     }
 }
 
