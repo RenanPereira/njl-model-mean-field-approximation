@@ -102,6 +102,34 @@ def calculate_enthalpy_quark_dens_ratio(
     return enthalpy_quark_dens_ratio
 
 
+def interpolate_enthalpy_quark_dens_ratio(
+    thermodynamics_data: FixedChemPotTempData, 
+    thermo_interpolation_kind: str = 'linear'
+) -> interp1d:
+    
+    temperature = []
+    enthalpy_quark_dens_ratio = []
+    for i in range(thermodynamics_data.size()):
+        quark_density = thermodynamics_data.get_up_quark_density()[i] + thermodynamics_data.get_down_quark_density()[i] + thermodynamics_data.get_strange_quark_density()[i]
+        
+        if quark_density>0:
+            pressure = thermodynamics_data.get_pressure()[i]
+            energy_dens = thermodynamics_data.get_energy_density()[i]
+            enthalpy = pressure + energy_dens
+            
+            temperature.append(thermodynamics_data.get_temperature()[i])
+            enthalpy_quark_dens_ratio.append(enthalpy/quark_density)
+    
+    enthalpy_quark_dens_ratio_inter = interp1d(
+        temperature, 
+        enthalpy_quark_dens_ratio, 
+        kind=thermo_interpolation_kind,
+        bounds_error=True
+    )
+    
+    return enthalpy_quark_dens_ratio_inter
+
+
 def check_temperature_ranges(
     quark_rel_times_data: QuarkRelaxationTimesData, 
     thermodynamics_data: FixedChemPotTempData, 
@@ -126,13 +154,8 @@ def calculate_thermal_conductivity(
     # first check if temperature of quark_rel_times_data are within the values of min and max values of thermodynamics_data
     check_temperature_ranges(quark_rel_times_data, thermodynamics_data)
     
-    # calculate and interpolate the enthalpy to total quark density ratio
-    ratio = calculate_enthalpy_quark_dens_ratio(thermodynamics_data)
-    enthalpy_quark_dens_ratio_inter = interp1d(
-        thermodynamics_data.get_temperature(), 
-        ratio, 
-        kind=thermo_interpolation_kind,
-        bounds_error=True
+    enthalpy_quark_dens_ratio_inter = interpolate_enthalpy_quark_dens_ratio(
+        thermodynamics_data, thermo_interpolation_kind
     )
     
     thermal_conductivity = [] 

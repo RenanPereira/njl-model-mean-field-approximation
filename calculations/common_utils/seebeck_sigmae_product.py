@@ -8,7 +8,7 @@ from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
 from common_utils.thermal_conductivity import (
     simplified_thermal_conductivity_integrand, 
     check_temperature_ranges,
-    calculate_enthalpy_quark_dens_ratio
+    interpolate_enthalpy_quark_dens_ratio
 )
 from common_utils.physical_constants import (
     hbarc_gevfm, 
@@ -64,13 +64,8 @@ def calculate_seebeck_sigmae_product(
     # first check if temperature of quark_rel_times_data are within the values of min and max values of thermodynamics_data
     check_temperature_ranges(quark_rel_times_data, thermodynamics_data)
     
-    # calculate and interpolate the enthalpy to total quark density ratio
-    ratio = calculate_enthalpy_quark_dens_ratio(thermodynamics_data)
-    enthalpy_quark_dens_ratio_inter = interp1d(
-        thermodynamics_data.get_temperature(), 
-        ratio, 
-        kind=thermo_interpolation_kind,
-        bounds_error=True
+    enthalpy_quark_dens_ratio_inter = interpolate_enthalpy_quark_dens_ratio(
+        thermodynamics_data, thermo_interpolation_kind
     )
     
     seebeck_sigmae_product = [] 
