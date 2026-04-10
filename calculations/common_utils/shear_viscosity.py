@@ -51,7 +51,7 @@ def simplified_shear_viscosity_integral(
         simplified_shear_viscosity_integrand,
         0.0,
         math.inf,
-        arguments,
+        args=arguments,
         epsabs=epsabs,
         epsrel=epsrel,
     )

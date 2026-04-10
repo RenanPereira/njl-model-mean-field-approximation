@@ -57,7 +57,7 @@ def simplified_electrical_conductivity_integral(
         simplified_electrical_conductivity_integrand,
         0.0,
         math.inf,
-        arguments,
+        args=arguments,
         epsabs=epsabs,
         epsrel=epsrel,
     )
