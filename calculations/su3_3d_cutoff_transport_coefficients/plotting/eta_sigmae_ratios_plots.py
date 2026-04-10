@@ -62,7 +62,8 @@ def plot_eta_temp_over_sigmae_s_vs_temp(
     entropy_dens_interpolation = interp1d(
         data_thermodynamics.get_temperature(), 
         data_thermodynamics.get_entropy_density(), 
-        kind='linear'
+        kind='linear',
+        bounds_error=True
     )
     
     # Create a new figure

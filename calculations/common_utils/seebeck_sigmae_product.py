@@ -1,7 +1,6 @@
 import math
 import numpy as np
 from scipy.integrate import quad
-from scipy.interpolate import interp1d
 
 from common_utils.quark_relaxation_times_data import QuarkRelaxationTimesData
 from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
