@@ -1,5 +1,5 @@
 import os
-from common_utils.electrical_conductivity import ElectricalConductivity
+from common_utils.transport_coefficients.electrical_conductivity import ElectricalConductivity
 
 
 path_input_data_folder = "su3_3d_cutoff_quark_relaxation_times/data/"

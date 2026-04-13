@@ -4,7 +4,7 @@ from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 
 from common_utils.plot_helper import configure_axes, add_annotation_block
-from common_utils.thermal_conductivity_data import ThermalConductivityData
+from common_utils.transport_coefficients.thermal_conductivity_data import ThermalConductivityData
 
 
 # Common configurations between plots

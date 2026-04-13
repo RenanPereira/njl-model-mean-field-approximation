@@ -1,5 +1,5 @@
 import os
-from common_utils.seebeck_sigmae_product import SeebeckSigmaeProduct
+from common_utils.transport_coefficients.seebeck_sigmae_product import SeebeckSigmaeProduct
 
 
 path_quark_rel_times_data_folder = "su3_3d_cutoff_quark_relaxation_times/data/"

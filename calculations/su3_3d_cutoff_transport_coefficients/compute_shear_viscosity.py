@@ -1,5 +1,5 @@
 import os
-from common_utils.shear_viscosity import ShearViscosity
+from common_utils.transport_coefficients.shear_viscosity import ShearViscosity
 
 
 path_input_data_folder = "su3_3d_cutoff_quark_relaxation_times/data/"

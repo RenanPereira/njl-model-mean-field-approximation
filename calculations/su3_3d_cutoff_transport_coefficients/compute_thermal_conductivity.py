@@ -1,5 +1,5 @@
 import os
-from common_utils.thermal_conductivity import ThermalConductivity
+from common_utils.transport_coefficients.thermal_conductivity import ThermalConductivity
 
 
 path_quark_rel_times_data_folder = "su3_3d_cutoff_quark_relaxation_times/data/"

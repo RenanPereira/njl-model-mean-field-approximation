@@ -4,7 +4,7 @@ from scipy.integrate import quad
 
 from common_utils.quark_relaxation_times_data import QuarkRelaxationTimesData
 from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
-from common_utils.thermal_conductivity import (
+from common_utils.transport_coefficients.thermal_conductivity import (
     simplified_thermal_conductivity_integrand, 
     check_temperature_ranges,
     interpolate_enthalpy_quark_dens_ratio
