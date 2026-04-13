@@ -3,8 +3,8 @@ from matplotlib.ticker import FormatStrFormatter
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from scipy.interpolate import interp1d
-import numpy as np
 import math
+
 from common_utils.plot_helper import configure_axes, add_annotation_block
 from common_utils.shear_viscosity_data import ShearViscosityData
 from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData

@@ -4,6 +4,7 @@ from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from scipy.interpolate import interp1d
 import numpy as np
+
 from common_utils.plot_helper import configure_axes, add_annotation_block
 from common_utils.shear_viscosity_data import ShearViscosityData
 from common_utils.electrical_conductivity_data import ElectricalConductivityData

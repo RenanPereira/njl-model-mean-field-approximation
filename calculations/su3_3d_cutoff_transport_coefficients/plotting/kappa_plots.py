@@ -4,7 +4,7 @@ from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 
 from common_utils.plot_helper import configure_axes, add_annotation_block
-from common_utils.electrical_conductivity_data import ElectricalConductivityData
+from common_utils.thermal_conductivity_data import ThermalConductivityData
 
 
 # Common configurations between plots
@@ -12,7 +12,7 @@ from common_utils.electrical_conductivity_data import ElectricalConductivityData
 plt.rcParams['font.family'] = 'sans-serif'
 
 
-def plot_sigmae_vs_temp(
+def plot_kappa_vs_temp(
     fig_dpi: int,
     fig_x_size: int,
     fig_y_size: int,
@@ -32,29 +32,29 @@ def plot_sigmae_vs_temp(
     """
     data_specs:
         List of tuples defining datasets and plot styles:
-        (path_file_sigmae, label, color, linewidth, linestyle)
+        (path_file_kappa, label, color, linewidth, linestyle)
     """
-    print("Building plot: electrical conductivity versus temperature.")
+    print("Building plot: thermal conductivity versus temperature.")
 
     print("Using datafiles:")
-    for path_file_sigmae, _, _, _, _ in data_specs:
-        print(path_file_sigmae)
+    for path_file_kappa, _, _, _, _ in data_specs:
+        print(path_file_kappa)
     print()
     
-    datasets: list[tuple[ElectricalConductivityData, str, str, int, str]] = []
-    for path_file_sigmae, label, color, linewidth, linestyle in data_specs:
-        data_sigmae = ElectricalConductivityData(path_file_sigmae)
-        datasets.append((data_sigmae, label, color, linewidth, linestyle))
+    datasets: list[tuple[ThermalConductivityData, str, str, int, str]] = []
+    for path_file_kappa, label, color, linewidth, linestyle in data_specs:
+        data_kappa = ThermalConductivityData(path_file_kappa)
+        datasets.append((data_kappa, label, color, linewidth, linestyle))
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
-    for data_sigmae, label, color, linewidth, linestyle in datasets:
-        temp = data_sigmae.get_temperature()
-        sigmae = data_sigmae.get_electrical_conductivity()
+    for data_kappa, label, color, linewidth, linestyle in datasets:
+        temp = data_kappa.get_temperature()
+        kappa = data_kappa.get_thermal_conductivity()
         ax.plot(
             temp, 
-            sigmae, 
+            kappa, 
             label=label, 
             color=color, 
             linewidth=linewidth, 
@@ -70,7 +70,7 @@ def plot_sigmae_vs_temp(
 
     # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\sigma_{\mathrm{e}}\, [\mathrm{GeV}]$', fontsize=20)
+    ax.set_ylabel(r'$\kappa \, [\mathrm{GeV}^2]$', fontsize=20)
 
     # Configure axes using the helper function
     xmin = xlim[0]
@@ -115,7 +115,7 @@ def plot_sigmae_vs_temp(
     return fig, ax
 
 
-def plot_sigmae_over_temp_vs_temp(
+def plot_kappa_over_temp2_vs_temp(
     fig_dpi: int,
     fig_x_size: int,
     fig_y_size: int,
@@ -135,29 +135,29 @@ def plot_sigmae_over_temp_vs_temp(
     """
     data_specs:
         List of tuples defining datasets and plot styles:
-        (path_file_sigmae, label, color, linewidth, linestyle)
+        (path_file_kappa, label, color, linewidth, linestyle)
     """
-    print("Building plot: electrical conductivity over temperature versus temperature.")
+    print("Building plot: thermal conductivity over temperature squared versus temperature.")
 
     print("Using datafiles:")
-    for path_file_sigmae, _, _, _, _ in data_specs:
-        print(path_file_sigmae)
+    for path_file_kappa, _, _, _, _ in data_specs:
+        print(path_file_kappa)
     print()
     
-    datasets: list[tuple[ElectricalConductivityData, str, str, int, str]] = []
-    for path_file_sigmae, label, color, linewidth, linestyle in data_specs:
-        data_sigmae = ElectricalConductivityData(path_file_sigmae)
-        datasets.append((data_sigmae, label, color, linewidth, linestyle))
+    datasets: list[tuple[ThermalConductivityData, str, str, int, str]] = []
+    for path_file_kappa, label, color, linewidth, linestyle in data_specs:
+        data_kappa = ThermalConductivityData(path_file_kappa)
+        datasets.append((data_kappa, label, color, linewidth, linestyle))
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
     
-    for data_sigmae, label, color, linewidth, linestyle in datasets:
-        temp = data_sigmae.get_temperature()
-        sigmae = data_sigmae.get_electrical_conductivity()
+    for data_kappa, label, color, linewidth, linestyle in datasets:
+        temp = data_kappa.get_temperature()
+        kappa = data_kappa.get_thermal_conductivity()
         ax.plot(
             temp, 
-            sigmae/temp, 
+            kappa/(temp**2), 
             label=label, 
             color=color, 
             linewidth=linewidth, 
@@ -173,7 +173,7 @@ def plot_sigmae_over_temp_vs_temp(
 
     # Axes labels
     ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\sigma_{\mathrm{e}} / T$', fontsize=20)
+    ax.set_ylabel(r'$\kappa/T^2$', fontsize=20)
 
     # Configure axes using the helper function
     xmin = xlim[0]
