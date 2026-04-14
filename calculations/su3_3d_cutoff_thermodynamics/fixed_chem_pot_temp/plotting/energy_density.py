@@ -260,7 +260,7 @@ plot_energy_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
     "set A",
     "energy_vs_temp_CP0_setA.png"
 )
@@ -271,7 +271,7 @@ plot_energy_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
     "set B",
     "energy_vs_temp_CP0_setB.png"
 )
@@ -282,7 +282,7 @@ plot_energy_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
     "set C",
     "energy_vs_temp_CP0_setC.png"
 )
@@ -294,9 +294,9 @@ plot_energy_density_vs_temperature_given_list(
     path_data_folder,
     path_plots_folder,
     [
-        "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
-        "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p000000_TMax0p500000_CP0.dat",
-        "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p000000_TMax0p500000_CP0.dat",
+        "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
+        "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
+        "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
     ],
     [
         "set A",
@@ -322,7 +322,7 @@ plot_energy_euler_eq_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
     "set A",
     "energy_euler_eq_vs_temp_CP0_setA.png"
 )
@@ -333,7 +333,7 @@ plot_energy_euler_eq_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
     "set B",
     "energy_euler_eq_vs_temp_CP0_setB.png"
 )
@@ -344,7 +344,7 @@ plot_energy_euler_eq_vs_temperature(
     fig_y_size,
     path_data_folder,
     path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p000000_TMax0p500000_CP0.dat",
+    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
     "set C",
     "energy_euler_eq_vs_temp_CP0_setC.png"
 )

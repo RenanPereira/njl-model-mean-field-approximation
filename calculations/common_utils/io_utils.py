@@ -26,3 +26,17 @@ def save_columns_to_file(
         comments="",
         fmt=f'%{column_width}.{precision}f',
     )
+
+def print_unique_filepaths(data_specs) -> None:
+    """Print unique filepaths from data specifications."""
+    print("Using datafiles:")
+    
+    filepaths = []
+    for filepath, *_ in data_specs:
+        if ( filepath not in filepaths ):
+            filepaths.append(filepath)
+    
+    for filepath in filepaths:
+        print(filepath)
+    
+    print()

@@ -61,6 +61,42 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string methodVacToFinTemp = "methodVacuumToFiniteTemperature";
     }
 
+    namespace VacuumToChemicalPotentialParameters
+    {
+        inline const std::string section = "VacuumToChemicalPotentialParameters";
+        inline const std::string chemicalPotential = "chemicalPotential_GeV";
+        inline const std::string numberOfPointsVacToChemPot = "numberOfPointsVacuumToChemicalPotential";
+        inline const std::string precisionVacToChemPot = "precisionVacuumToChemicalPotential";
+        inline const std::string methodVacToChemPot = "methodVacuumToChemicalPotential";  
+    }
+
+    namespace VacuumToTemperatureParameters
+    {
+        inline const std::string section = "VacuumToTemperatureParameters";
+        inline const std::string temperature = "temperature_GeV";
+        inline const std::string numberOfPointsVacToTemp = "numberOfPointsVacuumToTemperature";
+        inline const std::string precisionVacToTemp = "precisionVacuumToTemperature";
+        inline const std::string methodVacToTemp = "methodVacuumToTemperature";  
+    }
+
+    namespace ToTemperatureParameters
+    {
+        inline const std::string section = "ToTemperatureParameters";
+        inline const std::string temperature = "temperature_GeV";
+        inline const std::string numberOfPointsUpToTemp = "numberOfPointsToTemperature";
+        inline const std::string precisionUpToTemp = "precisionToTemperature";
+        inline const std::string methodUpToTemp = "methodToTemperature";
+    }
+
+    namespace ToChemicalPotentialSymmetricParameters
+    {
+        inline const std::string section = "ToChemicalPotentialSymmetricParameters";
+        inline const std::string chemicalPotential = "chemicalPotential_GeV";
+        inline const std::string numberOfPointsToChemPot = "numberOfPointsToChemicalPotential";
+        inline const std::string precisionToChemPot = "precisionToChemicalPotential";
+        inline const std::string methodToChemPot = "methodToChemicalPotential";  
+    }
+
     namespace LowToHighTemperatureAtZeroChemicalPotentialParameters 
     {
         inline const std::string section = "LowToHighTemperatureAtZeroChemicalPotentialParameters";
@@ -101,6 +137,12 @@ namespace SU3NJL3DCutoffFileParserKeys
         inline const std::string integratedCrossSectionIntegralPrecision_dX = "integratedCrossSectionIntegralPrecision_dX";
         inline const std::string approximationMethod = "approximationMethod";
         inline const std::string numberOfThreads = "numberOfThreads";
+    }
+
+    namespace OutputFileParameters
+    {
+        inline const std::string section = "OutputFileParameters";
+        inline const std::string customSuffix = "customSuffix";
     }
 }
 

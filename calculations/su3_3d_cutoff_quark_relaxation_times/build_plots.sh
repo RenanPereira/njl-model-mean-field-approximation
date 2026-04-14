@@ -5,4 +5,5 @@ echo ""
 
 cd ..
 
-python3 -m su3_3d_cutoff_quark_relaxation_times.plotting.build_plots_quark_relaxation_times
+python3 -m su3_3d_cutoff_quark_relaxation_times.plotting.build_plots_quark_rel_time_cp0
+python3 -m su3_3d_cutoff_quark_relaxation_times.plotting.build_plots_quark_rel_time_cpcep

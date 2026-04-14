@@ -5,6 +5,9 @@ echo ""
 
 cd ..
 
-python3 -m su3_3d_cutoff_transport_coefficients.plotting.shear_viscosity
-python3 -m su3_3d_cutoff_transport_coefficients.plotting.electrical_conductivity
-python3 -m su3_3d_cutoff_transport_coefficients.plotting.shear_visc_elec_conduct_ratios
+python3 -m su3_3d_cutoff_transport_coefficients.plotting.generate_eta_plots
+python3 -m su3_3d_cutoff_transport_coefficients.plotting.generate_sigmae_plots
+python3 -m su3_3d_cutoff_transport_coefficients.plotting.generate_eta_sigmae_ratios_plots
+python3 -m su3_3d_cutoff_transport_coefficients.plotting.generate_kappa_plots
+python3 -m su3_3d_cutoff_transport_coefficients.plotting.generate_kappa_sigmae_ratio_plots
+python3 -m su3_3d_cutoff_transport_coefficients.plotting.generate_seebeck_plots

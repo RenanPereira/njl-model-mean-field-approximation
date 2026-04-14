@@ -1,18 +1,20 @@
 #include <iostream>
 #include <cmath>
 
+#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
 #include "gsl_wrapper/root_solver_gsl.h"
-
 #include "njl_model/njl_regularization_schemes.h"
 #include "njl_model/NJLDimensionlessCouplings.h"
-#include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParserKeys.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedTempRhoBEqualChemPot.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+using std::vector;
 
 namespace SU3NJL3DCutoffFileParser
 {
@@ -32,7 +34,7 @@ NJLDimensionfulCouplings Common::extractDimensionfulCouplings() const
     );
 	cout << "interaction = " << toString(interaction) << endl;
 
-	if ( interaction==SP4Q_DET2NFQ )
+	if ( interaction == SP4Q_DET2NFQ )
 	{
 		double fourQuarkSPCouplingCutoff2 = config.getDouble(
             SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section,              
@@ -43,8 +45,8 @@ NJLDimensionfulCouplings Common::extractDimensionfulCouplings() const
             NJLDimensionlessCouplings::DETERMINANT_COUPLING
         );
 		
-		cout << NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING + " = " << fourQuarkSPCouplingCutoff2 << endl;
-		cout << NJLDimensionlessCouplings::DETERMINANT_COUPLING + " = " << determinantCouplingCutoff5 << endl;
+		cout << NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING << " = " << fourQuarkSPCouplingCutoff2 << endl;
+		cout << NJLDimensionlessCouplings::DETERMINANT_COUPLING << " = " << determinantCouplingCutoff5 << endl;
 		
 		double gs = fourQuarkSPCouplingCutoff2/pow(cutoff, 2);
 		double kappa = determinantCouplingCutoff5/pow(cutoff, 5);
@@ -53,7 +55,7 @@ NJLDimensionfulCouplings Common::extractDimensionfulCouplings() const
 
 		return couplingsSU3NJL3DCutoff;
 	}
-	else if( interaction==SP4Q_DET2NFQ_SP8Q )
+	else if( interaction == SP4Q_DET2NFQ_SP8Q )
 	{
 		double fourQuarkSPCouplingCutoff2 = config.getDouble(
             SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section, 
@@ -73,9 +75,9 @@ NJLDimensionfulCouplings Common::extractDimensionfulCouplings() const
         );
 		
 		cout << NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING << " = " << fourQuarkSPCouplingCutoff2 << endl;
-		cout << NJLDimensionlessCouplings::DETERMINANT_COUPLING + " = " << determinantCouplingCutoff5 << endl;
-		cout << NJLDimensionlessCouplings::EIGHT_QUARK_SP_OZI_COUPLING + " = " << eightQuarkSPOziViolatingCouplingCutoff8 << endl;
-		cout << NJLDimensionlessCouplings::EIGHT_QUARK_SP_NON_OZI_COUPLING + " = " << eightQuarkSPNonOziViolatingCouplingCutoff8 << endl;
+		cout << NJLDimensionlessCouplings::DETERMINANT_COUPLING << " = " << determinantCouplingCutoff5 << endl;
+		cout << NJLDimensionlessCouplings::EIGHT_QUARK_SP_OZI_COUPLING << " = " << eightQuarkSPOziViolatingCouplingCutoff8 << endl;
+		cout << NJLDimensionlessCouplings::EIGHT_QUARK_SP_NON_OZI_COUPLING << " = " << eightQuarkSPNonOziViolatingCouplingCutoff8 << endl;
 		
 		double gs = fourQuarkSPCouplingCutoff2/pow(cutoff, 2);
 		double kappa = determinantCouplingCutoff5/pow(cutoff, 5);
@@ -168,44 +170,46 @@ bool Common::validateDimensionfulCouplings() const
 
 bool Common::validateVacuumMassesParameters() const
 {   
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + VMP::section + ".";
+    
     // Ensure precisionVacuum>0
     bool isPrecisionVacuumValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section,
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::precisionVacuum, 
-        invalidFileMessage, 
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::precisionVacuum + " > 0 must be satisfied."
+        VMP::section,
+        VMP::precisionVacuum, 
+        sectionError, 
+        VMP::precisionVacuum + " > 0 must be satisfied."
     );
 
     // Ensure methodVacuum is valid
     string methodVacuum = config.getValue(
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section, 
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::methodVacuum
+        VMP::section, 
+        VMP::methodVacuum
     );
-    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacuum);
-    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacuum, sectionError);
 
     // Ensure up quark mass is valid
     bool isUpQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section, 
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::upQuarkMassGuess, 
-        invalidFileMessage, 
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::upQuarkMassGuess + " > 0 must be satisfied."
+        VMP::section, 
+        VMP::upQuarkMassGuess, 
+        sectionError, 
+        VMP::upQuarkMassGuess + " > 0 must be satisfied."
     );
 
     // Ensure down quark mass is valid
     bool isDownQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section, 
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::downQuarkMassGuess, 
-        invalidFileMessage, 
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::downQuarkMassGuess + " > 0 must be satisfied."
+        VMP::section, 
+        VMP::downQuarkMassGuess, 
+        sectionError, 
+        VMP::downQuarkMassGuess + " > 0 must be satisfied."
     );
 
     // Ensure strange quark mass is valid
     bool isStrangeQuarkMassGuessValid = config.validatePositiveDouble(
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section, 
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::strangeQuarkMassGuess, 
-        invalidFileMessage, 
-        SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::strangeQuarkMassGuess + " > 0 must be satisfied."
+        VMP::section, 
+        VMP::strangeQuarkMassGuess, 
+        sectionError, 
+        VMP::strangeQuarkMassGuess + " > 0 must be satisfied."
     );
 
     // The function returns true only if all tests passed
@@ -219,12 +223,13 @@ bool Common::validateVacuumMassesParameters() const
 bool Common::validateVacuumToFiniteBaryonDensityParameters() const
 {   
     namespace VFBD = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteBaryonDensityParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + VFBD::section + ".";
 
     // Ensure minimumBaryonDensity>0
     bool isMinimumBaryonDensityValid = config.validatePositiveDouble(
         VFBD::section,
         VFBD::minimumBaryonDensity,
-        invalidFileMessage + " Invalid value found in section " + VFBD::section + ".", 
+        sectionError, 
         VFBD::minimumBaryonDensity + " > 0 must be satisfied."
     );
 
@@ -232,7 +237,7 @@ bool Common::validateVacuumToFiniteBaryonDensityParameters() const
     bool isMaximumBaryonDensityValid = config.validatePositiveDouble(
         VFBD::section,
         VFBD::maximumBaryonDensity,
-        invalidFileMessage + " Invalid value found in section " + VFBD::section + ".", 
+        sectionError, 
         VFBD::maximumBaryonDensity + " > 0 must be satisfied."
     );
     
@@ -240,7 +245,7 @@ bool Common::validateVacuumToFiniteBaryonDensityParameters() const
     bool isNumberOfPointsValid = config.validatePositiveInteger(
         VFBD::section,
         VFBD::numberOfPoints, 
-        invalidFileMessage + " Invalid value found in section " + VFBD::section + ".", 
+        sectionError, 
         VFBD::numberOfPoints + " > 0 must be satisfied."
     );
 
@@ -248,7 +253,7 @@ bool Common::validateVacuumToFiniteBaryonDensityParameters() const
     bool isPrecisionZeroTempSolValid = config.validatePositiveDouble(
         VFBD::section,
         VFBD::precisionZeroTempSol, 
-        invalidFileMessage + " Invalid value found in section " + VFBD::section + ".", 
+        sectionError, 
         VFBD::precisionZeroTempSol + " > 0 must be satisfied."
     );
 
@@ -257,8 +262,7 @@ bool Common::validateVacuumToFiniteBaryonDensityParameters() const
         VFBD::section, 
         VFBD::methodZeroTempSol
     );
-    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodZeroTempSol);
-    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodZeroTempSol, sectionError);
 
     // The function return true only if all tests passed
     return isMinimumBaryonDensityValid && 
@@ -271,12 +275,13 @@ bool Common::validateVacuumToFiniteBaryonDensityParameters() const
 bool Common::validateFirstOrderLineParameters() const
 {   
     namespace FOLP = SU3NJL3DCutoffFileParserKeys::FirstOrderLineParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + FOLP::section + ".";
 
     // Ensure precisionTransitionPointSol>0
     bool isPrecisionTransitionPointSolValid = config.validatePositiveDouble(
         FOLP::section,
         FOLP::precisionTransitionPointSol,
-        invalidFileMessage + " Invalid value found in section " + FOLP::section + ".", 
+        sectionError, 
         FOLP::precisionTransitionPointSol + " > 0 must be satisfied."
     );
 
@@ -285,14 +290,13 @@ bool Common::validateFirstOrderLineParameters() const
         FOLP::section, 
         FOLP::methodTransitionPointSol
     );
-    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodTransitionPointSol);
-    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodTransitionPointSol, sectionError);
 
     // Ensure deltaT>0
     bool isDeltaTValid = config.validatePositiveDouble(
         FOLP::section,
         FOLP::deltaT,
-        invalidFileMessage + " Invalid value found in section " + FOLP::section + ".", 
+        sectionError, 
         FOLP::deltaT + " > 0 must be satisfied."
     );
 
@@ -300,7 +304,7 @@ bool Common::validateFirstOrderLineParameters() const
     bool isMassDifferenceCEPValid = config.validatePositiveDouble(
         FOLP::section,
         FOLP::massDifferenceCEP,
-        invalidFileMessage + " Invalid value found in section " + FOLP::section + ".", 
+        sectionError, 
         FOLP::massDifferenceCEP + " > 0 must be satisfied."
     );
 
@@ -311,15 +315,188 @@ bool Common::validateFirstOrderLineParameters() const
            isMassDifferenceCEPValid;
 }
 
+bool Common::validateVacuumToChemicalPotentialParameters() const
+{
+    namespace VTFCPP = SU3NJL3DCutoffFileParserKeys::VacuumToChemicalPotentialParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + VTFCPP::section + ".";
+
+    // Ensure chemicalPotential>0
+    bool isChemicalPotentialValid = config.validateNonNegativeDouble(
+        VTFCPP::section,
+        VTFCPP::chemicalPotential,
+        sectionError, 
+        VTFCPP::chemicalPotential + " >= 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsVacToChemPot>0
+    bool isNumberOfPointsVacToChemPotValid = config.validatePositiveInteger(
+        VTFCPP::section,
+        VTFCPP::numberOfPointsVacToChemPot, 
+        sectionError, 
+        VTFCPP::numberOfPointsVacToChemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionVacToFinTemp>0
+    bool isPrecisionVacToChemPotValid = config.validatePositiveDouble(
+        VTFCPP::section,
+        VTFCPP::precisionVacToChemPot,
+        sectionError, 
+        VTFCPP::precisionVacToChemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure methodVacToChemPot is valid
+    string methodVacToChemPot = config.getValue(
+        VTFCPP::section, 
+        VTFCPP::methodVacToChemPot
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacToChemPot, sectionError);
+
+    // The function return true only if all tests passed
+    return isChemicalPotentialValid && 
+           isNumberOfPointsVacToChemPotValid &&
+           isPrecisionVacToChemPotValid &&
+           isRootFindingMethodValid;
+}
+
+bool Common::validateVacuumToTemperatureParameters() const
+{
+    namespace VTTP = SU3NJL3DCutoffFileParserKeys::VacuumToTemperatureParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + VTTP::section + ".";
+
+    // Ensure temperature>0
+    bool isTemperatureValid = config.validateNonNegativeDouble(
+        VTTP::section,
+        VTTP::temperature,
+        sectionError, 
+        VTTP::temperature + " >= 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsVacToTemp>0
+    bool isNumberOfPointsVacToTemp = config.validatePositiveInteger(
+        VTTP::section,
+        VTTP::numberOfPointsVacToTemp, 
+        sectionError, 
+        VTTP::numberOfPointsVacToTemp + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionVacToTemp>0
+    bool isPrecisionVacToTempValid = config.validatePositiveDouble(
+        VTTP::section,
+        VTTP::precisionVacToTemp,
+        sectionError, 
+        VTTP::precisionVacToTemp + " > 0 must be satisfied."
+    );
+
+    // Ensure methodVacToTemp is valid
+    string methodVacToTemp = config.getValue(
+        VTTP::section, 
+        VTTP::methodVacToTemp
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacToTemp, sectionError);
+
+    // The function return true only if all tests passed
+    return isTemperatureValid && 
+           isNumberOfPointsVacToTemp &&
+           isPrecisionVacToTempValid &&
+           isRootFindingMethodValid;
+}
+
+bool Common::validateToTemperatureParameters() const
+{
+    namespace TTP = SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + TTP::section + ".";
+
+    // Ensure temperature>0
+    bool isTemperatureValid = config.validatePositiveDouble(
+        TTP::section,
+        TTP::temperature,
+        sectionError, 
+        TTP::temperature + " > 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsUpToTemp>0
+    bool isNumberOfPointsUpToTempValid = config.validatePositiveInteger(
+        TTP::section,
+        TTP::numberOfPointsUpToTemp, 
+        sectionError, 
+        TTP::numberOfPointsUpToTemp + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionUpToTemp>0
+    bool isPrecisionUpToTempValid = config.validatePositiveDouble(
+        TTP::section,
+        TTP::precisionUpToTemp,
+        sectionError, 
+        TTP::precisionUpToTemp + " > 0 must be satisfied."
+    );
+
+    // Ensure methodUpToTemp is valid
+    string methodUpToTemp = config.getValue(
+        TTP::section, 
+        TTP::methodUpToTemp
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodUpToTemp, sectionError);
+
+    // The function return true only if all tests passed
+    return isTemperatureValid && 
+           isNumberOfPointsUpToTempValid &&
+           isPrecisionUpToTempValid &&
+           isRootFindingMethodValid;
+}
+
+bool Common::validateToChemicalPotentialSymmetricParameters() const
+{
+    namespace TCPSP = SU3NJL3DCutoffFileParserKeys::ToChemicalPotentialSymmetricParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + TCPSP::section + ".";
+
+    // Ensure chemicalPotential>0
+    bool isChemicalPotentialValid = config.validatePositiveDouble(
+        TCPSP::section,
+        TCPSP::chemicalPotential,
+        sectionError, 
+        TCPSP::chemicalPotential + " > 0 must be satisfied."
+    );
+
+    // Ensure numberOfPointsToChemPot>0
+    bool isNumberOfPointsToChemPotValid = config.validatePositiveInteger(
+        TCPSP::section,
+        TCPSP::numberOfPointsToChemPot, 
+        sectionError, 
+        TCPSP::numberOfPointsToChemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure precisionToChemPot>0
+    bool isPrecisionToChemPotValid = config.validatePositiveDouble(
+        TCPSP::section,
+        TCPSP::precisionToChemPot,
+        sectionError, 
+        TCPSP::precisionToChemPot + " > 0 must be satisfied."
+    );
+
+    // Ensure methodToChemPot is valid
+    string methodToChemPot = config.getValue(
+        TCPSP::section, 
+        TCPSP::methodToChemPot
+    );
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodToChemPot, sectionError);
+
+    // The function return true only if all tests passed
+    return isChemicalPotentialValid && 
+           isNumberOfPointsToChemPotValid &&
+           isPrecisionToChemPotValid &&
+           isRootFindingMethodValid;
+}
+
 bool Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const
 {
     namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + VFTZCPP::section + ".";
 
     // Ensure nearVacuumTemperature>=0
     bool isNearVacuumTemperatureValid = config.validateNonNegativeDouble(
         VFTZCPP::section,
         VFTZCPP::nearVacuumTemperature ,
-        invalidFileMessage + " Invalid value found in section " + VFTZCPP::section + ".", 
+        sectionError, 
         VFTZCPP::nearVacuumTemperature + " >= 0 must be satisfied."
     );
 
@@ -327,7 +504,7 @@ bool Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters(
     bool isTemperatureValid = config.validatePositiveDouble(
         VFTZCPP::section,
         VFTZCPP::temperature,
-        invalidFileMessage + " Invalid value found in section " + VFTZCPP::section + ".", 
+        sectionError, 
         VFTZCPP::temperature + " > 0 must be satisfied."
     );
 
@@ -335,7 +512,7 @@ bool Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters(
     bool isNumberOfPointsFromVacToFinTempValid = config.validatePositiveInteger(
         VFTZCPP::section,
         VFTZCPP::numberOfPointsFromVacToFinTemp, 
-        invalidFileMessage + " Invalid value found in section " + VFTZCPP::section + ".", 
+        sectionError, 
         VFTZCPP::numberOfPointsFromVacToFinTemp + " > 0 must be satisfied."
     );
 
@@ -343,7 +520,7 @@ bool Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters(
     bool isPrecisionVacToFinTempValid = config.validatePositiveDouble(
         VFTZCPP::section,
         VFTZCPP::precisionVacToFinTemp,
-        invalidFileMessage + " Invalid value found in section " + VFTZCPP::section + ".", 
+        sectionError, 
         VFTZCPP::precisionVacToFinTemp + " > 0 must be satisfied."
     );
 
@@ -352,8 +529,7 @@ bool Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters(
         VFTZCPP::section, 
         VFTZCPP::methodVacToFinTemp
     );
-    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacToFinTemp);
-    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodVacToFinTemp, sectionError);
 
     // The function return true only if all tests passed
     return isNearVacuumTemperatureValid &&
@@ -366,12 +542,13 @@ bool Common::validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters(
 bool Common::validateLowToHighTemperatureAtZeroChemicalPotentialParameters() const
 {   
     namespace LHTZCPP = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + LHTZCPP::section + ".";
 
     // Ensure minimumTemp>0
     bool isMinimumTempValid = config.validatePositiveDouble(
         LHTZCPP::section,
         LHTZCPP::minimumTemp,
-        invalidFileMessage + " Invalid value found in section " + LHTZCPP::section + ".", 
+        sectionError, 
         LHTZCPP::minimumTemp + " > 0 must be satisfied."
     );
 
@@ -379,7 +556,7 @@ bool Common::validateLowToHighTemperatureAtZeroChemicalPotentialParameters() con
     bool isMaximumTempValid = config.validatePositiveDouble(
         LHTZCPP::section,
         LHTZCPP::maximumTemp,
-        invalidFileMessage + " Invalid value found in section " + LHTZCPP::section + ".", 
+        sectionError, 
         LHTZCPP::maximumTemp + " > 0 must be satisfied."
     );
 
@@ -387,7 +564,7 @@ bool Common::validateLowToHighTemperatureAtZeroChemicalPotentialParameters() con
     bool isNumberOfPointsFromLowToHighTempValid = config.validatePositiveInteger(
         LHTZCPP::section,
         LHTZCPP::numberOfPointsFromLowToHighTemp, 
-        invalidFileMessage + " Invalid value found in section " + LHTZCPP::section + ".", 
+        sectionError, 
         LHTZCPP::numberOfPointsFromLowToHighTemp + " > 0 must be satisfied."
     );
 
@@ -395,14 +572,13 @@ bool Common::validateLowToHighTemperatureAtZeroChemicalPotentialParameters() con
     bool isPrecisionLowToHighTempValid = config.validatePositiveDouble(
         LHTZCPP::section,
         LHTZCPP::precisionLowToHighTemp,
-        invalidFileMessage + " Invalid value found in section " + LHTZCPP::section + ".", 
+        sectionError, 
         LHTZCPP::precisionLowToHighTemp + " > 0 must be satisfied."
     );
 
     // Ensure methodLowToHighTemp is valid
     string methodLowToHighTemp = config.getValue(LHTZCPP::section, LHTZCPP::methodLowToHighTemp);
-    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodLowToHighTemp);
-    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodLowToHighTemp, sectionError);
 
     // The function return true only if all tests passed
     return isMinimumTempValid && 
@@ -415,12 +591,13 @@ bool Common::validateLowToHighTemperatureAtZeroChemicalPotentialParameters() con
 bool Common::validateFiniteTemperatureToFiniteChemicalPotentialParameters() const
 {
     namespace FTFCPP = SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + FTFCPP::section + ".";
 
     // Ensure chemPot>=0
     bool isChemPotValid = config.validateNonNegativeDouble(
         FTFCPP::section,
         FTFCPP::chemPot,
-        invalidFileMessage + " Invalid value found in section " + FTFCPP::section + ".", 
+        sectionError, 
         FTFCPP::chemPot + " > 0 must be satisfied."
     );
 
@@ -428,7 +605,7 @@ bool Common::validateFiniteTemperatureToFiniteChemicalPotentialParameters() cons
     bool isNumberOfPointsFromFinTempToFinChemPotValid = config.validatePositiveInteger(
         FTFCPP::section,
         FTFCPP::numberOfPointsFromFinTempToFinChemPot, 
-        invalidFileMessage + " Invalid value found in section " + FTFCPP::section + ".", 
+        sectionError, 
         FTFCPP::numberOfPointsFromFinTempToFinChemPot + " > 0 must be satisfied."
     );
 
@@ -436,14 +613,13 @@ bool Common::validateFiniteTemperatureToFiniteChemicalPotentialParameters() cons
     bool isPrecisionFinTempToFinChemPotValid = config.validatePositiveDouble(
         FTFCPP::section,
         FTFCPP::precisionFinTempToFinChemPot,
-        invalidFileMessage + " Invalid value found in section " + FTFCPP::section + ".", 
+        sectionError, 
         FTFCPP::precisionFinTempToFinChemPot + " > 0 must be satisfied."
     );
 
     // Ensure methodFinTempToFinChemPot is valid
     string methodFinTempToFinChemPot = config.getValue(FTFCPP::section, FTFCPP::methodFinTempToFinChemPot);
-    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodFinTempToFinChemPot);
-    if( !isRootFindingMethodValid ){ cout << invalidFileMessage << endl; }
+    bool isRootFindingMethodValid = isValidMultiRootFindingMethod(methodFinTempToFinChemPot, sectionError);
 
     // The function return true only if all tests passed
     return isChemPotValid && 
@@ -455,12 +631,13 @@ bool Common::validateFiniteTemperatureToFiniteChemicalPotentialParameters() cons
 bool Common::validateCrossSectionsParameters() const
 {
     namespace CSP = SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + CSP::section + ".";
 
     // Ensure propagatorIntegralPrecision>0
     bool isPropagatorIntegralPrecisionValid = config.validatePositiveDouble(
         CSP::section,
         CSP::propagatorIntegralPrecision,
-        invalidFileMessage + " Invalid value found in section " + CSP::section + ".", 
+        sectionError, 
         CSP::propagatorIntegralPrecision + " > 0 must be satisfied."
     );
 
@@ -468,7 +645,7 @@ bool Common::validateCrossSectionsParameters() const
     bool isPrecisionCrossSectionsValid = config.validatePositiveDouble(
         CSP::section,
         CSP::precisionCrossSections,
-        invalidFileMessage + " Invalid value found in section " + CSP::section + ".", 
+        sectionError, 
         CSP::precisionCrossSections + " > 0 must be satisfied."
     );
 
@@ -476,7 +653,7 @@ bool Common::validateCrossSectionsParameters() const
     bool isNumberOfPointsCrossSectionsValid = config.validatePositiveInteger(
         CSP::section,
         CSP::numberOfPointsCrossSections, 
-        invalidFileMessage + " Invalid value found in section " + CSP::section + ".", 
+        sectionError, 
         CSP::numberOfPointsCrossSections + " > 0 must be satisfied."
     );
 
@@ -484,7 +661,7 @@ bool Common::validateCrossSectionsParameters() const
     bool isNumberOfThreadsValid = config.validatePositiveInteger(
         CSP::section,
         CSP::numberOfThreads, 
-        invalidFileMessage + " Invalid value found in section " + CSP::section + ".", 
+        sectionError, 
         CSP::numberOfThreads + " > 0 must be satisfied."
     );
 
@@ -498,12 +675,13 @@ bool Common::validateCrossSectionsParameters() const
 bool Common::validateIntegratedCrossSectionsParameters() const
 {
     namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
+    const string sectionError = invalidFileMessage + " Invalid value found in section " + ICSP::section + ".";
 
     // Ensure numberOfPointsIntegratedCrossSections>0
     bool isNumberOfPointsIntegratedCrossSectionsValid = config.validatePositiveInteger(
         ICSP::section,
         ICSP::numberOfPointsIntegratedCrossSections, 
-        invalidFileMessage + " Invalid value found in section " + ICSP::section + ".", 
+        sectionError, 
         ICSP::numberOfPointsIntegratedCrossSections + " > 0 must be satisfied."
     );
 
@@ -511,7 +689,7 @@ bool Common::validateIntegratedCrossSectionsParameters() const
     bool isPropagatorIntegralPrecisionValid = config.validatePositiveDouble(
         ICSP::section,
         ICSP::propagatorIntegralPrecision,
-        invalidFileMessage + " Invalid value found in section " + ICSP::section + ".", 
+        sectionError, 
         ICSP::propagatorIntegralPrecision + " > 0 must be satisfied."
     );
 
@@ -519,7 +697,7 @@ bool Common::validateIntegratedCrossSectionsParameters() const
     bool isLargeAngleScatteringContribution = config.validateBool(
         ICSP::section,
         ICSP::largeAngleScatteringContribution,
-        invalidFileMessage + " Invalid value found in section " + ICSP::section + ".", 
+        sectionError, 
         ICSP::largeAngleScatteringContribution + " must be true (1, yes, on) or false (0, no, off)."
     );
 
@@ -527,7 +705,7 @@ bool Common::validateIntegratedCrossSectionsParameters() const
     bool isCrossSectionIntegralPrecisionValid = config.validatePositiveDouble(
         ICSP::section,
         ICSP::crossSectionIntegralPrecision,
-        invalidFileMessage + " Invalid value found in section " + ICSP::section + ".", 
+        sectionError, 
         ICSP::crossSectionIntegralPrecision + " > 0 must be satisfied."
     );
 
@@ -535,7 +713,7 @@ bool Common::validateIntegratedCrossSectionsParameters() const
     bool isIntegratedCrossSectionIntegralPrecision_dXdYValid = config.validatePositiveDouble(
         ICSP::section,
         ICSP::integratedCrossSectionIntegralPrecision_dXdY,
-        invalidFileMessage + " Invalid value found in section " + ICSP::section + ".", 
+        sectionError, 
         ICSP::integratedCrossSectionIntegralPrecision_dXdY + " > 0 must be satisfied."
     );
 
@@ -543,20 +721,19 @@ bool Common::validateIntegratedCrossSectionsParameters() const
     bool isIntegratedCrossSectionIntegralPrecision_dXValid = config.validatePositiveDouble(
         ICSP::section,
         ICSP::integratedCrossSectionIntegralPrecision_dX,
-        invalidFileMessage + " Invalid value found in section " + ICSP::section + ".", 
+        sectionError, 
         ICSP::integratedCrossSectionIntegralPrecision_dX + " > 0 must be satisfied."
     );
 
     // Ensure approximationMethod is valid
     string approximationMethod = config.getValue(ICSP::section, ICSP::approximationMethod);
-    bool isApproximationMethodValid = isValidIntegratedCrossSectionApproximationMethod(approximationMethod);
-    if( !isApproximationMethodValid ){ cout << invalidFileMessage << endl; }
+    bool isApproximationMethodValid = isValidIntegratedCrossSectionApproximationMethod(approximationMethod, sectionError);
 
     // Ensure numberOfThreads>0
     bool isNumberOfThreadsValid = config.validatePositiveInteger(
         ICSP::section,
         ICSP::numberOfThreads, 
-        invalidFileMessage + " Invalid value found in section " + ICSP::section + ".", 
+        sectionError, 
         ICSP::numberOfThreads + " > 0 must be satisfied."
     );
 
@@ -591,7 +768,7 @@ bool Common::checkRequiredSections(const vector<string> requiredSections) const
 
 void Common::printQualityCheckFailedMessage() const
 {
-    cout << "The quality check failed for the " << config.getFilename() << " file."  << endl;
+    cout << "The quality check failed for the file: " << config.getFilename() << endl;
 }
 
 }
@@ -602,22 +779,13 @@ namespace SU3NJL3DCutoffFileParser::Vacuum
 bool Masses::validateFile() const
 {
     // Check for missing sections
-    bool allRequiredSectionsPresent = true;
     vector<string> requiredSections = 
     {
         SU3NJL3DCutoffFileParserKeys::ModelParameters::section, 
         SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section, 
         SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters::section
     };  
-    for (int i = 0; i < int(requiredSections.size()); ++i) 
-    {
-        string section = requiredSections[i];
-        if (config.getSectionsData(section).empty()) 
-        {   
-            allRequiredSectionsPresent = false;
-            cout << "Missing required section: " << section << endl;
-        }
-    }
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
 
     // Validate individual sections
     bool areModelParametersValid = validateModelParameters();
@@ -704,21 +872,12 @@ bool FirstOrderLine::validateFile() const
     bool vacuumValidations = configVacuum.validateFile();
 
     // Check for missing sections
-    bool allRequiredSectionsPresent = true;
     vector<string> requiredSections = 
     {
         SU3NJL3DCutoffFileParserKeys::VacuumToFiniteBaryonDensityParameters::section,
         SU3NJL3DCutoffFileParserKeys::FirstOrderLineParameters::section
     };  
-    for (int i = 0; i < int(requiredSections.size()); ++i) 
-    {
-        string section = requiredSections[i];
-        if (config.getSectionsData(section).empty()) 
-        {   
-            allRequiredSectionsPresent = false;
-            cout << "Missing required section: " << section << endl;
-        }
-    }
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
 
     // Validate individual sections
     bool areVacuumToFiniteBaryonDensityParametersValid = validateVacuumToFiniteBaryonDensityParameters();
@@ -844,22 +1003,13 @@ bool IsospinSymmetricCrossSections::validateFile() const
     bool vacuumValidations = configVacuum.validateFile();
 
     // Check for missing sections
-    bool allRequiredSectionsPresent = true;
     vector<string> requiredSections = 
     {
         SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
         SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters::section,
         SU3NJL3DCutoffFileParserKeys::CrossSectionsParameters::section
     };  
-    for (int i = 0; i < int(requiredSections.size()); ++i) 
-    {
-        string section = requiredSections[i];
-        if (config.getSectionsData(section).empty()) 
-        {   
-            allRequiredSectionsPresent = false;
-            cout << "Missing required section: " << section << endl;
-        }
-    }
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
 
     // Validate individual sections
     bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
@@ -1025,22 +1175,13 @@ bool IsospinSymmetricIntegratedCrossSectionsZeroChemPot::validateFile() const
     bool vacuumValidations = configVacuum.validateFile();
 
     // Check for missing sections
-    bool allRequiredSectionsPresent = true;
     vector<string> requiredSections = 
     {
         SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
         SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters::section,
         SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters::section
     };  
-    for (int i = 0; i < int(requiredSections.size()); ++i) 
-    {
-        string section = requiredSections[i];
-        if (config.getSectionsData(section).empty()) 
-        {   
-            allRequiredSectionsPresent = false;
-            cout << "Missing required section: " << section << endl;
-        }
-    }
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
 
     // Validate individual sections
     bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
@@ -1182,6 +1323,466 @@ void IsospinSymmetricIntegratedCrossSectionsZeroChemPot::evaluate() const
         integratedCrossSectionIntegralPrecision_dXdY,
         integratedCrossSectionIntegralPrecision_dX,
         numberOfThreads
+    );
+}
+
+bool IsospinSymmetricIntegratedCrossSectionsFiniteChemPot::validateTemperatureAndGridConsistency() const
+{
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    namespace ICS = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
+
+    bool areTemperaturesEqual = (config.getValue(VFTZCPP::section, VFTZCPP::temperature)==config.getValue(LHT::section, LHT::minimumTemp));
+    if ( !areTemperaturesEqual )
+    {
+        cout << invalidFileMessage + " Invalid values found in sections " + VFTZCPP::section + " and " + LHT::section + ": \n";
+        cout << VFTZCPP::temperature << "==" << LHT::minimumTemp << " must be satisfied.\n";
+    }
+
+    bool areNumberOfPointsEqual = (config.getValue(LHT::section, LHT::numberOfPointsFromLowToHighTemp)==config.getValue(ICS::section, ICS::numberOfPointsIntegratedCrossSections));
+    if ( !areNumberOfPointsEqual )
+    {
+        cout << invalidFileMessage + " Invalid values found in sections " + LHT::section + " and " + ICS::section + ": \n";
+        cout << LHT::numberOfPointsFromLowToHighTemp << "==" << ICS::numberOfPointsIntegratedCrossSections << " must be satisfied.\n";
+    }
+    
+    return areTemperaturesEqual && areNumberOfPointsEqual;
+}
+
+bool IsospinSymmetricIntegratedCrossSectionsFiniteChemPot::validateFile() const
+{   
+    // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters using previous developed logic
+	const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
+    bool vacuumValidations = configVacuum.validateFile();
+
+    // Check for missing sections
+    vector<string> requiredSections = 
+    {
+        SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters::section
+    };  
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
+
+    // Validate individual sections
+    bool areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid = validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters();
+    bool areFiniteTemperatureToFiniteChemicalPotentialParametersValid = validateFiniteTemperatureToFiniteChemicalPotentialParameters();
+    bool areLowToHighTemperatureAtZeroChemicalPotentialParametersValid = validateLowToHighTemperatureAtZeroChemicalPotentialParameters();
+    bool areIntegratedCrossSectionsParametersValid = validateIntegratedCrossSectionsParameters();
+
+    // Other validations
+    bool areTemperatureAndGridValid = validateTemperatureAndGridConsistency();
+
+    return vacuumValidations && 
+           allRequiredSectionsPresent &&
+           areVacuumToFiniteTemperatureAtZeroChemicalPotentialParametersValid &&
+           areFiniteTemperatureToFiniteChemicalPotentialParametersValid &&
+           areLowToHighTemperatureAtZeroChemicalPotentialParametersValid &&
+           areIntegratedCrossSectionsParametersValid &&
+           areTemperatureAndGridValid;
+}
+
+void IsospinSymmetricIntegratedCrossSectionsFiniteChemPot::evaluate() const
+{   
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
+    namespace VFTZCPP = SU3NJL3DCutoffFileParserKeys::VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters;
+    namespace FTFCPP = SU3NJL3DCutoffFileParserKeys::FiniteTemperatureToFiniteChemicalPotentialParameters;
+    namespace LHT = SU3NJL3DCutoffFileParserKeys::LowToHighTemperatureAtZeroChemicalPotentialParameters;
+    namespace ICSP = SU3NJL3DCutoffFileParserKeys::IntegratedCrossSectionsParameters;
+
+    // Model Parameters
+    cout << "\n" << MP::section << ": " << endl;
+
+    string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
+    string regularizationScheme = config.getValue(MP::section, MP::regularizationScheme);
+    double cutoff = config.getDouble(MP::section, MP::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MP::section, MP::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MP::section, MP::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
+
+    cout << MP::parameterSetName << " = " << parameterSetName << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::cutoff << " = " << cutoff << endl;
+    cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
+
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
+
+    // VacuumMassesParameters
+    cout << "\n" << VMP::section << ": " << endl;
+
+    double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
+    string methodVacuum = config.getValue(VMP::section, VMP::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMP::section, VMP::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMP::section, VMP::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
+
+    cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
+    
+    // VacuumToFiniteTemperatureAtZeroChemicalPotentialParameters
+    cout << "\n" << VFTZCPP::section << ": " << endl;
+
+    double nearVacuumTemperature = config.getDouble(VFTZCPP::section, VFTZCPP::nearVacuumTemperature);
+    double temperature = config.getDouble(VFTZCPP::section, VFTZCPP::temperature);
+    int numberOfPointsFromVacToFinTemp = config.getInt(VFTZCPP::section, VFTZCPP::numberOfPointsFromVacToFinTemp);
+    double precisionVacToFinTemp = config.getDouble(VFTZCPP::section, VFTZCPP::precisionVacToFinTemp);
+    string methodVacToFinTemp = config.getValue(VFTZCPP::section, VFTZCPP::methodVacToFinTemp);
+
+    cout << VFTZCPP::nearVacuumTemperature << " = " << nearVacuumTemperature << endl;
+    cout << VFTZCPP::temperature << " = " << temperature << endl;
+    cout << VFTZCPP::numberOfPointsFromVacToFinTemp << " = " << numberOfPointsFromVacToFinTemp << endl;
+    cout << VFTZCPP::precisionVacToFinTemp << " = " << precisionVacToFinTemp << endl;
+    cout << VFTZCPP::methodVacToFinTemp << " = " << methodVacToFinTemp << endl;
+
+    // FiniteTemperatureToFiniteChemicalPotentialParameters
+    cout << "\n" << FTFCPP::section << ": " << endl;
+    
+    double chemPot = config.getDouble(FTFCPP::section, FTFCPP::chemPot);
+    int numberOfPointsFromFinTempToFinChemPot = config.getInt(FTFCPP::section, FTFCPP::numberOfPointsFromFinTempToFinChemPot);
+    double precisionFinTempToFinChemPot = config.getDouble(FTFCPP::section, FTFCPP::precisionFinTempToFinChemPot);
+    string methodFinTempToFinChemPot = config.getValue(FTFCPP::section, FTFCPP::methodFinTempToFinChemPot);
+
+    cout << FTFCPP::chemPot << " = " << chemPot << endl;
+    cout << FTFCPP::numberOfPointsFromFinTempToFinChemPot << " = " << numberOfPointsFromFinTempToFinChemPot << endl;
+    cout << FTFCPP::precisionFinTempToFinChemPot << " = " << precisionFinTempToFinChemPot << endl;
+    cout << FTFCPP::methodFinTempToFinChemPot << " = " << methodFinTempToFinChemPot << endl;
+    
+    // LowToHighTemperatureAtZeroChemicalPotentialParameters
+    cout << "\n" << LHT::section << ": " << endl;
+    
+    double minimumTemp = config.getDouble(LHT::section, LHT::minimumTemp);
+    double maximumTemp = config.getDouble(LHT::section, LHT::maximumTemp);
+    double numberOfPointsFromLowToHighTemp = config.getInt(LHT::section, LHT::numberOfPointsFromLowToHighTemp);
+    double precisionLowToHighTemp = config.getDouble(LHT::section, LHT::precisionLowToHighTemp);
+    string methodLowToHighTemp = config.getValue(LHT::section, LHT::methodLowToHighTemp);  
+
+    cout << LHT::minimumTemp << " = " << minimumTemp << endl;
+    cout << LHT::maximumTemp << " = " << maximumTemp << endl;
+    cout << LHT::numberOfPointsFromLowToHighTemp << " = " << numberOfPointsFromLowToHighTemp << endl;
+    cout << LHT::precisionLowToHighTemp << " = " << precisionLowToHighTemp << endl;
+    cout << LHT::methodLowToHighTemp << " = " << methodLowToHighTemp << endl;
+
+    // IntegratedCrossSectionsParameters
+    cout << "\n" << ICSP::section << ": " << endl;
+    
+    int numberOfPointsIntegratedCrossSections = config.getInt(ICSP::section, ICSP::numberOfPointsIntegratedCrossSections);
+    double propagatorIntegralPrecision = config.getDouble(ICSP::section, ICSP::propagatorIntegralPrecision);
+    bool largeAngleScatteringContribution = config.getBool(ICSP::section, ICSP::largeAngleScatteringContribution);
+    double crossSectionIntegralPrecision = config.getDouble(ICSP::section, ICSP::crossSectionIntegralPrecision);
+    double integratedCrossSectionIntegralPrecision_dXdY = config.getDouble(ICSP::section, ICSP::integratedCrossSectionIntegralPrecision_dXdY);
+    double integratedCrossSectionIntegralPrecision_dX = config.getDouble(ICSP::section, ICSP::integratedCrossSectionIntegralPrecision_dX);
+    string approximationMethod = config.getValue(ICSP::section, ICSP::approximationMethod);
+    int numberOfThreads = config.getInt(ICSP::section, ICSP::numberOfThreads);
+  
+    cout << ICSP::numberOfPointsIntegratedCrossSections << " = " << numberOfPointsIntegratedCrossSections << endl;
+    cout << ICSP::propagatorIntegralPrecision << " = " << propagatorIntegralPrecision << endl;
+    cout << ICSP::largeAngleScatteringContribution << " = " << largeAngleScatteringContribution << endl;
+    cout << ICSP::crossSectionIntegralPrecision << " = " << crossSectionIntegralPrecision << endl;
+    cout << ICSP::integratedCrossSectionIntegralPrecision_dXdY << " = " << integratedCrossSectionIntegralPrecision_dXdY << endl;
+    cout << ICSP::integratedCrossSectionIntegralPrecision_dX << " = " << integratedCrossSectionIntegralPrecision_dX << endl;
+    cout << ICSP::approximationMethod << " = " << approximationMethod << endl;
+    cout << ICSP::numberOfThreads << " = " << numberOfThreads << endl;
+
+    // Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoff, 
+        couplings, 
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
+    );
+    parameters.setParameterSetName(parameterSetName);
+    
+    evaluateIsospinSymmetricIntegratedCrossSectionsWithFixedChemicalPotential(
+        parameters, 
+        precisionVacuum, 
+        stringToMultiRootFindingMethod(methodVacuum), 
+        upQuarkMassGuess, 
+        strangeQuarkMassGuess,
+        nearVacuumTemperature,
+        minimumTemp,
+        numberOfPointsFromVacToFinTemp, 
+        precisionVacToFinTemp, 
+        stringToMultiRootFindingMethod(methodVacToFinTemp), 
+        chemPot,
+        numberOfPointsFromFinTempToFinChemPot,
+        precisionFinTempToFinChemPot, 
+        stringToMultiRootFindingMethod(methodFinTempToFinChemPot),
+        maximumTemp, 
+        numberOfPointsFromLowToHighTemp, 
+        precisionLowToHighTemp, 
+        stringToMultiRootFindingMethod(methodLowToHighTemp),
+        largeAngleScatteringContribution, 
+        stringToIntegratedCrossSectionApproximationMethod(approximationMethod),
+        propagatorIntegralPrecision,
+        crossSectionIntegralPrecision,
+        integratedCrossSectionIntegralPrecision_dXdY,
+        integratedCrossSectionIntegralPrecision_dX,
+        numberOfThreads
+    );
+}
+
+bool ThermoFixedChemPotTrajectory::validateFile() const
+{   
+    // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters
+	const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
+    bool vacuumValidations = configVacuum.validateFile();
+
+    // Check for missing sections
+    vector<string> requiredSections = 
+    {
+        SU3NJL3DCutoffFileParserKeys::VacuumToChemicalPotentialParameters::section,
+        SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters::section,
+        SU3NJL3DCutoffFileParserKeys::OutputFileParameters::section,
+    };
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
+
+    // Validate individual sections
+    bool areVacuumToChemicalPotentialParametersValid = validateVacuumToChemicalPotentialParameters();
+    bool areToTemperatureParametersValid = validateToTemperatureParameters();
+
+    return vacuumValidations && 
+           allRequiredSectionsPresent &&
+           areVacuumToChemicalPotentialParametersValid &&
+           areToTemperatureParametersValid;
+}
+
+void ThermoFixedChemPotTrajectory::evaluate() const
+{   
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
+    namespace VTFCPP = SU3NJL3DCutoffFileParserKeys::VacuumToChemicalPotentialParameters;
+    namespace TTP = SU3NJL3DCutoffFileParserKeys::ToTemperatureParameters;
+    namespace OFP = SU3NJL3DCutoffFileParserKeys::OutputFileParameters;
+
+    // Model Parameters
+    string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
+    string regularizationScheme = config.getValue(MP::section, MP::regularizationScheme);
+    double cutoff = config.getDouble(MP::section, MP::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MP::section, MP::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MP::section, MP::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
+
+    cout << "\n" << MP::section << ": " << endl;
+    cout << MP::parameterSetName << " = " << parameterSetName << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::cutoff << " = " << cutoff << endl;
+    cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
+
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
+
+    // VacuumMassesParameters
+    double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
+    string methodVacuum = config.getValue(VMP::section, VMP::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMP::section, VMP::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMP::section, VMP::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
+
+    cout << "\n" << VMP::section << ": " << endl;
+    cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
+    
+    // VacuumToChemicalPotentialParameters
+    double chemicalPotential = config.getDouble(VTFCPP::section, VTFCPP::chemicalPotential);
+    int numberOfPointsVacToChemPot = config.getInt(VTFCPP::section, VTFCPP::numberOfPointsVacToChemPot);
+    double precisionVacToChemPot = config.getDouble(VTFCPP::section, VTFCPP::precisionVacToChemPot);
+    string methodVacToChemPot = config.getValue(VTFCPP::section, VTFCPP::methodVacToChemPot);
+
+    cout << "\n" << VTFCPP::section << ": " << endl;
+    cout << VTFCPP::chemicalPotential << " = " << chemicalPotential << endl;
+    cout << VTFCPP::numberOfPointsVacToChemPot << " = " << numberOfPointsVacToChemPot << endl;
+    cout << VTFCPP::precisionVacToChemPot << " = " << precisionVacToChemPot << endl;
+    cout << VTFCPP::methodVacToChemPot << " = " << methodVacToChemPot << endl;
+    
+    // ToTemperatureParameters
+    double temperature = config.getDouble(TTP::section, TTP::temperature);
+    int numberOfPointsUpToTemp = config.getInt(TTP::section, TTP::numberOfPointsUpToTemp);
+	double precisionUpToTemp = config.getDouble(TTP::section, TTP::precisionUpToTemp);
+	string methodUpToTemp = config.getValue(TTP::section, TTP::methodUpToTemp);
+
+    cout << "\n" << TTP::section << ": " << endl;
+    cout << TTP::temperature << " = " << temperature << endl;
+    cout << TTP::numberOfPointsUpToTemp << " = " << numberOfPointsUpToTemp << endl;
+    cout << TTP::precisionUpToTemp << " = " << precisionUpToTemp << endl;
+    cout << TTP::methodUpToTemp << " = " << methodUpToTemp << endl;
+
+    // OutputFileParameters    
+    string customSuffix = config.getValue(OFP::section, OFP::customSuffix);
+    
+    cout << "\n" << OFP::section << ": " << endl;
+    cout << OFP::customSuffix << " = " << customSuffix << endl;
+
+    // Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoff, 
+        couplings, 
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
+    );
+    parameters.setParameterSetName(parameterSetName);
+
+    SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedChemPotTrajectory(
+        parameters, 
+        precisionVacuum,
+        stringToMultiRootFindingMethod(methodVacuum),
+        upQuarkMassGuess,
+        downQuarkMassGuess,
+        strangeQuarkMassGuess,
+        chemicalPotential,
+        numberOfPointsVacToChemPot,
+        precisionVacToChemPot,
+        stringToMultiRootFindingMethod(methodVacToChemPot),
+        temperature,
+        numberOfPointsUpToTemp,
+        precisionUpToTemp,
+        stringToMultiRootFindingMethod(methodUpToTemp),
+        customSuffix
+    );
+}
+
+bool ThermoFixedTemperatureTrajectory::validateFile() const
+{   
+    // Validate sections SU3NJL3DCutoffModelParameters, NJLDimensionfulCouplings and VacuumMassesParameters
+	const SU3NJL3DCutoffFileParser::Vacuum::Masses configVacuum(config);
+    bool vacuumValidations = configVacuum.validateFile();
+
+    // Check for missing sections
+    vector<string> requiredSections = 
+    {
+        SU3NJL3DCutoffFileParserKeys::VacuumToTemperatureParameters::section,
+        SU3NJL3DCutoffFileParserKeys::ToChemicalPotentialSymmetricParameters::section,
+        SU3NJL3DCutoffFileParserKeys::OutputFileParameters::section,
+    };
+    bool allRequiredSectionsPresent = checkRequiredSections(requiredSections);
+
+    // Validate individual sections
+    bool areVacuumToTemperatureParametersValid = validateVacuumToTemperatureParameters();
+    bool areToChemicalPotentialSymmetricParametersValid = validateToChemicalPotentialSymmetricParameters();
+
+    return vacuumValidations && 
+           allRequiredSectionsPresent &&
+           areVacuumToTemperatureParametersValid &&
+           areToChemicalPotentialSymmetricParametersValid;
+}
+
+void ThermoFixedTemperatureTrajectory::evaluate() const
+{   
+    namespace MP = SU3NJL3DCutoffFileParserKeys::ModelParameters;
+    namespace VMP = SU3NJL3DCutoffFileParserKeys::VacuumMassesParameters;
+    namespace VTTP = SU3NJL3DCutoffFileParserKeys::VacuumToTemperatureParameters;
+    namespace TCPSP = SU3NJL3DCutoffFileParserKeys::ToChemicalPotentialSymmetricParameters;
+    namespace OFP = SU3NJL3DCutoffFileParserKeys::OutputFileParameters;
+
+    // Model Parameters
+    string parameterSetName = config.getValue(MP::section, MP::parameterSetName);
+    string regularizationScheme = config.getValue(MP::section, MP::regularizationScheme);
+    double cutoff = config.getDouble(MP::section, MP::cutoff);
+    double upQuarkCurrentMass = config.getDouble(MP::section, MP::upQuarkCurrentMass);
+    double downQuarkCurrentMass = config.getDouble(MP::section, MP::downQuarkCurrentMass);
+    double strangeQuarkCurrentMass = config.getDouble(MP::section, MP::strangeQuarkCurrentMass);
+
+    cout << "\n" << MP::section << ": " << endl;
+    cout << MP::parameterSetName << " = " << parameterSetName << endl;
+    cout << MP::regularizationScheme << " = " << toString(stringToNJL3DCutoffRegularizationScheme(regularizationScheme)) << endl;
+    cout << MP::cutoff << " = " << cutoff << endl;
+    cout << MP::upQuarkCurrentMass << " = " << upQuarkCurrentMass << endl;
+    cout << MP::downQuarkCurrentMass << " = " << downQuarkCurrentMass << endl;
+    cout << MP::strangeQuarkCurrentMass << " = " << strangeQuarkCurrentMass << endl;
+
+    // Dimensionful Couplings
+    cout << "\n" << SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section << ": " << endl;
+    NJLDimensionfulCouplings couplings = extractDimensionfulCouplings();
+
+    // VacuumMassesParameters
+    double precisionVacuum = config.getDouble(VMP::section, VMP::precisionVacuum);
+    string methodVacuum = config.getValue(VMP::section, VMP::methodVacuum);
+    double upQuarkMassGuess = config.getDouble(VMP::section, VMP::upQuarkMassGuess);
+    double downQuarkMassGuess = config.getDouble(VMP::section, VMP::downQuarkMassGuess);
+    double strangeQuarkMassGuess = config.getDouble(VMP::section, VMP::strangeQuarkMassGuess);
+
+    cout << "\n" << VMP::section << ": " << endl;
+    cout << VMP::precisionVacuum << " = " << precisionVacuum << endl;
+    cout << VMP::methodVacuum << " = " << toString(stringToMultiRootFindingMethod(methodVacuum)) << endl;
+    cout << VMP::upQuarkMassGuess << " = " << upQuarkMassGuess << endl;
+    cout << VMP::downQuarkMassGuess << " = " << downQuarkMassGuess << endl;
+    cout << VMP::strangeQuarkMassGuess << " = " << strangeQuarkMassGuess << endl;
+
+    // VacuumToTemperatureParameters
+    double temperature = config.getDouble(VTTP::section, VTTP::temperature);
+    int numberOfPointsVacToTemp = config.getInt(VTTP::section, VTTP::numberOfPointsVacToTemp);
+    double precisionVacToTemp = config.getDouble(VTTP::section, VTTP::precisionVacToTemp);
+    string methodVacToTemp = config.getValue(VTTP::section, VTTP::methodVacToTemp);
+
+    cout << "\n" << VTTP::section << ": " << endl;
+    cout << VTTP::temperature << " = " << temperature << endl;
+    cout << VTTP::numberOfPointsVacToTemp << " = " << numberOfPointsVacToTemp << endl;
+    cout << VTTP::precisionVacToTemp << " = " << precisionVacToTemp << endl;
+    cout << VTTP::methodVacToTemp << " = " << methodVacToTemp << endl;
+    
+    // ToChemicalPotentialSymmetricParameters
+    double chemicalPotential = config.getDouble(TCPSP::section, TCPSP::chemicalPotential);
+    int numberOfPointsToChemPot = config.getInt(TCPSP::section, TCPSP::numberOfPointsToChemPot);
+	double precisionToChemPot = config.getDouble(TCPSP::section, TCPSP::precisionToChemPot);
+	string methodToChemPot = config.getValue(TCPSP::section, TCPSP::methodToChemPot);
+
+    cout << "\n" << TCPSP::section << ": " << endl;
+    cout << TCPSP::chemicalPotential << " = " << chemicalPotential << endl;
+    cout << TCPSP::numberOfPointsToChemPot << " = " << numberOfPointsToChemPot << endl;
+    cout << TCPSP::precisionToChemPot << " = " << precisionToChemPot << endl;
+    cout << TCPSP::methodToChemPot << " = " << methodToChemPot << endl;
+
+    // OutputFileParameters    
+    string customSuffix = config.getValue(OFP::section, OFP::customSuffix);
+    
+    cout << "\n" << OFP::section << ": " << endl;
+    cout << OFP::customSuffix << " = " << customSuffix << endl;
+
+    // Create NJL parameter set
+    SU3NJL3DCutoffParameters parameters(
+        stringToNJL3DCutoffRegularizationScheme(regularizationScheme), 
+        cutoff, 
+        couplings, 
+        upQuarkCurrentMass, 
+        downQuarkCurrentMass, 
+        strangeQuarkCurrentMass
+    );
+    parameters.setParameterSetName(parameterSetName);
+
+    SU3NJL3DCutoffFixedChemPotTemp::computeThermoFixedTemperatureTrajectory(
+        parameters, 
+        precisionVacuum,
+        stringToMultiRootFindingMethod(methodVacuum),
+        upQuarkMassGuess,
+        downQuarkMassGuess,
+        strangeQuarkMassGuess,
+        temperature,
+        numberOfPointsVacToTemp,
+        precisionVacToTemp,
+        stringToMultiRootFindingMethod(methodVacToTemp),
+        chemicalPotential,
+        numberOfPointsToChemPot,
+        precisionToChemPot,
+        stringToMultiRootFindingMethod(methodToChemPot),
+        customSuffix
     );
 }
 

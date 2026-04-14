@@ -20,13 +20,19 @@ cp bin/nambuJonaLasinioModel.out $data_folder
 
 cd $data_folder
 
-filename="thermodynamicsSU3NJL3DCutoffFixedChemPotTempSetA.ini"
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setA_CP0.ini"
 ./nambuJonaLasinioModel.out use-config-file $filename
 
-filename="thermodynamicsSU3NJL3DCutoffFixedChemPotTempSetB.ini"
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setB_CP0.ini"
 ./nambuJonaLasinioModel.out use-config-file $filename
 
-filename="thermodynamicsSU3NJL3DCutoffFixedChemPotTempSetC.ini"
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setC_CP0.ini"
+./nambuJonaLasinioModel.out use-config-file $filename
+
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setA_CPCEP.ini"
+./nambuJonaLasinioModel.out use-config-file $filename
+
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setA_T0p075.ini"
 ./nambuJonaLasinioModel.out use-config-file $filename
 
 rm nambuJonaLasinioModel.out

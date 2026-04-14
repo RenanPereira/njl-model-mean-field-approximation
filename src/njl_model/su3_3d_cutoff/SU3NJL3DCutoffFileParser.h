@@ -42,6 +42,10 @@ namespace SU3NJL3DCutoffFileParser
             bool validateVacuumMassesParameters() const;
             bool validateVacuumToFiniteBaryonDensityParameters() const;
             bool validateFirstOrderLineParameters() const;
+            bool validateVacuumToChemicalPotentialParameters() const;
+            bool validateVacuumToTemperatureParameters() const;
+            bool validateToTemperatureParameters() const;
+            bool validateToChemicalPotentialSymmetricParameters() const;
             bool validateVacuumToFiniteTemperatureAtZeroChemicalPotentialParameters() const;
             bool validateFiniteTemperatureToFiniteChemicalPotentialParameters() const;
             bool validateCrossSectionsParameters() const;
@@ -114,6 +118,19 @@ namespace SU3NJL3DCutoffFileParser
                 bool validateFile() const;
                 void evaluate() const;
         };
+    
+        class IsospinSymmetricIntegratedCrossSectionsFiniteChemPot : public Common
+        {   
+            public:
+                inline static const std::string calculationType = type + "IsospinSymmetricIntegratedCrossSectionsFiniteChemicalPotential";
+
+            public:
+                IsospinSymmetricIntegratedCrossSectionsFiniteChemPot(const IniFileParser& p) : Common(p) {}
+                
+                bool validateTemperatureAndGridConsistency() const;
+                bool validateFile() const;
+                void evaluate() const;
+        };
 
         class InMediumMassesAndThermodynamics : public Common
         {   
@@ -126,6 +143,31 @@ namespace SU3NJL3DCutoffFileParser
                 bool validateFile() const;
                 void evaluate() const;
         };
+
+        class ThermoFixedChemPotTrajectory : public Common
+        {   
+            public:
+                inline static const std::string calculationType = type + "ThermodynamicsFixedChemicalPotentialTrajectory";
+
+            public:
+                ThermoFixedChemPotTrajectory(const IniFileParser& p) : Common(p) {}
+                
+                bool validateFile() const;
+                void evaluate() const;
+        };
+
+        class ThermoFixedTemperatureTrajectory : public Common
+        {   
+            public:
+                inline static const std::string calculationType = type + "ThermodynamicsFixedTemperatureTrajectory";
+
+            public:
+                ThermoFixedTemperatureTrajectory(const IniFileParser& p) : Common(p) {}
+                
+                bool validateFile() const;
+                void evaluate() const;
+        };
+
     }
 }
 

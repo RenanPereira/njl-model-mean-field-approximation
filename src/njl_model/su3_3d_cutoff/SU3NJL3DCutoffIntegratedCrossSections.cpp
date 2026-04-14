@@ -1515,7 +1515,7 @@ IntegratedCrossSectionApproximationMethod stringToIntegratedCrossSectionApproxim
     abort();
 }
 
-bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString)
+bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString, const string& invalidMessage)
 {
     bool isIntegratedCrossSectionApproximationMethod = false;
     // Iterate over the map with explicit type
@@ -1530,10 +1530,19 @@ bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString
 
     if( isIntegratedCrossSectionApproximationMethod==false )
     {
+		if( !invalidMessage.empty() )
+        {
+            cout << invalidMessage << endl;
+        }
         cout << "The value " + methodString + " is not a IntegratedCrossSectionApproximationMethod!\n";
     }
 
     return isIntegratedCrossSectionApproximationMethod;
+}
+
+bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString)
+{
+    return isValidIntegratedCrossSectionApproximationMethod(methodString, "");
 }
 
 vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlongTrajectory(
@@ -1703,16 +1712,38 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialT
 	if ( runFiniteDensityProcesses )
 	{
 		process = { 
-			UUUU, UDUD, USUS, SSSS,
-			UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SUBarSUBar, SSBarUUBar, SSBarSSBar,
-			UBarUBarUBarUBar, UBarDBarUBarDBar, UBarSBarUBarSBar, SBarSBarSBarSBar 
+			UUUU, 
+			UDUD, 
+			USUS, 
+			SSSS,
+			UUBarUUBar, 
+			UUBarDDBar, 
+			UUBarSSBar, 
+			UDBarUDBar, 
+			USBarUSBar, 
+			SUBarSUBar, 
+			SSBarUUBar, 
+			SSBarSSBar,
+			UBarUBarUBarUBar, 
+			UBarDBarUBarDBar, 
+			UBarSBarUBarSBar, 
+			SBarSBarSBarSBar
 		};
 	}
 	else
 	{
 		process = { 
-			UUUU, UDUD, USUS, SSSS,
-			UUBarUUBar, UUBarDDBar, UUBarSSBar, UDBarUDBar, USBarUSBar, SSBarUUBar, SSBarSSBar 
+			UUUU, 
+			UDUD, 
+			USUS, 
+			SSSS,
+			UUBarUUBar, 
+			UUBarDDBar, 
+			UUBarSSBar, 
+			UDBarUDBar, 
+			USBarUSBar, 
+			SSBarUUBar, 
+			SSBarSSBar 
 		};
 	}
 
@@ -1844,7 +1875,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
     );
 
     //solve model at zero chemical potential up to some finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 		vacuum, 
 		nearVacuumTemperature,
 		minimumTemperature, 
@@ -1860,7 +1891,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsWithZeroChemicalPotential(
         	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-    finiteTSolution = solveFromLowToHighTemperatureAtZeroChemicalPotential(
+    finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromLowToHighTemperatureAtZeroChemicalPotential(
 		finiteTSolution[finiteTSolution.size()-1], 
 		maximumTemperature, 
 		numberOfPointsFromMinToMaxTemp, 
@@ -1908,7 +1939,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 )
 {
     //solve model at zero chemical potential up to some finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 		vacuum, 
 		nearVacuumTemperature, 
 		fixedTemperature, 
@@ -1931,7 +1962,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution;
     if ( minChemPot>0 )
     {
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(
+    	finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
 			finiteTSolution[finiteTSolution.size()-1], 
 			minChemPot, 
 			numberOfPointsFromMinTempToMinChemPot, 
@@ -1949,7 +1980,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 	             << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
 	    }
 
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(
+    	finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
 			finiteChemPotSolution[finiteChemPotSolution.size()-1], 
 			maxChemPot, 
 			numberOfPointsFromMinToMaxChemPot, 
@@ -1969,7 +2000,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
     }
     else
     {
-    	finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(
+    	finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
 			finiteTSolution[finiteTSolution.size()-1], 
 			maxChemPot, 
 			numberOfPointsFromMinTempToMinChemPot, 
@@ -2001,16 +2032,25 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 }
 
 
-void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
-	SU3NJL3DCutoffVacuum vacuum,
-	double gapPrecision,
-	double chemPot,
+void evaluateIsospinSymmetricIntegratedCrossSectionsWithFixedChemicalPotential(
+	SU3NJL3DCutoffParameters& parameters, 
+    double precisionVacuum, 
+    MultiRootFindingMethod methodVacuum, 
+    double lightQuarkMassGuess, 
+    double strangeQuarkMassGuess,
 	double nearVacuumTemperature,
-	double minimumTemperature, 
-	double maximumTemperature, 
+	double minimumTemperature,
 	int numberOfPointsFromVacToMinTemp, 
-	int numberOfPointsMinTempToChemPot, 
+	double precisionVacToFinTemp, 
+	MultiRootFindingMethod methodVacToFinTemp, 
+	double chemicalPotential,
+	int numberOfPointsMinTempToChemPot,
+	double precisionMinTempToChemPot, 
+	MultiRootFindingMethod methodMinTempToChemPot,
+	double maximumTemperature, 
 	int numberOfPointsFromMinToMaxTemp, 
+	double precisionMinToMaxTemp, 
+	MultiRootFindingMethod methodMinToMaxTemp,
 	bool largeAngleScatteringContribution, 
 	IntegratedCrossSectionApproximationMethod approximationMethod,
 	double propagatorIntegralPrecision,
@@ -2020,15 +2060,23 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
 	int numberOfThreads
 )
 {
+	SU3NJL3DCutoffVacuum vacuum = SU3NJL3DCutoffVacuum::calculateVacuumMasses(
+        parameters,                                    
+        precisionVacuum,                                    
+        methodVacuum,                                    
+        lightQuarkMassGuess, 
+        lightQuarkMassGuess, 
+        strangeQuarkMassGuess
+    );
+
     //solve model at zero chemical potential up to some finite temperature
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = 
-    solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 		vacuum, 
 		nearVacuumTemperature,
 		minimumTemperature, 
 		numberOfPointsFromVacToMinTemp, 
-		gapPrecision, 
-		HYBRIDS
+		precisionVacToFinTemp, 
+		methodVacToFinTemp
 	);
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
     {
@@ -2038,8 +2086,13 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
         	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTSolution[finiteTSolution.size()-1], chemPot, numberOfPointsMinTempToChemPot, gapPrecision, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteChemPotSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(
+		finiteTSolution[finiteTSolution.size()-1], 
+		chemicalPotential, 
+		numberOfPointsMinTempToChemPot, 
+		precisionMinTempToChemPot, 
+		methodMinTempToChemPot
+	);
     for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
     {   
         cout << finiteChemPotSolution[i].getTemperature() << "\t"
@@ -2051,9 +2104,13 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
              << finiteChemPotSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
 
-
-    finiteTSolution = 
-    solveFromLowToHighTemperature(finiteChemPotSolution[finiteChemPotSolution.size()-1], maximumTemperature, numberOfPointsFromMinToMaxTemp, gapPrecision, HYBRIDS);
+    finiteTSolution = SU3NJL3DCutoffFixedChemPotTemp::solveFromLowToHighTemperature(
+		finiteChemPotSolution[finiteChemPotSolution.size()-1], 
+		maximumTemperature, 
+		numberOfPointsFromMinToMaxTemp, 
+		precisionMinToMaxTemp, 
+		methodMinToMaxTemp
+	);
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
     {
         cout << finiteTSolution[i].getTemperature() << "\t" 
@@ -2062,7 +2119,6 @@ void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
         	 << finiteTSolution[i].getDownQuarkEffectiveMass() << "\t"
         	 << finiteTSolution[i].getStrangeQuarkEffectiveMass() << "\n";
     }
-
 
     evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialTrajectory(
 		finiteTSolution, 

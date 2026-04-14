@@ -392,8 +392,9 @@ string toString(IntegratedCrossSectionApproximationMethod );
 
 IntegratedCrossSectionApproximationMethod stringToIntegratedCrossSectionApproximationMethod(const std::string& );
 
-bool isValidIntegratedCrossSectionApproximationMethod(const string& );
+bool isValidIntegratedCrossSectionApproximationMethod(const string& , const string& );
 
+bool isValidIntegratedCrossSectionApproximationMethod(const string& );
 class SU3NJL3DCutoffIntegratedCrossSection
 {
 private:
@@ -802,16 +803,25 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 	int 
 );
 
-void evaluateIntegratedCrossSectionsWithFixedChemicalPotential(
-	SU3NJL3DCutoffVacuum ,
+void evaluateIsospinSymmetricIntegratedCrossSectionsWithFixedChemicalPotential(
+	SU3NJL3DCutoffParameters& , 
+    double , 
+    MultiRootFindingMethod , 
+    double , 
+    double ,
 	double ,
 	double ,
-	double ,
+	int , 
 	double , 
+	MultiRootFindingMethod , 
+	double ,
+	int ,
+	double , 
+	MultiRootFindingMethod ,
 	double , 
 	int , 
-	int , 
-	int , 
+	double , 
+	MultiRootFindingMethod ,
 	bool , 
 	IntegratedCrossSectionApproximationMethod ,
 	double ,

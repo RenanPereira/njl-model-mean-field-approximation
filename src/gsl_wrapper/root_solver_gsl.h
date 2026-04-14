@@ -37,6 +37,8 @@ std::string toString(MultiRootFindingMethod );
 
 MultiRootFindingMethod stringToMultiRootFindingMethod(const std::string& );
 
+bool isValidMultiRootFindingMethod(const std::string& , const std::string& );
+
 bool isValidMultiRootFindingMethod(const std::string& );
 
 void multiDimensionalRootFind(int , double , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod );

@@ -5,9 +5,6 @@
 #include "njl_model/NJLDimensionfulCouplings.h"
 #include "njl_model/njl_regularization_schemes.h"
 
-using namespace std;
-
-
 
 class SU3NJL3DCutoffParameters
 {
@@ -26,11 +23,18 @@ private:
     double downQuarkCurrentMass = 0.0;
     double strangeQuarkCurrentMass = 0.0;
 
-    string parameterSetName = "";
+    std::string parameterSetName = "";
 
 public:
     SU3NJL3DCutoffParameters(){};
-    SU3NJL3DCutoffParameters(NJL3DCutoffRegularizationScheme reguSchemeAux, double threeMomentumCutoffAux, NJLDimensionfulCouplings couplingsAux, double m0u, double m0d, double m0s)
+    SU3NJL3DCutoffParameters(
+        NJL3DCutoffRegularizationScheme reguSchemeAux, 
+        double threeMomentumCutoffAux, 
+        NJLDimensionfulCouplings couplingsAux, 
+        double m0u, 
+        double m0d, 
+        double m0s
+    )
     {
         reguScheme = reguSchemeAux;
         threeMomentumCutoff = threeMomentumCutoffAux;
@@ -39,7 +43,15 @@ public:
         downQuarkCurrentMass = m0d;
         strangeQuarkCurrentMass = m0s;
     }
-    SU3NJL3DCutoffParameters(NJL3DCutoffRegularizationScheme reguSchemeAux, double threeMomentumCutoffAux, NJLDimensionfulCouplings couplingsAux, double m0u, double m0d, double m0s, string parameterSetNameAux)
+    SU3NJL3DCutoffParameters(
+        NJL3DCutoffRegularizationScheme reguSchemeAux, 
+        double threeMomentumCutoffAux, 
+        NJLDimensionfulCouplings couplingsAux, 
+        double m0u, 
+        double m0d, 
+        double m0s, 
+        std::string parameterSetNameAux
+    )
     {
         reguScheme = reguSchemeAux;
         threeMomentumCutoff = threeMomentumCutoffAux;
@@ -57,7 +69,7 @@ public:
     void setSigmaIntegralPrecision(double sigmaIntegralPrecisionAux){ sigmaIntegralPrecision = sigmaIntegralPrecisionAux; };
     void setThermoIntegralPrecision(double thermoIntegralPrecisionAux){ thermoIntegralPrecision = thermoIntegralPrecisionAux; };
     void setNumberOfColours(double numberOfColoursAux){ numberOfColours = numberOfColoursAux; };
-    void setParameterSetName(string parameterSetNameAux){ parameterSetName = parameterSetNameAux; };
+    void setParameterSetName(std::string parameterSetNameAux){ parameterSetName = parameterSetNameAux; };
 
     NJLDimensionfulCouplings getDimensionfulCouplings(){ return couplings; };
     NJL3DCutoffRegularizationScheme getNJL3DCutoffRegularizationScheme(){ return reguScheme; };
@@ -68,21 +80,25 @@ public:
     double getUpQuarkCurrentMass(){ return upQuarkCurrentMass; };
     double getDownQuarkCurrentMass(){ return downQuarkCurrentMass; };
     double getStrangeQuarkCurrentMass(){ return strangeQuarkCurrentMass; };
-    string getParameterSetName(){ return parameterSetName; };
+    std::string getParameterSetName(){ return parameterSetName; };
 };
-
 
 class ThermodynamicsIntegrandParameters : public GeneralIntegrandParameters
 {
 public:
-    string integralID;
+    std::string integralID;
     double temperature;
     double effectiveChemicalPotential;
     double chemicalPotential;
     double effectiveMass;
 
 public:
-    ThermodynamicsIntegrandParameters(string integralIDAux, double temperatureAux, double effectiveChemicalPotentialAux, double effectiveMassAux)
+    ThermodynamicsIntegrandParameters(
+        std::string integralIDAux, 
+        double temperatureAux, 
+        double effectiveChemicalPotentialAux, 
+        double effectiveMassAux
+    )
     {   
         integralID = integralIDAux;
         temperature = temperatureAux;
@@ -91,7 +107,13 @@ public:
         effectiveMass = effectiveMassAux;
     };
 
-    ThermodynamicsIntegrandParameters(string integralIDAux, double temperatureAux, double effectiveChemicalPotentialAux, double chemicalPotentialAux, double effectiveMassAux)
+    ThermodynamicsIntegrandParameters(
+        std::string integralIDAux, 
+        double temperatureAux, 
+        double effectiveChemicalPotentialAux, 
+        double chemicalPotentialAux, 
+        double effectiveMassAux
+    )
     {   
         integralID = integralIDAux;
         temperature = temperatureAux;
@@ -116,31 +138,67 @@ public:
 
     void printIntegrandVariables() override
     {   
-        cout << integralID << "\n";
-        cout << "T = " << temperature << "\n";
-        cout << "effChemPot = " << effectiveChemicalPotential << "\n";
-        cout << "chemPot = " << chemicalPotential << "\n";
-        cout << "effMass = " << effectiveMass << "\n";
-        cout << "(T, effChemPot, chemPot, effMass)\n";
-        cout << "(" << temperature << ", " << effectiveChemicalPotential << ", " << chemicalPotential << ", " << effectiveMass << ")" << "\n";
+        std::cout << integralID << "\n";
+        std::cout << "T = " << temperature << "\n";
+        std::cout << "effChemPot = " << effectiveChemicalPotential << "\n";
+        std::cout << "chemPot = " << chemicalPotential << "\n";
+        std::cout << "effMass = " << effectiveMass << "\n";
+        std::cout << "(T, effChemPot, chemPot, effMass)\n";
+        std::cout << "(" << temperature << ", " << effectiveChemicalPotential << ", " << chemicalPotential << ", " << effectiveMass << ")" << "\n";
     }
 };
 
-
 double SU3BaryonDensity(double , double , double );
 
+double SU3NJLNulledGapEquation(
+    NJLDimensionfulCouplings , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-double SU3NJLNulledGapEquation(NJLDimensionfulCouplings , double , double , double , double , double , double , double );
+double SU3NJLQuarkChemicalPotential(
+    NJLDimensionfulCouplings , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-double SU3NJLQuarkChemicalPotential(NJLDimensionfulCouplings , double , double , double , double , double , double , double );
-
-double SU3NJLInteractionPotential(NJLDimensionfulCouplings , double , double , double , double , double , double );
-
+double SU3NJLInteractionPotential(
+    NJLDimensionfulCouplings , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 double fermionParticleDensityIntegrand(double , void *);
 
-double fermionParticleDensity3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double );
+double fermionParticleDensity3DCutoffStefanBoltzmannCTmu(
+    double , 
+    double , 
+    double , 
+    double 
+);
 
+double fermionParticleDensity3DCutoff(
+    NJL3DCutoffRegularizationScheme , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 double fermionPressureDivergentPrimitive3DCutoff(double , double );
 
@@ -150,28 +208,77 @@ double fermionPressure3DCutoffStefanBoltzmannCTmu(double , double , double , dou
 
 double fermionPressure3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double );
 
-
 double fermionEnergyDensityConvergentIntegrand(double , void *);
 
-double fermionEnergyDensity3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double );
+double fermionEnergyDensity3DCutoff(
+    NJL3DCutoffRegularizationScheme , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-double fermionEnergyDensity3DCutoffStefanBoltzmannCTmu(double , double , double , double , double );
-
+double fermionEnergyDensity3DCutoffStefanBoltzmannCTmu(
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 double fermionEntropyDensityConvergentIntegrand(double , void *);
 
-double fermionEntropyDensity3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double );
+double fermionEntropyDensity3DCutoff(
+    NJL3DCutoffRegularizationScheme , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 double fermionEntropyDensity3DCutoffStefanBoltzmannCTmu(double , double , double , double );
 
+double SU3NJL3DCutoffPressure(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-double SU3NJL3DCutoffPressure(SU3NJL3DCutoffParameters , double , double , double , double , double , double , double );
+double SU3NJL3DCutoffEnergyDensity(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-double SU3NJL3DCutoffEnergyDensity(SU3NJL3DCutoffParameters , double , double , double , double , double , double , double );
+double SU3NJL3DCutoffEntropyDensity(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-double SU3NJL3DCutoffEntropyDensity(SU3NJL3DCutoffParameters , double , double , double , double , double , double , double );
-
-
-
+double SU3NJL3DCutoffQuarkFlavourDensity(
+    SU3NJL3DCutoffParameters& , 
+    double , 
+    double , 
+    double 
+);
 
 #endif

@@ -50,13 +50,29 @@ class QuarkRelaxationTimesData:
         return self.rel_time_strange_quark
 
     def get_rel_time_up_antiquark(self) -> np.ndarray:
-        return self.rel_time_up_quark
+        return self.rel_time_up_antiquark
 
     def get_rel_time_down_antiquark(self) -> np.ndarray:
-        return self.rel_time_down_quark
+        return self.rel_time_down_antiquark
 
     def get_rel_time_strange_antiquark(self) -> np.ndarray:
-        return self.rel_time_strange_quark
+        return self.rel_time_strange_antiquark
+
+    def get_rel_time(self, quark_species: str) -> np.ndarray:        
+        if quark_species == "up_quark":
+            return self.get_rel_time_up_quark()
+        elif quark_species == "down_quark":
+            return self.get_rel_time_down_quark()
+        elif quark_species == "strange_quark":
+            return self.get_rel_time_strange_quark()
+        elif quark_species == "up_antiquark":
+            return self.get_rel_time_up_antiquark()
+        elif quark_species == "down_antiquark":
+            return self.get_rel_time_down_antiquark()
+        elif quark_species == "strange_antiquark":
+            return self.get_rel_time_strange_antiquark()
+        else:
+            raise ValueError(f"The provided quark_species='{quark_species}' is not valid!")
 
     def get_up_quark_effective_mass(self) -> np.ndarray:
         return self.up_quark_effective_mass
