@@ -1515,7 +1515,7 @@ IntegratedCrossSectionApproximationMethod stringToIntegratedCrossSectionApproxim
     abort();
 }
 
-bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString)
+bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString, const string& invalidMessage)
 {
     bool isIntegratedCrossSectionApproximationMethod = false;
     // Iterate over the map with explicit type
@@ -1530,10 +1530,19 @@ bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString
 
     if( isIntegratedCrossSectionApproximationMethod==false )
     {
+		if( !invalidMessage.empty() )
+        {
+            cout << invalidMessage << endl;
+        }
         cout << "The value " + methodString + " is not a IntegratedCrossSectionApproximationMethod!\n";
     }
 
     return isIntegratedCrossSectionApproximationMethod;
+}
+
+bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString)
+{
+    return isValidIntegratedCrossSectionApproximationMethod(methodString, "");
 }
 
 vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlongTrajectory(

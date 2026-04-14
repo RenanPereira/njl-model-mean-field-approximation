@@ -392,8 +392,9 @@ string toString(IntegratedCrossSectionApproximationMethod );
 
 IntegratedCrossSectionApproximationMethod stringToIntegratedCrossSectionApproximationMethod(const std::string& );
 
-bool isValidIntegratedCrossSectionApproximationMethod(const string& );
+bool isValidIntegratedCrossSectionApproximationMethod(const string& , const string& );
 
+bool isValidIntegratedCrossSectionApproximationMethod(const string& );
 class SU3NJL3DCutoffIntegratedCrossSection
 {
 private:
