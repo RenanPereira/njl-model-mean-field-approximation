@@ -1,7 +1,8 @@
 #include <cmath>
 #include <iostream>
-#include "physics_utils/distribution_functions.h"
+
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
+#include "physics_utils/distribution_functions.h"
 #include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
 
 using namespace std;
@@ -29,7 +30,6 @@ GVP12 = -gOmega3;
 GVP16 = -gOmega4;
 */
 
-
 double SU3BaryonDensity(double upQuarkDensity, double downQuarkDensity, double strangeQuarkDensity)
 {
 	double rhoB = (1.0/3.0)*( upQuarkDensity + downQuarkDensity + strangeQuarkDensity );
@@ -37,8 +37,16 @@ double SU3BaryonDensity(double upQuarkDensity, double downQuarkDensity, double s
 	return rhoB;
 }
 
-
-double SU3NJLNulledGapEquation(NJLDimensionfulCouplings couplings, double Mf_minus_m0f, double sigma_f, double sigma_fplus1, double sigma_fplus2, double rho_f, double rho_fplus1, double rho_fplus2)
+double SU3NJLNulledGapEquation(
+    NJLDimensionfulCouplings couplings, 
+    double Mf_minus_m0f, 
+    double sigma_f, 
+    double sigma_fplus1, 
+    double sigma_fplus2, 
+    double rho_f, 
+    double rho_fplus1, 
+    double rho_fplus2
+)
 {	
     //no interactions
     double nullGap = 0.0;
@@ -68,12 +76,19 @@ double SU3NJLNulledGapEquation(NJLDimensionfulCouplings couplings, double Mf_min
             - (8.0/3.0)*gSigmaOmega*( pow(rho_f + rho_fplus1 + rho_fplus2, 2) )*sigma_f
             - (16.0/3.0)*gSigmaRho*( pow(rho_f,2) + pow(rho_fplus1,2) + pow(rho_fplus2,2) - rho_f*rho_fplus1 - rho_fplus1*rho_fplus2 - rho_f*rho_fplus2 )*sigma_f;
 
-
 	return nullGap;
 }
 
-
-double SU3NJLQuarkChemicalPotential(NJLDimensionfulCouplings couplings, double effectiveCP_f, double rho_f, double rho_fplus1, double rho_fplus2, double sigma_f, double sigma_fplus1, double sigma_fplus2)
+double SU3NJLQuarkChemicalPotential(
+    NJLDimensionfulCouplings couplings, 
+    double effectiveCP_f, 
+    double rho_f, 
+    double rho_fplus1, 
+    double rho_fplus2, 
+    double sigma_f, 
+    double sigma_fplus1, 
+    double sigma_fplus2
+)
 {	
     //no interactions
     double cp_f = 0.0;
@@ -113,7 +128,6 @@ double SU3NJLQuarkChemicalPotential(NJLDimensionfulCouplings couplings, double e
     cp_f = cp_f 
          + (128.0/81.0)*gOmega4*pow( (rho_f + rho_fplus1 + rho_fplus2) , 7);
 
-
     //multi VP quark interaction     
     if ( couplings.getInteractionsIncludeMultiQuarkVPCouplings()==true )
     {
@@ -130,8 +144,15 @@ double SU3NJLQuarkChemicalPotential(NJLDimensionfulCouplings couplings, double e
 	return cp_f;
 }
 
-
-double SU3NJLInteractionPotential(NJLDimensionfulCouplings couplings, double sigmaU, double sigmaD, double sigmaS, double rhoU, double rhoD, double rhoS)
+double SU3NJLInteractionPotential(
+    NJLDimensionfulCouplings couplings, 
+    double sigmaU, 
+    double sigmaD, 
+    double sigmaS, 
+    double rhoU, 
+    double rhoD, 
+    double rhoS
+)
 {	
     //no interactions
 	double interactionPotential = 0.0;
@@ -186,7 +207,6 @@ double SU3NJLInteractionPotential(NJLDimensionfulCouplings couplings, double sig
     interactionPotential = interactionPotential 
                          - (112.0/81.0)*gOmega4*pow(rhoU+rhoD+rhoS, 8);     
 
-
     //multi VP quark interaction     
     if ( couplings.getInteractionsIncludeMultiQuarkVPCouplings()==true )
     {
@@ -200,14 +220,11 @@ double SU3NJLInteractionPotential(NJLDimensionfulCouplings couplings, double sig
         }
     }
 
-
     return interactionPotential;
 }
 
-
 double fermionParticleDensityIntegrand(double k, void *parameters)
 {   
-
     ThermodynamicsIntegrandParameters aux(parameters);
     double T = aux.getTemperature();
     double effCP = aux.getEffectiveChemicalPotential();
@@ -221,7 +238,12 @@ double fermionParticleDensityIntegrand(double k, void *parameters)
 }
 
 //CTmu term that correctly reproduces the Stefan–Boltzmann limit (particle density)
-double fermionParticleDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T, double effChemPot, double integralPrecision)
+double fermionParticleDensity3DCutoffStefanBoltzmannCTmu(
+    double cutoff, 
+    double T, 
+    double effChemPot, 
+    double integralPrecision
+)
 {   
     int integralWorkspace = 1000;
     ThermodynamicsIntegrandParameters params("fermionParticleDensityCTmuIntegral", T, effChemPot, 0.0);
@@ -230,7 +252,12 @@ double fermionParticleDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T
     if ( T>0.0 )
     {   
     	//finite T
-        Integration1DimGSLQAGIU fermionParticleDensityCTmu(cutoff, &params, fermionParticleDensityIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+        Integration1DimGSLQAGIU fermionParticleDensityCTmu(
+            cutoff, 
+            &params, 
+            fermionParticleDensityIntegrand, 
+            integralPrecision, integralPrecision, integralWorkspace
+        );
         particleDensity = fermionParticleDensityCTmu.evaluate();
     }
     else
@@ -243,7 +270,14 @@ double fermionParticleDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T
     return particleDensity;
 }
 
-double fermionParticleDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double effChemPot, double effMass, double integralPrecision)
+double fermionParticleDensity3DCutoff(
+    NJL3DCutoffRegularizationScheme reguScheme, 
+    double cutoff, 
+    double T, 
+    double effChemPot, 
+    double effMass, 
+    double integralPrecision
+)
 {   
     int integralWorkspace = 1000;
     ThermodynamicsIntegrandParameters params("fermionParticleDensity", T, effChemPot, effMass);
@@ -254,12 +288,23 @@ double fermionParticleDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme
         //finite T
         if ( reguScheme==CUTOFF_EVERYWHERE || reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
         {   
-            Integration1DimGSLQAGS fermionParticleDensity(0.0, cutoff, &params, fermionParticleDensityIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGS fermionParticleDensity(
+                0.0, 
+                cutoff, 
+                &params, 
+                fermionParticleDensityIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionDensity = ( 1.0/(M_PI*M_PI) )*fermionParticleDensity.evaluate();
         }
         else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
         {
-            Integration1DimGSLQAGIU fermionParticleDensity(0.0, &params, fermionParticleDensityIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGIU fermionParticleDensity(
+                0.0, 
+                &params, 
+                fermionParticleDensityIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionDensity = ( 1.0/(M_PI*M_PI) )*fermionParticleDensity.evaluate();
         }
     }
@@ -278,7 +323,6 @@ double fermionParticleDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme
     return fermionDensity;
 }
 
-
 //Divergent contribution to the fermion pressure
 double fermionPressureDivergentPrimitive3DCutoff(double k, double M)
 {   
@@ -290,7 +334,6 @@ double fermionPressureDivergentPrimitive3DCutoff(double k, double M)
 	
     return primitive;
 }
-
 
 //Convergent contribution to the fermion pressure
 double fermionPressureConvergentIntegrand(double k, void *parameters)
@@ -307,7 +350,6 @@ double fermionPressureConvergentIntegrand(double k, void *parameters)
     return integrand;
 }
 
-
 //CTmu term that correctly reproduces the Stefan–Boltzmann limit (pressure)
 double fermionPressure3DCutoffStefanBoltzmannCTmu(double cutoff, double T, double effChemPot, double integralPrecision)
 {   
@@ -318,7 +360,12 @@ double fermionPressure3DCutoffStefanBoltzmannCTmu(double cutoff, double T, doubl
     if ( T>0.0 )
     {   
     	//finite T
-        Integration1DimGSLQAGIU fermionPressureCTmu(cutoff, &params, fermionPressureConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+        Integration1DimGSLQAGIU fermionPressureCTmu(
+            cutoff, 
+            &params, 
+            fermionPressureConvergentIntegrand, 
+            integralPrecision, integralPrecision, integralWorkspace
+        );
         quarkPressure = T*fermionPressureCTmu.evaluate();
     }
     else
@@ -331,8 +378,14 @@ double fermionPressure3DCutoffStefanBoltzmannCTmu(double cutoff, double T, doubl
     return quarkPressure;
 }
 
-
-double fermionPressure3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double effMass, double effChemPot, double integralPrecision)
+double fermionPressure3DCutoff(
+    NJL3DCutoffRegularizationScheme reguScheme, 
+    double cutoff, 
+    double T, 
+    double effMass, 
+    double effChemPot, 
+    double integralPrecision
+)
 {   
     int integralWorkspace = 1000;
     ThermodynamicsIntegrandParameters params("fermionPressureConvergentIntegral", T, effChemPot, effMass);
@@ -347,7 +400,13 @@ double fermionPressure3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, doubl
             fermionPressure = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass);
 
             //convergent contribution
-            Integration1DimGSLQAGS fermionPressureConvergent(0.0, cutoff, &params, fermionPressureConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGS fermionPressureConvergent(
+                0.0, 
+                cutoff, 
+                &params, 
+                fermionPressureConvergentIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionPressure = fermionPressure + T*fermionPressureConvergent.evaluate();
     	}
     	else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
@@ -356,7 +415,12 @@ double fermionPressure3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, doubl
             fermionPressure = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass);
 
             //convergent contribution
-            Integration1DimGSLQAGIU fermionPressureConvergent(0.0, &params, fermionPressureConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGIU fermionPressureConvergent(
+                0.0, 
+                &params, 
+                fermionPressureConvergentIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionPressure = fermionPressure + T*fermionPressureConvergent.evaluate();
     	}
     }
@@ -369,7 +433,6 @@ double fermionPressure3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, doubl
     }
     fermionPressure = ( 1.0/(M_PI*M_PI) )*fermionPressure;
 
-
     //if the chosen regularization includes the CTmu term, add it to the pressure
 	if ( reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
 	{
@@ -378,7 +441,6 @@ double fermionPressure3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, doubl
 
     return fermionPressure;
 }
-
 
 //Convergent contribution to the fermion energy density
 double fermionEnergyDensityConvergentIntegrand(double k, void *parameters)
@@ -396,8 +458,15 @@ double fermionEnergyDensityConvergentIntegrand(double k, void *parameters)
     return integrand;
 }
 
-
-double fermionEnergyDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double effMass, double effChemPot, double chemPot, double integralPrecision)
+double fermionEnergyDensity3DCutoff(
+    NJL3DCutoffRegularizationScheme reguScheme, 
+    double cutoff, 
+    double T, 
+    double effMass, 
+    double effChemPot, 
+    double chemPot, 
+    double integralPrecision
+)
 {   
     int integralWorkspace = 1000;
     ThermodynamicsIntegrandParameters params("fermionEnergyConvergentIntegral", T, effChemPot, chemPot, effMass);
@@ -412,7 +481,13 @@ double fermionEnergyDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, 
             fermionEnergy = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass);
 
             //convergent contribution
-            Integration1DimGSLQAGS fermionEnergyConvergent(0.0, cutoff, &params, fermionEnergyDensityConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGS fermionEnergyConvergent(
+                0.0, 
+                cutoff, 
+                &params, 
+                fermionEnergyDensityConvergentIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionEnergy = fermionEnergy + fermionEnergyConvergent.evaluate();
         }
         else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
@@ -421,7 +496,12 @@ double fermionEnergyDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, 
             fermionEnergy = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass);
 
             //convergent contribution
-            Integration1DimGSLQAGIU fermionEnergyConvergent(0.0, &params, fermionEnergyDensityConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGIU fermionEnergyConvergent(
+                0.0, 
+                &params, 
+                fermionEnergyDensityConvergentIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionEnergy = fermionEnergy + fermionEnergyConvergent.evaluate();
         }
     }
@@ -429,11 +509,10 @@ double fermionEnergyDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, 
     {   
         //T=0 limit
         double fermiMom = fermiMomentum(effChemPot, effMass);
-        fermionEnergy = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass) - fermionPressureDivergentPrimitive3DCutoff(fermiMom, effMass);;
+        fermionEnergy = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass) - fermionPressureDivergentPrimitive3DCutoff(fermiMom, effMass);
         fermionEnergy = fermionEnergy + ( effChemPot - chemPot )*pow(fermiMom,3)/3.0;
     }
     fermionEnergy = - ( 1.0/(M_PI*M_PI) )*fermionEnergy;
-
 
 	//if the chosen regularization includes the CTmu term, add it to the energy density
 	if ( reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
@@ -444,8 +523,13 @@ double fermionEnergyDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, 
     return fermionEnergy;
 }
 
-
-double fermionEnergyDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T, double effChemPot, double chemPot, double integralPrecision)
+double fermionEnergyDensity3DCutoffStefanBoltzmannCTmu(
+    double cutoff, 
+    double T, 
+    double effChemPot, 
+    double chemPot, 
+    double integralPrecision
+)
 {   
     int integralWorkspace = 1000;
     ThermodynamicsIntegrandParameters params("fermionEnergyCTmuIntegral", T, effChemPot, chemPot, 0.0);
@@ -454,7 +538,12 @@ double fermionEnergyDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T, 
     if ( T>0.0 )
     {   
     	//finite T
-        Integration1DimGSLQAGIU fermionEnergyCTmu(cutoff, &params, fermionEnergyDensityConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+        Integration1DimGSLQAGIU fermionEnergyCTmu(
+            cutoff, 
+            &params, 
+            fermionEnergyDensityConvergentIntegrand, 
+            integralPrecision, integralPrecision, integralWorkspace
+        );
         energy = fermionEnergyCTmu.evaluate();
     }
     else
@@ -466,7 +555,6 @@ double fermionEnergyDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T, 
 
     return energy;
 }
-
 
 //Convergent contribution to the fermion entropy
 double fermionEntropyDensityConvergentIntegrand(double k, void *parameters)
@@ -483,8 +571,14 @@ double fermionEntropyDensityConvergentIntegrand(double k, void *parameters)
     return integrand;
 }
 
-
-double fermionEntropyDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double T, double effMass, double effChemPot, double integralPrecision)
+double fermionEntropyDensity3DCutoff(
+    NJL3DCutoffRegularizationScheme reguScheme, 
+    double cutoff, 
+    double T, 
+    double effMass, 
+    double effChemPot, 
+    double integralPrecision
+)
 {   
     int integralWorkspace = 1000;
     ThermodynamicsIntegrandParameters params("fermionEntropyIntegral", T, effChemPot, effMass);
@@ -496,19 +590,41 @@ double fermionEntropyDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme,
         if ( reguScheme==CUTOFF_EVERYWHERE || reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
         {   
             //convergent contributions
-            Integration1DimGSLQAGS fermionEntropyConvergent1(0.0, cutoff, &params, fermionPressureConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGS fermionEntropyConvergent1(
+                0.0, 
+                cutoff, 
+                &params, 
+                fermionPressureConvergentIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionEntropy = fermionEntropyConvergent1.evaluate();
 
-            Integration1DimGSLQAGS fermionEntropyConvergent2(0.0, cutoff, &params, fermionEntropyDensityConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGS fermionEntropyConvergent2(
+                0.0, 
+                cutoff, 
+                &params, 
+                fermionEntropyDensityConvergentIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionEntropy = fermionEntropy + fermionEntropyConvergent2.evaluate();
         }
         else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
         {   
             //convergent contributions
-            Integration1DimGSLQAGIU fermionEntropyConvergent1(0.0, &params, fermionPressureConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGIU fermionEntropyConvergent1(
+                0.0, 
+                &params, 
+                fermionPressureConvergentIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionEntropy = fermionEntropyConvergent1.evaluate();
 
-            Integration1DimGSLQAGIU fermionEntropyConvergent2(0.0, &params, fermionEntropyDensityConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+            Integration1DimGSLQAGIU fermionEntropyConvergent2(
+                0.0, 
+                &params, 
+                fermionEntropyDensityConvergentIntegrand, 
+                integralPrecision, integralPrecision, integralWorkspace
+            );
             fermionEntropy = fermionEntropy + fermionEntropyConvergent2.evaluate();
         }
     }
@@ -529,7 +645,6 @@ double fermionEntropyDensity3DCutoff(NJL3DCutoffRegularizationScheme reguScheme,
     return fermionEntropy;
 }
 
-
 double fermionEntropyDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T, double effChemPot, double integralPrecision)
 {   
 	int integralWorkspace = 1000;
@@ -539,10 +654,20 @@ double fermionEntropyDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T,
     if ( T>0.0 )
     {   
     	//finite T
-        Integration1DimGSLQAGIU fermionEntropyConvergent1(cutoff, &params, fermionPressureConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+        Integration1DimGSLQAGIU fermionEntropyConvergent1(
+            cutoff, 
+            &params, 
+            fermionPressureConvergentIntegrand, 
+            integralPrecision, integralPrecision, integralWorkspace
+        );
         entropy = fermionEntropyConvergent1.evaluate();
 
-        Integration1DimGSLQAGIU fermionEntropyConvergent2(cutoff, &params, fermionEntropyDensityConvergentIntegrand, integralPrecision, integralPrecision, integralWorkspace);
+        Integration1DimGSLQAGIU fermionEntropyConvergent2(
+            cutoff, 
+            &params, 
+            fermionEntropyDensityConvergentIntegrand, 
+            integralPrecision, integralPrecision, integralWorkspace
+        );
         entropy = entropy + fermionEntropyConvergent2.evaluate();
     }
     else
@@ -555,8 +680,16 @@ double fermionEntropyDensity3DCutoffStefanBoltzmannCTmu(double cutoff, double T,
     return entropy;
 }
 
-
-double SU3NJL3DCutoffPressure(SU3NJL3DCutoffParameters parametersNJL, double T, double effMassU, double effMassD, double effMassS, double effChemPotU, double effChemPotD, double effChemPotS)
+double SU3NJL3DCutoffPressure(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS
+)
 {   
 	NJLDimensionfulCouplings couplings = parametersNJL.getDimensionfulCouplings();
 
@@ -568,7 +701,6 @@ double SU3NJL3DCutoffPressure(SU3NJL3DCutoffParameters parametersNJL, double T, 
     double sigmaIntegralPrecision = parametersNJL.getSigmaIntegralPrecision();
     double thermoIntegralPrecision = parametersNJL.getThermoIntegralPrecision();
 
-
     //Calculate the sigma field and density for each quark flavour
     double sigmaU = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effChemPotU, effMassU, sigmaIntegralPrecision);
     double sigmaD = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effChemPotD, effMassD, sigmaIntegralPrecision);
@@ -578,12 +710,10 @@ double SU3NJL3DCutoffPressure(SU3NJL3DCutoffParameters parametersNJL, double T, 
 	double rhoD = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effChemPotD, effMassD, thermoIntegralPrecision);
 	double rhoS = Nc*fermionParticleDensity3DCutoff(reguScheme, cutoff, T, effChemPotS, effMassS, thermoIntegralPrecision);
 
-
 	//calculate integral contributions to the pressure for each quark flavour
 	double fermionPressureU = Nc*fermionPressure3DCutoff(reguScheme, cutoff, T, effMassU, effChemPotU, thermoIntegralPrecision);
 	double fermionPressureD = Nc*fermionPressure3DCutoff(reguScheme, cutoff, T, effMassD, effChemPotD, thermoIntegralPrecision);
 	double fermionPressureS = Nc*fermionPressure3DCutoff(reguScheme, cutoff, T, effMassS, effChemPotS, thermoIntegralPrecision);
-
 
 	//calculate the SU3 NJL model pressure
 	double pressure = 0.0;
@@ -595,8 +725,16 @@ double SU3NJL3DCutoffPressure(SU3NJL3DCutoffParameters parametersNJL, double T, 
     return pressure;
 }
 
-
-double SU3NJL3DCutoffEnergyDensity(SU3NJL3DCutoffParameters parametersNJL, double T, double effMassU, double effMassD, double effMassS, double effChemPotU, double effChemPotD, double effChemPotS)
+double SU3NJL3DCutoffEnergyDensity(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS
+)
 {   
     NJLDimensionfulCouplings couplings = parametersNJL.getDimensionfulCouplings();
 
@@ -608,7 +746,6 @@ double SU3NJL3DCutoffEnergyDensity(SU3NJL3DCutoffParameters parametersNJL, doubl
     double sigmaIntegralPrecision = parametersNJL.getSigmaIntegralPrecision();
     double thermoIntegralPrecision = parametersNJL.getThermoIntegralPrecision();
     
-
     //Calculate the sigma field and density for each quark flavour
     double sigmaU = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effChemPotU, effMassU, sigmaIntegralPrecision);
     double sigmaD = sigmaNJL3DCutoff(reguScheme, cutoff, Nc, T, effChemPotD, effMassD, sigmaIntegralPrecision);
@@ -623,12 +760,10 @@ double SU3NJL3DCutoffEnergyDensity(SU3NJL3DCutoffParameters parametersNJL, doubl
     double chemPotD = SU3NJLQuarkChemicalPotential(couplings, effChemPotD, rhoD, rhoS, rhoU, sigmaD, sigmaS, sigmaU);
     double chemPotS = SU3NJLQuarkChemicalPotential(couplings, effChemPotS, rhoS, rhoU, rhoD, sigmaS, sigmaU, sigmaD);
 
-
 	//calculate integral contributions to the energy density for each quark flavour
 	double fermionEnergyU = Nc*fermionEnergyDensity3DCutoff(reguScheme, cutoff, T, effMassU, effChemPotU, chemPotU, thermoIntegralPrecision);
 	double fermionEnergyD = Nc*fermionEnergyDensity3DCutoff(reguScheme, cutoff, T, effMassD, effChemPotD, chemPotD, thermoIntegralPrecision);
 	double fermionEnergyS = Nc*fermionEnergyDensity3DCutoff(reguScheme, cutoff, T, effMassS, effChemPotS, chemPotS, thermoIntegralPrecision);
-
 
 	//calculate the SU3 NJL model energy density
 	double energy = 0.0;
@@ -641,7 +776,16 @@ double SU3NJL3DCutoffEnergyDensity(SU3NJL3DCutoffParameters parametersNJL, doubl
 }
 
 
-double SU3NJL3DCutoffEntropyDensity(SU3NJL3DCutoffParameters parametersNJL, double T, double effMassU, double effMassD, double effMassS, double effChemPotU, double effChemPotD, double effChemPotS)
+double SU3NJL3DCutoffEntropyDensity(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS
+)
 {   
 	double Nc = parametersNJL.getNumberOfColours();
 
@@ -653,7 +797,6 @@ double SU3NJL3DCutoffEntropyDensity(SU3NJL3DCutoffParameters parametersNJL, doub
 	double fermionEntropyU = Nc*fermionEntropyDensity3DCutoff(reguScheme, cutoff, T, effMassU, effChemPotU, thermoIntegralPrecision);
 	double fermionEntropyD = Nc*fermionEntropyDensity3DCutoff(reguScheme, cutoff, T, effMassD, effChemPotD, thermoIntegralPrecision);
 	double fermionEntropyS = Nc*fermionEntropyDensity3DCutoff(reguScheme, cutoff, T, effMassS, effChemPotS, thermoIntegralPrecision);
-
 
 	//calculate the SU3 NJL model entropy density
 	double entropy = 0.0;
