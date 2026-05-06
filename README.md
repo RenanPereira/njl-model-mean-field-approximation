@@ -154,6 +154,12 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 (cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && ./build_plots.sh)
 ```
 
+## SU3 Klevansky Nuclear Physics A 608 (1996) Results Reproduction (su3_3d_cutoff_klev_1996_reproduction)
+```bash
+(cd calculations/su3_3d_cutoff_klev_1996_reproduction && ./execute_calculations.sh)
+(cd calculations/su3_3d_cutoff_klev_1996_reproduction && ./build_plots.sh)
+```
+
 # Tests
 
 ## Local test modules
