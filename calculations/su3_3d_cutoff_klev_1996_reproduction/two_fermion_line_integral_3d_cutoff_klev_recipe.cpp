@@ -248,7 +248,7 @@ double funEnerlambdaxkequal(double k, double Mi, double Mj)
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskypEner(double lambdax, double Mi, double Mj, double k, double Lambda, double T, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskypEner(double lambdax, double Mi, double Mj, double k, double /*Lambda*/, double T, double Cp, double Ener)
 {
     double aux = fermiDistribution(T,+Ener-Cp)*( 
         + log(pow(+2.*k*sqrt(pow(Ener,2) - pow(Mi,2)) + (-pow(k,2) + pow(Mi,2) - pow(Mj,2) + 2*Ener*lambdax + pow(lambdax,2)),2))
@@ -257,7 +257,7 @@ double IntegrandoReIntB0RehbergKlevanskypEner(double lambdax, double Mi, double 
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskymEner(double lambdax, double Mi, double Mj, double k, double Lambda, double T, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskymEner(double lambdax, double Mi, double Mj, double k, double /*Lambda*/, double T, double Cp, double Ener)
 {
     double aux = fermiDistribution(T,-Ener-Cp)*(    
         + log(pow(+2.*k*sqrt(pow(Ener,2) - pow(Mi,2)) + (-pow(k,2) + 2*Ener*lambdax + pow(lambdax,2) + pow(Mi,2) - pow(Mj,2)),2))
@@ -267,7 +267,7 @@ double IntegrandoReIntB0RehbergKlevanskymEner(double lambdax, double Mi, double 
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskypEnerA(double lambdax, double Mi, double Mj, double k, double Lambda, double T, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskypEnerA(double lambdax, double Mi, double Mj, double k, double /*Lambda*/, double T, double Cp, double Ener)
 {
     double aux = fermiDistribution(T,+Ener-Cp)*(
         + log(pow(+2.*k*sqrt(pow(Ener,2) - pow(Mi,2)) + (-pow(k,2) + pow(Mi,2) - pow(Mj,2) + 2*Ener*lambdax + pow(lambdax,2)),2))
@@ -275,7 +275,7 @@ double IntegrandoReIntB0RehbergKlevanskypEnerA(double lambdax, double Mi, double
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskypEnerB(double lambdax, double Mi, double Mj, double k, double Lambda, double T, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskypEnerB(double lambdax, double Mi, double Mj, double k, double /*Lambda*/, double T, double Cp, double Ener)
 {
     double aux = fermiDistribution(T,+Ener-Cp)*(
         - log(pow(-2.*k*sqrt(pow(Ener,2) - pow(Mi,2)) + (-pow(k,2) + pow(Mi,2) - pow(Mj,2) + 2*Ener*lambdax + pow(lambdax,2)),2))
@@ -283,7 +283,7 @@ double IntegrandoReIntB0RehbergKlevanskypEnerB(double lambdax, double Mi, double
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskymEnerA(double lambdax, double Mi, double Mj, double k, double Lambda, double T, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskymEnerA(double lambdax, double Mi, double Mj, double k, double /*Lambda*/, double T, double Cp, double Ener)
 {
     double aux = fermiDistribution(T,-Ener-Cp)*(
         + log(pow(+2.*k*sqrt(pow(Ener,2) - pow(Mi,2)) + (-pow(k,2) + 2*Ener*lambdax + pow(lambdax,2) + pow(Mi,2) - pow(Mj,2)),2))
@@ -291,7 +291,7 @@ double IntegrandoReIntB0RehbergKlevanskymEnerA(double lambdax, double Mi, double
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskymEnerB(double lambdax, double Mi, double Mj, double k, double Lambda, double T, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskymEnerB(double lambdax, double Mi, double Mj, double k, double /*Lambda*/, double T, double Cp, double Ener)
 {
     double aux = fermiDistribution(T,-Ener-Cp)*(
         - log(pow(-2.*k*sqrt(pow(Ener,2) - pow(Mi,2)) + (-pow(k,2) + 2*Ener*lambdax + pow(lambdax,2) + pow(Mi,2) - pow(Mj,2)),2))
@@ -492,7 +492,7 @@ double IntegrandoReIntB0RehbergKlevanskympB1D(double p, void* params)
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskypT0Ener(double lambdax, double Mi, double Mj, double k, double Lambda, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskypT0Ener(double lambdax, double Mi, double Mj, double k, double /*Lambda*/, double Cp, double Ener)
 {
     double aux = (1.-heavisideTheta(+Ener-Cp))*log(
         pow(1 + (-pow(k,2) + pow(Mi,2) - pow(Mj,2) + 2*Ener*lambdax + pow(lambdax,2))/(2.*k*sqrt(pow(Ener,2) - pow(Mi,2))),2)/
@@ -501,7 +501,7 @@ double IntegrandoReIntB0RehbergKlevanskypT0Ener(double lambdax, double Mi, doubl
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskymT0Ener(double lambdax, double Mi, double Mj, double k, double Lambda, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskymT0Ener(double lambdax, double Mi, double Mj, double k, double /*Lambda*/, double Cp, double Ener)
 {
     double aux = (1.-heavisideTheta(-Ener-Cp))*log(
         pow(1 + (-pow(k,2) + 2*Ener*lambdax + pow(lambdax,2) + pow(Mi,2) - pow(Mj,2))/(2.*k*sqrt(pow(Ener,2) - pow(Mi,2))),2)/
@@ -510,7 +510,7 @@ double IntegrandoReIntB0RehbergKlevanskymT0Ener(double lambdax, double Mi, doubl
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskypT0Enerlambdax0(double Mi, double Mj, double k, double Lambda, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskypT0Enerlambdax0(double Mi, double Mj, double k, double /*Lambda*/, double Cp, double Ener)
 {
     double aux = (1.-heavisideTheta(+Ener-Cp))*log(
         pow(pow(k,2) - pow(Mi,2) - 2*k*sqrt((Ener - Mi)*(Ener + Mi)) + pow(Mj,2),2)/
@@ -519,7 +519,7 @@ double IntegrandoReIntB0RehbergKlevanskypT0Enerlambdax0(double Mi, double Mj, do
     return aux;
 }
 
-double IntegrandoReIntB0RehbergKlevanskymT0Enerlambdax0(double Mi, double Mj, double k, double Lambda, double Cp, double Ener)
+double IntegrandoReIntB0RehbergKlevanskymT0Enerlambdax0(double Mi, double Mj, double k, double /*Lambda*/, double Cp, double Ener)
 {
     double aux = (1.-heavisideTheta(-Ener-Cp))*log(
         pow(pow(k,2) - pow(Mi,2) - 2*k*sqrt((Ener - Mi)*(Ener + Mi)) + pow(Mj,2),2)/
@@ -561,7 +561,6 @@ double IntegrandoReIntB0RehbergKlevanskypT0Ener21D(double Ener, void* params)
     double Mi = ((struct f1_loop_parameters*)(params))->eff_mass_quark_1;
     double Mj = ((struct f1_loop_parameters*)(params))->eff_mass_quark_2;
     double Lambda = ((struct f1_loop_parameters*)(params))->cutoff;
-    double T = ((struct f1_loop_parameters*)(params))->temperature;
     double Cp = ((struct f1_loop_parameters*)(params))->eff_chem_pot_1;
     double k = ((struct f1_loop_parameters*)(params))->external_momentum;
     double lambdax = ((struct f1_loop_parameters*)(params))->omega;
@@ -574,7 +573,6 @@ double IntegrandoReIntB0RehbergKlevanskymT0Ener21D(double Ener, void* params)
     double Mi= ((struct f1_loop_parameters*)(params))->eff_mass_quark_1;
     double Mj = ((struct f1_loop_parameters*)(params))->eff_mass_quark_2;
     double Lambda = ((struct f1_loop_parameters*)(params))->cutoff;
-    double T = ((struct f1_loop_parameters*)(params))->temperature;
     double Cp = ((struct f1_loop_parameters*)(params))->eff_chem_pot_1;
     double k = ((struct f1_loop_parameters*)(params))->external_momentum;
     double lambdax = ((struct f1_loop_parameters*)(params))->omega;
@@ -620,52 +618,44 @@ vector<double> polos(double lambdax, double Mi, double Mj, double k, double Lamb
     return auxpolos;
 }
 
-double IntB0RehbergKlevanskypk0T0Re(double lambdax, double Mi, double Mj, double Lambda, double Cp)
+double IntB0RehbergKlevanskypk0T0Re(double /*lambdax*/, double /*Mi*/, double /*Mj*/, double /*Lambda*/, double /*Cp*/)
 {
-    double aux = 0;
-    return aux;
+    return 0.0;
 }
 
-double IntB0RehbergKlevanskypk0T0Im(double lambdax, double Mi, double Mj, double Lambda, double Cp)
+double IntB0RehbergKlevanskypk0T0Im(double /*lambdax*/, double /*Mi*/, double /*Mj*/, double /*Lambda*/, double /*Cp*/)
 {
-    double aux = 0;
-    return aux;
+    return 0.0;
 }
 
-double IntB0RehbergKlevanskymk0T0Re(double lambdax, double Mi, double Mj, double Lambda, double Cp)
+double IntB0RehbergKlevanskymk0T0Re(double /*lambdax*/, double /*Mi*/, double /*Mj*/, double /*Lambda*/, double /*Cp*/)
 {
-    double aux = 0;
-    return aux;
+    return 0.0;
 }
 
-double IntB0RehbergKlevanskymk0T0Im(double lambdax, double Mi, double Mj, double Lambda, double Cp)
+double IntB0RehbergKlevanskymk0T0Im(double /*lambdax*/, double /*Mi*/, double /*Mj*/, double /*Lambda*/, double /*Cp*/)
 {
-    double aux = 0;
-    return aux;
+    return 0.0;
 }
 
-double IntB0RehbergKlevanskypk0TfinRe(double lambdax, double Mi, double Mj, double Lambda, double T, double Cp)
+double IntB0RehbergKlevanskypk0TfinRe(double /*lambdax*/, double /*Mi*/, double /*Mj*/, double /*Lambda*/, double /*T*/, double /*Cp*/)
 {
-    double aux = 0;
-    return aux;
+    return 0.0;
 }
 
-double IntB0RehbergKlevanskypk0TfinIm(double lambdax, double Mi, double Mj, double Lambda, double T, double Cp)
+double IntB0RehbergKlevanskypk0TfinIm(double /*lambdax*/, double /*Mi*/, double /*Mj*/, double /*Lambda*/, double /*T*/, double /*Cp*/)
 {
-    double aux = 0;
-    return aux;
+    return 0.0;
 }
 
-double IntB0RehbergKlevanskymk0TfinRe(double lambdax, double Mi, double Mj, double Lambda, double T, double Cp)
+double IntB0RehbergKlevanskymk0TfinRe(double /*lambdax*/, double /*Mi*/, double /*Mj*/, double /*Lambda*/, double /*T*/, double /*Cp*/)
 {
-    double aux = 0;
-    return aux;
+    return 0.0;
 }
 
-double IntB0RehbergKlevanskymk0TfinIm(double lambdax, double Mi, double Mj, double Lambda, double T, double Cp)
+double IntB0RehbergKlevanskymk0TfinIm(double /*lambdax*/, double /*Mi*/, double /*Mj*/, double /*Lambda*/, double /*T*/, double /*Cp*/)
 {
-    double aux = 0;
-    return aux;
+    return 0.0;
 }
 
 double IntB0RehbergKlevanskypkfinT0Re(double lambdax, double Mi, double Mj, double k, double Lambda, double Cp)
@@ -723,14 +713,6 @@ double IntB0RehbergKlevanskymkfinT0Re(double lambdax, double Mi, double Mj, doub
 double IntB0RehbergKlevanskypkfinT0Im(double lambdax, double Mi, double Mj, double k, double Lambda, double Cp)
 {
     double aux = 0;
-    struct f1_loop_parameters auxparams;
-    auxparams.temperature = 0;
-    auxparams.eff_chem_pot_1 = Cp;
-    auxparams.cutoff = Lambda;
-    auxparams.eff_mass_quark_1 = Mi;
-    auxparams.eff_mass_quark_2 = Mj;
-    auxparams.omega = lambdax;
-    auxparams.external_momentum = k;
     vector<double> auxpolos = {};
     
     auxpolos = polos(lambdax, Mi, Mj,  k, Lambda);
@@ -787,14 +769,6 @@ double IntB0RehbergKlevanskypkfinT0Im(double lambdax, double Mi, double Mj, doub
 double IntB0RehbergKlevanskymkfinT0Im(double lambdax, double Mi, double Mj, double k, double Lambda, double Cp)
 {
     double aux = 0;
-    struct f1_loop_parameters auxparams;
-    auxparams.temperature = 0;
-    auxparams.eff_chem_pot_1 = Cp;
-    auxparams.cutoff = Lambda;
-    auxparams.eff_mass_quark_1 = Mi;
-    auxparams.eff_mass_quark_2 = Mj;
-    auxparams.omega = lambdax;
-    auxparams.external_momentum = k;
     vector<double> auxpolos = {};
 
     auxpolos = polos(lambdax, Mi, Mj,  k, Lambda);
@@ -968,14 +942,6 @@ double IntB0RehbergKlevanskymkfinTfinRe(double lambdax, double Mi, double Mj, do
 double IntB0RehbergKlevanskypkfinTfinIm(double lambdax, double Mi, double Mj, double k, double Lambda, double T, double Cp)
 {
     double aux = 0;
-    struct f1_loop_parameters auxparams;
-    auxparams.temperature = T;
-    auxparams.eff_chem_pot_1 = Cp;
-    auxparams.cutoff = Lambda;
-    auxparams.eff_mass_quark_1 = Mi;
-    auxparams.eff_mass_quark_2 = Mj;
-    auxparams.omega = lambdax;
-    auxparams.external_momentum = k;
     vector<double> auxpolos = {};
 
     auxpolos = polos(lambdax, Mi, Mj,  k, Lambda);
@@ -1031,14 +997,6 @@ double IntB0RehbergKlevanskypkfinTfinIm(double lambdax, double Mi, double Mj, do
 double IntB0RehbergKlevanskymkfinTfinIm(double lambdax, double Mi, double Mj, double k, double Lambda, double T, double Cp)
 {
     double aux = 0;
-    struct f1_loop_parameters auxparams;
-    auxparams.temperature = T;
-    auxparams.eff_chem_pot_1 = Cp;
-    auxparams.cutoff = Lambda;
-    auxparams.eff_mass_quark_1 = Mi;
-    auxparams.eff_mass_quark_2 = Mj;
-    auxparams.omega = lambdax;
-    auxparams.external_momentum = k;
     vector<double> auxpolos = {};
 
     auxpolos = polos(lambdax, Mi, Mj,  k, Lambda);
@@ -1350,7 +1308,7 @@ gsl_complex klevanskyB0Integral3DCutoffKlevanskyRecipe(
     double M2, 
     double w, 
     double k, 
-    double integralPrecision
+    double /*integralPrecision*/
 )
 {
     if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )

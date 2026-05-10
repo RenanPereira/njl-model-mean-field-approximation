@@ -212,19 +212,19 @@ Some of the results that can be obtained using this code are shown below. For mo
 
 ### Quark masses
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setB.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setC.png" width="32%">
 </p>
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
 </p>
 
 ### Pressure
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setA.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setB.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setC.png" width="32%">
@@ -233,18 +233,18 @@ Some of the results that can be obtained using this code are shown below. For mo
 
 ### Entropy density
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setA.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setB.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setC.png" width="32%">
 </p>
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setsABC.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_CP0_setsABC.png" width="32%">
 </p>
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setA.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setB.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setC.png" width="32%">
@@ -252,52 +252,52 @@ Some of the results that can be obtained using this code are shown below. For mo
 
 ### Energy density
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setA.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setB.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setC.png" width="32%">
 </p>
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setsABC.png" width="32%">
 </p>
 
 
 ### Pressure and Energy density
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setA.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setB.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setC.png" width="32%">
 </p>
 
-<p align="center">
+<p align="left">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setsABC.png" width="32%">
 </p>
 
 
 ### Shear Viscosity - Zero chemical potential
 
-<p align="center">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_s_vs_temp_CP0_setA.png" width="32%">
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_s_vs_temp_setA_CP0.png" width="32%">
 </p>
 
 ### Electrical Conductivity - Zero chemical potential
 
-<p align="center">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_over_temp_vs_temp_CP0_setA.png" width="32%">
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_over_temp_vs_temp_setA_CP0.png" width="32%">
 </p>
 
 ### Shear Viscosity and Electrical Conductivity Ratios - Zero chemical potential
 
-<p align="center">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_CP0_setA_zoom.png" width="32%">
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CP0_zoom.png" width="32%">
 </p>
 
-<p align="center">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_CP0_setA_zoom.png" width="32%">
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CP0_zoom.png" width="32%">
 </p>
