@@ -172,13 +172,18 @@ Can be executed in the root folder using:
 
 ## Calculations
 
-One can execute the `scripts/tests/execute_calculations.sh` script to execute all the calulations configured inside the calculations folder in the root of the project. This can be used to test the code base and understand if the modification of the code or implementation of new features broke something unexpectedly. Executing this can be quite time consuming due to the complex nature of all the calculations. Thus, one can also find `scripts/tests/execute_calculations_lite.sh` which contains less calculations, while covering a similar part of the entire code base. These tests can be considered functional tests. Execute them with
+One can execute the `scripts/tests/execute_calculations.sh` script to execute all the calulations configured inside the calculations folder in the root of the project. This can be used to test the code base and understand if the modification of the code or implementation of new features broke something unexpectedly. Executing this can be quite time consuming due to the complex nature of all the calculations. Thus, one can also find `scripts/tests/execute_calculations_lite.sh` which contains less calculations, while covering a similar part of the entire code base. These tests can be considered functional tests. Execute them with:
 ```bash
 (cd scripts/tests/ && ./execute_calculations.sh)
 ```
 or, for the lite version,
 ```bash
 (cd scripts/tests/ && ./execute_calculations_lite.sh)
+```
+
+The results generated when running the `execute_calculations_lite.sh` script can be deleted locally by running the following script:
+```bash
+(cd scripts/tests/ && ./clean_calculations.sh)
 ```
 
 ## Plots
