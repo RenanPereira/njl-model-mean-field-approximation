@@ -10,13 +10,13 @@
 class OneFermionLine3DCutoffIntegrand : public GeneralIntegrandParameters
 {
 public:
-    string integralID;
+    std::string integralID;
     double temperature = 0.0/0.0;
     double effectiveChemicalPotential = 0.0/0.0;
     double effectiveMass = 0.0/0.0;
 
 public:
-    OneFermionLine3DCutoffIntegrand(string integralIDAux, double temperatureAux, double effectiveChemicalPotentialAux, double effectiveMassAux)
+    OneFermionLine3DCutoffIntegrand(std::string integralIDAux, double temperatureAux, double effectiveChemicalPotentialAux, double effectiveMassAux)
     {   
         integralID = integralIDAux;
         temperature = temperatureAux;
@@ -32,19 +32,19 @@ public:
         effectiveMass = ((class OneFermionLine3DCutoffIntegrand *)(auxiliar))->effectiveMass;
     };
 
-    string getIntegralID(){ return integralID; }
+    std::string getIntegralID(){ return integralID; }
     double getTemperature(){ return temperature; };
     double getEffectiveChemicalPotential(){ return effectiveChemicalPotential; };
     double getEffectiveMass(){ return effectiveMass; };
 
     void printIntegrandVariables() override
     {   
-        cout << integralID << "\n";
-        cout << "T = " << temperature << "\n";
-        cout << "effChemPot = " << effectiveChemicalPotential << "\n";
-        cout << "effMass = " << effectiveMass << "\n";
-        cout << "(T, effChemPot, effMass)\n";
-        cout << "(" << temperature << ", " << effectiveChemicalPotential << ", " << effectiveMass << ")" << "\n";
+        std::cout << integralID << "\n";
+        std::cout << "T = " << temperature << "\n";
+        std::cout << "effChemPot = " << effectiveChemicalPotential << "\n";
+        std::cout << "effMass = " << effectiveMass << "\n";
+        std::cout << "(T, effChemPot, effMass)\n";
+        std::cout << "(" << temperature << ", " << effectiveChemicalPotential << ", " << effectiveMass << ")" << "\n";
     }
 };
 

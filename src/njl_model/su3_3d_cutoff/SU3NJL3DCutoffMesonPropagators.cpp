@@ -6,16 +6,24 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonProjectors.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonPropagators.h"
 
-using namespace std;
-
 
 //In the scalar and pseudoscalar polarization operators a finite width is included with the following recipe: k0 -> k0 - iGamma/2
 
 
-
-gsl_complex pseudoscalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double Nc, 
-													 double T, double effCP1, double effCP2, double M1, double M2, 
-													 double k0, double k, double Gamma, double integralPrecision)
+gsl_complex pseudoscalarPolarizationOperator3DCutoff(
+	NJL3DCutoffRegularizationScheme reguScheme, 
+	double cutoff, 
+	double Nc, 
+	double T, 
+	double effCP1, 
+	double effCP2, 
+	double M1, 
+	double M2, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {	
 	double deltaReal = pow((M1-M2), 2) - pow((k0 + effCP1 - effCP2), 2) + pow(k,2) + pow(Gamma,2)/4.0;
 	double deltaImag = Gamma*(k0 + effCP1 - effCP2);
@@ -37,21 +45,41 @@ gsl_complex pseudoscalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationSc
     return pseudoscalarPol;
 }
 
-
-gsl_complex pseudoscalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double Nc, 
-												     double T, double effCP1, double effCP2, double M1, double M2, 
-												     double k0, double k, double integralPrecision)
+gsl_complex pseudoscalarPolarizationOperator3DCutoff(
+	NJL3DCutoffRegularizationScheme reguScheme, 
+	double cutoff, 
+	double Nc, 
+	double T, 
+	double effCP1, 
+	double effCP2, 
+	double M1, 
+	double M2, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex pseudoscalarPol = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effCP1, effCP2, M1, M2, k0, k, 0.0, integralPrecision);
+	gsl_complex pseudoscalarPol = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effCP1, effCP2, M1, M2, k0, k, 0.0, integralPrecision
+	);
 
 	return pseudoscalarPol;
 }
 
-
-gsl_complex scalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double Nc, 
-											   double T, double effCP1, double effCP2, double M1, double M2, 
-											   double k0, double k, double Gamma, double integralPrecision)
+gsl_complex scalarPolarizationOperator3DCutoff(
+	NJL3DCutoffRegularizationScheme reguScheme, 
+	double cutoff, 
+	double Nc, 
+	double T, 
+	double effCP1, 
+	double effCP2, 
+	double M1, 
+	double M2, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {
 	double deltaReal = pow((M1+M2), 2) - pow((k0 + effCP1 - effCP2), 2) + pow(k,2) + pow(Gamma,2)/4.0;
     double deltaImag = Gamma*(k0 + effCP1 - effCP2);
@@ -73,38 +101,59 @@ gsl_complex scalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme r
     return scalarPol;
 }
 
-
-gsl_complex scalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double cutoff, double Nc, 
-											   double T, double effCP1, double effCP2, double M1, double M2, 
-											   double k0, double k, double integralPrecision)
+gsl_complex scalarPolarizationOperator3DCutoff(
+	NJL3DCutoffRegularizationScheme reguScheme, 
+	double cutoff, 
+	double Nc, 
+	double T, 
+	double effCP1, 
+	double effCP2, 
+	double M1, 
+	double M2, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex scalarPol = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effCP1, effCP2, M1, M2, k0, k, 0.0, integralPrecision);
+	gsl_complex scalarPol = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effCP1, effCP2, M1, M2, k0, k, 0.0, integralPrecision
+	);
 
 	return scalarPol;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //Pseudoscalar Meson Propagators
 
-
-gsl_complex pionPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		   double effMassU, double effMassD, double effMassS, 
-					  		   double k0, double k, double Gamma, double integralPrecision)
+gsl_complex pionPlusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double P11 = projector.pseudoscalar11();
 
 	//calculate appropriate polarization function
-	gsl_complex pseudoscalarPolUD = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotU, effChemPotD, effMassU, effMassD, k0, k, Gamma, integralPrecision);
+	gsl_complex pseudoscalarPolUD = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotU, effChemPotD, effMassU, effMassD, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -117,35 +166,56 @@ gsl_complex pionPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T,
     return pionPropagator;
 }
 
-
-gsl_complex pionPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		   double effMassU, double effMassD, double effMassS, 
-					  		   double k0, double k, double integralPrecision)
+gsl_complex pionPlusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex pionPropagator = 
-	pionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex pionPropagator = pionPlusPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return pionPropagator;
 }
 
-
-gsl_complex pionMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		    double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		    double effMassU, double effMassD, double effMassS, 
-					  		    double k0, double k, double Gamma, double integralPrecision)
+gsl_complex pionMinusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double P11 = projector.pseudoscalar11();
 
 	//calculate appropriate polarization function
-	gsl_complex pseudoscalarPolDU = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotD, effChemPotU, effMassD, effMassU, k0, k, Gamma, integralPrecision);
+	gsl_complex pseudoscalarPolDU = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotD, effChemPotU, effMassD, effMassU, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -158,35 +228,56 @@ gsl_complex pionMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T
     return pionPropagator;
 }
 
-
-gsl_complex pionMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		    double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		    double effMassU, double effMassD, double effMassS, 
-					  		    double k0, double k, double integralPrecision)
+gsl_complex pionMinusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex pionPropagator = 
-	pionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex pionPropagator = pionMinusPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return pionPropagator;
 }
 
-
-gsl_complex kaonPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		   double effMassU, double effMassD, double effMassS, 
-					  		   double k0, double k, double Gamma, double integralPrecision)
+gsl_complex kaonPlusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double P44 = projector.pseudoscalar44();
 
 	//calculate appropriate polarization function
-	gsl_complex pseudoscalarPolUS = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotU, effChemPotS, effMassU, effMassS, k0, k, Gamma, integralPrecision);
+	gsl_complex pseudoscalarPolUS = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotU, effChemPotS, effMassU, effMassS, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -200,34 +291,56 @@ gsl_complex kaonPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T,
 }
 
 
-gsl_complex kaonPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		   double effMassU, double effMassD, double effMassS, 
-					  		   double k0, double k, double integralPrecision)
+gsl_complex kaonPlusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex kaonPropagator = 
-	kaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex kaonPropagator = kaonPlusPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return kaonPropagator;
 }
 
-
-gsl_complex kaonMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		    double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		    double effMassU, double effMassD, double effMassS, 
-					  		    double k0, double k, double Gamma, double integralPrecision)
+gsl_complex kaonMinusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double P44 = projector.pseudoscalar44();
 
 	//calculate appropriate polarization function
-	gsl_complex pseudoscalarPolSU = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotS, effChemPotU, effMassS, effMassU, k0, k, Gamma, integralPrecision);
+	gsl_complex pseudoscalarPolSU = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotS, effChemPotU, effMassS, effMassU, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -240,35 +353,56 @@ gsl_complex kaonMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T
     return kaonPropagator;
 }
 
-
-gsl_complex kaonMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		    double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		    double effMassU, double effMassD, double effMassS, 
-					  		    double k0, double k, double integralPrecision)
+gsl_complex kaonMinusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex kaonPropagator = 
-	kaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex kaonPropagator = kaonMinusPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return kaonPropagator;
 }
 
-
-gsl_complex neutralKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		      double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		      double effMassU, double effMassD, double effMassS, 
-					  		      double k0, double k, double Gamma, double integralPrecision)
+gsl_complex neutralKaonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double P66 = projector.pseudoscalar66();
 
 	//calculate appropriate polarization function
-	gsl_complex pseudoscalarPolDS = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotD, effChemPotS, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	gsl_complex pseudoscalarPolDS = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotD, effChemPotS, effMassD, effMassS, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -281,35 +415,56 @@ gsl_complex neutralKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double
     return kaonPropagator;
 }
 
-
-gsl_complex neutralKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		      double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		      double effMassU, double effMassD, double effMassS, 
-					  		      double k0, double k, double integralPrecision)
+gsl_complex neutralKaonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex kaonPropagator = 
-	neutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex kaonPropagator = neutralKaonPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return kaonPropagator;
 }
 
-
-gsl_complex antiNeutralKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          double effMassU, double effMassD, double effMassS, 
-					  		          double k0, double k, double Gamma, double integralPrecision)
+gsl_complex antiNeutralKaonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double P66 = projector.pseudoscalar66();
 
 	//calculate appropriate polarization function
-	gsl_complex pseudoscalarPolSD = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotS, effChemPotD, effMassS, effMassD, k0, k, Gamma, integralPrecision);
+	gsl_complex pseudoscalarPolSD = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotS, effChemPotD, effMassS, effMassD, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -322,30 +477,50 @@ gsl_complex antiNeutralKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, do
     return kaonPropagator;
 }
 
-
-gsl_complex antiNeutralKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          double effMassU, double effMassD, double effMassS, 
-					  		          double k0, double k, double integralPrecision)
+gsl_complex antiNeutralKaonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex kaonPropagator = 
-	antiNeutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex kaonPropagator = antiNeutralKaonPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return kaonPropagator;
 }
 
-
-ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          				     double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          				     double effMassU, double effMassD, double effMassS, 
-					  		          			         double k0, double k, double Gamma, double integralPrecision)
+ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//Set matrix with meson projection operators
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double P00 = projector.pseudoscalar00();
 	double P03 = projector.pseudoscalar03();
 	double P08 = projector.pseudoscalar08();
@@ -368,12 +543,15 @@ ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(SU3NJL3DCutoffParameter
 	pAB.setValue(2, 2, gsl_complex_rect(2.0*P88, 0.0));
 
 	//Set matrix with quark polarization operators
-	gsl_complex pseudoscalarPolUU = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotU, effChemPotU, effMassU, effMassU, k0, k, Gamma, integralPrecision);
-	gsl_complex pseudoscalarPolDD = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotD, effChemPotD, effMassD, effMassD, k0, k, Gamma, integralPrecision);
-	gsl_complex pseudoscalarPolSS = 
-	pseudoscalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotS, effChemPotS, effMassS, effMassS, k0, k, Gamma, integralPrecision);
+	gsl_complex pseudoscalarPolUU = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotU, effChemPotU, effMassU, effMassU, k0, k, Gamma, integralPrecision
+	);
+	gsl_complex pseudoscalarPolDD = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotD, effChemPotD, effMassD, effMassD, k0, k, Gamma, integralPrecision
+	);
+	gsl_complex pseudoscalarPolSS = pseudoscalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotS, effChemPotS, effMassS, effMassS, k0, k, Gamma, integralPrecision
+	);
 
 	//PI00 = (2./3.)*( PIuu + PIdd + PIss)
 	gsl_complex pseudoscalarPol00;
@@ -428,39 +606,59 @@ ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(SU3NJL3DCutoffParameter
 	return inverseNeutral038Propagator.inverse();
 }
 
-
-ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          				     double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          				     double effMassU, double effMassD, double effMassS, 
-					  		          				     double k0, double k, double integralPrecision)
+ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	ComplexSquareMatrixGSL neutral038Propagator = 
-	neutral038PseudoscalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	ComplexSquareMatrixGSL neutral038Propagator = neutral038PseudoscalarsPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return neutral038Propagator;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //Scalar Meson Propagators
 
-
-gsl_complex sigmaPionPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		   		double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		   		double effMassU, double effMassD, double effMassS, 
-					  		   		double k0, double k, double Gamma, double integralPrecision)
+gsl_complex sigmaPionPlusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double S11 = projector.scalar11();
 
 	//calculate appropriate polarization function
-	gsl_complex scalarPolUD = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotU, effChemPotD, effMassU, effMassD, k0, k, Gamma, integralPrecision);
+	gsl_complex scalarPolUD = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotU, effChemPotD, effMassU, effMassD, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -473,35 +671,56 @@ gsl_complex sigmaPionPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, doub
     return sigmaPionPropagator;
 }
 
-
-gsl_complex sigmaPionPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		   		double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		   		double effMassU, double effMassD, double effMassS, 
-					  		   		double k0, double k, double integralPrecision)
+gsl_complex sigmaPionPlusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex sigmaPionPropagator = 
-	sigmaPionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex sigmaPionPropagator = sigmaPionPlusPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return sigmaPionPropagator;
 }
 
-
-gsl_complex sigmaPionMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		    	 double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		    	 double effMassU, double effMassD, double effMassS, 
-					  		    	 double k0, double k, double Gamma, double integralPrecision)
+gsl_complex sigmaPionMinusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double S11 = projector.scalar11();
 
 	//calculate appropriate polarization function
-	gsl_complex scalarPolDU = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotD, effChemPotU, effMassD, effMassU, k0, k, Gamma, integralPrecision);
+	gsl_complex scalarPolDU = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotD, effChemPotU, effMassD, effMassU, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -511,39 +730,59 @@ gsl_complex sigmaPionMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, dou
 
     gsl_complex sigmaPionPropagator = gsl_complex_div(numerator, denominator);
 
-
     return sigmaPionPropagator;
 }
 
-
-gsl_complex sigmaPionMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		    	 double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		    	 double effMassU, double effMassD, double effMassS, 
-					  		    	 double k0, double k, double integralPrecision)
+gsl_complex sigmaPionMinusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex sigmaPionPropagator = 
-	sigmaPionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex sigmaPionPropagator = sigmaPionMinusPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return sigmaPionPropagator;
 }
 
-
-gsl_complex sigmaKaonPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		   		double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		   		double effMassU, double effMassD, double effMassS, 
-					  		   		double k0, double k, double Gamma, double integralPrecision)
+gsl_complex sigmaKaonPlusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double S44 = projector.scalar44();
 
 	//calculate appropriate polarization function
-	gsl_complex scalarPolUS = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotU, effChemPotS, effMassU, effMassS, k0, k, Gamma, integralPrecision);
+	gsl_complex scalarPolUS = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotU, effChemPotS, effMassU, effMassS, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -556,35 +795,56 @@ gsl_complex sigmaKaonPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, doub
     return sigmaKaonPropagator;
 }
 
-
-gsl_complex sigmaKaonPlusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		   		double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		   		double effMassU, double effMassD, double effMassS, 
-					  		   		double k0, double k, double integralPrecision)
+gsl_complex sigmaKaonPlusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex sigmaKaonPropagator = 
-	sigmaKaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex sigmaKaonPropagator = sigmaKaonPlusPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return sigmaKaonPropagator;
 }
 
-
-gsl_complex sigmaKaonMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		    	 double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		    	 double effMassU, double effMassD, double effMassS, 
-					  		    	 double k0, double k, double Gamma, double integralPrecision)
+gsl_complex sigmaKaonMinusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double S44 = projector.scalar44();
 
 	//calculate appropriate polarization function
-	gsl_complex scalarPolSU = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotS, effChemPotU, effMassS, effMassU, k0, k, Gamma, integralPrecision);
+	gsl_complex scalarPolSU = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotS, effChemPotU, effMassS, effMassU, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -597,35 +857,56 @@ gsl_complex sigmaKaonMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, dou
     return sigmaKaonPropagator;
 }
 
-
-gsl_complex sigmaKaonMinusPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		    	 double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		    	 double effMassU, double effMassD, double effMassS, 
-					  		    	 double k0, double k, double integralPrecision)
+gsl_complex sigmaKaonMinusPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex sigmaKaonPropagator = 
-	sigmaKaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex sigmaKaonPropagator = sigmaKaonMinusPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return sigmaKaonPropagator;
 }
 
-
-gsl_complex neutralSigmaKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		      	   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		      	   double effMassU, double effMassD, double effMassS, 
-					  		      	   double k0, double k, double Gamma, double integralPrecision)
+gsl_complex neutralSigmaKaonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double S66 = projector.scalar66();
 
 	//calculate appropriate polarization function
-	gsl_complex scalarPolDS = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotD, effChemPotS, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+	gsl_complex scalarPolDS = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotD, effChemPotS, effMassD, effMassS, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -638,35 +919,56 @@ gsl_complex neutralSigmaKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, d
     return sigmaKaonPropagator;
 }
 
-
-gsl_complex neutralSigmaKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		      	   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		      	   double effMassU, double effMassD, double effMassS, 
-					  		      	   double k0, double k, double integralPrecision)
+gsl_complex neutralSigmaKaonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex sigmaKaonPropagator = 
-	neutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex sigmaKaonPropagator = neutralSigmaKaonPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return sigmaKaonPropagator;
 }
 
-
-gsl_complex antiNeutralSigmaKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          	   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          	   double effMassU, double effMassD, double effMassS, 
-					  		          	   double k0, double k, double Gamma, double integralPrecision)
+gsl_complex antiNeutralSigmaKaonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//calculate appropriate projector
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double S66 = projector.scalar66();
 
 	//calculate appropriate polarization function
-	gsl_complex scalarPolSD = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotS, effChemPotD, effMassS, effMassD, k0, k, Gamma, integralPrecision);
+	gsl_complex scalarPolSD = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotS, effChemPotD, effMassS, effMassD, k0, k, Gamma, integralPrecision
+	);
 
 	//build propagator
 	gsl_complex denominator, numerator;
@@ -680,29 +982,50 @@ gsl_complex antiNeutralSigmaKaonPropagator(SU3NJL3DCutoffParameters parametersNJ
 }
 
 
-gsl_complex antiNeutralSigmaKaonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          	   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          	   double effMassU, double effMassD, double effMassS, 
-					  		          	   double k0, double k, double integralPrecision)
+gsl_complex antiNeutralSigmaKaonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	gsl_complex sigmaKaonPropagator = 
-	antiNeutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	gsl_complex sigmaKaonPropagator = antiNeutralSigmaKaonPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return sigmaKaonPropagator;
 }
 
-
-ComplexSquareMatrixGSL neutral038ScalarsPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          			   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          			   double effMassU, double effMassD, double effMassS, 
-					  		          			   double k0, double k, double Gamma, double integralPrecision)
+ComplexSquareMatrixGSL neutral038ScalarsPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision
+)
 {   
 	NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
     double cutoff = parametersNJL.getThreeMomentumCutoff();
 	double Nc = parametersNJL.getNumberOfColours();
 
 	//Set matrix with meson projection operators
-	SU3NJL3DCutoffMesonProjector projector(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision);
+	SU3NJL3DCutoffMesonProjector projector(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, integralPrecision
+	);
 	double S00 = projector.scalar00();
 	double S03 = projector.scalar03();
 	double S08 = projector.scalar08();
@@ -725,12 +1048,15 @@ ComplexSquareMatrixGSL neutral038ScalarsPropagator(SU3NJL3DCutoffParameters para
 	sAB.setValue(2, 2, gsl_complex_rect(2.0*S88, 0.0));
 
 	//Set matrix with quark polarization operators
-	gsl_complex scalarPolUU = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotU, effChemPotU, effMassU, effMassU, k0, k, Gamma, integralPrecision);
-	gsl_complex scalarPolDD = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotD, effChemPotD, effMassD, effMassD, k0, k, Gamma, integralPrecision);
-	gsl_complex scalarPolSS = 
-	scalarPolarizationOperator3DCutoff(reguScheme, cutoff, Nc, T, effChemPotS, effChemPotS, effMassS, effMassS, k0, k, Gamma, integralPrecision);
+	gsl_complex scalarPolUU = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotU, effChemPotU, effMassU, effMassU, k0, k, Gamma, integralPrecision
+	);
+	gsl_complex scalarPolDD = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotD, effChemPotD, effMassD, effMassD, k0, k, Gamma, integralPrecision
+	);
+	gsl_complex scalarPolSS = scalarPolarizationOperator3DCutoff(
+		reguScheme, cutoff, Nc, T, effChemPotS, effChemPotS, effMassS, effMassS, k0, k, Gamma, integralPrecision
+	);
 
 	//PI00 = (2./3.)*( PIuu + PIdd + PIss)
 	gsl_complex scalarPol00;
@@ -785,129 +1111,198 @@ ComplexSquareMatrixGSL neutral038ScalarsPropagator(SU3NJL3DCutoffParameters para
 	return inverseNeutral038Propagator.inverse();
 }
 
-
-ComplexSquareMatrixGSL neutral038ScalarsPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          			   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          			   double effMassU, double effMassD, double effMassS, 
-					  		          			   double k0, double k, double integralPrecision)
+ComplexSquareMatrixGSL neutral038ScalarsPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision
+)
 {
-	ComplexSquareMatrixGSL neutral038Propagator = 
-	neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision);
+	ComplexSquareMatrixGSL neutral038Propagator = neutral038ScalarsPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision
+	);
     
     return neutral038Propagator;
 }
 
-
-
-gsl_complex nonDiagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		           double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		           double effMassU, double effMassD, double effMassS, 
-					  		           double k0, double k, double Gamma, double integralPrecision,
-					  		           mesonState mesonID)
+gsl_complex nonDiagonalMesonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision,
+	mesonState mesonID
+)
 {   
 	gsl_complex mesonPropagator;
 
 	if ( mesonID==pionPlus )
 	{
-		mesonPropagator = pionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = pionPlusPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==pionMinus )
 	{
-		mesonPropagator = pionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = pionMinusPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==kaonPlus )
 	{
-		mesonPropagator = kaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = kaonPlusPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==kaonMinus )
 	{
-		mesonPropagator = kaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = kaonMinusPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==neutralKaon )
 	{
-		mesonPropagator = neutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = neutralKaonPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==antiNeutralKaon )
 	{
-		mesonPropagator = antiNeutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = antiNeutralKaonPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==sigmaPionPlus )
 	{
-		mesonPropagator = sigmaPionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = sigmaPionPlusPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==sigmaPionMinus )
 	{
-		mesonPropagator = sigmaPionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = sigmaPionMinusPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==sigmaKaonPlus )
 	{
-		mesonPropagator = sigmaKaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = sigmaKaonPlusPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==sigmaKaonMinus )
 	{
-		mesonPropagator = sigmaKaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = sigmaKaonMinusPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==neutralSigmaKaon )
 	{
-		mesonPropagator = neutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = neutralSigmaKaonPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if ( mesonID==antiNeutralSigmaKaon )
 	{
-		mesonPropagator = antiNeutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = antiNeutralSigmaKaonPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 
     return mesonPropagator;
 }
 
-
-gsl_complex nonDiagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		           double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		           double effMassU, double effMassD, double effMassS, 
-					  		           double k0, double k, double integralPrecision,
-					  		           mesonState mesonID)
+gsl_complex nonDiagonalMesonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision,
+	mesonState mesonID
+)
 {
-	gsl_complex mesonPropagator = 
-	nonDiagonalMesonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, mesonID);
+	gsl_complex mesonPropagator = nonDiagonalMesonPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, mesonID
+	);
     
     return mesonPropagator;
 }
 
-
-ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          		   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          		   double effMassU, double effMassD, double effMassS, 
-					  		          		   double k0, double k, double Gamma, double integralPrecision,
-					  		          		   mesonState mesonID)
+ComplexSquareMatrixGSL diagonalMesonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double Gamma, 
+	double integralPrecision,
+	mesonState mesonID
+)
 {
 	ComplexSquareMatrixGSL mesonPropagator(3);
 
 	if( mesonID==diagonalPseudoscalars )
 	{
-		mesonPropagator = 
-		neutral038PseudoscalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = neutral038PseudoscalarsPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 	else if( mesonID==diagonalScalars )
 	{
-		mesonPropagator = 
-		neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision);
+		mesonPropagator = neutral038ScalarsPropagator(
+			parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, Gamma, integralPrecision
+		);
 	}
 
 	return mesonPropagator;
 }
 
-
-ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters parametersNJL, double T, 
-					  		          		   double effChemPotU, double effChemPotD, double effChemPotS, 
-					  		          		   double effMassU, double effMassD, double effMassS, 
-					  		          		   double k0, double k, double integralPrecision,
-					  		          		   mesonState mesonID)
+ComplexSquareMatrixGSL diagonalMesonPropagator(
+	SU3NJL3DCutoffParameters parametersNJL, 
+	double T, 
+	double effChemPotU, 
+	double effChemPotD, 
+	double effChemPotS, 
+	double effMassU, 
+	double effMassD, 
+	double effMassS, 
+	double k0, 
+	double k, 
+	double integralPrecision,
+	mesonState mesonID
+)
 {
-	ComplexSquareMatrixGSL mesonPropagator = 
-	diagonalMesonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, mesonID);
+	ComplexSquareMatrixGSL mesonPropagator = diagonalMesonPropagator(
+		parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, k0, k, 0.0, integralPrecision, mesonID
+	);
 
 	return mesonPropagator;
 }
-
 
 int SU3NJL3DCutoffMesonMassEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {
@@ -932,7 +1327,7 @@ int SU3NJL3DCutoffMesonMassEquations(const gsl_vector *x, void *auxiliar, gsl_ve
 	}
 	else
 	{
-	    vector<gsl_complex> eigenvalue = meson.calculateInverseDiagonalPropagatorEigenvalues(k0, k, gamma);
+	    std::vector<gsl_complex> eigenvalue = meson.calculateInverseDiagonalPropagatorEigenvalues(k0, k, gamma);
 
 	    f0 = GSL_REAL( eigenvalue[0] );
 	    f1 = GSL_IMAG( eigenvalue[0] );
@@ -943,17 +1338,25 @@ int SU3NJL3DCutoffMesonMassEquations(const gsl_vector *x, void *auxiliar, gsl_ve
 	return GSL_SUCCESS;
 }
 
-
 double mesonStateMassAtMeltingPoint(double Mu, double Md, double Ms, mesonState mesonID)
 {
 	double k0 = 0;
 
-	if 	   ( mesonID==pionPlus || mesonID==pionMinus || mesonID==sigmaPionPlus || mesonID==sigmaPionMinus ){ k0 = Mu + Md; }
-	else if( mesonID==kaonPlus || mesonID==kaonMinus || mesonID==sigmaKaonPlus || mesonID==sigmaKaonMinus  ){ k0 = Mu + Ms; }
-	else if( mesonID==neutralKaon || mesonID==antiNeutralKaon || mesonID==neutralSigmaKaon || mesonID==antiNeutralSigmaKaon  ){ k0 = Md + Ms; }
+	if 	   ( mesonID==pionPlus || mesonID==pionMinus || mesonID==sigmaPionPlus || mesonID==sigmaPionMinus )
+	{ 
+		k0 = Mu + Md; 
+	}
+	else if( mesonID==kaonPlus || mesonID==kaonMinus || mesonID==sigmaKaonPlus || mesonID==sigmaKaonMinus  )
+	{ 
+		k0 = Mu + Ms; 
+	}
+	else if( mesonID==neutralKaon || mesonID==antiNeutralKaon || mesonID==neutralSigmaKaon || mesonID==antiNeutralSigmaKaon  )
+	{ 
+		k0 = Md + Ms; 
+	}
 	else
 	{	
-		cout << "Meson not defined in mesonStateMassAtMeltingPoint! Aborting! \n";
+		std::cout << "Meson not defined in mesonStateMassAtMeltingPoint! Aborting! \n";
 		abort();
 	}
 

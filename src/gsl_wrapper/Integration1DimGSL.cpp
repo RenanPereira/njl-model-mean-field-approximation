@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <gsl/gsl_errno.h>
 
-using namespace std;
+using std::cout;
 
 
 void Integration1DimGSL::setVariables(double lowerBoundAux, double upperBoundAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux)
@@ -33,7 +33,7 @@ double Integration1DimGSL::evaluate()
 }
 
 
-void Integration1DimGSL::errorHandler(int code, string methodName)
+void Integration1DimGSL::errorHandler(int code, std::string methodName)
 {
     if( code!=0 )
     {   
@@ -236,7 +236,7 @@ double Integration1DimGSLQAWC::evaluate()
 
 
 //QAGP method constructor
-Integration1DimGSLQAGP::Integration1DimGSLQAGP(double lowerBoundAux, double upperBoundAux, vector<double> singularitiesAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux)
+Integration1DimGSLQAGP::Integration1DimGSLQAGP(double lowerBoundAux, double upperBoundAux, std::vector<double> singularitiesAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux)
 {   
     setVariables(lowerBoundAux, upperBoundAux, integrandParametersAux, integrand, absolutePrecisionAux, relativePrecisionAux, workspaceLimitSizeAux);
 

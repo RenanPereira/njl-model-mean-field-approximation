@@ -1,7 +1,7 @@
 #include <omp.h>
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
 
-using namespace std;
+using std::string;
 
 
 int main()

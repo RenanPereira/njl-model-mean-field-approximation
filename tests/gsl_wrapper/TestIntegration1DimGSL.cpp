@@ -1,6 +1,9 @@
 #include "gsl_wrapper/Integration1DimGSL.h"
 #include "TestIntegration1DimGSL.h"
 
+using std::cout;
+
+
 double integrandTestGSL(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */

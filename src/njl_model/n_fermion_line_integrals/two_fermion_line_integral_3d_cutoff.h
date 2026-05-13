@@ -10,7 +10,7 @@
 class TwoFermionLine3DCutoffIntegrand : public GeneralIntegrandParameters
 {
 private:
-    string integralID = "notDefined";
+    std::string integralID = "notDefined";
     double threeMomentumCutoff = 0.0/0.0;
     double temperature = 0.0/0.0;
     double effectiveChemicalPotential1 = 0.0/0.0;
@@ -22,7 +22,7 @@ private:
     double etaVariable = 0.0/0.0;
 
 public:
-    TwoFermionLine3DCutoffIntegrand(string integralIDAux, 
+    TwoFermionLine3DCutoffIntegrand(std::string integralIDAux, 
                                     double threeMomentumCutoffAux, 
                                     double effectiveMass1Aux, double effectiveMass2Aux, 
                                     double threeMomentumAux)
@@ -34,7 +34,7 @@ public:
         threeMomentum = threeMomentumAux;
     };
 
-    TwoFermionLine3DCutoffIntegrand(string integralIDAux, 
+    TwoFermionLine3DCutoffIntegrand(std::string integralIDAux, 
                                     double temperatureAux, 
                                     double effectiveChemicalPotential1Aux, double effectiveChemicalPotential2Aux,
                                     double threeMomentumCutoffAux,
@@ -84,7 +84,7 @@ public:
         etaVariable = ((class TwoFermionLine3DCutoffIntegrand *)(auxiliar))->etaVariable;
     };
 
-    string getIntegralID(){ return integralID; }
+    std::string getIntegralID(){ return integralID; }
     double getThreeMomentumCutoff(){ return threeMomentumCutoff; };
     double getTemperature(){ return temperature; };
     double getEffectiveChemicalPotential1(){ return effectiveChemicalPotential1; };
@@ -95,7 +95,7 @@ public:
     double getThreeMomentum(){ return threeMomentum; };
     double getEtaVariable(){ return etaVariable; };
 
-    void setIntegralID(string integralIDAux){ integralID = integralIDAux; }
+    void setIntegralID(std::string integralIDAux){ integralID = integralIDAux; }
     void setEtaVariable(double etaVariableAux){ etaVariable = etaVariableAux; };
 
     void printIntegrandVariables() override

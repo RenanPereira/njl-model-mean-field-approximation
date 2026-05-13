@@ -1,8 +1,11 @@
 #include <iostream>
-
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMisc.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffCrossSections.h"
+
+using std::cout;
+using std::vector;
+
 
 void someVacuumAndThermalPropertiesKlevanskyParameterSet()
 {

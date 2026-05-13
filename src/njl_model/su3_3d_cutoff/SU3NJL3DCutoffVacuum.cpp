@@ -6,14 +6,11 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 
-using namespace std;
-
 
 SU3NJL3DCutoffVacuum::SU3NJL3DCutoffVacuum(SU3NJL3DCutoffParameters parametersNJLAux)
 {
 	parametersNJL = parametersNJLAux;
 }
-
 
 SU3NJL3DCutoffVacuum::SU3NJL3DCutoffVacuum(void* auxiliar)
 {	
@@ -23,7 +20,6 @@ SU3NJL3DCutoffVacuum::SU3NJL3DCutoffVacuum(void* auxiliar)
 	downQuarkEffectiveMass = ((class SU3NJL3DCutoffVacuum *)(auxiliar))->downQuarkEffectiveMass;
 	strangeQuarkEffectiveMass = ((class SU3NJL3DCutoffVacuum *)(auxiliar))->strangeQuarkEffectiveMass;
 };
-
 
 void SU3NJL3DCutoffVacuum::solve(double precision, MultiRootFindingMethod method, double upQuarkEffectiveMassGuess, double downQuarkEffectiveMassGuess, double strangeQuarkEffectiveMassGuess)
 {	
@@ -38,7 +34,6 @@ void SU3NJL3DCutoffVacuum::solve(double precision, MultiRootFindingMethod method
 	setDownQuarkEffectiveMass(x[1]);
 	setStrangeQuarkEffectiveMass(x[2]);
 }
-
 
 int SU3NJL3DCutoffVacuum::gapEquations(const gsl_vector *x, void *auxiliar, gsl_vector *f)
 {   
@@ -63,7 +58,6 @@ int SU3NJL3DCutoffVacuum::gapEquations(const gsl_vector *x, void *auxiliar, gsl_
     double m0D = solution.getParametersNJL().getDownQuarkCurrentMass();
     double m0S = solution.getParametersNJL().getStrangeQuarkCurrentMass();
 
-
     //calculate quark condensates
     double T = 0.0;
     double effCP = 0.0;
@@ -83,7 +77,6 @@ int SU3NJL3DCutoffVacuum::gapEquations(const gsl_vector *x, void *auxiliar, gsl_
     return GSL_SUCCESS;
 }
 
-
 bool SU3NJL3DCutoffVacuum::testSolution(double precision)
 {   
     double x[3];
@@ -98,7 +91,6 @@ bool SU3NJL3DCutoffVacuum::testSolution(double precision)
     else{ return false; }
 }
 
-
 SU3NJL3DCutoffVacuum SU3NJL3DCutoffVacuum::calculateVacuumMasses(
     SU3NJL3DCutoffParameters& parameters,                                    
     double gapPrecision,                                    
@@ -109,7 +101,7 @@ SU3NJL3DCutoffVacuum SU3NJL3DCutoffVacuum::calculateVacuumMasses(
 )
 {
     // Solve model in the vacuum
-    cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in the vacuum...\n";
+    std::cout << "\nSolving the SU3 NJL model, regularized by a 3D Cutoff, in the vacuum...\n";
 
     SU3NJL3DCutoffVacuum vacuumSolution(parameters);
     vacuumSolution.solve(
@@ -124,15 +116,14 @@ SU3NJL3DCutoffVacuum SU3NJL3DCutoffVacuum::calculateVacuumMasses(
     double Md = vacuumSolution.getDownQuarkEffectiveMass();
     double Ms = vacuumSolution.getStrangeQuarkEffectiveMass();
 
-    cout << "Vacuum effective masses: \n";
-    cout << "testSolution=" << vacuumSolution.testSolution(gapPrecision) << "\n";
-    cout << "Mu[GeV] = " << Mu << "\n" 
-         << "Md[GeV] = " << Md << "\n" 
-         << "Ms[GeV] = " << Ms << "\n";
+    std::cout << "Vacuum effective masses: \n";
+    std::cout << "testSolution=" << vacuumSolution.testSolution(gapPrecision) << "\n";
+    std::cout << "Mu[GeV] = " << Mu << "\n" 
+              << "Md[GeV] = " << Md << "\n" 
+              << "Ms[GeV] = " << Ms << "\n";
 
     return vacuumSolution;
 }
-
 
 double SU3NJL3DCutoffVacuum::calculatePressure()
 {
@@ -140,13 +131,11 @@ double SU3NJL3DCutoffVacuum::calculatePressure()
     return pressure;
 }
 
-
 double SU3NJL3DCutoffVacuum::calculateEnergyDensity()
 {
     double energy = SU3NJL3DCutoffEnergyDensity(parametersNJL, 0.0, upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 0.0, 0.0, 0.0);
     return energy;
 }
-
 
 double SU3NJL3DCutoffVacuum::calculateVacuumPressureElectrons(double electronMass)
 {   
@@ -159,25 +148,31 @@ double SU3NJL3DCutoffVacuum::calculateVacuumPressureElectrons(double electronMas
     return vacuumPressureElectrons;
 }
 
-
 SU3NJL3DCutoffMeson SU3NJL3DCutoffVacuum::calculateMesonMassAndWidth(mesonState meson, double precision, MultiRootFindingMethod method, double mesonMassGuess, double mesonWidthGuess)
 {   
     double temperature = 0.0;
     double effChemPot = 0.0;
     double mesonPropagatorPrecision = parametersNJL.getSigmaIntegralPrecision();
 
-    SU3NJL3DCutoffMeson mesonAux(parametersNJL, temperature, 
-                                 effChemPot, effChemPot, effChemPot, 
-                                 upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                                 mesonPropagatorPrecision, meson);
+    SU3NJL3DCutoffMeson mesonAux(
+        parametersNJL, 
+        temperature, 
+        effChemPot, 
+        effChemPot, 
+        effChemPot, 
+        upQuarkEffectiveMass, 
+        downQuarkEffectiveMass, 
+        strangeQuarkEffectiveMass, 
+        mesonPropagatorPrecision, 
+        meson
+    );
 
     mesonAux.calculateMesonMassAndWidth(precision, method, mesonMassGuess, mesonWidthGuess);
 
     return mesonAux;
 }
 
-
-void SU3NJL3DCutoffVacuum::logVacuumSolutionToFile(string filename)
+void SU3NJL3DCutoffVacuum::logVacuumSolutionToFile(std::string filename)
 {	
 	int dataPrecision = 15;
 	int colW = 25;
@@ -199,7 +194,6 @@ void SU3NJL3DCutoffVacuum::logVacuumSolutionToFile(string filename)
 	fileVacuumSolution.close();
 }
 
-
 void SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
     SU3NJL3DCutoffParameters& parameters,                                    
     double gapPrecision,                                    
@@ -220,4 +214,3 @@ void SU3NJL3DCutoffVacuum::evaluateVacuumMasses(
 
     vacuum.logVacuumSolutionToFile("SU3NJL3DCutoffVacuumMasses_" + parameters.getParameterSetName() + ".dat");
 }
-

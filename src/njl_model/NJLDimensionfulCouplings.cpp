@@ -3,7 +3,9 @@
 #include "njl_model/NJLDimensionfulCouplings.h"
 #include "njl_model/NJLDimensionlessCouplings.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::vector;
 
 
 string toString(LagrangianInteractions interaction) 
@@ -15,7 +17,7 @@ string toString(LagrangianInteractions interaction)
     } 
     else 
     {
-        cout << "Error: LagrangianInteractions not found in map! Returning UNKNOWN." << endl;
+        cout << "Error: LagrangianInteractions not found in map! Returning UNKNOWN." << std::endl;
         return "UNKNOWN";
     }
 }
@@ -24,7 +26,7 @@ string toString(LagrangianInteractions interaction)
 LagrangianInteractions stringToLagrangianInteractions(const string& interactionString) 
 {
 	// Iterate over the map with explicit type
-    for (map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
+    for (std::map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
     {
         if (it->second == interactionString) 
         {
@@ -41,7 +43,7 @@ bool isValidLagrangianInteractions(const string& interactionString)
 {
 	bool isLagrangianInteractionsValid = false;
     // Iterate over the map with explicit type
-    for (map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
+    for (std::map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
     {
         if (it->second == interactionString) 
         {

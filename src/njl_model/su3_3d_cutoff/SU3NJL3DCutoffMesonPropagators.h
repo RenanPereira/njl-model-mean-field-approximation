@@ -8,199 +8,551 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 
 
-gsl_complex pseudoscalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme , double , double , 
-                                                     double , double , double , double , double , 
-                                                     double , double , double , double );
+gsl_complex pseudoscalarPolarizationOperator3DCutoff(
+    NJL3DCutoffRegularizationScheme , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex pseudoscalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme , double , double , 
-                                                     double , double , double , double , double , 
-                                                     double , double , double );
+gsl_complex pseudoscalarPolarizationOperator3DCutoff(
+    NJL3DCutoffRegularizationScheme , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
+gsl_complex scalarPolarizationOperator3DCutoff(
+    NJL3DCutoffRegularizationScheme , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex scalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme , double , double , 
-                                               double , double , double , double , double , 
-                                               double , double , double , double );
+gsl_complex scalarPolarizationOperator3DCutoff(
+    NJL3DCutoffRegularizationScheme , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex scalarPolarizationOperator3DCutoff(NJL3DCutoffRegularizationScheme , double , double , 
-                                               double , double , double , double , double , 
-                                               double , double , double );
+gsl_complex pionPlusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
+gsl_complex pionPlusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex pionPlusPropagator(SU3NJL3DCutoffParameters , double , 
-                               double , double , double , 
-                               double , double , double , 
-                               double , double , double , double );
+gsl_complex pionMinusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex pionPlusPropagator(SU3NJL3DCutoffParameters , double , 
-                               double , double , double , 
-                               double , double , double , 
-                               double , double , double );
+gsl_complex pionMinusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex pionMinusPropagator(SU3NJL3DCutoffParameters , double , 
-                                double , double , double , 
-                                double , double , double , 
-                                double , double , double , double );
+gsl_complex kaonPlusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex pionMinusPropagator(SU3NJL3DCutoffParameters , double , 
-                                double , double , double , 
-                                double , double , double , 
-                                double , double , double );
+gsl_complex kaonPlusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex kaonPlusPropagator(SU3NJL3DCutoffParameters , double , 
-                               double , double , double , 
-                               double , double , double , 
-                               double , double , double , double );
+gsl_complex kaonMinusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex kaonPlusPropagator(SU3NJL3DCutoffParameters , double , 
-                               double , double , double , 
-                               double , double , double , 
-                               double , double , double );
+gsl_complex kaonMinusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex kaonMinusPropagator(SU3NJL3DCutoffParameters , double , 
-                                double , double , double , 
-                                double , double , double , 
-                                double , double , double , double );
+gsl_complex neutralKaonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex kaonMinusPropagator(SU3NJL3DCutoffParameters , double , 
-                                double , double , double , 
-                                double , double , double , 
-                                double , double , double );
+gsl_complex neutralKaonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex neutralKaonPropagator(SU3NJL3DCutoffParameters , double , 
-                                  double , double , double , 
-                                  double , double , double , 
-                                  double , double , double , double );
+gsl_complex antiNeutralKaonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex neutralKaonPropagator(SU3NJL3DCutoffParameters , double , 
-                                  double , double , double , 
-                                  double , double , double , 
-                                  double , double , double );
+gsl_complex antiNeutralKaonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex antiNeutralKaonPropagator(SU3NJL3DCutoffParameters , double , 
-                                      double , double , double , 
-                                      double , double , double , 
-                                      double , double , double , double );
+ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex antiNeutralKaonPropagator(SU3NJL3DCutoffParameters , double , 
-                                      double , double , double , 
-                                      double , double , double , 
-                                      double , double , double );
+ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(SU3NJL3DCutoffParameters , double , 
-                                                         double , double , double , 
-                                                         double , double , double , 
-                                                         double , double , double , double );
+gsl_complex sigmaPionPlusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-ComplexSquareMatrixGSL neutral038PseudoscalarsPropagator(SU3NJL3DCutoffParameters , double , 
-                                                         double , double , double , 
-                                                         double , double , double , 
-                                                         double , double , double );
+gsl_complex sigmaPionPlusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex sigmaPionPlusPropagator(SU3NJL3DCutoffParameters , double , 
-                                    double , double , double , 
-                                    double , double , double , 
-                                    double , double , double , double );
+gsl_complex sigmaPionMinusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex sigmaPionPlusPropagator(SU3NJL3DCutoffParameters , double , 
-                                    double , double , double , 
-                                    double , double , double , 
-                                    double , double , double );
+gsl_complex sigmaPionMinusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex sigmaPionMinusPropagator(SU3NJL3DCutoffParameters , double , 
-                                     double , double , double , 
-                                     double , double , double , 
-                                     double , double , double , double );
+gsl_complex sigmaKaonPlusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex sigmaPionMinusPropagator(SU3NJL3DCutoffParameters , double , 
-                                     double , double , double , 
-                                     double , double , double , 
-                                     double , double , double );
+gsl_complex sigmaKaonPlusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex sigmaKaonPlusPropagator(SU3NJL3DCutoffParameters , double , 
-                                    double , double , double , 
-                                    double , double , double , 
-                                    double , double , double , double );
+gsl_complex sigmaKaonMinusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex sigmaKaonPlusPropagator(SU3NJL3DCutoffParameters , double , 
-                                    double , double , double , 
-                                    double , double , double , 
-                                    double , double , double );
+gsl_complex sigmaKaonMinusPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex sigmaKaonMinusPropagator(SU3NJL3DCutoffParameters , double , 
-                                     double , double , double , 
-                                     double , double , double , 
-                                     double , double , double , double );
+gsl_complex neutralSigmaKaonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex sigmaKaonMinusPropagator(SU3NJL3DCutoffParameters , double , 
-                                     double , double , double , 
-                                     double , double , double , 
-                                     double , double , double );
+gsl_complex neutralSigmaKaonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex neutralSigmaKaonPropagator(SU3NJL3DCutoffParameters , double , 
-                                       double , double , double , 
-                                       double , double , double , 
-                                       double , double , double , double );
+gsl_complex antiNeutralSigmaKaonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex neutralSigmaKaonPropagator(SU3NJL3DCutoffParameters , double , 
-                                       double , double , double , 
-                                       double , double , double , 
-                                       double , double , double );
+gsl_complex antiNeutralSigmaKaonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex antiNeutralSigmaKaonPropagator(SU3NJL3DCutoffParameters , double , 
-                                           double , double , double , 
-                                           double , double , double , 
-                                           double , double , double , double );
+ComplexSquareMatrixGSL neutral038ScalarsPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex antiNeutralSigmaKaonPropagator(SU3NJL3DCutoffParameters , double , 
-                                           double , double , double , 
-                                           double , double , double , 
-                                           double , double , double );
+ComplexSquareMatrixGSL neutral038ScalarsPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-ComplexSquareMatrixGSL neutral038ScalarsPropagator(SU3NJL3DCutoffParameters , double , 
-                                                   double , double , double , 
-                                                   double , double , double , 
-                                                   double , double , double , double );
+enum mesonState 
+{ 
+    pionPlus, 
+    pionMinus, 
+    kaonPlus, 
+    kaonMinus, 
+    neutralKaon, 
+    antiNeutralKaon, 
+    diagonalPseudoscalars,
+    sigmaPionPlus, 
+    sigmaPionMinus, 
+    sigmaKaonPlus, 
+    sigmaKaonMinus, 
+    neutralSigmaKaon, 
+    antiNeutralSigmaKaon, 
+    diagonalScalars 
+};
 
-ComplexSquareMatrixGSL neutral038ScalarsPropagator(SU3NJL3DCutoffParameters , double , 
-                                                   double , double , double , 
-                                                   double , double , double , 
-                                                   double , double , double );
+gsl_complex nonDiagonalMesonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double ,
+    mesonState 
+);
 
+gsl_complex nonDiagonalMesonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double ,
+    mesonState 
+);
 
-enum mesonState { pionPlus, pionMinus, kaonPlus, kaonMinus, neutralKaon, antiNeutralKaon, diagonalPseudoscalars,
-                  sigmaPionPlus, sigmaPionMinus, sigmaKaonPlus, sigmaKaonMinus, neutralSigmaKaon, antiNeutralSigmaKaon, diagonalScalars };
+ComplexSquareMatrixGSL diagonalMesonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double ,
+    mesonState 
+);
 
-
-gsl_complex nonDiagonalMesonPropagator(SU3NJL3DCutoffParameters , double , 
-                                       double , double , double , 
-                                       double , double , double , 
-                                       double , double , double , double ,
-                                       mesonState );
-
-
-gsl_complex nonDiagonalMesonPropagator(SU3NJL3DCutoffParameters , double , 
-                                       double , double , double , 
-                                       double , double , double , 
-                                       double , double , double ,
-                                       mesonState );
-
-
-ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters , double , 
-                                               double , double , double , 
-                                               double , double , double , 
-                                               double , double , double , double ,
-                                               mesonState );
-
-
-ComplexSquareMatrixGSL diagonalMesonPropagator(SU3NJL3DCutoffParameters , double , 
-                                               double , double , double , 
-                                               double , double , double , 
-                                               double , double , double ,
-                                               mesonState );
-
+ComplexSquareMatrixGSL diagonalMesonPropagator(
+    SU3NJL3DCutoffParameters , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double ,
+    mesonState 
+);
 
 int SU3NJL3DCutoffMesonMassEquations(const gsl_vector *, void *, gsl_vector *);
-
 
 class SU3NJL3DCutoffMeson
 {
@@ -221,10 +573,18 @@ private:
 
 public:
     SU3NJL3DCutoffMeson(){};
-    SU3NJL3DCutoffMeson(SU3NJL3DCutoffParameters parametersNJLAux, double TAux, 
-                        double effChemPotUAux, double effChemPotDAux, double effChemPotSAux, 
-                        double effMassUAux, double effMassDAux, double effMassSAux, 
-                        double integralPrecisionAux, mesonState mesonAux)
+    SU3NJL3DCutoffMeson(
+        SU3NJL3DCutoffParameters parametersNJLAux, 
+        double TAux, 
+        double effChemPotUAux, 
+        double effChemPotDAux, 
+        double effChemPotSAux, 
+        double effMassUAux, 
+        double effMassDAux, 
+        double effMassSAux, 
+        double integralPrecisionAux, 
+        mesonState mesonAux
+    )
     {
         parametersNJL = parametersNJLAux;
         temperature = TAux;
@@ -267,12 +627,21 @@ public:
 
     gsl_complex calculateNonDiagonalPropagator(double zeroMomentum, double threeMomentum, double gamma)
     {   
-        gsl_complex propagator;
-        propagator = nonDiagonalMesonPropagator(parametersNJL, temperature, 
-                                                upQuarkEffectiveChemicalPotential, downQuarkEffectiveChemicalPotential, strangeQuarkEffectiveChemicalPotential, 
-                                                upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                                                zeroMomentum, threeMomentum, gamma, integralPrecision,
-                                                meson);
+        gsl_complex propagator = nonDiagonalMesonPropagator(
+            parametersNJL, 
+            temperature, 
+            upQuarkEffectiveChemicalPotential, 
+            downQuarkEffectiveChemicalPotential, 
+            strangeQuarkEffectiveChemicalPotential, 
+            upQuarkEffectiveMass, 
+            downQuarkEffectiveMass, 
+            strangeQuarkEffectiveMass, 
+            zeroMomentum, 
+            threeMomentum, 
+            gamma, 
+            integralPrecision,
+            meson
+        );
 
         return propagator;
     }
@@ -286,26 +655,39 @@ public:
 
     ComplexSquareMatrixGSL calculateDiagonalPropagator(double zeroMomentum, double threeMomentum, double gamma)
     {   
-        ComplexSquareMatrixGSL propagator = 
-        diagonalMesonPropagator(parametersNJL, temperature, 
-                                upQuarkEffectiveChemicalPotential, downQuarkEffectiveChemicalPotential, strangeQuarkEffectiveChemicalPotential, 
-                                upQuarkEffectiveMass, downQuarkEffectiveMass, strangeQuarkEffectiveMass, 
-                                zeroMomentum, threeMomentum, gamma, integralPrecision,
-                                meson);
+        ComplexSquareMatrixGSL propagator = diagonalMesonPropagator(
+            parametersNJL, 
+            temperature, 
+            upQuarkEffectiveChemicalPotential, 
+            downQuarkEffectiveChemicalPotential, 
+            strangeQuarkEffectiveChemicalPotential, 
+            upQuarkEffectiveMass, 
+            downQuarkEffectiveMass, 
+            strangeQuarkEffectiveMass, 
+            zeroMomentum, 
+            threeMomentum, 
+            gamma, 
+            integralPrecision,
+            meson
+        );
 
         return propagator;
     }
 
-    vector<gsl_complex> calculateInverseDiagonalPropagatorEigenvalues(double zeroMomentum, double threeMomentum, double gamma)
+    std::vector<gsl_complex> calculateInverseDiagonalPropagatorEigenvalues(
+        double zeroMomentum, double threeMomentum, double gamma
+    )
     {   
         ComplexSquareMatrixGSL propagator = calculateDiagonalPropagator(zeroMomentum, threeMomentum, gamma);
 
-        vector<gsl_complex> eigenvalues = calculateEigenvalues3By3ComplexMatrix( propagator.inverse() );
+        std::vector<gsl_complex> eigenvalues = calculateEigenvalues3By3ComplexMatrix( propagator.inverse() );
 
         return eigenvalues;
     }
 
-    void calculateMesonMassAndWidth(double precision, MultiRootFindingMethod method, double mesonMassGuess, double mesonWidthGuess)
+    void calculateMesonMassAndWidth(
+        double precision, MultiRootFindingMethod method, double mesonMassGuess, double mesonWidthGuess
+    )
     {   
         double x[2];
         x[0] = mesonMassGuess + 1E-6; 

@@ -1,8 +1,6 @@
 #include "integration_methods/Integration1DimNewtonCotes.h"
 #include <cmath>
 
-using namespace std;
-
 
 void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), NewtonCotesRule ruleAux)
 {
@@ -20,7 +18,7 @@ void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upper
     {
         if ( numberOfPartitions<2 )
         {
-            cout << "Integration1DimNewtonCotes: to use the trapezoidal rule, at least 2 partitions are necessary!\n";
+            std::cout << "Integration1DimNewtonCotes: to use the trapezoidal rule, at least 2 partitions are necessary!\n";
             abort();
         }
     }
@@ -29,7 +27,7 @@ void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upper
     {
         if ( numberOfPartitions<8 )
         {
-            cout << "Integration1DimNewtonCotes: to use the alternative Composite Simpson rule, at least 8 partitions are necessary!\n";
+            std::cout << "Integration1DimNewtonCotes: to use the alternative Composite Simpson rule, at least 8 partitions are necessary!\n";
             abort();
         }
     }

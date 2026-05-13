@@ -1,9 +1,8 @@
+#include <iostream>
 #include <fstream>
 #include "njl_model/n_fermion_line_integrals/n_fermion_line_integrals_calculator.h"
 #include "njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h"
 #include "utils/format_utils.h"
-
-using namespace std;
 
 
 void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(
@@ -22,27 +21,29 @@ void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(
 {
     if (Npoints < 2 || k0ToLambdaRatioMax <= k0ToLambdaRatioMin) 
     {
-        cout << "Error in evaluateB0VSK0ToFile: Npoints must be > 1 and k0ToLambdaRatioMax > k0ToLambdaRatioMin. Aborting.\n";
+        std::cout << "Error in evaluateB0VSK0ToFile: Npoints must be > 1 and k0ToLambdaRatioMax > k0ToLambdaRatioMin. Aborting.\n";
         abort();
     }
 
-    vector<double> ratioZeroMomentumTo3DCutoff(Npoints);
-    vector<double> RealB0(Npoints);
-    vector<double> ImagB0(Npoints);
+    std::vector<double> ratioZeroMomentumTo3DCutoff(Npoints);
+    std::vector<double> RealB0(Npoints);
+    std::vector<double> ImagB0(Npoints);
 	double delta = ( k0ToLambdaRatioMax - k0ToLambdaRatioMin )/( Npoints - 1 );
 	for (int i = 0; i < Npoints; ++i)
 	{
 		double k0 = ( k0ToLambdaRatioMin + i*delta )*threeMomentumCutoff;
-        gsl_complex complexB0 = klevanskyB0Integral3DCutoff(reguScheme, 
-                                                            temperature, 
-                                                            effectiveChemicalPotential1, 
-                                                            effectiveChemicalPotential2, 
-                                                            threeMomentumCutoff, 
-                                                            effectiveMass1, 
-                                                            effectiveMass2, 
-                                                            k0, 
-                                                            threeMomentum, 
-                                                            integralPrecision);
+        gsl_complex complexB0 = klevanskyB0Integral3DCutoff(
+            reguScheme, 
+            temperature, 
+            effectiveChemicalPotential1, 
+            effectiveChemicalPotential2, 
+            threeMomentumCutoff, 
+            effectiveMass1, 
+            effectiveMass2, 
+            k0, 
+            threeMomentum, 
+            integralPrecision
+        );
 
         ratioZeroMomentumTo3DCutoff[i] = k0/threeMomentumCutoff;
         RealB0[i] = GSL_REAL(complexB0);
@@ -51,7 +52,7 @@ void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(
 
 
     //Create file
-    string filename = string("B0_vs_k0_") 
+    std::string filename = std::string("B0_vs_k0_") 
         + "T"   
         + trim0ToDot0(temperature) 
         + "Cpi" 
@@ -68,13 +69,13 @@ void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(
         + trim0ToDot0(threeMomentum);
     replaceChar(filename, '.', 'p');
     filename = filename + ".dat";
-    ofstream fileB0;
-    fileB0.open(filename, ofstream::out | ios::trunc);
+    std::ofstream fileB0;
+    fileB0.open(filename, std::ofstream::out | std::ios::trunc);
 
     // Check if file is open successfully
     if (!fileB0.is_open()) 
     {
-        cout << "Error: Unable to open file " << filename << endl;
+        std::cout << "Error: Unable to open file " << filename << std::endl;
         return;
     }
 
@@ -82,14 +83,14 @@ void evaluateKlevanskyB0Integral3DCutoffVsZeroMomentumToFile(
     fileB0.width(25);   fileB0 << "k0To3DCutoffRatio"; 
     fileB0.width(25);   fileB0 << "RealB0"; 
     fileB0.width(25);   fileB0 << "ImagB0"; 
-    fileB0 << endl;
+    fileB0 << std::endl;
     
     for (int i = 0; i < Npoints; ++i)
     {
         fileB0.width(25);   fileB0 << ratioZeroMomentumTo3DCutoff[i]; 
         fileB0.width(25);   fileB0 << RealB0[i];
         fileB0.width(25);   fileB0 << ImagB0[i]; 
-        fileB0 << endl;
+        fileB0 << std::endl;
     }
 
     // Close the file explicitly
@@ -112,27 +113,29 @@ void evaluateKlevanskyB0Integral3DCutoffVsThreeMomentumToFile(
 {
     if (Npoints < 2 || kToLambdaRatioMax <= kToLambdaRatioMin) 
     {
-        cout << "Error in evaluateKlevanskyB0IntegralVsThreeMomentumToFile: Npoints must be > 1 and kToLambdaRatioMax > k0ToLambdaRatioMin. Aborting.\n";
+        std::cout << "Error in evaluateKlevanskyB0IntegralVsThreeMomentumToFile: Npoints must be > 1 and kToLambdaRatioMax > k0ToLambdaRatioMin. Aborting.\n";
         abort();
     }
 
-    vector<double> kToLambda(Npoints);
-    vector<double> RealB0(Npoints);
-    vector<double> ImagB0(Npoints);
+    std::vector<double> kToLambda(Npoints);
+    std::vector<double> RealB0(Npoints);
+    std::vector<double> ImagB0(Npoints);
 	double delta = ( kToLambdaRatioMax - kToLambdaRatioMin )/( Npoints - 1 );
 	for (int i = 0; i < Npoints; ++i)
 	{
 		double k = ( kToLambdaRatioMin + i*delta )*threeMomentumCutoff;
-        gsl_complex complexB0 = klevanskyB0Integral3DCutoff(reguScheme, 
-                                                            temperature, 
-                                                            effectiveChemicalPotential1, 
-                                                            effectiveChemicalPotential2, 
-                                                            threeMomentumCutoff, 
-                                                            effectiveMass1, 
-                                                            effectiveMass2, 
-                                                            k0, 
-                                                            k, 
-                                                            integralPrecision);
+        gsl_complex complexB0 = klevanskyB0Integral3DCutoff(
+            reguScheme, 
+            temperature, 
+            effectiveChemicalPotential1, 
+            effectiveChemicalPotential2, 
+            threeMomentumCutoff, 
+            effectiveMass1, 
+            effectiveMass2, 
+            k0, 
+            k, 
+            integralPrecision
+        );
 
         kToLambda[i] = k/threeMomentumCutoff;
         RealB0[i] = GSL_REAL(complexB0);
@@ -140,7 +143,7 @@ void evaluateKlevanskyB0Integral3DCutoffVsThreeMomentumToFile(
 	}
 
     //Create file
-    string filename = string("B0_vs_k_") 
+    std::string filename = std::string("B0_vs_k_") 
         + "T"   
         + trim0ToDot0(temperature) 
         + "Cpi" 
@@ -157,13 +160,13 @@ void evaluateKlevanskyB0Integral3DCutoffVsThreeMomentumToFile(
         + trim0ToDot0(k0);
     replaceChar(filename, '.', 'p');
     filename = filename + ".dat";
-    ofstream fileB0;
-    fileB0.open(filename, ofstream::out | ios::trunc);
+    std::ofstream fileB0;
+    fileB0.open(filename, std::ofstream::out | std::ios::trunc);
 
     // Check if file is open successfully
     if (!fileB0.is_open()) 
     {
-        cout << "Error: Unable to open file " << filename << endl;
+        std::cout << "Error: Unable to open file " << filename << std::endl;
         return;
     }
 
@@ -171,14 +174,14 @@ void evaluateKlevanskyB0Integral3DCutoffVsThreeMomentumToFile(
     fileB0.width(25);   fileB0 << "kTo3DCutoffRatio"; 
     fileB0.width(25);   fileB0 << "RealB0"; 
     fileB0.width(25);   fileB0 << "ImagB0"; 
-    fileB0 << endl;
+    fileB0 << std::endl;
     
     for (int i = 0; i < Npoints; ++i)
     {
         fileB0.width(25);   fileB0 << kToLambda[i]; 
         fileB0.width(25);   fileB0 << RealB0[i];
         fileB0.width(25);   fileB0 << ImagB0[i]; 
-        fileB0 << endl;
+        fileB0 << std::endl;
     }
 
     // Close the file explicitly

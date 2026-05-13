@@ -5,7 +5,6 @@
 #include "physics_utils/distribution_functions.h"
 #include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
 
-using namespace std;
 
 /*
 Coupling constants at the Lagrangian Level

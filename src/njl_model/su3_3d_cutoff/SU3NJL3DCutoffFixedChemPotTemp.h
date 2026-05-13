@@ -165,7 +165,7 @@ public:
 		MultiRootFindingMethod 
 	);
 
-	static vector<SU3NJL3DCutoffFixedChemPotTemp> solveToChemicalPotentialSymmetric(
+	static std::vector<SU3NJL3DCutoffFixedChemPotTemp> solveToChemicalPotentialSymmetric(
 		SU3NJL3DCutoffFixedChemPotTemp , 
 		double , 
 		int , 
@@ -222,7 +222,7 @@ public:
 		int ,
 		double ,
 		MultiRootFindingMethod ,
-		string& 
+		std::string& 
 	);
 	
 private:

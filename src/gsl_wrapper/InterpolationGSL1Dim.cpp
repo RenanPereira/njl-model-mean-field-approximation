@@ -1,6 +1,7 @@
 #include "gsl_wrapper/InterpolationGSL1Dim.h"
 
-using namespace std;
+using std::cout;
+using std::vector;
 
 void InterpolationGSL1Dim::setSpline()
 {   

@@ -2,7 +2,10 @@
 #include "njl_model/njl_regularization_schemes.h"
 #include "njl_model/n_fermion_line_integrals/n_fermion_line_integrals_calculator.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::endl;
+using std::vector;
 
 
 bool KlevanskyB0Integral3DCutoffFileParser::validateFile() const 
@@ -198,13 +201,13 @@ bool KlevanskyB0Integral3DCutoffFileParser::validateSectionVsKParameters(string 
 
 void KlevanskyB0Integral3DCutoffFileParser::evaluate() const
 {   
-    vector<map<string, string>> vsK0ParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::vsK0section);
+    vector<std::map<string, string>> vsK0ParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::vsK0section);
     for (int i = 0; i < int(vsK0ParametersData.size()); ++i) 
 	{
         cout << "\n" << KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::vsK0section << ":" << endl;
         cout << endl;
 
-		const map<string, string>& section = vsK0ParametersData[i];
+		const std::map<string, string>& section = vsK0ParametersData[i];
 
         int numberOfPoints = config.getInt(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::numberOfPoints);
         double k0LambdaRatioMin = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsK0Parameters::k0LambdaRatioMin);
@@ -249,13 +252,13 @@ void KlevanskyB0Integral3DCutoffFileParser::evaluate() const
             integralPrecision);
     }
 
-    vector<map<string, string>> vsKParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::vsKsection);
+    vector<std::map<string, string>> vsKParametersData = config.getSectionsData(KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::vsKsection);
     for (int i = 0; i < int(vsKParametersData.size()); ++i) 
 	{
         cout << "\n" << KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::vsKsection << ":" << endl;
         cout << endl;
 
-		const map<string, string>& section = vsKParametersData[i];
+		const std::map<string, string>& section = vsKParametersData[i];
 
         int numberOfPoints = config.getInt(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::numberOfPoints);
         double absKLambdaRatioMin = config.getDouble(section, KlevanskyB0Integral3DCutoffFileParserKeys::VsKParameters::absKLambdaRatioMin);

@@ -1,7 +1,8 @@
 #include <omp.h>
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFixedChemPotTemp.h"
 
-using namespace std;
+using std::string;
+
 
 int main()
 {

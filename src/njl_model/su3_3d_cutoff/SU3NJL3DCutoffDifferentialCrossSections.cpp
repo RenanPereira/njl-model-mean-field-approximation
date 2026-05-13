@@ -5,21 +5,20 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffDifferentialCrossSections.h"
 
 
+// In this file we have functions to calculate quark-quark and quark-antiquark differential cross sections
+// quark-quark: 
+// UD->UD, DU->DU, US->US, SU->SU, DS->DS, SD->SD, UU->UU, DD->DD, SS->SS
+// quark-antiquark: 
+// UDBar->UDBar, USBar->USBar, DSBar->DSBar,
+// DUBar->DUBar, SUBar->SUBar, SDBar->SDBar,
+// UUBar->UUBar, UUBar->DDBar, UUBar->SSBar,
+// DDBar->UUBar, DDBar->DDBar, DDBar->SSBar,
+// SSBar->UUBar, SSBar->DDBar, SSBar->SSBar
+// antiquark-antiquark: 
+// UBarUBar->UBarUBar, UBarDBar->UBarDBar, UBarSBar->UBarSBar, SBarSBar->SBarSBar
 
-//In this file we have functions to calculate quark-quark and quark-antiquark differential cross sections
-//quark-quark: 
-//UD->UD, DU->DU, US->US, SU->SU, DS->DS, SD->SD, UU->UU, DD->DD, SS->SS
-//quark-antiquark: 
-//UDBar->UDBar, USBar->USBar, DSBar->DSBar,
-//DUBar->DUBar, SUBar->SUBar, SDBar->SDBar,
-//UUBar->UUBar, UUBar->DDBar, UUBar->SSBar,
-//DDBar->UUBar, DDBar->DDBar, DDBar->SSBar,
-//SSBar->UUBar, SSBar->DDBar, SSBar->SSBar
-//antiquark-antiquark: 
-//UBarUBar->UBarUBar, UBarDBar->UBarDBar, UBarSBar->UBarSBar, SBarSBar->SBarSBar
 
-
-string toString(scatteringProcess process)
+std::string toString(scatteringProcess process)
 { 
     if      ( process==UDUD ){ return "UDUD"; }
     else if ( process==DUDU ){ return "DUDU"; }
@@ -54,9 +53,17 @@ string toString(scatteringProcess process)
     return "0";
 }
 
-
 //function that given the process selects the incoming and outgoing masses
-void inOutMassesGivenScatteringProcess(double effMU, double effMD, double effMS, scatteringProcess process, double& m1, double& m2, double& m3, double& m4)
+void inOutMassesGivenScatteringProcess(
+    double effMU, 
+    double effMD, 
+    double effMS, 
+    scatteringProcess process, 
+    double& m1, 
+    double& m2, 
+    double& m3, 
+    double& m4
+)
 {   
     if      ( process==UDUD ){ m1 = effMU; m2 = effMD; m3 = effMU; m4 = effMD; }
     else if ( process==DUDU ){ m1 = effMD; m2 = effMU; m3 = effMD; m4 = effMU; }
@@ -88,7 +95,6 @@ void inOutMassesGivenScatteringProcess(double effMU, double effMD, double effMS,
     else if ( process==UBarDBarUBarDBar ){ m1 = effMU; m2 = effMD; m3 = effMU; m4 = effMD; }
     else if ( process==UBarSBarUBarSBar ){ m1 = effMU; m2 = effMS; m3 = effMU; m4 = effMS; }
 }
-
 
 //function that given the process selects the incoming chemical potentials
 void inChemicalPotentialsGivenScatteringProcess(double effCPU, double effCPD, double effCPS, scatteringProcess process, double& cP1, double& cP2)
@@ -124,8 +130,14 @@ void inChemicalPotentialsGivenScatteringProcess(double effCPU, double effCPD, do
     else if ( process==UBarSBarUBarSBar ){ cP1 = -effCPU; cP2 = -effCPS; }
 }
 
-
-void outChemicalPotentialsGivenScatteringProcess(double effCPU, double effCPD, double effCPS, scatteringProcess process, double& cP3, double& cP4)
+void outChemicalPotentialsGivenScatteringProcess(
+    double effCPU, 
+    double effCPD, 
+    double effCPS, 
+    scatteringProcess process, 
+    double& cP3, 
+    double& cP4
+)
 {   
     if      ( process==UDUD ){ cP3 = effCPU; cP4 = effCPD; }
     else if ( process==DUDU ){ cP3 = effCPD; cP4 = effCPU; }
@@ -158,7 +170,6 @@ void outChemicalPotentialsGivenScatteringProcess(double effCPU, double effCPD, d
     else if ( process==UBarSBarUBarSBar ){ cP3 = -effCPU; cP4 = -effCPS; }
 }
 
-
 double xij(double x, double eta, double mi, double mj)
 {
     double xijAux = x - pow(mi + eta*mj,2);
@@ -166,10 +177,8 @@ double xij(double x, double eta, double mi, double mj)
     return xijAux;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //s channel
-
 
 double sChannelZeroMomentum(double s)
 {
@@ -178,7 +187,6 @@ double sChannelZeroMomentum(double s)
     return k0;
 }
 
-
 double sChannelThreeMomentum()
 {   
     double k = 0.0;
@@ -186,10 +194,8 @@ double sChannelThreeMomentum()
     return k;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //t channel
-
 
 double tChannelZeroMomentum(double s, double m1, double m2, double m3, double m4)
 {
@@ -198,7 +204,6 @@ double tChannelZeroMomentum(double s, double m1, double m2, double m3, double m4
     return k0;
 }
 
-
 double tChannelThreeMomentum(double s, double t, double m1, double m2, double m3, double m4)
 {   
     double k = sqrt( fabs(pow(pow(m1,2) - pow(m2,2) - pow(m3,2) + pow(m4,2), 2)/( 4.0*s ) - t) );
@@ -206,10 +211,8 @@ double tChannelThreeMomentum(double s, double t, double m1, double m2, double m3
     return k;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //u channel
-
 
 double uChannel(double s, double t, double m1, double m2, double m3, double m4)
 {
@@ -218,14 +221,12 @@ double uChannel(double s, double t, double m1, double m2, double m3, double m4)
     return uChannelAux;
 }
 
-
 double uChannelZeroMomentum(double s, double m1, double m2, double m3, double m4)
 {
     double k0 = ( pow(m1,2) - pow(m2,2) + pow(m3,2) - pow(m4,2) )/( 2.0*sqrt(s) );
 
     return k0;
 }
-
 
 double uChannelThreeMomentum(double s, double t, double m1, double m2, double m3, double m4)
 {   
@@ -234,10 +235,8 @@ double uChannelThreeMomentum(double s, double t, double m1, double m2, double m3
     return k;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //scattering angle
-
 
 //known as triangle function lambda(x,y,z)=x^2+y^2+z^2-2xy-2xz-2yz
 double lambdaTriangle(double x, double y, double z)
@@ -246,7 +245,6 @@ double lambdaTriangle(double x, double y, double z)
 
     return lambda;
 }
-
 
 double cosScatteringAngle(double s, double t, double m1, double m2, double m3, double m4)
 {   
@@ -261,7 +259,6 @@ double cosScatteringAngle(double s, double t, double m1, double m2, double m3, d
     return cosTheta;
 }
 
-
 double sinScatteringAngle(double s, double t, double m1, double m2, double m3, double m4)
 {       
     double cosTheta = cosScatteringAngle(s, t, m1, m2, m3, m4);
@@ -269,7 +266,7 @@ double sinScatteringAngle(double s, double t, double m1, double m2, double m3, d
 
     if ( sqrtArg<0 && fabs(sqrtArg)>1E-15 )
     { 
-        cout << "Argument of the square root in sinScatteringAngle is negative and its modulus is bigger then 1E-15!\n"; 
+        std::cout << "Argument of the square root in sinScatteringAngle is negative and its modulus is bigger then 1E-15!\n"; 
     }
 
     double sinTheta = sqrt( fabs( sqrtArg ) );
@@ -277,10 +274,21 @@ double sinScatteringAngle(double s, double t, double m1, double m2, double m3, d
     return sinTheta;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //Calculate the sum of matrix elements involved in the quark-quark scatteing: 1/(4Nc^2) SUM |Mu - Mt|^2
-double dsigmadtNJLQuarkQuarkScattering(double Nc, double s, double t, double m1, double m2, double m3, double m4, gsl_complex DPu, gsl_complex DSu, gsl_complex DPt, gsl_complex DSt)
+double dsigmadtNJLQuarkQuarkScattering(
+    double Nc, 
+    double s, 
+    double t, 
+    double m1, 
+    double m2, 
+    double m3, 
+    double m4, 
+    gsl_complex DPu, 
+    gsl_complex DSu, 
+    gsl_complex DPt, 
+    gsl_complex DSt
+)
 {
     //calculate u channel from s and t channels
     double u = uChannel(s, t, m1, m2, m3, m4);
@@ -361,10 +369,21 @@ double dsigmadtNJLQuarkQuarkScattering(double Nc, double s, double t, double m1,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //Calculate the sum of matrix elements involved in the quark-antiquark scatteing: 1/(4Nc^2) SUM |Ms - Mt|^2
-double dsigmadtNJLQuarkAntiquarkScattering(double Nc, double s, double t, double m1, double m2, double m3, double m4, gsl_complex DPs, gsl_complex DSs, gsl_complex DPt, gsl_complex DSt)
+double dsigmadtNJLQuarkAntiquarkScattering(
+    double Nc, 
+    double s, 
+    double t, 
+    double m1, 
+    double m2, 
+    double m3, 
+    double m4, 
+    gsl_complex DPs, 
+    gsl_complex DSs, 
+    gsl_complex DPt, 
+    gsl_complex DSt
+)
 {
     //calculate u channel from s and t channels
     double u = uChannel(s, t, m1, m2, m3, m4);
@@ -445,14 +464,21 @@ double dsigmadtNJLQuarkAntiquarkScattering(double Nc, double s, double t, double
     return dsigmadt;
 }
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //UD->UD differential cross section
-double dsigmadtUDUD(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtUDUD(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassU;
@@ -466,18 +492,15 @@ double dsigmadtUDUD(SU3NJL3DCutoffParameters parametersNJL, double T,
     double tK0 = tChannelZeroMomentum(s, m1, m2, m3, m4);
     double tKVec = tChannelThreeMomentum(s, t, m1, m2, m3, m4);
 
-
     // DPu = 2*pionPlusPropagator
     gsl_complex DPu;
     DPu = pionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DPu = gsl_complex_mul_real(DPu, 2);
 
-
     // DSu = 2 Dsigmapionplus
     gsl_complex DSu;
     DSu = sigmaPionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DSu = gsl_complex_mul_real(DSu, 2);
-
 
     // DPt = (2./3.)*DnP00 + (2sqrt(2)/3)*DnP08 - DnP33 + (1./3.)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -494,7 +517,6 @@ double dsigmadtUDUD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt08, +2.0*sqrt(2.0)/3.0));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt33, -1.0));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +1.0/3.0));
-    
 
     // DSt = (2./3.)*DnS00 + (2sqrt(2)/3)*DnS08 - DnS33 + (1./3.)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
@@ -512,7 +534,6 @@ double dsigmadtUDUD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt33, -1.0));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, 1.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -520,13 +541,21 @@ double dsigmadtUDUD(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //DU->DU differential cross section
-double dsigmadtDUDU(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtDUDU(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassD;
@@ -545,12 +574,10 @@ double dsigmadtDUDU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPu = pionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DPu = gsl_complex_mul_real(DPu, 2);
 
-
     // DSu = 2*sigmaPionMinusPropagator
     gsl_complex DSu;
     DSu = sigmaPionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DSu = gsl_complex_mul_real(DSu, 2);
-
 
     // DPt = (2./3.)*DnP00 + (2sqrt(2)/3)*DnP08 - DnP33 + (1./3.)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -568,7 +595,6 @@ double dsigmadtDUDU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt33, -1.0));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +1.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 + (2sqrt(2)/3)*DnS08 - DnS33 + (1./3.)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -585,7 +611,6 @@ double dsigmadtDUDU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt33, -1.0));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, 1.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -593,13 +618,21 @@ double dsigmadtDUDU(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //US->US differential cross section
-double dsigmadtUSUS(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtUSUS(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassU;
@@ -618,12 +651,10 @@ double dsigmadtUSUS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPu = kaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DPu = gsl_complex_mul_real(DPu, 2);
 
-
     // DSu = 2*sigmaKaonPlusPropagator
     gsl_complex DSu;
     DSu = sigmaKaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DSu = gsl_complex_mul_real(DSu, 2);
-
 
     // DPt = (2./3.)*DnP00 + sqrt(2/3)*DnP03 - (sqrt(2)/3)*DnP08 - (2/sqrt(3))*DnP38 - (2/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -642,7 +673,6 @@ double dsigmadtUSUS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, -2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, -2.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 + sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 - (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -660,7 +690,6 @@ double dsigmadtUSUS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, -2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, -2.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -668,13 +697,21 @@ double dsigmadtUSUS(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //SU->SU differential cross section
-double dsigmadtSUSU(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtSUSU(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassS;
@@ -693,12 +730,10 @@ double dsigmadtSUSU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPu = kaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DPu = gsl_complex_mul_real(DPu, 2);
 
-
     // DSu = 2*sigmaKaonMinusPropagator
     gsl_complex DSu;
     DSu = sigmaKaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DSu = gsl_complex_mul_real(DSu, 2);
-
 
     // DPt = (2./3.)*DnP00 + sqrt(2/3)*DnP03 - (sqrt(2)/3)*DnP08 - (2/sqrt(3))*DnP38 - (2/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -717,7 +752,6 @@ double dsigmadtSUSU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, -2./sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, -2.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 + sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 - (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -735,7 +769,6 @@ double dsigmadtSUSU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, -2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, -2.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -743,13 +776,21 @@ double dsigmadtSUSU(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //DS->DS differential cross section
-double dsigmadtDSDS(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtDSDS(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassD;
@@ -768,12 +809,10 @@ double dsigmadtDSDS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPu = neutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DPu = gsl_complex_mul_real(DPu, 2);
 
-
     // DSu = 2*neutralSigmaKaonPropagator
     gsl_complex DSu;
     DSu = neutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DSu = gsl_complex_mul_real(DSu, 2);
-
 
     // DPt = (2./3.)*DnP00 - sqrt(2/3)*DnP03 - (sqrt(2)/3)*DnP08 + (2/sqrt(3))*DnP38 - (2/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -792,7 +831,6 @@ double dsigmadtDSDS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, +2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, -2.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 - sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 + (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -810,7 +848,6 @@ double dsigmadtDSDS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, +2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, -2.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -818,13 +855,21 @@ double dsigmadtDSDS(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //SD->SD differential cross section
-double dsigmadtSDSD(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtSDSD(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassS;
@@ -843,12 +888,10 @@ double dsigmadtSDSD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPu = antiNeutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DPu = gsl_complex_mul_real(DPu, 2);
 
-
     // DSu = 2*antiNeutralSigmaKaonPropagator
     gsl_complex DSu;
     DSu = antiNeutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
     DSu = gsl_complex_mul_real(DSu, 2);
-
 
     // DPt = (2./3.)*DnP00 - sqrt(2/3)*DnP03 - (sqrt(2)/3)*DnP08 + (2/sqrt(3))*DnP38 - (2/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -867,7 +910,6 @@ double dsigmadtSDSD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, +2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, -2.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 - sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 + (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -885,7 +927,6 @@ double dsigmadtSDSD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, +2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, -2.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -893,13 +934,21 @@ double dsigmadtSDSD(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //UU->UU differential cross section
-double dsigmadtUUUU(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtUUUU(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassU;
@@ -931,7 +980,6 @@ double dsigmadtUUUU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPu = gsl_complex_add(DPu, gsl_complex_mul_real(DnPu38, +2.0/sqrt(3.0)));
     DPu = gsl_complex_add(DPu, gsl_complex_mul_real(DnPu88, +1.0/3.0));
 
-
     // DSu = (2./3.)*DnS00 + 2*sqrt(2/3)*DnS03 + (2*sqrt(2)/3)*DnS08 + DnS33 + (2/sqrt(3))*DnS38 + (1/3)*DnS88 ,  where DnS is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSu = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
@@ -949,7 +997,6 @@ double dsigmadtUUUU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSu = gsl_complex_add(DSu, gsl_complex_mul_real(DnSu33, +1.0));
     DSu = gsl_complex_add(DSu, gsl_complex_mul_real(DnSu38, +2.0/sqrt(3.0)));
     DSu = gsl_complex_add(DSu, gsl_complex_mul_real(DnSu88, +1.0/3.0));
-
 
     // DPt = (2./3.)*DnP00 + 2*sqrt(2/3)*DnP03 + (2*sqrt(2)/3)*DnP08 + DnP33 + (2/sqrt(3))*DnP38 + (1/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -969,7 +1016,6 @@ double dsigmadtUUUU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, +2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +1.0/3.0));
 
-    
     // DSt = (2./3.)*DnS00 + 2*sqrt(2/3)*DnS03 + (2*sqrt(2)/3)*DnS08 + DnS33 + (2/sqrt(3))*DnS38 + (1/3)*DnS88 ,  where DnP is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -988,7 +1034,6 @@ double dsigmadtUUUU(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, +2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, +1.0/3.0));
 
-
     ////calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -996,13 +1041,21 @@ double dsigmadtUUUU(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //DD->DD differential cross section
-double dsigmadtDDDD(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtDDDD(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassD;
@@ -1034,7 +1087,6 @@ double dsigmadtDDDD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPu = gsl_complex_add(DPu, gsl_complex_mul_real(DnPu38, -2.0/sqrt(3.0)));
     DPu = gsl_complex_add(DPu, gsl_complex_mul_real(DnPu88, +1.0/3.0));
 
-
     // DSu = (2./3.)*DnS00 - 2*sqrt(2/3)*DnS03 + (2*sqrt(2)/3)*DnS08 + DnS33 - (2/sqrt(3))*DnS38 + (1/3)*DnS88 ,  where DnS is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSu = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
@@ -1052,7 +1104,6 @@ double dsigmadtDDDD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSu = gsl_complex_add(DSu, gsl_complex_mul_real(DnSu33, +1.0));
     DSu = gsl_complex_add(DSu, gsl_complex_mul_real(DnSu38, -2.0/sqrt(3.0)));
     DSu = gsl_complex_add(DSu, gsl_complex_mul_real(DnSu88, +1.0/3.0));
-
 
     // DPt = (2./3.)*DnP00 - 2*sqrt(2/3)*DnP03 + (2*sqrt(2)/3)*DnP08 + DnP33 - (2/sqrt(3))*DnP38 + (1/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1072,7 +1123,6 @@ double dsigmadtDDDD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, -2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +1.0/3.0));
 
-    
     // DSt = (2./3.)*DnS00 - 2*sqrt(2/3)*DnS03 + (2*sqrt(2)/3)*DnS08 + DnS33 - (2/sqrt(3))*DnS38 + (1/3)*DnS88 ,  where DnP is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -1091,7 +1141,6 @@ double dsigmadtDDDD(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, -2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, +1.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -1099,13 +1148,21 @@ double dsigmadtDDDD(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //SS->SS differential cross section
-double dsigmadtSSSS(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtSSSS(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassS;
@@ -1134,7 +1191,6 @@ double dsigmadtSSSS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPu = gsl_complex_add(DPu, gsl_complex_mul_real(DnPu08, -4.0*sqrt(2.0)/3.0));
     DPu = gsl_complex_add(DPu, gsl_complex_mul_real(DnPu88, +4.0/3.0));
 
-
     // DSu = (2./3.)*DnS00 - (4*sqrt(2)/3)*DnS08 + (4/3)*DnS88 ,  where DnS is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSu = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, uK0, uKVec, integralPrecision);
@@ -1149,7 +1205,6 @@ double dsigmadtSSSS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSu = gsl_complex_mul_real(DnSu00, +2.0/3.0);
     DSu = gsl_complex_add(DSu, gsl_complex_mul_real(DnSu08, -4.0*sqrt(2.0)/3.0));
     DSu = gsl_complex_add(DSu, gsl_complex_mul_real(DnSu88, +4.0/3.0));
-
 
     // DPt = (2./3.)*DnP00 - (4*sqrt(2)/3)*DnP08 + (4/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1166,7 +1221,6 @@ double dsigmadtSSSS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt08, -4.0*sqrt(2.0)/3.0));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +4.0/3.0));
 
-    
     // DSt = (2./3.)*DnS00 - (4*sqrt(2)/3)*DnS08 + (4/3)*DnS88 ,  where DnP is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -1182,7 +1236,6 @@ double dsigmadtSSSS(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt08, -4.0*sqrt(2.0)/3.0));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, +4.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkQuarkScattering(Nc, s, t, m1, m2, m3, m4, DPu, DSu, DPt, DSt);
@@ -1190,13 +1243,21 @@ double dsigmadtSSSS(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //UDBar->UDBar differential cross section
-double dsigmadtUDBarUDBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtUDBarUDBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassU;
@@ -1215,12 +1276,10 @@ double dsigmadtUDBarUDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = pionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DPs = gsl_complex_mul_real(DPs, 2);
 
-
     // DSs = 2*sigmaPionPlusPropagator
     gsl_complex DSs;
     DSs = sigmaPionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DSs = gsl_complex_mul_real(DSs, 2);
-
 
     // DPt = (2./3.)*DnP00 + (2sqrt(2)/3)*DnP08 - DnP33 + (1./3.)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1238,7 +1297,6 @@ double dsigmadtUDBarUDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt33, -1.0));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +1.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 + (2sqrt(2)/3)*DnS08 - DnS33 + (1./3.)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -1255,7 +1313,6 @@ double dsigmadtUDBarUDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt33, -1.0));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, 1.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkAntiquarkScattering(Nc, s, t, m1, m2, m3, m4, DPs, DSs, DPt, DSt);
@@ -1263,13 +1320,21 @@ double dsigmadtUDBarUDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //DUBar->DUBar differential cross section
-double dsigmadtDUBarDUBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtDUBarDUBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassD;
@@ -1288,12 +1353,10 @@ double dsigmadtDUBarDUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = pionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DPs = gsl_complex_mul_real(DPs, 2);
 
-
     // DSs = 2*sigmaPionMinusPropagator
     gsl_complex DSs;
     DSs = sigmaPionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DSs = gsl_complex_mul_real(DSs, 2);
-
 
     // DPt = (2./3.)*DnP00 + (2sqrt(2)/3)*DnP08 - DnP33 + (1./3.)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1311,7 +1374,6 @@ double dsigmadtDUBarDUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt33, -1.0));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +1.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 + (2sqrt(2)/3)*DnS08 - DnS33 + (1./3.)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -1328,7 +1390,6 @@ double dsigmadtDUBarDUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt33, -1.0));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, 1.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkAntiquarkScattering(Nc, s, t, m1, m2, m3, m4, DPs, DSs, DPt, DSt);
@@ -1336,13 +1397,21 @@ double dsigmadtDUBarDUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //USBar->USBar differential cross section
-double dsigmadtUSBarUSBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtUSBarUSBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassU;
@@ -1361,12 +1430,10 @@ double dsigmadtUSBarUSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = kaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DPs = gsl_complex_mul_real(DPs, 2);
 
-
     // DSs = 2*sigmaKaonPlusPropagator
     gsl_complex DSs;
     DSs = sigmaKaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DSs = gsl_complex_mul_real(DSs, 2);
-
 
     // DPt = (2./3.)*DnP00 + sqrt(2/3)*DnP03 - (sqrt(2)/3)*DnP08 - (2/sqrt(3))*DnP38 - (2/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1385,7 +1452,6 @@ double dsigmadtUSBarUSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, -2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, -2.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 + sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 - (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -1403,7 +1469,6 @@ double dsigmadtUSBarUSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, -2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, -2.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkAntiquarkScattering(Nc, s, t, m1, m2, m3, m4, DPs, DSs, DPt, DSt);
@@ -1411,13 +1476,21 @@ double dsigmadtUSBarUSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //SUBar->SUBar differential cross section
-double dsigmadtSUBarSUBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtSUBarSUBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassS;
@@ -1436,12 +1509,10 @@ double dsigmadtSUBarSUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = kaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DPs = gsl_complex_mul_real(DPs, 2);
 
-
     // DSs = 2*sigmaKaonMinusPropagator
     gsl_complex DSs;
     DSs = sigmaKaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DSs = gsl_complex_mul_real(DSs, 2);
-
 
     // DPt = (2./3.)*DnP00 + sqrt(2/3)*DnP03 - (sqrt(2)/3)*DnP08 - (2/sqrt(3))*DnP38 - (2/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1460,7 +1531,6 @@ double dsigmadtSUBarSUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, -2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, -2.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 + sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 - (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -1478,7 +1548,6 @@ double dsigmadtSUBarSUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, -2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, -2.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkAntiquarkScattering(Nc, s, t, m1, m2, m3, m4, DPs, DSs, DPt, DSt);
@@ -1486,13 +1555,21 @@ double dsigmadtSUBarSUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //DSBar->DSBar differential cross section
-double dsigmadtDSBarDSBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                    double effChemPotU, double effChemPotD, double effChemPotS, 
-                    double effMassU, double effMassD, double effMassS, 
-                    double s, double t, double integralPrecision)
+double dsigmadtDSBarDSBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassD;
@@ -1511,12 +1588,10 @@ double dsigmadtDSBarDSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = neutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DPs = gsl_complex_mul_real(DPs, 2);
 
-
     // DSs = 2*neutralSigmaKaonPropagator
     gsl_complex DSs;
     DSs = neutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DSs = gsl_complex_mul_real(DSs, 2);
-
 
     // DPt = (2./3.)*DnP00 - sqrt(2/3)*DnP03 - (sqrt(2)/3)*DnP08 + (2/sqrt(3))*DnP38 - (2/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1535,7 +1610,6 @@ double dsigmadtDSBarDSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, +2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, -2.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 - sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 + (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -1553,7 +1627,6 @@ double dsigmadtDSBarDSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, +2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, -2.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkAntiquarkScattering(Nc, s, t, m1, m2, m3, m4, DPs, DSs, DPt, DSt);
@@ -1561,13 +1634,21 @@ double dsigmadtDSBarDSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //SDBar->SDBar differential cross section
-double dsigmadtSDBarSDBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtSDBarSDBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassS;
@@ -1586,12 +1667,10 @@ double dsigmadtSDBarSDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = antiNeutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DPs = gsl_complex_mul_real(DPs, 2);
 
-
     // DSs = 2*antiNeutralSigmaKaonPropagator
     gsl_complex DSs;
     DSs = antiNeutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
     DSs = gsl_complex_mul_real(DSs, 2);
-
 
     // DPt = (2./3.)*DnP00 - sqrt(2/3)*DnP03 - (sqrt(2)/3)*DnP08 + (2/sqrt(3))*DnP38 - (2/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1610,7 +1689,6 @@ double dsigmadtSDBarSDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, +2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, -2.0/3.0));
     
-
     // DSt = (2./3.)*DnS00 - sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 + (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     // DSt = (2./3.)*DnS00 - sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 + (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
@@ -1629,7 +1707,6 @@ double dsigmadtSDBarSDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, +2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, -2.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkAntiquarkScattering(Nc, s, t, m1, m2, m3, m4, DPs, DSs, DPt, DSt);
@@ -1637,13 +1714,21 @@ double dsigmadtSDBarSDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //UUBar->UUBar differential cross section
-double dsigmadtUUBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtUUBarUUBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassU;
@@ -1675,7 +1760,6 @@ double dsigmadtUUBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs38, +2.0/sqrt(3.0)));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, +1.0/3.0));
 
-
     // DSs = (2./3.)*DnS00 + 2*sqrt(2/3)*DnS03 + (2*sqrt(2)/3)*DnS08 + DnS33 + (2/sqrt(3))*DnS38 + (1/3)*DnS88 ,  where DnS is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -1693,7 +1777,6 @@ double dsigmadtUUBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs33, +1.0));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs38, +2.0/sqrt(3.0)));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, +1.0/3.0));
-
 
     // DPt = (2./3.)*DnP00 + 2*sqrt(2/3)*DnP03 + (2*sqrt(2)/3)*DnP08 + DnP33 + (2/sqrt(3))*DnP38 + (1/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -1713,7 +1796,6 @@ double dsigmadtUUBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, +2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +1.0/3.0));
 
-    
     // DSt = (2./3.)*DnS00 + 2*sqrt(2/3)*DnS03 + (2*sqrt(2)/3)*DnS08 + DnS33 + (2/sqrt(3))*DnS38 + (1/3)*DnS88 ,  where DnP is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -1732,7 +1814,6 @@ double dsigmadtUUBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, +2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, +1.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkAntiquarkScattering(Nc, s, t, m1, m2, m3, m4, DPs, DSs, DPt, DSt);
@@ -1740,13 +1821,21 @@ double dsigmadtUUBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //UUBar->DDBar differential cross section
-double dsigmadtUUBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtUUBarDDBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassU;
@@ -1776,7 +1865,6 @@ double dsigmadtUUBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs33, -1.0));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, +1.0/3.0));
     
-
     // DSs = (2./3.)*DnS00 + (2sqrt(2)/3)*DnS08 - DnS33 + (1./3.)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -1793,18 +1881,15 @@ double dsigmadtUUBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs33, -1.0));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, 1.0/3.0));
 
-
     // DPt = 2*pionPlusPropagator
     gsl_complex DPt;
     DPt = pionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DPt = gsl_complex_mul_real(DPt, 2);
 
-
     // DSt = 2*sigmaPionPlusPropagator
     gsl_complex DSt;
     DSt = sigmaPionPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DSt = gsl_complex_mul_real(DSt, 2);
-
 
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
@@ -1813,13 +1898,21 @@ double dsigmadtUUBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //UUBar->SSBar differential cross section
-double dsigmadtUUBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtUUBarSSBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassU;
@@ -1850,7 +1943,6 @@ double dsigmadtUUBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs38, -2.0/sqrt(3.0)));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, -2.0/3.0));
     
-
     // DSs = (2./3.)*DnS00 + sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 - (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -1868,18 +1960,15 @@ double dsigmadtUUBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs38, -2.0/sqrt(3.0)));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, -2.0/3.0));
 
-
     // DPt = 2*kaonPlusPropagator
     gsl_complex DPt;
     DPt = kaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DPt = gsl_complex_mul_real(DPt, 2);
 
-
     // DSt = 2*sigmaKaonPlusPropagator
     gsl_complex DSt;
     DSt = sigmaKaonPlusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DSt = gsl_complex_mul_real(DSt, 2);
-
 
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
@@ -1888,13 +1977,21 @@ double dsigmadtUUBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //DDBar->UUBar differential cross section
-double dsigmadtDDBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtDDBarUUBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassD;
@@ -1924,7 +2021,6 @@ double dsigmadtDDBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs33, -1.0));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, +1.0/3.0));
     
-
     // DSs = (2./3.)*DnS00 + (2sqrt(2)/3)*DnS08 - DnS33 + (1./3.)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -1941,18 +2037,15 @@ double dsigmadtDDBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs33, -1.0));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, 1.0/3.0));
 
-
     // DPt = 2*pionMinusPropagator
     gsl_complex DPt;
     DPt = pionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DPt = gsl_complex_mul_real(DPt, 2);
 
-
     // DSt = 2*sigmaPionMinusPropagator
     gsl_complex DSt;
     DSt = sigmaPionMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DSt = gsl_complex_mul_real(DSt, 2);
-
 
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
@@ -1961,13 +2054,21 @@ double dsigmadtDDBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //DDBar->DDBar differential cross section
-double dsigmadtDDBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtDDBarDDBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassD;
@@ -1999,7 +2100,6 @@ double dsigmadtDDBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs38, -2.0/sqrt(3.0)));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, +1.0/3.0));
 
-
     // DSs = (2./3.)*DnS00 - 2*sqrt(2/3)*DnS03 + (2*sqrt(2)/3)*DnS08 + DnS33 - (2/sqrt(3))*DnS38 + (1/3)*DnS88 ,  where DnS is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -2017,7 +2117,6 @@ double dsigmadtDDBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs33, +1.0));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs38, -2.0/sqrt(3.0)));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, +1.0/3.0));
-
 
     // DPt = (2./3.)*DnP00 - 2*sqrt(2/3)*DnP03 + (2*sqrt(2)/3)*DnP08 + DnP33 - (2/sqrt(3))*DnP38 + (1/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -2037,7 +2136,6 @@ double dsigmadtDDBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt38, -2.0/sqrt(3.0)));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +1.0/3.0));
 
-    
     // DSt = (2./3.)*DnS00 - 2*sqrt(2/3)*DnS03 + (2*sqrt(2)/3)*DnS08 + DnS33 - (2/sqrt(3))*DnS38 + (1/3)*DnS88 ,  where DnP is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -2056,7 +2154,6 @@ double dsigmadtDDBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt38, -2.0/sqrt(3.0)));
     DSt = gsl_complex_add(DSt, gsl_complex_mul_real(DnSt88, +1.0/3.0));
 
-
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
     double dsigmadt = dsigmadtNJLQuarkAntiquarkScattering(Nc, s, t, m1, m2, m3, m4, DPs, DSs, DPt, DSt);
@@ -2064,13 +2161,21 @@ double dsigmadtDDBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //DDBar->SSBar differential cross section
-double dsigmadtDDBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtDDBarSSBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassD;
@@ -2101,7 +2206,6 @@ double dsigmadtDDBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs38, +2.0/sqrt(3.0)));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, -2.0/3.0));
 
-
     // DSs = (2./3.)*DnS00 - sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 + (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -2119,18 +2223,15 @@ double dsigmadtDDBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs38, +2.0/sqrt(3.0)));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, -2.0/3.0));
 
-
     // DPt = 2*neutralKaonPropagator
     gsl_complex DPt;
     DPt = neutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DPt = gsl_complex_mul_real(DPt, 2);
 
-
     // DSt = 2*neutralSigmaKaonPlusPropagator
     gsl_complex DSt;
     DSt = neutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DSt = gsl_complex_mul_real(DSt, 2);
-
 
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
@@ -2139,13 +2240,21 @@ double dsigmadtDDBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //SSBar->UUBar differential cross section
-double dsigmadtSSBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtSSBarUUBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassS;
@@ -2176,7 +2285,6 @@ double dsigmadtSSBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs38, -2.0/sqrt(3.0)));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, -2.0/3.0));
     
-
     // DSs = (2./3.)*DnS00 + sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 - (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -2194,18 +2302,15 @@ double dsigmadtSSBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs38, -2.0/sqrt(3.0)));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, -2.0/3.0));
 
-
     // DPt = 2*kaonMinusPropagator
     gsl_complex DPt;
     DPt = kaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DPt = gsl_complex_mul_real(DPt, 2);
 
-
     // DSt = 2*sigmaKaonMinusPropagator
     gsl_complex DSt;
     DSt = sigmaKaonMinusPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DSt = gsl_complex_mul_real(DSt, 2);
-
 
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
@@ -2214,13 +2319,21 @@ double dsigmadtSSBarUUBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //SSBar->DDBar differential cross section
-double dsigmadtSSBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtSSBarDDBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassS;
@@ -2251,7 +2364,6 @@ double dsigmadtSSBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs38, +2.0/sqrt(3.0)));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, -2.0/3.0));
 
-
     // DSs = (2./3.)*DnS00 - sqrt(2/3)*DnS03 - (sqrt(2)/3)*DnS08 + (2/sqrt(3))*DnS38 - (2/3)*DnS88 ,  where DnS is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -2269,18 +2381,15 @@ double dsigmadtSSBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs38, +2.0/sqrt(3.0)));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, -2.0/3.0));
 
-
     // DPt = 2*antiNeutralKaonPropagator
     gsl_complex DPt;
     DPt = antiNeutralKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DPt = gsl_complex_mul_real(DPt, 2);
 
-
     // DSt = 2*antiNeutralSigmaKaonPropagator
     gsl_complex DSt;
     DSt = antiNeutralSigmaKaonPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
     DSt = gsl_complex_mul_real(DSt, 2);
-
 
     //calculate the differential cross section using the above propagators
     double Nc = parametersNJL.getNumberOfColours();
@@ -2289,13 +2398,21 @@ double dsigmadtSSBarDDBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 //SSBar->SSBar differential cross section
-double dsigmadtSSBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                          double effChemPotU, double effChemPotD, double effChemPotS, 
-                          double effMassU, double effMassD, double effMassS, 
-                          double s, double t, double integralPrecision)
+double dsigmadtSSBarSSBar(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision
+)
 {   
     //set incoming and outgoing masses
     double m1 = effMassS;
@@ -2324,7 +2441,6 @@ double dsigmadtSSBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs08, -4.0*sqrt(2.0)/3.0));
     DPs = gsl_complex_add(DPs, gsl_complex_mul_real(DnPs88, +4.0/3.0));
 
-
     // DSs = (2./3.)*DnS00 - (4*sqrt(2)/3)*DnS08 + (4/3)*DnS88 ,  where DnS is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSs = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, sK0, sKVec, integralPrecision);
@@ -2339,7 +2455,6 @@ double dsigmadtSSBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DSs = gsl_complex_mul_real(DnSs00, +2.0/3.0);
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs08, -4.0*sqrt(2.0)/3.0));
     DSs = gsl_complex_add(DSs, gsl_complex_mul_real(DnSs88, +4.0/3.0));
-
 
     // DPt = (2./3.)*DnP00 - (4*sqrt(2)/3)*DnP08 + (4/3)*DnP88 ,  where DnP is the neutral pseudoscalar propagator matrix
     ComplexSquareMatrixGSL DnPt = 
@@ -2356,7 +2471,6 @@ double dsigmadtSSBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt08, -4.0*sqrt(2.0)/3.0));
     DPt = gsl_complex_add(DPt, gsl_complex_mul_real(DnPt88, +4.0/3.0));
 
-    
     // DSt = (2./3.)*DnS00 - (4*sqrt(2)/3)*DnS08 + (4/3)*DnS88 ,  where DnP is the neutral scalar propagator matrix
     ComplexSquareMatrixGSL DnSt = 
     neutral038ScalarsPropagator(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, tK0, tKVec, integralPrecision);
@@ -2379,161 +2493,197 @@ double dsigmadtSSBarSSBar(SU3NJL3DCutoffParameters parametersNJL, double T,
     return dsigmadt;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
-double differentialCrossSectionProcess12To34(SU3NJL3DCutoffParameters parametersNJL, double T, 
-                                             double effChemPotU, double effChemPotD, double effChemPotS, 
-                                             double effMassU, double effMassD, double effMassS, 
-                                             double s, double t, double integralPrecision, scatteringProcess process)
+double differentialCrossSectionProcess12To34(
+    SU3NJL3DCutoffParameters parametersNJL, 
+    double T, 
+    double effChemPotU, 
+    double effChemPotD, 
+    double effChemPotS, 
+    double effMassU, 
+    double effMassD, 
+    double effMassS, 
+    double s, 
+    double t, 
+    double integralPrecision, 
+    scatteringProcess process
+)
 {
     double dsigmadtProcess = 0.0;
 
     if ( process==UDUD )
     {
-        dsigmadtProcess = 
-        dsigmadtUDUD(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);
+        dsigmadtProcess = dsigmadtUDUD(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );
     }
     else if( process==DUDU )
     {
-        dsigmadtProcess = 
-        dsigmadtDUDU(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);
+        dsigmadtProcess = dsigmadtDUDU(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );
     }
     else if( process==USUS )
     {
-        dsigmadtProcess = 
-        dsigmadtUSUS(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);     
+        dsigmadtProcess = dsigmadtUSUS(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );     
     }
     else if( process==SUSU )
     {
-        dsigmadtProcess = 
-        dsigmadtSUSU(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);         
+        dsigmadtProcess = dsigmadtSUSU(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );         
     }
     else if( process==DSDS )
     {
-        dsigmadtProcess = 
-        dsigmadtDSDS(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);         
+        dsigmadtProcess = dsigmadtDSDS(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );         
     }
     else if( process==SDSD )
     {
-        dsigmadtProcess = 
-        dsigmadtSDSD(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);           
+        dsigmadtProcess = dsigmadtSDSD(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );           
     }
     else if( process==UUUU )
     {
-        dsigmadtProcess = 
-        dsigmadtUUUU(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtUUUU(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==DDDD )
     {
-        dsigmadtProcess = 
-        dsigmadtDDDD(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);       
+        dsigmadtProcess = dsigmadtDDDD(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );       
     }
     else if( process==SSSS )
     {
-        dsigmadtProcess = 
-        dsigmadtSSSS(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);   
+        dsigmadtProcess = dsigmadtSSSS(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );   
     }
     else if( process==UDBarUDBar )
     {
-        dsigmadtProcess = 
-        dsigmadtUDBarUDBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);     
+        dsigmadtProcess = dsigmadtUDBarUDBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );     
     }
     else if( process==USBarUSBar )
     {
-        dsigmadtProcess = 
-        dsigmadtUSBarUSBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);           
+        dsigmadtProcess = dsigmadtUSBarUSBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );           
     }
     else if( process==DSBarDSBar )
     {
-        dsigmadtProcess = 
-        dsigmadtDSBarDSBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);           
+        dsigmadtProcess = dsigmadtDSBarDSBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );           
     }
     else if( process==DUBarDUBar )
     {
-        dsigmadtProcess = 
-        dsigmadtDUBarDUBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);              
+        dsigmadtProcess = dsigmadtDUBarDUBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );              
     }
     else if( process==SUBarSUBar )
     {
-        dsigmadtProcess = 
-        dsigmadtSUBarSUBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);              
+        dsigmadtProcess = dsigmadtSUBarSUBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );              
     }
     else if( process==SDBarSDBar )
     {
-        dsigmadtProcess = 
-        dsigmadtSDBarSDBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);      
+        dsigmadtProcess = dsigmadtSDBarSDBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );      
     }
     else if( process==UUBarUUBar )
     {
-        dsigmadtProcess = 
-        dsigmadtUUBarUUBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtUUBarUUBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==UUBarDDBar )
     {
-        dsigmadtProcess = 
-        dsigmadtUUBarDDBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtUUBarDDBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==UUBarSSBar )
     {
-        dsigmadtProcess = 
-        dsigmadtUUBarSSBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtUUBarSSBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==DDBarUUBar )
     {
-        dsigmadtProcess = 
-        dsigmadtDDBarUUBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);         
+        dsigmadtProcess = dsigmadtDDBarUUBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );         
     }
     else if( process==DDBarDDBar )
     {
-        dsigmadtProcess = 
-        dsigmadtDDBarDDBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);         
+        dsigmadtProcess = dsigmadtDDBarDDBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );         
     }
     else if( process==DDBarSSBar )
     {
-        dsigmadtProcess = 
-        dsigmadtDDBarSSBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);    
+        dsigmadtProcess = dsigmadtDDBarSSBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );    
     }
     else if( process==SSBarUUBar )
     {
-        dsigmadtProcess = 
-        dsigmadtSSBarUUBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtSSBarUUBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==SSBarDDBar )
     {
-        dsigmadtProcess = 
-        dsigmadtSSBarDDBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtSSBarDDBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==SSBarSSBar )
     {
-        dsigmadtProcess = 
-        dsigmadtSSBarSSBar(parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtSSBarSSBar(
+            parametersNJL, T, effChemPotU, effChemPotD, effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==UBarUBarUBarUBar )
     {
-        dsigmadtProcess = 
-        dsigmadtUUUU(parametersNJL, T, -effChemPotU, -effChemPotD, -effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtUUUU(
+            parametersNJL, T, -effChemPotU, -effChemPotD, -effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==UBarDBarUBarDBar )
     {
-        dsigmadtProcess = 
-        dsigmadtUDUD(parametersNJL, T, -effChemPotU, -effChemPotD, -effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtUDUD(
+            parametersNJL, T, -effChemPotU, -effChemPotD, -effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==UBarSBarUBarSBar )
     {
-        dsigmadtProcess = 
-        dsigmadtUSUS(parametersNJL, T, -effChemPotU, -effChemPotD, -effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtUSUS(
+            parametersNJL, T, -effChemPotU, -effChemPotD, -effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else if( process==SBarSBarSBarSBar )
     {
-        dsigmadtProcess = 
-        dsigmadtSSSS(parametersNJL, T, -effChemPotU, -effChemPotD, -effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision);            
+        dsigmadtProcess = dsigmadtSSSS(
+            parametersNJL, T, -effChemPotU, -effChemPotD, -effChemPotS, effMassU, effMassD, effMassS, s, t, integralPrecision
+        );            
     }
     else
     {
-        cout << "Differential cross section for the provided process is not defined in differentialCrossSectionProcess12To34! Aborting!\n";
+        std::cout << "Differential cross section for the provided process is not defined in differentialCrossSectionProcess12To34! Aborting!\n";
         abort();
     }
 
     return dsigmadtProcess;
 }
-

@@ -92,13 +92,13 @@ public:
 	void solve(double , MultiRootFindingMethod , double , double , double , double );
 	bool testSolution(double );
 
-	static vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solveFromVacuumToFiniteBaryonDensity(
+	static std::vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> solveFromVacuumToFiniteBaryonDensity(
 		SU3NJL3DCutoffVacuum , 
         double , double , int , 
         double , MultiRootFindingMethod , bool
 	);
 
-	static void writeToFile(vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , string , bool );
+	static void writeToFile(std::vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , std::string , bool );
 
 	double calculatePressure(double );
 	double calculateEnergyDensity(double );
@@ -137,14 +137,14 @@ public:
 		double ,
 		MultiRootFindingMethod 
 	);
-	static vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> calculateFirstOrderLine(
-		vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , 
+	static std::vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> calculateFirstOrderLine(
+		std::vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot> , 
 		double , 
 		MultiRootFindingMethod ,
 		double ,
 		double 
 	);
-	static vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> calculateFirstOrderLine(
+	static std::vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> calculateFirstOrderLine(
 		SU3NJL3DCutoffVacuum ,
 		double ,
 		double ,
@@ -157,7 +157,7 @@ public:
 		double ,
 		double 
 	);
-	static void writeToFile(SU3NJL3DCutoffVacuum , vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> , string , bool );
+	static void writeToFile(SU3NJL3DCutoffVacuum , std::vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> , std::string , bool );
 
 	static void evaluateFirstOrderLine(
         SU3NJL3DCutoffParameters& ,                                

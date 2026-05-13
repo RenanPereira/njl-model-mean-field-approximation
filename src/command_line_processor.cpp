@@ -2,38 +2,37 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffFileParser.h"
 #include "njl_model/n_fermion_line_integrals/KlevanskyB0Integral3DCutoffFileParser.h"
 
-using namespace std;
 
 int commandLineArgsProcessor(int argc, char* argv[])
 {	
-	string use_file_command = "use-config-file";
+	std::string use_file_command = "use-config-file";
 
 	// Handle command line input
     if (argc > 1) 
 	{
-        string command = argv[1];
+        std::string command = argv[1];
         // Check for the commands
         if (command == use_file_command) 
 		{
             if (argc == 3) 
 			{	
 				// Get name of the file from the third argument
-                string configFileName = argv[2];
+                std::string configFileName = argv[2];
 
 				// Open configuration file and parse it
-				cout << "\nFeeding IniFileParser with file " << configFileName << "..." << endl;
+				std::cout << "\nFeeding IniFileParser with file " << configFileName << "..." << std::endl;
 				IniFileParser configFile(configFileName);
 				selectPathBasedOnFileDetails(configFile);
             } 
 			else 
 			{
-                cerr << "Error: No file provided after the command: " << command << endl;
+                std::cerr << "Error: No file provided after the command: " << command << std::endl;
                 return 1;
             }
         } 
 		else 
 		{
-            cerr << "Unknown command: " << command << endl;
+            std::cerr << "Unknown command: " << command << std::endl;
             return 1;
         }
     }
@@ -44,10 +43,10 @@ int commandLineArgsProcessor(int argc, char* argv[])
 void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 {	
     // Get the file type
-    string type = configFile.getValue("FileDetails", "type");
+    std::string type = configFile.getValue("FileDetails", "type");
 	
-	cout << "\nFileDetails:" << endl;
-	cout << "type = " << type << endl;
+	std::cout << "\nFileDetails:" << std::endl;
+	std::cout << "type = " << type << std::endl;
 
 	// Check if file is written correctly and then make calculation
 	if(type==SU3NJL3DCutoffFileParser::Vacuum::Masses::calculationType)
@@ -97,6 +96,6 @@ void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 	}
 	else
 	{
-		cout << "The file " << configFile.getFilename() << " does not match any known configuration! Check the FileDetails.\n";
+		std::cout << "The file " << configFile.getFilename() << " does not match any known configuration! Check the FileDetails.\n";
 	}
 }

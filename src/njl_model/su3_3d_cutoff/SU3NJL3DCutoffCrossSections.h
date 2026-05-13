@@ -91,20 +91,20 @@ public:
 
     void printIntegrandVariables() override
     {   
-        cout << "integralID = " << integralID << "\n";
+        std::cout << "integralID = " << integralID << "\n";
 
-        cout << "SU3NJL3DCutoffParameters are not being printed!" << "\n";
+        std::cout << "SU3NJL3DCutoffParameters are not being printed!" << "\n";
 
-        cout << "T = " << temperature << "\n";
-        cout << "effChemPotU = " << upQuarkEffectiveChemicalPotential << "\n";
-        cout << "effChemPotD = " << downQuarkEffectiveChemicalPotential << "\n";
-        cout << "effChemPotS = " << strangeQuarkEffectiveChemicalPotential << "\n";
-        cout << "effMassU = " << upQuarkEffectiveMass << "\n";
-        cout << "effMassD = " << downQuarkEffectiveMass << "\n";
-        cout << "effMassS = " << strangeQuarkEffectiveMass << "\n";
-        cout << "s = " << centerOfMassEnergy << "\n";
-        cout << "propagatorPrecision = " << propagatorIntegralPrecision << "\n";
-        cout << "scatteringProcess = " << toString(process) << "\n";
+        std::cout << "T = " << temperature << "\n";
+        std::cout << "effChemPotU = " << upQuarkEffectiveChemicalPotential << "\n";
+        std::cout << "effChemPotD = " << downQuarkEffectiveChemicalPotential << "\n";
+        std::cout << "effChemPotS = " << strangeQuarkEffectiveChemicalPotential << "\n";
+        std::cout << "effMassU = " << upQuarkEffectiveMass << "\n";
+        std::cout << "effMassD = " << downQuarkEffectiveMass << "\n";
+        std::cout << "effMassS = " << strangeQuarkEffectiveMass << "\n";
+        std::cout << "s = " << centerOfMassEnergy << "\n";
+        std::cout << "propagatorPrecision = " << propagatorIntegralPrecision << "\n";
+        std::cout << "scatteringProcess = " << toString(process) << "\n";
     }
 };
 

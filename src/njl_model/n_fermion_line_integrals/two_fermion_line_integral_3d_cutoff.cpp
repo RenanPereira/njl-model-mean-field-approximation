@@ -4,6 +4,8 @@
 #include "physics_utils/distribution_functions.h"
 #include "njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h"
 
+using std::cout;
+
 
 //Zero variables necessary in this file: TFLI=TwoFermionLineIntegral
 const double TFLI_ZERO = 1E-12;

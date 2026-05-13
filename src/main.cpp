@@ -10,7 +10,9 @@
 
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::vector;
 
 
 int main(int argc, char* argv[])

@@ -2,8 +2,6 @@
 #include <iostream>
 #include "physics_utils/distribution_functions.h"
 
-using namespace std;
-
 
 //Bose-Einstein distribution function
 double boseDistribution(double temperature, double energy)

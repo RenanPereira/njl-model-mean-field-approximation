@@ -8,7 +8,11 @@
 #include "math_utils/useful_functions.h"
 #include "utils/format_utils.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::endl;
+using std::vector;
+
 
 // Constructor that takes generic pointer (void*), casts it into class object and copy it to the current instance
 SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(void* auxiliar)
@@ -928,7 +932,6 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEnergyDensity(double vacuumEnerg
     return energyNJL;
 }
 
-
 double SU3NJL3DCutoffFixedChemPotTemp::calculateEntropyDensity()
 {
     //Consider chemical potentials equal to effective chemical potentials
@@ -1106,8 +1109,8 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
 
     string filename = "SU3NJL3DCutoffFixedChemPotTemp";
     filename = filename + "_" + finiteTSolution[0].getParametersNJL().getParameterSetName();
-    filename = filename + "_TMin" + to_string(finiteTSolution[0].getTemperature());
-    filename = filename + "_TMax" + to_string(finiteTSolution[finiteTSolution.size()-1].getTemperature());
+    filename = filename + "_TMin" + std::to_string(finiteTSolution[0].getTemperature());
+    filename = filename + "_TMax" + std::to_string(finiteTSolution[finiteTSolution.size()-1].getTemperature());
     filename = filename + "_CP0";
     replaceChar(filename, '.', 'p');
     filename =  filename +".dat";
