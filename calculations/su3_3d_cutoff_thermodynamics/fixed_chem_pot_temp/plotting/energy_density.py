@@ -5,9 +5,13 @@ from common_utils.plot_helper import configure_axes, add_annotation_block
 from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
 
 
-# Common configurations between plots
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 
 def plot_energy_vs_temperature(
@@ -18,7 +22,11 @@ def plot_energy_vs_temperature(
     path_plots_folder: str,
     filename: str,
     parameter_set_annotation: str,
-    plotname: str
+    plotname: str,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
+    tick_fontsize: int = 20,
+    annotation_fontsize: int = 18
 ) -> None:
     print("Building plot: energy versus temperature.")
     print(f"Using datafile {filename}.\n")
@@ -42,12 +50,12 @@ def plot_energy_vs_temperature(
     )
 
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\epsilon\, [\mathrm{GeV}^4]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$\epsilon\, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
 
     # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
 
     # Configure axes using the helper function
     xmin = 0.000
@@ -56,7 +64,7 @@ def plot_energy_vs_temperature(
     ymax = 0.6
     x_num_ticks = 6
     y_num_ticks = 5
-    configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+    configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
     ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
@@ -66,7 +74,7 @@ def plot_energy_vs_temperature(
     texts = [
         r'$\mu = 0.0\ \mathrm{GeV}$',
     ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
     fig.tight_layout()
 
@@ -87,7 +95,11 @@ def plot_energy_density_vs_temperature_given_list(
     parameter_sets_annotation: list[str],
     colors: list[str],
     linestyles: list[str],
-    plotname: str
+    plotname: str,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
+    tick_fontsize: int = 20,
+    annotation_fontsize: int = 18
 ) -> None:
     print("Building plot: comparing energy density versus temperature for different files.\n")
 
@@ -119,12 +131,12 @@ def plot_energy_density_vs_temperature_given_list(
         )
     
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\epsilon\, [\mathrm{GeV}^4]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$\epsilon\, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
 
     # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
 
     # Configure axes using the helper function
     xmin = 0.1
@@ -133,7 +145,7 @@ def plot_energy_density_vs_temperature_given_list(
     ymax = 0.015
     x_num_ticks = 5
     y_num_ticks = 6
-    configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+    configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
     ax.xaxis.set_major_formatter(FormatStrFormatter('%.3f'))
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.3f'))
@@ -143,7 +155,7 @@ def plot_energy_density_vs_temperature_given_list(
     texts = [
         r'$\mu = 0.0\ \mathrm{GeV}$',
     ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
     fig.tight_layout()
 
@@ -162,7 +174,11 @@ def plot_energy_euler_eq_vs_temperature(
     path_plots_folder: str,
     filename: str,
     parameter_set_annotation: str,
-    plotname: str
+    plotname: str,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
+    tick_fontsize: int = 20,
+    annotation_fontsize: int = 18
 ) -> None:
     print("Building plot: energy density, euler equation versus temperature.")
     print(f"Using datafile {filename}.\n")
@@ -207,12 +223,12 @@ def plot_energy_euler_eq_vs_temperature(
     )
 
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\epsilon\, [\mathrm{GeV}^4]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$\epsilon\, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
 
     # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
 
     # Configure axes using the helper function
     xmin = 0.000
@@ -221,7 +237,7 @@ def plot_energy_euler_eq_vs_temperature(
     ymax = 0.6
     x_num_ticks = 6
     y_num_ticks = 5
-    configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+    configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks, y_num_ticks, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
     ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
     ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
@@ -232,7 +248,7 @@ def plot_energy_euler_eq_vs_temperature(
         parameter_set_annotation,
         r'$\mu = 0.0\ \mathrm{GeV}$',
     ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
     fig.tight_layout()
 

@@ -9,8 +9,13 @@ from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 
 
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 
 def overlay_figure_on_image(
@@ -61,11 +66,12 @@ def plot_quark_rel_time_vs_temperature_over_image(
     path_output_plot: str,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
+    labels_fontsize: int = 22,
     x_num_ticks: int = 11,
     y_num_ticks: int = 11,
     tick_fontsize: int = 12,
     x_formatter: str = "%.2f",
-    y_formatter: str = "%.0f",
+    y_formatter: str = "%.0f"
 ) -> tuple[Figure, Axes]:
     fig, ax = plt.subplots()
 
@@ -102,8 +108,8 @@ def plot_quark_rel_time_vs_temperature_over_image(
     ax.xaxis.set_major_formatter(FormatStrFormatter(x_formatter))
     ax.yaxis.set_major_formatter(FormatStrFormatter(y_formatter))
 
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\tau\, [\mathrm{fm}]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$\tau\, [\mathrm{fm}]$', fontsize=labels_fontsize)
 
     fig.tight_layout()
 

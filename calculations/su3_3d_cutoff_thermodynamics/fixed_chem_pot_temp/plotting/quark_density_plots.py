@@ -9,9 +9,13 @@ from common_utils.io_utils import print_unique_filepaths
 from common_utils.physical_constants import hbarc_gevfm
 
 
-# Common configurations between plots
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 
 def plot_quark_dens_vs_chem_pot(
@@ -22,17 +26,21 @@ def plot_quark_dens_vs_chem_pot(
     x_axis_chem_pot_quark_species: str,
     path_output_plot: str,
     legend_loc: str | None = None,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
     label_quark_density: str | None = None,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
     x_num_ticks: int = 6,
     y_num_ticks: int = 6,
+    tick_fontsize: int = 20,
     x_formatter: str = "%.2f",
     y_formatter: str = "%.1f",
     annotation_texts: list[str] | None = None,
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
-    annotation_vert_space: float = 0.06
+    annotation_vert_space: float = 0.06,
+    annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
     This function plots quark densities vs checmical potential from FixedChemPotTempData.
@@ -67,14 +75,14 @@ def plot_quark_dens_vs_chem_pot(
     
     # Legend
     if legend_loc is not None:
-        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        ax.legend(loc=legend_loc, fontsize=legend_fontsize, frameon=False)
 
     # Axes labels
-    ax.set_xlabel(r'$\mu\, [\mathrm{GeV}]$', fontsize=20)
+    ax.set_xlabel(r'$\mu\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
     if label_quark_density is None:
-        ax.set_ylabel(r'$\rho_q\, [\mathrm{fm}^{-3}]$', fontsize=20)
+        ax.set_ylabel(r'$\rho_q\, [\mathrm{fm}^{-3}]$', fontsize=labels_fontsize)
     else: 
-        ax.set_ylabel(label_quark_density, fontsize=20)
+        ax.set_ylabel(label_quark_density, fontsize=labels_fontsize)
 
     xmin = xlim[0]
     xmax = xlim[1]
@@ -88,7 +96,7 @@ def plot_quark_dens_vs_chem_pot(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -108,7 +116,7 @@ def plot_quark_dens_vs_chem_pot(
             y_annotation, 
             annotation_vert_space, 
             annotation_texts, 
-            fontsize=16
+            fontsize=annotation_fontsize
         )
 
     fig.tight_layout()
@@ -125,16 +133,20 @@ def plot_baryon_dens_vs_baryon_chem_pot(
     data_specs: list[tuple[str, str, str, int, str]],
     path_output_plot: str,
     legend_loc: str | None = None,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
     x_num_ticks: int = 6,
     y_num_ticks: int = 6,
+    tick_fontsize: int = 20,
     x_formatter: str = "%.2f",
     y_formatter: str = "%.1f",
     annotation_texts: list[str] | None = None,
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
-    annotation_vert_space: float = 0.06
+    annotation_vert_space: float = 0.06,
+    annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
     This function plots the baryon density vs baryon checmical potential from FixedChemPotTempData.
@@ -169,11 +181,11 @@ def plot_baryon_dens_vs_baryon_chem_pot(
     
     # Legend
     if legend_loc is not None:
-        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        ax.legend(loc=legend_loc, fontsize=legend_fontsize, frameon=False)
 
     # Axes labels
-    ax.set_xlabel(r'$\mu_B\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\rho_B\, [\mathrm{fm}^{-3}]$', fontsize=20)
+    ax.set_xlabel(r'$\mu_B\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$\rho_B\, [\mathrm{fm}^{-3}]$', fontsize=labels_fontsize)
 
     xmin = xlim[0]
     xmax = xlim[1]
@@ -187,7 +199,7 @@ def plot_baryon_dens_vs_baryon_chem_pot(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -207,7 +219,7 @@ def plot_baryon_dens_vs_baryon_chem_pot(
             y_annotation, 
             annotation_vert_space, 
             annotation_texts, 
-            fontsize=16
+            fontsize=annotation_fontsize
         )
 
     fig.tight_layout()
@@ -224,16 +236,20 @@ def plot_baryon_dens_dPdmuB_vs_baryon_chem_pot(
     data_specs: list[tuple[str, str, str, int, str, str, str, int, str]],
     path_output_plot: str,
     legend_loc: str | None = None,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
     x_num_ticks: int = 6,
     y_num_ticks: int = 6,
+    tick_fontsize: int = 20,
     x_formatter: str = "%.2f",
     y_formatter: str = "%.1f",
     annotation_texts: list[str] | None = None,
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
-    annotation_vert_space: float = 0.06
+    annotation_vert_space: float = 0.06,
+    annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
     This function plots the baryon density vs baryon checmical potential from FixedChemPotTempData.
@@ -278,11 +294,11 @@ def plot_baryon_dens_dPdmuB_vs_baryon_chem_pot(
     
     # Legend
     if legend_loc is not None:
-        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        ax.legend(loc=legend_loc, fontsize=legend_fontsize, frameon=False)
 
     # Axes labels
-    ax.set_xlabel(r'$\mu_B\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\rho_B\, [\mathrm{fm}^{-3}]$', fontsize=20)
+    ax.set_xlabel(r'$\mu_B\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$\rho_B\, [\mathrm{fm}^{-3}]$', fontsize=labels_fontsize)
 
     xmin = xlim[0]
     xmax = xlim[1]
@@ -296,7 +312,7 @@ def plot_baryon_dens_dPdmuB_vs_baryon_chem_pot(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -316,7 +332,7 @@ def plot_baryon_dens_dPdmuB_vs_baryon_chem_pot(
             y_annotation, 
             annotation_vert_space, 
             annotation_texts, 
-            fontsize=16
+            fontsize=annotation_fontsize
         )
 
     fig.tight_layout()

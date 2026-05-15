@@ -4,10 +4,13 @@ import numpy as np
 from common_utils.plot_helper import configure_axes, add_annotation_block
 from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
 
-
-# Common configurations between plots
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 
 def plot_pressure_vs_energy(
@@ -18,7 +21,11 @@ def plot_pressure_vs_energy(
     path_plots_folder: str,
     filename: str,
     parameter_set_annotation: str,
-    plotname: str
+    plotname: str,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
+    tick_fontsize: int = 20,
+    annotation_fontsize: int = 18
 ) -> None:
     print("Building plot: pressure versus energy density.")
     print(f"Using datafile {filename}.\n")
@@ -42,12 +49,12 @@ def plot_pressure_vs_energy(
     )
 
     # Axes labels
-    ax.set_xlabel(r'$\epsilon \, [\mathrm{GeV}^4]$', fontsize=20)
-    ax.set_ylabel(r'$P \, [\mathrm{GeV}^4]$', fontsize=20)
+    ax.set_xlabel(r'$\epsilon \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$P \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
 
     # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
 
     # Configure axes using the helper function
     xmin = 0.000
@@ -64,7 +71,7 @@ def plot_pressure_vs_energy(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -78,7 +85,7 @@ def plot_pressure_vs_energy(
     texts = [
         r'$\mu = 0.0\ \mathrm{GeV}$',
     ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
     fig.tight_layout()
 
@@ -99,7 +106,11 @@ def plot_pressure_vs_energy_given_list(
     parameter_sets_annotation: list[str],
     colors: list[str],
     linestyles: list[str],
-    plotname: str
+    plotname: str,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
+    tick_fontsize: int = 20,
+    annotation_fontsize: int = 18
 ) -> None:
     print("Building plot: comparing pressure versus energy density for different files.\n")
 
@@ -131,12 +142,12 @@ def plot_pressure_vs_energy_given_list(
         )
     
     # Axes labels
-    ax.set_xlabel(r'$\epsilon \, [\mathrm{GeV}^4]$', fontsize=20)
-    ax.set_ylabel(r'$P \, [\mathrm{GeV}^4]$', fontsize=20)
+    ax.set_xlabel(r'$\epsilon \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$P \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
 
     # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
 
     # Configure axes using the helper function
     xmin = 0.000
@@ -153,7 +164,7 @@ def plot_pressure_vs_energy_given_list(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -167,7 +178,7 @@ def plot_pressure_vs_energy_given_list(
     texts = [
         r'$\mu = 0.0\ \mathrm{GeV}$',
     ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
     fig.tight_layout()
 

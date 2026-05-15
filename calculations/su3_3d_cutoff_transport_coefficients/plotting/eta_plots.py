@@ -10,9 +10,13 @@ from common_utils.transport_coefficients.shear_viscosity_data import ShearViscos
 from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
 
 
-# Common configurations between plots
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 
 def plot_eta_vs_temp(
@@ -22,15 +26,20 @@ def plot_eta_vs_temp(
     data_specs: list[tuple[str, str, str, int, str]],
     path_output_plot: str,
     legend_loc: str | None = None,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
     x_num_ticks: int = 6,
     y_num_ticks: int = 6,
+    tick_fontsize: int = 20,
     x_formatter: str = "%.2f",
     y_formatter: str = "%.1f",
     annotation_texts: list[str] | None = None,
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
+    annotation_vert_space: float = 0.06,
+    annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
     data_specs:
@@ -69,11 +78,11 @@ def plot_eta_vs_temp(
     
     # Legend
     if legend_loc is not None:
-        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        ax.legend(loc=legend_loc, fontsize=legend_fontsize, frameon=False)
         
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\eta\, [\mathrm{GeV}^3]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$\eta\, [\mathrm{GeV}^3]$', fontsize=labels_fontsize)
 
     # Configure axes using the helper function
     xmin = xlim[0]
@@ -88,7 +97,7 @@ def plot_eta_vs_temp(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -106,9 +115,9 @@ def plot_eta_vs_temp(
             ymax, 
             x_annotation, 
             y_annotation, 
-            auxH=0.06, 
+            auxH=annotation_vert_space, 
             texts=annotation_texts, 
-            fontsize=16
+            fontsize=annotation_fontsize
         )
 
     fig.tight_layout()
@@ -127,15 +136,20 @@ def plot_eta_over_s_vs_temp(
     path_output_plot: str,
     include_kss_bound: bool = True,
     legend_loc: str | None = None,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
     x_num_ticks: int = 6,
     y_num_ticks: int = 6,
+    tick_fontsize: int = 20,
     x_formatter: str = "%.2f",
     y_formatter: str = "%.1f",
     annotation_texts: list[str] | None = None,
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
+    annotation_vert_space: float = 0.06,
+    annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
     data_specs:
@@ -194,11 +208,11 @@ def plot_eta_over_s_vs_temp(
     
     # Legend
     if legend_loc is not None:
-        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        ax.legend(loc=legend_loc, fontsize=legend_fontsize, frameon=False)
         
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$\eta/s$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$\eta/s$', fontsize=labels_fontsize)
 
     # Configure axes using the helper function
     xmin = xlim[0]
@@ -213,7 +227,7 @@ def plot_eta_over_s_vs_temp(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -231,9 +245,9 @@ def plot_eta_over_s_vs_temp(
             ymax, 
             x_annotation, 
             y_annotation, 
-            auxH=0.06, 
+            auxH=annotation_vert_space, 
             texts=annotation_texts, 
-            fontsize=16
+            fontsize=annotation_fontsize
         )
 
     fig.tight_layout()

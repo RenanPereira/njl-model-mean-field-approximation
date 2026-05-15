@@ -42,3 +42,7 @@ echo "Building plots: SU3 NJL Transport Coefficients Study"
 # SU3 NJL Thermodynamics Study with and without 8q interactions
 echo "Building plots: SU3 NJL Thermodynamics Study with and without 8q interactions"
 (cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && ./build_plots.sh)
+
+# SU3 Klevansky Nuclear Physics A 608 (1996) Results Reproduction
+echo "Building plots: SU3 Klevansky Nuclear Physics A 608 (1996) Results Reproduction"
+(cd calculations/su3_3d_cutoff_klev_1996_reproduction && ./build_plots.sh)

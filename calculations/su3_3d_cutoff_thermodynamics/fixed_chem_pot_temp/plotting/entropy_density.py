@@ -8,9 +8,13 @@ from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
 from common_utils.stefan_boltzmann import StefanBoltzmannMasslessQuarks
 
 
-# Common configurations between plots
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
         
 def plot_entropy_density_vs_temperature(
@@ -21,7 +25,11 @@ def plot_entropy_density_vs_temperature(
     path_plots_folder: str,
     filename: str,
     parameter_set_annotation: str,
-    plotname: str
+    plotname: str,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
+    tick_fontsize: int = 20,
+    annotation_fontsize: int = 18
 ) -> None:
     print("Building plot: entropy density versus temperature.")
     print(f"Using datafile {filename}.\n")
@@ -45,12 +53,12 @@ def plot_entropy_density_vs_temperature(
     )
 
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$s\, [\mathrm{GeV}^3]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$s\, [\mathrm{GeV}^3]$', fontsize=labels_fontsize)
 
     # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
 
     # Configure axes using the helper function
     xmin = 0.000
@@ -67,7 +75,7 @@ def plot_entropy_density_vs_temperature(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -81,7 +89,7 @@ def plot_entropy_density_vs_temperature(
     texts = [
         r'$\mu = 0.0\ \mathrm{GeV}$',
     ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
     fig.tight_layout()
 
@@ -102,7 +110,11 @@ def plot_entropy_density_vs_temperature_given_list(
     parameter_sets_annotation: list[str],
     colors: list[str],
     linestyles: list[str],
-    plotname: str
+    plotname: str,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
+    tick_fontsize: int = 20,
+    annotation_fontsize: int = 18
 ) -> None:
     print("Building plot: comparing entropy density versus temperature for different files.\n")
 
@@ -134,12 +146,12 @@ def plot_entropy_density_vs_temperature_given_list(
         )
     
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$s\, [\mathrm{GeV}^3]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$s\, [\mathrm{GeV}^3]$', fontsize=labels_fontsize)
 
     # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
 
     # Configure axes using the helper function
     xmin = 0.1
@@ -156,7 +168,7 @@ def plot_entropy_density_vs_temperature_given_list(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6,
@@ -171,7 +183,7 @@ def plot_entropy_density_vs_temperature_given_list(
     texts = [
         r'$\mu = 0.0\ \mathrm{GeV}$',
     ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
     fig.tight_layout()
 
@@ -189,7 +201,11 @@ def plot_entropy_density_dPdT_vs_temperature(
     path_plots_folder: str,
     filename: str,
     parameter_set_annotation: str,
-    plotname: str
+    plotname: str,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
+    tick_fontsize: int = 20,
+    annotation_fontsize: int = 18
 ) -> None:
     print("Building plot: entropy density, dPdT versus temperature.")
     print(f"Using datafile {filename}.\n")
@@ -227,12 +243,12 @@ def plot_entropy_density_dPdT_vs_temperature(
     )
 
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$s\, [\mathrm{GeV}^3]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$s\, [\mathrm{GeV}^3]$', fontsize=labels_fontsize)
 
     # Grid and legend
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=16, frameon=False, title_fontsize=14)
+    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
 
     # Configure axes using the helper function
     xmin = 0.000
@@ -249,7 +265,7 @@ def plot_entropy_density_dPdT_vs_temperature(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -264,7 +280,7 @@ def plot_entropy_density_dPdT_vs_temperature(
         parameter_set_annotation,
         r'$\mu = 0.0\ \mathrm{GeV}$',
     ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
     fig.tight_layout()
 
@@ -283,15 +299,20 @@ def plot_s_over_temp3_vs_temp(
     path_output_plot: str,
     stefan_boltzmann_limit: bool = True,
     legend_loc: str | None = None,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
     x_num_ticks: int = 6,
     y_num_ticks: int = 6,
+    tick_fontsize: int = 20,
     x_formatter: str = "%.2f",
     y_formatter: str = "%.1f",
     annotation_texts: list[str] | None = None,
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
+    annotation_vert_space: float = 0.06,
+    annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
     data_specs:
@@ -366,11 +387,11 @@ def plot_s_over_temp3_vs_temp(
     
     # Legend
     if legend_loc is not None:
-        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        ax.legend(loc=legend_loc, fontsize=legend_fontsize, frameon=False)
 
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
-    ax.set_ylabel(r'$s / T^3$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+    ax.set_ylabel(r'$s / T^3$', fontsize=labels_fontsize)
     
     # Configure axes using the helper function
     xmin = xlim[0]
@@ -385,7 +406,7 @@ def plot_s_over_temp3_vs_temp(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -403,9 +424,9 @@ def plot_s_over_temp3_vs_temp(
             ymax, 
             x_annotation, 
             y_annotation, 
-            auxH=0.06, 
+            auxH=annotation_vert_space, 
             texts=annotation_texts, 
-            fontsize=16
+            fontsize=annotation_fontsize
         )
 
     fig.tight_layout()

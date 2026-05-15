@@ -51,7 +51,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 8.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -103,7 +103,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 12.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -155,7 +155,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 8.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -207,7 +207,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 3.0),
     x_num_ticks=4,
     y_num_ticks=4,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -259,7 +259,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 8.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -311,7 +311,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 8.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -363,7 +363,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 8.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -415,7 +415,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 8.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -467,7 +467,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 8.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -519,7 +519,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 8.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
@@ -571,7 +571,7 @@ plot_integrated_cross_section_vs_temperature(
     ylim=(0.0, 12.0),
     x_num_ticks=4,
     y_num_ticks=5,
-    x_formatter="%.2f",
+    x_formatter="%.3f",
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
