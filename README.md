@@ -227,6 +227,24 @@ Some of the results that can be obtained using this code are shown below. For mo
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
 </p>
 
+
+### Phase Diagram
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setA_muq_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setB_muq_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setC_muq_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_allSets_muq_vs_temp.png" width="24%">
+</p>
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setA_rhoB_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setB_rhoB_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setC_rhoB_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_allSets_rhoB_vs_temp.png" width="24%">
+</p>
+
+
 ### Pressure
 
 <p align="left">
