@@ -18,7 +18,7 @@ private:
     double downQuarkEffectiveMass = 0.0/0.0;
     double strangeQuarkEffectiveMass = 0.0/0.0;
     double propagatorIntegralPrecision = 1E-8;
-    scatteringProcess process;
+    ScatteringProcess process;
     bool largeAngleScatteringContribution = false;
     double crossSectionIntegralPrecision = 0.0/0.0;
     double integratedCrossSectionIntegralPrecision_dXdYdZ = 0.0/0.0;
@@ -41,7 +41,7 @@ public:
         double downQuarkEffectiveMassAux, 
         double strangeQuarkEffectiveMassAux, 
         double propagatorIntegralPrecisionAux, 
-        scatteringProcess processAux, 
+        ScatteringProcess processAux, 
         bool largeAngleScatteringContributionAux, 
         double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXdYAux
@@ -74,7 +74,7 @@ public:
         double downQuarkEffectiveMassAux, 
         double strangeQuarkEffectiveMassAux, 
         double propagatorIntegralPrecisionAux, 
-        scatteringProcess processAux, 
+        ScatteringProcess processAux, 
         bool largeAngleScatteringContributionAux, 
         double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXdYdZAux, 
@@ -132,7 +132,7 @@ public:
     double getDownQuarkEffectiveChemicalPotential(){ return downQuarkEffectiveChemicalPotential; };
     double getStrangeQuarkEffectiveChemicalPotential(){ return strangeQuarkEffectiveChemicalPotential; };
     double getPropagatorIntegralPrecision(){ return propagatorIntegralPrecision; }
-    scatteringProcess getProcess(){ return process; }
+    ScatteringProcess getProcess(){ return process; }
     bool getLargeAngleScatteringContribution(){ return largeAngleScatteringContribution; }
     double getCrossSectionIntegralPrecision(){ return crossSectionIntegralPrecision; }
     double getIntegratedCrossSectionIntegralPrecision_dXdYdZ(){ return integratedCrossSectionIntegralPrecision_dXdYdZ; }
@@ -163,7 +163,7 @@ public:
         std::cout << "effMassD = " << downQuarkEffectiveMass << "\n";
         std::cout << "effMassS = " << strangeQuarkEffectiveMass << "\n";
         std::cout << "propagatorPrecision = " << propagatorIntegralPrecision << "\n";
-        std::cout << "scatteringProcess = " << toString(process) << "\n";
+        std::cout << "ScatteringProcess = " << toString(process) << "\n";
         std::cout << "s = " << centerOfMassEnergy << "\n";
         std::cout << "E = " << energy << "\n";
         std::cout << "p1 = " << momentumParticle1 << "\n";
@@ -261,7 +261,7 @@ double integratedCrossSectionProcess12To34(
     double , 
     double , 
     double , 
-    scatteringProcess , 
+    ScatteringProcess , 
     bool , 
     double , 
     double , 
@@ -284,7 +284,7 @@ double integratedCrossSectionOGProcess12To34(
     double , 
     double , 
     double , 
-    scatteringProcess , 
+    ScatteringProcess , 
     bool , 
     double , 
     double , 
@@ -308,7 +308,7 @@ double probabilityKlevansky(
     double , 
     double , 
     double , 
-    scatteringProcess ,
+    ScatteringProcess ,
     double 
 );
 
@@ -328,7 +328,7 @@ double integratedCrossSectionProcess12To34Klevansky(
     double , 
     double , 
     double , 
-    scatteringProcess , 
+    ScatteringProcess , 
     bool , 
     double , 
     double , 
@@ -346,7 +346,7 @@ double probabilityNormalizationInverseZhuang(
     double , 
     double , 
     double , 
-    scatteringProcess ,
+    ScatteringProcess ,
     double 
 );
 
@@ -364,7 +364,7 @@ double integratedCrossSectionProcess12To34Zhuang(
     double , 
     double , 
     double , 
-    scatteringProcess , 
+    ScatteringProcess , 
     bool , 
     double , 
     double 
@@ -407,7 +407,7 @@ private:
     double downQuarkEffectiveMass = 0.0/0.0;
     double strangeQuarkEffectiveMass = 0.0/0.0;
     double propagatorIntegralPrecision = 1E-8;
-    scatteringProcess process;
+    ScatteringProcess process;
     bool largeAngleScatteringContribution = false;
     double crossSectionIntegralPrecision = 1E-4;
     double integratedCrossSectionIntegralPrecision_dXdYdZ = 0.0/0.0;
@@ -435,7 +435,7 @@ public:
         double effMassDAux, 
         double effMassSAux, 
         double propagatorIntegralPrecisionAux, 
-        scatteringProcess processAux, 
+        ScatteringProcess processAux, 
         bool largeAngleScatteringContributionAux, 
         double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXdYdZAux, 
@@ -476,7 +476,7 @@ public:
         double effMassDAux, 
         double effMassSAux, 
         double propagatorIntegralPrecisionAux, 
-        scatteringProcess processAux, 
+        ScatteringProcess processAux, 
         bool largeAngleScatteringContributionAux, 
         double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXdYAux, 
@@ -515,7 +515,7 @@ public:
         double effMassDAux, 
         double effMassSAux, 
         double propagatorIntegralPrecisionAux, 
-        scatteringProcess processAux, 
+        ScatteringProcess processAux, 
         bool largeAngleScatteringContributionAux, 
         double crossSectionIntegralPrecisionAux,
         double integratedCrossSectionIntegralPrecision_dXAux,
@@ -551,7 +551,7 @@ public:
         double effMassUAux, 
         double effMassDAux, 
         double effMassSAux, 
-        scatteringProcess processAux, 
+        ScatteringProcess processAux, 
         bool largeAngleScatteringContributionAux,
         IntegratedCrossSectionApproximationMethod approximationMethodAux
     )
@@ -584,7 +584,7 @@ public:
     double getDownQuarkEffectiveChemicalPotential(){ return downQuarkEffectiveChemicalPotential; };
     double getStrangeQuarkEffectiveChemicalPotential(){ return strangeQuarkEffectiveChemicalPotential; };
     double getPropagatorIntegralPrecision(){ return propagatorIntegralPrecision; }
-    scatteringProcess getProcess(){ return process; }
+    ScatteringProcess getProcess(){ return process; }
     bool getLargeAngleScatteringContribution(){ return largeAngleScatteringContribution; }
     double getCrossSectionIntegralPrecision(){ return crossSectionIntegralPrecision; }
     double getIntegratedCrossSectionIntegralPrecision_dXdYdZ(){ return integratedCrossSectionIntegralPrecision_dXdYdZ; }
@@ -745,7 +745,7 @@ public:
 
 std::vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlongTrajectory(
     std::vector<SU3NJL3DCutoffFixedChemPotTemp> ,
-    scatteringProcess , 
+    ScatteringProcess , 
     double , 
     bool , 
     double , 
@@ -759,7 +759,7 @@ void writeIntegratedCrossSectionToFile(std::vector<SU3NJL3DCutoffIntegratedCross
 
 void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
     std::vector<SU3NJL3DCutoffFixedChemPotTemp> ,
-    scatteringProcess , 
+    ScatteringProcess , 
     double , 
     bool , 
     double , 
@@ -782,7 +782,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialT
 
 void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
     std::vector<SU3NJL3DCutoffFixedChemPotTemp> ,
-    scatteringProcess , 
+    ScatteringProcess , 
     double , 
     bool , 
     double , 

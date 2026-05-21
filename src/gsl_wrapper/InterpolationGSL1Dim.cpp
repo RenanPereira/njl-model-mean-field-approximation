@@ -15,12 +15,30 @@ void InterpolationGSL1Dim::setSpline()
     copy(discretizedFunction.begin(), discretizedFunction.end(), function);
 
     //allocate memory for GSL interpolation
-    if ( method==linear ){ spline = gsl_spline_alloc(gsl_interp_linear, N); }
-    else if( method==steffen ){ spline = gsl_spline_alloc(gsl_interp_steffen, N); }
-    else if( method==cubic ){ spline = gsl_spline_alloc(gsl_interp_cspline, N); }
-    else if( method==akima ){ spline = gsl_spline_alloc(gsl_interp_akima, N); }	
-    else if( method==polynomial ){ spline = gsl_spline_alloc(gsl_interp_polynomial, N); }
-    else { spline = gsl_spline_alloc(gsl_interp_linear, N); }
+    if ( method==InterpolationGSL1DimMethod::LINEAR  )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_linear, N); 
+	}
+    else if( method==InterpolationGSL1DimMethod::STEFFEN )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_steffen, N); 
+	}
+    else if( method==InterpolationGSL1DimMethod::CUBIC )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_cspline, N); 
+	}
+    else if( method==InterpolationGSL1DimMethod::AKIMA )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_akima, N);
+	}	
+    else if( method==InterpolationGSL1DimMethod::POLYNOMIAL )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_polynomial, N); 
+	}
+    else 
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_linear, N); 
+	}
 
     //initiate interpolation
     gsl_spline_init(spline, variable, function, N);
@@ -353,6 +371,3 @@ double equationToFindRootsOfInterpolation2ndDerivative(double x, void *interpola
 
 	return fx;
 }
-
-
-

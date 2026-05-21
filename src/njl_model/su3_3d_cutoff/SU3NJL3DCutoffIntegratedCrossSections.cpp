@@ -575,7 +575,7 @@ double integratedCrossSectionCOVVolume(
 		M2, 
 		0.0, 
         0.0, 
-		UDUD, 
+		ScatteringProcess::UDUD, 
         false, 
 		0.0,
         integralPrecision_dsdE
@@ -693,12 +693,21 @@ double integratedCrossSectionOGVolume(
 {
 	SU3NJL3DCutoffParameters parametersNJL(cutoff);
 	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(
-		"integratedCrossSectionOGVolumeIntegral", parametersNJL, 0.0, 
-        0.0, 0.0, 0.0, 
-        M1, M2, 0.0, 
-        0.0, UDUD, 
-        false, 0.0,
-        integralPrecision_dp1dp2dtheta, integralPrecision_dp1dp2
+		"integratedCrossSectionOGVolumeIntegral", 
+		parametersNJL, 
+		0.0, 
+        0.0, 
+		0.0, 
+		0.0, 
+        M1, 
+		M2, 
+		0.0, 
+        0.0, 
+		ScatteringProcess::UDUD, 
+        false, 
+		0.0,
+        integralPrecision_dp1dp2dtheta, 
+		integralPrecision_dp1dp2
 	);
 
     int integrationWorkspace = 1000;
@@ -795,7 +804,7 @@ double integratedCrossSectionIntegrand_dsdE(double E, void *parameters)
 	double effMD = aux.getDownQuarkEffectiveMass();
 	double effMS = aux.getStrangeQuarkEffectiveMass();
 	double s = aux.getCenterOfMassEnergy();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 
 	//set incoming and outgoing masses
 	double m1, m2, m3, m4;
@@ -822,7 +831,7 @@ double integratedCrossSectionIntegrand_ds(double s, void *parameters)
 	double effMU = aux.getUpQuarkEffectiveMass();
 	double effMD = aux.getDownQuarkEffectiveMass();
 	double effMS = aux.getStrangeQuarkEffectiveMass();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 	double integralPrecision_dsdE = aux.getIntegratedCrossSectionIntegralPrecision_dXdY();
 
 	//set center of mass energy
@@ -1029,7 +1038,7 @@ double integratedCrossSectionProcess12To34(
 	double effMassD, 
 	double effMassS, 
 	double propagatorIntegralPrecision, 
-	scatteringProcess process, 
+	ScatteringProcess process, 
 	bool largeAngleScatteringContribution, 
 	double crossSectionIntegralPrecision,
 	double integralPrecision_dsdE, 
@@ -1112,7 +1121,7 @@ double integratedCrossSectionOGIntegrand_dp1dp2dtheta(double theta, void *parame
 	double effMS = aux.getStrangeQuarkEffectiveMass();
 	double p1 = aux.getMomentumParticle1();
 	double p2 = aux.getMomentumParticle2();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 
 	//set incoming and outgoing masses
 	double m1, m2, m3, m4;
@@ -1158,7 +1167,7 @@ double integratedCrossSectionOGIntegrand_dp1dp2(double p2, void *parameters)
 	SU3NJL3DCutoffIntegratedCrossSectionIntegrand aux(parameters);
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 	double integralPrecision = aux.getIntegratedCrossSectionIntegralPrecision_dXdYdZ();
 
 	//set momentum particle 2
@@ -1194,7 +1203,7 @@ double integratedCrossSectionOGIntegrand_dp1(double p1, void *parameters)
 	double cutoff = aux.getParametersNJL().getThreeMomentumCutoff();
 	double T = aux.getTemperature();
 	double effCPU = aux.getUpQuarkEffectiveChemicalPotential();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 	double integralPrecision = aux.getIntegratedCrossSectionIntegralPrecision_dXdY();
 
 	//set momentum particle 1
@@ -1234,7 +1243,7 @@ double integratedCrossSectionOGProcess12To34(
 	double effMassD, 
 	double effMassS, 
 	double propagatorIntegralPrecision, 
-	scatteringProcess process, 
+	ScatteringProcess process, 
 	bool largeAngleScatteringContribution, 
 	double crossSectionIntegralPrecision,
 	double integralPrecision_dp1dp2dtheta, 
@@ -1330,7 +1339,7 @@ double probabilityKlevanskyIntegrand_dx(double x, void *parameters)
 	double effMD = aux.getDownQuarkEffectiveMass();
 	double effMS = aux.getStrangeQuarkEffectiveMass();
 	double s = aux.getCenterOfMassEnergy();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 
 	//set incoming and outgoing masses
 	double m1, m2, m3, m4;
@@ -1364,7 +1373,7 @@ double probabilityKlevansky(
 	double effMassD, 
 	double effMassS, 
 	double s, 
-	scatteringProcess process,
+	ScatteringProcess process,
 	double integralPrecision_dE1
 )
 {   
@@ -1426,7 +1435,7 @@ double probabilityKlevansky(double s, void *parameters)
 	double effMU = aux.getUpQuarkEffectiveMass();
 	double effMD = aux.getDownQuarkEffectiveMass();
 	double effMS = aux.getStrangeQuarkEffectiveMass();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 	double integralPrecision_dsdx = aux.getIntegratedCrossSectionIntegralPrecision_dXdY();
 
 	double probabilityKlev = probabilityKlevansky(
@@ -1457,7 +1466,7 @@ double integratedCrossSectionKlevanskyIntegrand_ds(double s, void *parameters)
 	double effMU = aux.getUpQuarkEffectiveMass();
 	double effMD = aux.getDownQuarkEffectiveMass();
 	double effMS = aux.getStrangeQuarkEffectiveMass();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 
 	//set center of mass energy
 	aux.setCenterOfMassEnergy(s);
@@ -1531,7 +1540,7 @@ double integratedCrossSectionProcess12To34Klevansky(
 	double effMassD, 
 	double effMassS, 
 	double propagatorIntegralPrecision, 
-	scatteringProcess process, 
+	ScatteringProcess process, 
 	bool largeAngleScatteringContribution, 
 	double crossSectionIntegralPrecision,
 	double integralPrecision_dsdE, 
@@ -1616,7 +1625,7 @@ double nonNormalizedProbabilityZhuangIntegrand_ds(double s, void *parameters)
 	double effMU = aux.getUpQuarkEffectiveMass();
 	double effMD = aux.getDownQuarkEffectiveMass();
 	double effMS = aux.getStrangeQuarkEffectiveMass();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 
 	//set incoming and outgoing masses
 	double m1, m2, m3, m4;
@@ -1648,7 +1657,7 @@ double probabilityNormalizationInverseZhuang(
 	double effMassU, 
 	double effMassD, 
 	double effMassS, 
-	scatteringProcess process,
+	ScatteringProcess process,
 	double integralPrecision_ds
 )
 {
@@ -1704,7 +1713,7 @@ double integratedCrossSectionZhuangIntegrand_ds(double s, void *parameters)
 	double effMU = aux.getUpQuarkEffectiveMass();
 	double effMD = aux.getDownQuarkEffectiveMass();
 	double effMS = aux.getStrangeQuarkEffectiveMass();
-	scatteringProcess process = aux.getProcess();
+	ScatteringProcess process = aux.getProcess();
 
 	//set center of mass energy
 	aux.setCenterOfMassEnergy(s);
@@ -1775,7 +1784,7 @@ double integratedCrossSectionProcess12To34Zhuang(
 	double effMassD, 
 	double effMassS, 
 	double propagatorIntegralPrecision, 
-	scatteringProcess process, 
+	ScatteringProcess process, 
 	bool largeAngleScatteringContribution, 
 	double crossSectionIntegralPrecision,
 	double integralPrecision_ds
@@ -1907,7 +1916,7 @@ bool isValidIntegratedCrossSectionApproximationMethod(const string& methodString
 
 vector<SU3NJL3DCutoffIntegratedCrossSection> evaluateIntegratedCrossSectionAlongTrajectory(
 	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
-	scatteringProcess process, 
+	ScatteringProcess process, 
 	double propagatorIntegralPrecision,
 	bool largeAngleScatteringContribution, 
 	double crossSectionIntegralPrecision,
@@ -2009,7 +2018,7 @@ void writeIntegratedCrossSectionToFile(vector<SU3NJL3DCutoffIntegratedCrossSecti
 
 void evaluateIntegratedCrossSectionAlongFixedChemicalPotentialTrajectory(
 	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
-	scatteringProcess process, 
+	ScatteringProcess process, 
 	double propagatorIntegralPrecision,
 	bool largeAngleScatteringContribution, 
 	double crossSectionIntegralPrecision,
@@ -2076,42 +2085,42 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialT
 		}
 	}
 
-	vector<scatteringProcess> process;
+	vector<ScatteringProcess> process;
 	if ( runFiniteDensityProcesses )
 	{
 		process = { 
-			UUUU, 
-			UDUD, 
-			USUS, 
-			SSSS,
-			UUBarUUBar, 
-			UUBarDDBar, 
-			UUBarSSBar, 
-			UDBarUDBar, 
-			USBarUSBar, 
-			SUBarSUBar, 
-			SSBarUUBar, 
-			SSBarSSBar,
-			UBarUBarUBarUBar, 
-			UBarDBarUBarDBar, 
-			UBarSBarUBarSBar, 
-			SBarSBarSBarSBar
+			ScatteringProcess::UUUU, 
+			ScatteringProcess::UDUD, 
+			ScatteringProcess::USUS, 
+			ScatteringProcess::SSSS,
+			ScatteringProcess::UUBarUUBar, 
+			ScatteringProcess::UUBarDDBar, 
+			ScatteringProcess::UUBarSSBar, 
+			ScatteringProcess::UDBarUDBar, 
+			ScatteringProcess::USBarUSBar, 
+			ScatteringProcess::SUBarSUBar, 
+			ScatteringProcess::SSBarUUBar, 
+			ScatteringProcess::SSBarSSBar,
+			ScatteringProcess::UBarUBarUBarUBar, 
+			ScatteringProcess::UBarDBarUBarDBar, 
+			ScatteringProcess::UBarSBarUBarSBar, 
+			ScatteringProcess::SBarSBarSBarSBar
 		};
 	}
 	else
 	{
 		process = { 
-			UUUU, 
-			UDUD, 
-			USUS, 
-			SSSS,
-			UUBarUUBar, 
-			UUBarDDBar, 
-			UUBarSSBar, 
-			UDBarUDBar, 
-			USBarUSBar, 
-			SSBarUUBar, 
-			SSBarSSBar 
+			ScatteringProcess::UUUU, 
+			ScatteringProcess::UDUD, 
+			ScatteringProcess::USUS, 
+			ScatteringProcess::SSSS,
+			ScatteringProcess::UUBarUUBar, 
+			ScatteringProcess::UUBarDDBar, 
+			ScatteringProcess::UUBarSSBar, 
+			ScatteringProcess::UDBarUDBar, 
+			ScatteringProcess::USBarUSBar, 
+			ScatteringProcess::SSBarUUBar, 
+			ScatteringProcess::SSBarSSBar 
 		};
 	}
 
@@ -2134,7 +2143,7 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedChemicalPotentialT
 
 void evaluateIntegratedCrossSectionAlongFixedTemperatureTrajectory(
 	vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTemperatureSolution,
-	scatteringProcess process, 
+	ScatteringProcess process, 
 	double propagatorIntegralPrecision,
 	bool largeAngleScatteringContribution, 
 	double crossSectionIntegralPrecision,
@@ -2188,24 +2197,24 @@ void evaluateIsospinSymmetricIntegratedCrossSectionsAlongFixedTemperatureTraject
 	int numberOfThreads
 )
 {
-	vector<scatteringProcess> process;
+	vector<ScatteringProcess> process;
 	process = { 
-		UUUU, 
-		UDUD, 
-		USUS, 
-		SSSS,
-		UUBarUUBar, 
-		UUBarDDBar, 
-		UUBarSSBar, 
-		UDBarUDBar, 
-		USBarUSBar, 
-		SUBarSUBar, 
-		SSBarUUBar, 
-		SSBarSSBar,
-		UBarUBarUBarUBar, 
-		UBarDBarUBarDBar, 
-		UBarSBarUBarSBar, 
-		SBarSBarSBarSBar 
+		ScatteringProcess::UUUU, 
+		ScatteringProcess::UDUD, 
+		ScatteringProcess::USUS, 
+		ScatteringProcess::SSSS,
+		ScatteringProcess::UUBarUUBar, 
+		ScatteringProcess::UUBarDDBar, 
+		ScatteringProcess::UUBarSSBar, 
+		ScatteringProcess::UDBarUDBar, 
+		ScatteringProcess::USBarUSBar, 
+		ScatteringProcess::SUBarSUBar, 
+		ScatteringProcess::SSBarUUBar, 
+		ScatteringProcess::SSBarSSBar,
+		ScatteringProcess::UBarUBarUBarUBar, 
+		ScatteringProcess::UBarDBarUBarDBar, 
+		ScatteringProcess::UBarSBarUBarSBar, 
+		ScatteringProcess::SBarSBarSBarSBar 
 	};
 
 	for (int i = 0; i < int(process.size()); ++i)

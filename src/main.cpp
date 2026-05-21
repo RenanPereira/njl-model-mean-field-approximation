@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
     double effMassS = inMedium.getStrangeQuarkEffectiveMass();
 
 
-    scatteringProcess process = UUUU;
+    ScatteringProcess process = UUUU;
     evaluateCrossSectionProcess12To34ToFile(parameters, T, 
                                             effChemPotU, effChemPotD, effChemPotS, 
                                             effMassU, effMassD, effMassS, 

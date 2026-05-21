@@ -47,7 +47,7 @@ public:
 	double calculateVacuumPressureElectrons(double );
 
 	//meson properties
-	SU3NJL3DCutoffMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
+	SU3NJL3DCutoffMeson calculateMesonMassAndWidth(MesonState , double , MultiRootFindingMethod , double , double );
 	void logVacuumSolutionToFile(std::string );
 
 	static void evaluateVacuumMasses(

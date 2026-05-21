@@ -37,22 +37,22 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
 
     cout << "Pseudoscalar meson masses:\n";
 
-    SU3NJL3DCutoffMeson pionPlusMassSolution = vacuum.calculateMesonMassAndWidth(pionPlus, 1E-7, HYBRIDS, 0.2, 0.2);
+    SU3NJL3DCutoffMeson pionPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::pionPlus, 1E-7, HYBRIDS, 0.2, 0.2);
     cout << pionPlusMassSolution.getMesonMass() << "\t" << pionPlusMassSolution.getMesonWidth() << "\n";
 
-    SU3NJL3DCutoffMeson kaonPlusMassSolution = vacuum.calculateMesonMassAndWidth(kaonPlus, 1E-7, HYBRIDS, 0.4, 0.2);
+    SU3NJL3DCutoffMeson kaonPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::kaonPlus, 1E-7, HYBRIDS, 0.4, 0.2);
     cout << kaonPlusMassSolution.getMesonMass() << "\t" << kaonPlusMassSolution.getMesonWidth() << "\n";
 
     SU3NJL3DCutoffMeson diagonalMassSolution;
-    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(diagonalPseudoscalars, 1E-7, HYBRIDS, 0.5, 0.2);
+    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::diagonalPseudoscalars, 1E-7, HYBRIDS, 0.5, 0.2);
     cout << diagonalMassSolution.getMesonMass() << "\t" << diagonalMassSolution.getMesonWidth() << "\n";
 
-    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(diagonalPseudoscalars, 1E-7, HYBRIDS, 1.0, 0.2);
+    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::diagonalPseudoscalars, 1E-7, HYBRIDS, 1.0, 0.2);
     cout << diagonalMassSolution.getMesonMass() << "\t" << diagonalMassSolution.getMesonWidth() << "\n";
 
      cout << "Scalar meson masses:\n";
 
-    SU3NJL3DCutoffMeson sigmaPionPlusMassSolution = vacuum.calculateMesonMassAndWidth(sigmaPionPlus, 1E-7, HYBRIDS, 0.2, 0.2);
+    SU3NJL3DCutoffMeson sigmaPionPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::sigmaPionPlus, 1E-7, HYBRIDS, 0.2, 0.2);
     cout << sigmaPionPlusMassSolution.getMesonMass() << "\t" << sigmaPionPlusMassSolution.getMesonWidth() << "\n";
 
     //solve model at zero chemical potential up to some finite temperature
@@ -73,11 +73,11 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     double mesonPropertiesPrecision = 1E-7;
     double mesonMassVacuumGuess;
     double mesonWidthVacuumGuess;
-    mesonState mesonID;
+    MesonState mesonID;
 
     mesonMassVacuumGuess = 0.2;
     mesonWidthVacuumGuess = 0.2;
-    mesonID = pionPlus;
+    mesonID = MesonState::pionPlus;
     SU3NJL3DCutoffFixedChemPotTemp meltingPointPionPlus = nondiagonalMesonMeltingPoint(
         vacuum, 
         finiteTSolution, 
@@ -91,7 +91,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
 
     mesonMassVacuumGuess = 0.5;
     mesonWidthVacuumGuess = 0.2;
-    mesonID = kaonPlus;
+    mesonID = MesonState::kaonPlus;
     SU3NJL3DCutoffFixedChemPotTemp meltingPointKaonPlus = nondiagonalMesonMeltingPoint(
         vacuum, 
         finiteTSolution, 

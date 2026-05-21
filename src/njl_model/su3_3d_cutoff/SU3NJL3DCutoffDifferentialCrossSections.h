@@ -5,7 +5,7 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoff.h"
 
 
-enum scatteringProcess 
+enum class ScatteringProcess 
 { 
     UDUD, 
     DUDU, 
@@ -38,13 +38,48 @@ enum scatteringProcess
     UBarSBarUBarSBar 
 };
 
-std::string toString(scatteringProcess );
+inline const std::map<ScatteringProcess, std::string> ScatteringProcessMap = 
+{
+    {ScatteringProcess::UDUD, "UDUD"},
+    {ScatteringProcess::DUDU, "DUDU"},
+    {ScatteringProcess::USUS, "USUS"},
+    {ScatteringProcess::SUSU, "SUSU"},
+    {ScatteringProcess::DSDS, "DSDS"},
+    {ScatteringProcess::SDSD, "SDSD"},
+    {ScatteringProcess::UUUU, "UUUU"},
+    {ScatteringProcess::DDDD, "DDDD"},
+    {ScatteringProcess::SSSS, "SSSS"},
+    {ScatteringProcess::UDBarUDBar, "UDBarUDBar"},
+    {ScatteringProcess::USBarUSBar, "USBarUSBar"},
+    {ScatteringProcess::DSBarDSBar, "DSBarDSBar"},
+    {ScatteringProcess::DUBarDUBar, "DUBarDUBar"},
+    {ScatteringProcess::SUBarSUBar, "SUBarSUBar"},
+    {ScatteringProcess::SDBarSDBar, "SDBarSDBar"},
+    {ScatteringProcess::UUBarUUBar, "UUBarUUBar"},
+    {ScatteringProcess::UUBarDDBar, "UUBarDDBar"},
+    {ScatteringProcess::UUBarSSBar, "UUBarSSBar"},
+    {ScatteringProcess::DDBarUUBar, "DDBarUUBar"},
+    {ScatteringProcess::DDBarDDBar, "DDBarDDBar"},
+    {ScatteringProcess::DDBarSSBar, "DDBarSSBar"},
+    {ScatteringProcess::SSBarUUBar, "SSBarUUBar"},
+    {ScatteringProcess::SSBarDDBar, "SSBarDDBar"},
+    {ScatteringProcess::SSBarSSBar, "SSBarSSBar"},
+    {ScatteringProcess::UBarUBarUBarUBar, "UBarUBarUBarUBar"},
+    {ScatteringProcess::DBarDBarDBarDBar, "DBarDBarDBarDBar"},
+    {ScatteringProcess::SBarSBarSBarSBar, "SBarSBarSBarSBar"},
+    {ScatteringProcess::UBarDBarUBarDBar, "UBarDBarUBarDBar"},
+    {ScatteringProcess::UBarSBarUBarSBar, "UBarSBarUBarSBar"},
+};
+
+std::string toString(ScatteringProcess );
+
+ScatteringProcess stringToScatteringProcess(const std::string& );
 
 void inOutMassesGivenScatteringProcess(
     double , 
     double , 
     double , 
-    scatteringProcess , 
+    ScatteringProcess , 
     double& , 
     double& , 
     double& , 
@@ -55,12 +90,12 @@ void inChemicalPotentialsGivenScatteringProcess(
     double , 
     double , 
     double , 
-    scatteringProcess , 
+    ScatteringProcess , 
     double& , 
     double& 
 );
 
-void outChemicalPotentialsGivenScatteringProcess(double , double , double , scatteringProcess , double& , double& );
+void outChemicalPotentialsGivenScatteringProcess(double , double , double , ScatteringProcess , double& , double& );
 
 double xij(double , double , double , double );
 
@@ -460,7 +495,7 @@ double differentialCrossSectionProcess12To34(
     double , 
     double , 
     double , 
-    scatteringProcess 
+    ScatteringProcess 
 );
 
 

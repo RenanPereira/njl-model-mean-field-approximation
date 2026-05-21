@@ -158,7 +158,7 @@ double crossSectionProcess12To34Integrand(double x, void *parameters)
     double effMassS = aux.getStrangeQuarkEffectiveMass();
     double s = aux.getCenterOfMassEnergy();
     double integralPrecision = aux.getPropagatorIntegralPrecision();
-    scatteringProcess process = aux.getProcess();
+    ScatteringProcess process = aux.getProcess();
     bool largeAngleScatteringContribution = aux.getLargeAngleScatteringContribution();
 
     double integrand = differentialCrossSectionProcess12To34(
@@ -199,7 +199,7 @@ double crossSectionProcess12To34(
     double effMassS, 
     double s, 
     double propIntPrecision, 
-    scatteringProcess process, 
+    ScatteringProcess process, 
     bool largeAngleScatteringContribution, 
     double crossSecIntPrecision
 )
@@ -266,12 +266,12 @@ double crossSectionProcess12To34(
 
     //for processes involving completely identical particles, we have to remove extra counting
     if ( 
-        process==UUUU || 
-        process==DDDD || 
-        process==SSSS ||
-        process==UBarUBarUBarUBar || 
-        process==DBarDBarDBarDBar || 
-        process==SBarSBarSBarSBar 
+        process==ScatteringProcess::UUUU || 
+        process==ScatteringProcess::DDDD || 
+        process==ScatteringProcess::SSSS ||
+        process==ScatteringProcess::UBarUBarUBarUBar || 
+        process==ScatteringProcess::DBarDBarDBarDBar || 
+        process==ScatteringProcess::SBarSBarSBarSBar 
     )
     { 
         crossSection = 0.5*crossSection; 
@@ -291,7 +291,7 @@ void evaluateCrossSectionProcess12To34ToFile(
     double effMassD, 
     double effMassS, 
     double propIntPrecision, 
-    scatteringProcess process, 
+    ScatteringProcess process, 
     bool largeAngleScatteringContribution, 
     double crossSecIntPrecision,
     int numberOfPoints, 
@@ -385,19 +385,19 @@ void evaluateCrossSectionsKlevanskyPaper(
     // uu->uu, ud->ud, us->us, ss->ss
     // uubar->uubar, uubar->ddbar, uubar->ssbar, udbar->udbar, usbar->usbar, ssbar->uubar, ssbar->ssbar
 
-    std::vector<scatteringProcess> processes = 
+    std::vector<ScatteringProcess> processes = 
     { 
-        UDUD, 
-        USUS, 
-        UUUU, 
-        SSSS, 
-        UDBarUDBar, 
-        USBarUSBar, 
-        UUBarUUBar, 
-        UUBarDDBar, 
-        UUBarSSBar, 
-        SSBarUUBar, 
-        SSBarSSBar 
+        ScatteringProcess::UDUD, 
+        ScatteringProcess::USUS, 
+        ScatteringProcess::UUUU, 
+        ScatteringProcess::SSSS, 
+        ScatteringProcess::UDBarUDBar, 
+        ScatteringProcess::USBarUSBar, 
+        ScatteringProcess::UUBarUUBar, 
+        ScatteringProcess::UUBarDDBar, 
+        ScatteringProcess::UUBarSSBar, 
+        ScatteringProcess::SSBarUUBar, 
+        ScatteringProcess::SSBarSSBar 
     };
 
     for (int i = 0; i < int(processes.size()); ++i)
@@ -443,24 +443,24 @@ void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
     // uubar->uubar, uubar->ddbar, uubar->ssbar, udbar->udbar ,usbar->usbar, subar->subar, ssbar->uubar, ssbar->ssbar
     // ubarubar->ubarubar, sbarsbar->sbarsbar, ubardbar->ubardbar, ubarsbar->ubarsbar
 
-    std::vector<scatteringProcess> processes = 
+    std::vector<ScatteringProcess> processes = 
     { 
-        UDUD, 
-        USUS, 
-        UUUU, 
-        SSSS, 
-        UDBarUDBar, 
-        USBarUSBar, 
-        UUBarUUBar, 
-        UUBarDDBar, 
-        UUBarSSBar, 
-        SSBarUUBar, 
-        SSBarSSBar, 
-        SUBarSUBar, 
-        UBarUBarUBarUBar, 
-        SBarSBarSBarSBar, 
-        UBarDBarUBarDBar, 
-        UBarSBarUBarSBar 
+        ScatteringProcess::UDUD, 
+        ScatteringProcess::USUS, 
+        ScatteringProcess::UUUU, 
+        ScatteringProcess::SSSS, 
+        ScatteringProcess::UDBarUDBar, 
+        ScatteringProcess::USBarUSBar, 
+        ScatteringProcess::UUBarUUBar, 
+        ScatteringProcess::UUBarDDBar, 
+        ScatteringProcess::UUBarSSBar, 
+        ScatteringProcess::SSBarUUBar, 
+        ScatteringProcess::SSBarSSBar, 
+        ScatteringProcess::SUBarSUBar, 
+        ScatteringProcess::UBarUBarUBarUBar, 
+        ScatteringProcess::SBarSBarSBarSBar, 
+        ScatteringProcess::UBarDBarUBarDBar, 
+        ScatteringProcess::UBarSBarUBarSBar 
     };
 
     for (int i = 0; i < int(processes.size()); ++i)

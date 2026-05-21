@@ -472,7 +472,7 @@ ComplexSquareMatrixGSL neutral038ScalarsPropagator(
     double 
 );
 
-enum mesonState 
+enum class MesonState 
 { 
     pionPlus, 
     pionMinus, 
@@ -503,7 +503,7 @@ gsl_complex nonDiagonalMesonPropagator(
     double , 
     double , 
     double ,
-    mesonState 
+    MesonState 
 );
 
 gsl_complex nonDiagonalMesonPropagator(
@@ -518,7 +518,7 @@ gsl_complex nonDiagonalMesonPropagator(
     double , 
     double , 
     double ,
-    mesonState 
+    MesonState 
 );
 
 ComplexSquareMatrixGSL diagonalMesonPropagator(
@@ -534,7 +534,7 @@ ComplexSquareMatrixGSL diagonalMesonPropagator(
     double , 
     double , 
     double ,
-    mesonState 
+    MesonState 
 );
 
 ComplexSquareMatrixGSL diagonalMesonPropagator(
@@ -549,7 +549,7 @@ ComplexSquareMatrixGSL diagonalMesonPropagator(
     double , 
     double , 
     double ,
-    mesonState 
+    MesonState 
 );
 
 int SU3NJL3DCutoffMesonMassEquations(const gsl_vector *, void *, gsl_vector *);
@@ -566,7 +566,7 @@ private:
     double downQuarkEffectiveMass;
     double strangeQuarkEffectiveMass;
     double integralPrecision;
-    mesonState meson;
+    MesonState meson;
 
     double mesonMass = 0;
     double mesonWidth = 0;
@@ -583,7 +583,7 @@ public:
         double effMassDAux, 
         double effMassSAux, 
         double integralPrecisionAux, 
-        mesonState mesonAux
+        MesonState mesonAux
     )
     {
         parametersNJL = parametersNJLAux;
@@ -620,7 +620,7 @@ public:
     double getDownQuarkEffectiveMass(){ return downQuarkEffectiveMass; };
     double getStrangeQuarkEffectiveMass(){ return strangeQuarkEffectiveMass; };
     double getMesonPropagatorIntegralPrecision(){ return integralPrecision; };
-    mesonState getMesonState(){ return meson; }
+    MesonState getMesonState(){ return meson; }
 
     double getMesonMass(){ return mesonMass; }
     double getMesonWidth(){ return mesonWidth; }
@@ -700,7 +700,7 @@ public:
     }
 };
 
-double mesonStateMassAtMeltingPoint(double , double , double , mesonState );
+double mesonStateMassAtMeltingPoint(double , double , double , MesonState );
 
 
 #endif

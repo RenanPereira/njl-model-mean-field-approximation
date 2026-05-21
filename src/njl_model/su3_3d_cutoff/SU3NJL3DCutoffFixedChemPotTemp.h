@@ -19,7 +19,7 @@ private:
 	double downQuarkEffectiveMass = 0.0/0.0;
 	double strangeQuarkEffectiveMass = 0.0/0.0;
 
-	mesonState mesonID;
+	MesonState mesonID;
 
 	double pressure = 0.0/0.0;
 	double energyDensity = 0.0/0.0;
@@ -47,8 +47,8 @@ public:
 	double getDownQuarkChemicalPotential() const { return downQuarkChemicalPotential; }
 	double getStrangeQuarkChemicalPotential() const { return strangeQuarkChemicalPotential; }
 
-	mesonState getMesonID() const { return mesonID; }
-	void setMesonID(mesonState mesonIDAux){ mesonID = mesonIDAux; }
+	MesonState getMesonID() const { return mesonID; }
+	void setMesonID(MesonState mesonIDAux){ mesonID = mesonIDAux; }
 
 	//gap equations
 	void solve(double , MultiRootFindingMethod , double , double , double );
@@ -56,14 +56,14 @@ public:
 
 	//meson properties
     SU3NJL3DCutoffMeson calculateMesonMassAndWidth(
-		mesonState , 
+		MesonState , 
 		double , 
 		MultiRootFindingMethod , 
 		double , 
 		double 
 	);
     void findNondiagonalMesonMottTemperature(
-		mesonState , 
+		MesonState , 
 		double , 
 		MultiRootFindingMethod , 
 		double , 
@@ -240,7 +240,7 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
 std::vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
 	SU3NJL3DCutoffVacuum , 
 	std::vector<SU3NJL3DCutoffFixedChemPotTemp> , 
-	mesonState , 
+	MesonState , 
 	double , 
 	MultiRootFindingMethod , 
 	double , 
@@ -252,7 +252,7 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
 SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(
 	SU3NJL3DCutoffVacuum , 
 	std::vector<SU3NJL3DCutoffFixedChemPotTemp> , 
-	mesonState , 
+	MesonState , 
 	double , 
 	MultiRootFindingMethod , 
 	double , 

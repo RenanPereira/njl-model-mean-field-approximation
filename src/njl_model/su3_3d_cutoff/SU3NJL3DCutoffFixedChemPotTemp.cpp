@@ -177,7 +177,7 @@ bool SU3NJL3DCutoffFixedChemPotTemp::testSolution(double precision)
 }
 
 SU3NJL3DCutoffMeson SU3NJL3DCutoffFixedChemPotTemp::calculateMesonMassAndWidth(
-    mesonState mesonIDAux, 
+    MesonState mesonIDAux, 
     double precision, 
     MultiRootFindingMethod method, 
     double mesonMassGuess, 
@@ -584,7 +584,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveToCh
 vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
     SU3NJL3DCutoffVacuum vacuumSolution, 
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, 
-    mesonState mesonID, 
+    MesonState mesonID, 
     double mesonPropertiesPrecision, 
     MultiRootFindingMethod method, 
     double mesonMassVacuumGuess, 
@@ -656,7 +656,7 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
     
     //Meson propagator stuff
     double mesonPropagatorPrecision = solution.getParametersNJL().getSigmaIntegralPrecision();
-    mesonState mesonID = solution.getMesonID();
+    MesonState mesonID = solution.getMesonID();
     double k0 = mesonStateMassAtMeltingPoint(mU, mD, mS, mesonID);
     gsl_complex mesonPropagator = nonDiagonalMesonPropagator(
         solution.getParametersNJL(), 
@@ -690,7 +690,7 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
 }
 
 void SU3NJL3DCutoffFixedChemPotTemp::findNondiagonalMesonMottTemperature(
-    mesonState mesonIDAux,
+    MesonState mesonIDAux,
     double precision, 
     MultiRootFindingMethod method, 
     double upQuarkEffectiveMassGuess, 
@@ -724,7 +724,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::findNondiagonalMesonMottTemperature(
 SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(
     SU3NJL3DCutoffVacuum vacuumSolution, 
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, 
-    mesonState mesonID, 
+    MesonState mesonID, 
     double mesonPropertiesPrecision, 
     MultiRootFindingMethod method, 
     double mesonMassVacuumGuess, 
