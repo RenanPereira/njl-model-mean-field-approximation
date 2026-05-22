@@ -45,10 +45,10 @@ int main(int argc, char* argv[])
     double m0s = 0.1407;
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
+    NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setA");
 
 
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     int numberOfPointsFromVacToMinTemp = 200; 
     int numberOfPointsFromMinToMaxTemp = 11;
     bool largeAngleScatteringContribution = false;
-    IntegratedCrossSectionApproximationMethod approximationMethod = COMPLETE_COV;
+    IntegratedCrossSectionApproximationMethod approximationMethod = IntegratedCrossSectionApproximationMethod::COMPLETE_COV;
 	double propagatorIntegralPrecision = 1E-5;
 	double crossSectionIntegralPrecision = 1E-4;
 	double integratedCrossSectionIntegralPrecision_dXdY = 1E-10;
@@ -180,7 +180,7 @@ int main(int argc, char* argv[])
     int numberOfPointsMinTempToChemPot = 200;
     int numberOfPointsFromMinToMaxTemp = 261;
     bool largeAngleScatteringContribution = false;
-    IntegratedCrossSectionApproximationMethod approximationMethod = COMPLETE_COV;
+    IntegratedCrossSectionApproximationMethod approximationMethod = IntegratedCrossSectionApproximationMethod::COMPLETE_COV;
     double propagatorIntegralPrecision = 1E-7;
     double crossSectionIntegralPrecision = 1E-4;
     double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
@@ -231,7 +231,7 @@ int main(int argc, char* argv[])
     int numberOfPointsFromVacToMinTemp = 200; 
     int numberOfPointsFromMinToMaxTemp = 181;
     bool largeAngleScatteringContribution = false;
-    IntegratedCrossSectionApproximationMethod approximationMethod = COMPLETE_COV;
+    IntegratedCrossSectionApproximationMethod approximationMethod = IntegratedCrossSectionApproximationMethod::COMPLETE_COV;
     double propagatorIntegralPrecision = 1E-7;
     double crossSectionIntegralPrecision = 1E-4;
     double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
@@ -286,17 +286,17 @@ int main(int argc, char* argv[])
     //double gOmega4 = 7.0*pow(0.5*gs, 10);
 
     //Fix Lagrangian dimensionful couplings
-    //NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q, gs, kappa, gOmega1, gOmega2, gOmega3, gOmega4);
+    //NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q, gs, kappa, gOmega1, gOmega2, gOmega3, gOmega4);
 
     vector<double> gOmegaAdimensional = {0.8, 1.0, -3.0, 3.0, -1.0};
     vector<double> gOmegaDimensionful = multiQuarkVPCouplingWithDimensions(gOmegaAdimensional, 0.5*gs);
     
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_VPMULTIQ, gs, kappa, gOmegaDimensionful);
+    NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ_VPMULTIQ, gs, kappa, gOmegaDimensionful);
 
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("renanMasterThesis");
 
 

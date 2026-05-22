@@ -1712,7 +1712,7 @@ double imag16Pi2f13DCutoff(double T, double effCP1, double effCP2, double cutoff
 
 gsl_complex klevanskyB0Integral3DCutoff(NJL3DCutoffRegularizationScheme reguScheme, double T, double effCP1, double effCP2, double cutoff, double M1, double M2, double w, double k, double integralPrecision)
 {
-    if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
+    if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
     {
         cout << "The function klevanskyB0Integral3DCutoff is not defined for the NJL3DCutoffRegularizationScheme:CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY! Aborting!\n";
         abort();

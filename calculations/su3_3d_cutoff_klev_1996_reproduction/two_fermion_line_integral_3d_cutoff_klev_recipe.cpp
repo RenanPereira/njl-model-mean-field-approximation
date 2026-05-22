@@ -1313,9 +1313,9 @@ gsl_complex klevanskyB0Integral3DCutoffKlevanskyRecipe(
     double /*integralPrecision*/
 )
 {
-    if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
+    if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
     {
-        cout << "The function klevanskyB0Integral3DCutoff is not defined for the NJL3DCutoffRegularizationScheme:CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY! Aborting!\n";
+        cout << "The function klevanskyB0Integral3DCutoff is not defined for the NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY! Aborting!\n";
         abort();
     }
 

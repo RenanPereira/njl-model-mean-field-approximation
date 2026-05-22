@@ -126,7 +126,7 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
     double cPS = solution->getStrangeQuarkChemicalPotential();
 
     //This solution does not take into account vector degrees of freedom
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -874,7 +874,7 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculatePressure(double vacuumPressure)
     //This holds if no vector interactions are considered
     //If vector interactions are considered, abort until this is updated
     LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -906,7 +906,7 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEnergyDensity(double vacuumEnerg
     //This holds if no vector interactions are considered
     //If vector interactions are considered, abort until this is updated
     LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -938,7 +938,7 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEntropyDensity()
     //This holds if no vector interactions are considered
     //If vector interactions are considered, abort until this is updated
     LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -968,7 +968,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::setQuarkDensities()
     //This holds if no vector interactions are considered
     //If vector interactions are considered, abort until this is updated
     LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";

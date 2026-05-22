@@ -21,11 +21,11 @@ int main()
     double kappa = determinantCouplingCutoff5/pow(cutoff_GeV,5);
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
+    NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(
-        CUTOFF_EVERYWHERE_WITH_CTMU, 
+        NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU, 
         cutoff_GeV, 
         couplings, 
         upQuarkCurrentMass_GeV, 

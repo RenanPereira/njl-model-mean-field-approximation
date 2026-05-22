@@ -4,7 +4,11 @@
 #include <iostream>
 
 
-enum NewtonCotesRule { trapezoidal, alternativeCompositeSimpson };
+enum class NewtonCotesRule
+{ 
+	TRAPEZOIDAL,
+	ALTERNATIVE_COMPOSITE_SIMPSON
+};
 
 
 class GeneralIntegrandParameters

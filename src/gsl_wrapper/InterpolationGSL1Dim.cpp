@@ -306,7 +306,7 @@ vector<double> InterpolationGSL1Dim::findRoots2ndDerivative(RootFindingMethod me
 
 void InterpolationGSL1Dim::tests(OneVariableFunction testFunction)
 {
-	vector<double> roots = findRoots(brent, 1E-8);
+	vector<double> roots = findRoots(RootFindingMethod::BRENT, 1E-8);
 
 	cout << "Number of simple roots found = " << roots.size() << "\n";
 	cout << "The roots in the provided interpolation bounds are (x , y):\n";
@@ -316,7 +316,7 @@ void InterpolationGSL1Dim::tests(OneVariableFunction testFunction)
 		cout << "(" << x << " , " << testFunction.evaluate(x) << ")" << "\n";
 	}
 
-    vector<double> extrema = findRoots1stDerivative(brent, 1E-8);
+    vector<double> extrema = findRoots1stDerivative(RootFindingMethod::BRENT, 1E-8);
     cout << "Number of extrema found = " << extrema.size() << "\n";
 	cout << "The extrema in the provided interpolation bounds are  (x , y):\n";
     for (int i = 0; i < int(extrema.size()); i++)

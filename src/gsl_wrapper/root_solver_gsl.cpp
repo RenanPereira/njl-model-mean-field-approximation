@@ -149,15 +149,15 @@ double OneDimensionalRootFind(double precision, double x_low, double x_high, voi
 	gsl_root_fsolver *s;
 	
 	//choose root fiding method
-	if ( method==brent )
+	if ( method==RootFindingMethod::BRENT )
 	{
 		T = gsl_root_fsolver_brent;
 	}
-	else if ( method==bisection )
+	else if ( method==RootFindingMethod::BISECTION )
 	{
 		T = gsl_root_fsolver_bisection;
 	}
-	else if ( method==falsepos )
+	else if ( method==RootFindingMethod::FALSEPOS )
 	{
 		T = gsl_root_fsolver_falsepos;
 	}

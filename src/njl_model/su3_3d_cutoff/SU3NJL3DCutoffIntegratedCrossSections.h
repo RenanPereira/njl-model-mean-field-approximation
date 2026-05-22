@@ -371,7 +371,7 @@ double integratedCrossSectionProcess12To34Zhuang(
 );
 
 
-enum IntegratedCrossSectionApproximationMethod 
+enum class IntegratedCrossSectionApproximationMethod 
 { 
     COMPLETE_OG, 
     COMPLETE_COV, 
@@ -460,7 +460,7 @@ public:
         integratedCrossSectionIntegralPrecision_dXdY = integratedCrossSectionIntegralPrecision_dXdYAux;
         integratedCrossSectionIntegralPrecision_dX = integratedCrossSectionIntegralPrecision_dXAux;
         approximationMethod = approximationMethodAux;
-        if ( approximationMethod!=COMPLETE_OG )
+        if ( approximationMethod!=IntegratedCrossSectionApproximationMethod::COMPLETE_OG )
         {
             std::cout << "Calling a constructor for SU3NJL3DCutoffIntegratedCrossSection that is not appropriate for the chosen approximation method! Aborting!\n";
             abort();
@@ -499,7 +499,7 @@ public:
         integratedCrossSectionIntegralPrecision_dXdY = integratedCrossSectionIntegralPrecision_dXdYAux;
         integratedCrossSectionIntegralPrecision_dX = integratedCrossSectionIntegralPrecision_dXAux;
         approximationMethod = approximationMethodAux;
-        if ( approximationMethod==COMPLETE_OG )
+        if ( approximationMethod==IntegratedCrossSectionApproximationMethod::COMPLETE_OG )
         {
             std::cout << "Calling a constructor for SU3NJL3DCutoffIntegratedCrossSection that is not appropriate for the chosen approximation method! Aborting!\n";
             abort();
@@ -536,7 +536,7 @@ public:
         crossSectionIntegralPrecision = crossSectionIntegralPrecisionAux;
         integratedCrossSectionIntegralPrecision_dX = integratedCrossSectionIntegralPrecision_dXAux;
         approximationMethod = approximationMethodAux;
-        if ( approximationMethod!=ZHUANG )
+        if ( approximationMethod!=IntegratedCrossSectionApproximationMethod::ZHUANG )
         {
             std::cout << "Calling constructor for SU3NJL3DCutoffIntegratedCrossSection that is not appropriate for the chosen approximation method! Aborting!\n";
             abort();
@@ -568,7 +568,7 @@ public:
         largeAngleScatteringContribution = largeAngleScatteringContributionAux;
         approximationMethod = approximationMethodAux;
 
-        if ( approximationMethod==COMPLETE_OG )
+        if ( approximationMethod==IntegratedCrossSectionApproximationMethod::COMPLETE_OG )
         {
             std::cout << "Calling a constructor for SU3NJL3DCutoffIntegratedCrossSection that is not appropriate for the chosen approximation method! Aborting!\n";
             abort();
@@ -594,7 +594,7 @@ public:
 
     void setIntegratedCrossSection()
     {   
-        if ( approximationMethod==COMPLETE_COV )
+        if ( approximationMethod==IntegratedCrossSectionApproximationMethod::COMPLETE_COV )
         {   
             integratedCrossSection = 
             integratedCrossSectionProcess12To34(
@@ -614,7 +614,7 @@ public:
                 integratedCrossSectionIntegralPrecision_dX
             );
         }
-        else if( approximationMethod==KLEVANSKY )
+        else if( approximationMethod==IntegratedCrossSectionApproximationMethod::KLEVANSKY )
         {
             integratedCrossSection = 
             integratedCrossSectionProcess12To34Klevansky(
@@ -634,7 +634,7 @@ public:
                 integratedCrossSectionIntegralPrecision_dX
             );
         }
-        else if( approximationMethod==ZHUANG )
+        else if( approximationMethod==IntegratedCrossSectionApproximationMethod::ZHUANG )
         {
             integratedCrossSection = 
             integratedCrossSectionProcess12To34Zhuang(
@@ -653,7 +653,7 @@ public:
                 integratedCrossSectionIntegralPrecision_dX
             );
         }
-        else if( approximationMethod==COMPLETE_OG )
+        else if( approximationMethod==IntegratedCrossSectionApproximationMethod::COMPLETE_OG )
         {
             integratedCrossSection = 
             integratedCrossSectionOGProcess12To34(

@@ -1088,7 +1088,7 @@ double integratedCrossSectionProcess12To34(
 		10, 
 		&aux, 
 		integratedCrossSectionIntegrand_ds, 
-		alternativeCompositeSimpson
+		NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON
 	);
     double normalization_ds = trapezoidalSum.evaluate();
     aux.setNormalizationRiemannSum_ds(normalization_ds);
@@ -1588,7 +1588,7 @@ double integratedCrossSectionProcess12To34Klevansky(
 		10, 
 		&aux, 
 		integratedCrossSectionKlevanskyIntegrand_ds, 
-		alternativeCompositeSimpson
+		NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON
 	);
     double normalization_ds = trapezoidalSum.evaluate();
     aux.setNormalizationRiemannSum_ds(normalization_ds);
@@ -1834,7 +1834,7 @@ double integratedCrossSectionProcess12To34Zhuang(
 		10, 
 		&aux, 
 		integratedCrossSectionZhuangIntegrand_ds, 
-		alternativeCompositeSimpson
+		NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON
 	);
     double normalization_ds = trapezoidalSum.evaluate();
     aux.setNormalizationRiemannSum_ds(normalization_ds);

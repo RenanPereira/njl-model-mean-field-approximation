@@ -26,11 +26,11 @@ inline const std::map<MultiRootFindingMethod, std::string> MultiRootFindingMetho
     {MultiRootFindingMethod::BROYDEN, "BROYDEN"}
 };
 
-enum RootFindingMethod 
+enum class RootFindingMethod 
 { 
-    brent, 
-    bisection, 
-    falsepos 
+    BRENT,
+    BISECTION,
+    FALSEPOS
 };
 
 std::string toString(MultiRootFindingMethod );

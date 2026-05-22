@@ -14,16 +14,16 @@ void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upper
     rule = ruleAux;
 
     //check if number of partitions are appropriate for the chosen rule
-    if ( rule==trapezoidal )
+    if ( rule==NewtonCotesRule::TRAPEZOIDAL )
     {
         if ( numberOfPartitions<2 )
         {
-            std::cout << "Integration1DimNewtonCotes: to use the trapezoidal rule, at least 2 partitions are necessary!\n";
+            std::cout << "Integration1DimNewtonCotes: to use the TRAPEZOIDAL rule, at least 2 partitions are necessary!\n";
             abort();
         }
     }
 
-    if ( rule==alternativeCompositeSimpson )
+    if ( rule==NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON )
     {
         if ( numberOfPartitions<8 )
         {
@@ -36,7 +36,7 @@ void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upper
 
 Integration1DimNewtonCotes::Integration1DimNewtonCotes(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*))
 {
-    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, trapezoidal);
+    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, NewtonCotesRule::TRAPEZOIDAL);
 }
 
 
@@ -92,11 +92,11 @@ double Integration1DimNewtonCotes::evaluate()
 {   
     double area = 0.0;
 
-    if ( rule==trapezoidal )
+    if ( rule==NewtonCotesRule::TRAPEZOIDAL )
     {
         area = evaluateTrapezoidal();
     }
-    else if ( rule==alternativeCompositeSimpson )
+    else if ( rule==NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON )
     {
         area = evaluateAlternativeCompositeSimpson();
     }

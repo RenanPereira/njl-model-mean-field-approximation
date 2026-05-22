@@ -21,11 +21,11 @@ int main()
     double kappa = determinantCouplingCutoff5/pow(cutoff_GeV,5);
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
+    NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
     SU3NJL3DCutoffParameters parameters(
-        CUTOFF_EVERYWHERE, 
+        NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE, 
         cutoff_GeV, 
         couplings, 
         upQuarkCurrentMass_GeV, 
@@ -56,7 +56,7 @@ int main()
 	string methodMinToMaxTemp = "DNEWTON";
     
     bool largeAngleScatteringContribution = false;
-    IntegratedCrossSectionApproximationMethod approximationMethod = COMPLETE_COV;
+    IntegratedCrossSectionApproximationMethod approximationMethod = IntegratedCrossSectionApproximationMethod::COMPLETE_COV;
 	double propagatorIntegralPrecision = 1E-5;
 	double crossSectionIntegralPrecision = 1E-4;
 	double integratedCrossSectionIntegralPrecision_dXdY = 1E-10;
