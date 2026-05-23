@@ -769,7 +769,7 @@ SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(
         mottSolution.findNondiagonalMesonMottTemperature(
             mesonID, 
             mesonPropertiesPrecision, 
-            HYBRIDS, 
+            MultiRootFindingMethod::HYBRIDS, 
             mesonFiniteT[meltingPointGuess].getUpQuarkEffectiveMass(), 
             mesonFiniteT[meltingPointGuess].getDownQuarkEffectiveMass(), 
             mesonFiniteT[meltingPointGuess].getStrangeQuarkEffectiveMass(), 

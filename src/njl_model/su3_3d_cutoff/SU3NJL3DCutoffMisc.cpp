@@ -27,7 +27,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, MultiRootFindingMethod::HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
@@ -37,22 +37,22 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
 
     cout << "Pseudoscalar meson masses:\n";
 
-    SU3NJL3DCutoffMeson pionPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::pionPlus, 1E-7, HYBRIDS, 0.2, 0.2);
+    SU3NJL3DCutoffMeson pionPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::pionPlus, 1E-7, MultiRootFindingMethod::HYBRIDS, 0.2, 0.2);
     cout << pionPlusMassSolution.getMesonMass() << "\t" << pionPlusMassSolution.getMesonWidth() << "\n";
 
-    SU3NJL3DCutoffMeson kaonPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::kaonPlus, 1E-7, HYBRIDS, 0.4, 0.2);
+    SU3NJL3DCutoffMeson kaonPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::kaonPlus, 1E-7, MultiRootFindingMethod::HYBRIDS, 0.4, 0.2);
     cout << kaonPlusMassSolution.getMesonMass() << "\t" << kaonPlusMassSolution.getMesonWidth() << "\n";
 
     SU3NJL3DCutoffMeson diagonalMassSolution;
-    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::diagonalPseudoscalars, 1E-7, HYBRIDS, 0.5, 0.2);
+    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::diagonalPseudoscalars, 1E-7, MultiRootFindingMethod::HYBRIDS, 0.5, 0.2);
     cout << diagonalMassSolution.getMesonMass() << "\t" << diagonalMassSolution.getMesonWidth() << "\n";
 
-    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::diagonalPseudoscalars, 1E-7, HYBRIDS, 1.0, 0.2);
+    diagonalMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::diagonalPseudoscalars, 1E-7, MultiRootFindingMethod::HYBRIDS, 1.0, 0.2);
     cout << diagonalMassSolution.getMesonMass() << "\t" << diagonalMassSolution.getMesonWidth() << "\n";
 
      cout << "Scalar meson masses:\n";
 
-    SU3NJL3DCutoffMeson sigmaPionPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::sigmaPionPlus, 1E-7, HYBRIDS, 0.2, 0.2);
+    SU3NJL3DCutoffMeson sigmaPionPlusMassSolution = vacuum.calculateMesonMassAndWidth(MesonState::sigmaPionPlus, 1E-7, MultiRootFindingMethod::HYBRIDS, 0.2, 0.2);
     cout << sigmaPionPlusMassSolution.getMesonMass() << "\t" << sigmaPionPlusMassSolution.getMesonWidth() << "\n";
 
     //solve model at zero chemical potential up to some finite temperature
@@ -66,7 +66,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
         maximumTemperature, 
         numberOfPoints, 
         gapPrecision, 
-        HYBRIDS
+        MultiRootFindingMethod::HYBRIDS
     );
 
     //Search for meson melting points in the range of temperatures considered above
@@ -83,7 +83,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
         finiteTSolution, 
         mesonID, 
         mesonPropertiesPrecision, 
-        HYBRIDS, 
+        MultiRootFindingMethod::HYBRIDS, 
         mesonMassVacuumGuess, 
         mesonWidthVacuumGuess
     );
@@ -97,7 +97,7 @@ void someVacuumAndThermalPropertiesKlevanskyParameterSet()
         finiteTSolution, 
         mesonID, 
         mesonPropertiesPrecision, 
-        HYBRIDS, 
+        MultiRootFindingMethod::HYBRIDS, 
         mesonMassVacuumGuess, 
         mesonWidthVacuumGuess
     );
@@ -135,7 +135,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(
 
     //find solution in the vacuum for the Klevansky parameter set
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, MultiRootFindingMethod::HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "testSolution=" << vacuum.testSolution(1E-8) << "\n";
     cout << "Mu=" << vacuum.getUpQuarkEffectiveMass() << "GeV" << "\t" 
@@ -149,7 +149,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(
         T, 
         100, 
         gapPrecision, 
-        HYBRIDS
+        MultiRootFindingMethod::HYBRIDS
     );
 
     double effMassU, effMassD, effMassS;
@@ -169,7 +169,7 @@ void evaluateCrossSectionsPaperWithKlevanskyParameterSet(
             chemPot, 
             100, 
             gapPrecision, 
-            HYBRIDS
+            MultiRootFindingMethod::HYBRIDS
         );
 
         effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();

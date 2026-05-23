@@ -10,7 +10,7 @@
 // Maximum number of iterations in the root-finding loops
 inline constexpr int MAX_ITERATIONS = 1000;
 
-enum MultiRootFindingMethod 
+enum class MultiRootFindingMethod 
 { 
     HYBRIDS, 
     HYBRID, 

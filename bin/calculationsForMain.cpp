@@ -65,7 +65,7 @@
         inMedium.setBaryonDensity(rho_B);
 
         //find quark masses and effective chemical potential
-        inMedium.solve(1E-8, HYBRIDS, MuGuess, MdGuess, MsGuess, effectiveCPGuess);
+        inMedium.solve(1E-8, MultiRootFindingMethod::HYBRIDS, MuGuess, MdGuess, MsGuess, effectiveCPGuess);
 
         //guesses for next step
         MuGuess = inMedium.getUpQuarkEffectiveMass();
@@ -118,7 +118,7 @@
         SU3NJL3DCutoffBetaEqFixedTempRhoB betaEq(parameters, PhysicalConstants::electronMass_GeV, temperature, rhoB);
 
         //find quark masses and effective chemical potential
-        betaEq.solve(1E-8, HYBRIDS, mUGuess, mDGuess, mSGuess, effCPUGuess, effCPDGuess, effCPSGuess);
+        betaEq.solve(1E-8, MultiRootFindingMethod::HYBRIDS, mUGuess, mDGuess, mSGuess, effCPUGuess, effCPDGuess, effCPSGuess);
 
         //guesses for next step
         mUGuess = betaEq.getUpQuarkEffectiveMass();
@@ -152,7 +152,7 @@
 
 
     //find chiral transition
-    vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> transitionPoints = findChiralTransitionPointsFixedTemperature(betaEqSolutions, 1E-8, DNEWTON);
+    vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> transitionPoints = findChiralTransitionPointsFixedTemperature(betaEqSolutions, 1E-8, MultiRootFindingMethod::DNEWTON);
 
 
     //save EOS to file: if it has first order phase transition, save only after restoration 
@@ -228,7 +228,7 @@
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, MultiRootFindingMethod::HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(gapPrecision) << "\n";
@@ -240,7 +240,7 @@
     double rhoi = 1E-5*pow(PhysicalConstants::hbarc_GeVfm, 3);
     double rhof = 2.50*pow(PhysicalConstants::hbarc_GeVfm, 3);
     int NrhoB = 5000;
-    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, HYBRIDS);
+    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, MultiRootFindingMethod::HYBRIDS);
 
 
 
@@ -262,7 +262,7 @@
     double m0s = 0.1407;
 
     double precisionVacuum = 1E-8;
-    MultiRootFindingMethod methodVacuum = DNEWTON;
+    MultiRootFindingMethod methodVacuum = MultiRootFindingMethod::DNEWTON;
     double mUGuess = 0.3;
     double mDGuess = 0.3;
     double mSGuess = 0.5;
@@ -290,9 +290,13 @@
 
     //find solution in the at finite temperature and fixed chemical potentials
     SU3NJL3DCutoffFixedChemPotTemp inMedium(parameters, T, effChemPotU, effChemPotD, effChemPotS);
-    inMedium.solve(1E-8, HYBRIDS, vacuum.getUpQuarkEffectiveMass(), 
-                                  vacuum.getDownQuarkEffectiveMass(), 
-                                  vacuum.getStrangeQuarkEffectiveMass());
+    inMedium.solve(
+        1E-8, 
+        MultiRootFindingMethod::HYBRIDS, 
+        vacuum.getUpQuarkEffectiveMass(), 
+        vacuum.getDownQuarkEffectiveMass(), 
+        vacuum.getStrangeQuarkEffectiveMass()
+    );
 
     cout << "inMediumSolution=" << inMedium.testSolution(1E-8) << "\n";
     cout << "Mu=" << inMedium.getUpQuarkEffectiveMass() << "GeV" << "\t" 
@@ -327,7 +331,7 @@
     double effMassU, effMassD, effMassS;
 
     double T = 0.250;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, MultiRootFindingMethod::HYBRIDS);
 
     effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
     effMassD = finiteTempSol[int(finiteTempSol.size()-1)].getDownQuarkEffectiveMass();
@@ -339,7 +343,7 @@
 
 
     double chemPot = 0.100;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, MultiRootFindingMethod::HYBRIDS);
 
     effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
     effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();

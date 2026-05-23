@@ -157,8 +157,3 @@ double Integration1DimNewtonCotes::evaluateAvoidingSingularPoint(double singular
     return area;
 
 }
-
-
-
-
-

@@ -111,9 +111,13 @@ int main(int argc, char* argv[])
 
     //find solution in the at finite temperature and fixed chemical potentials
     SU3NJL3DCutoffFixedChemPotTemp inMedium(parameters, T, effChemPotU, effChemPotD, effChemPotS);
-    inMedium.solve(1E-8, HYBRIDS, vacuum.getUpQuarkEffectiveMass(), 
-                                  vacuum.getDownQuarkEffectiveMass(), 
-                                  vacuum.getStrangeQuarkEffectiveMass());
+    inMedium.solve(
+        1E-8, 
+        MultiRootFindingMethod::HYBRIDS, 
+        vacuum.getUpQuarkEffectiveMass(), 
+        vacuum.getDownQuarkEffectiveMass(), 
+        vacuum.getStrangeQuarkEffectiveMass()
+    );
 
     cout << "inMediumSolution=" << inMedium.testSolution(1E-8) << "\n";
     cout << "Mu=" << inMedium.getUpQuarkEffectiveMass() << "GeV" << "\t" 
@@ -148,7 +152,7 @@ int main(int argc, char* argv[])
     double effMassU, effMassD, effMassS;
 
     double T = 0.250;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, MultiRootFindingMethod::HYBRIDS);
 
     effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
     effMassD = finiteTempSol[int(finiteTempSol.size()-1)].getDownQuarkEffectiveMass();
@@ -160,7 +164,7 @@ int main(int argc, char* argv[])
 
 
     double chemPot = 0.100;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, MultiRootFindingMethod::HYBRIDS);
 
     effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
     effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();
@@ -303,7 +307,7 @@ int main(int argc, char* argv[])
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, MultiRootFindingMethod::HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(gapPrecision) << "\n";
@@ -315,7 +319,7 @@ int main(int argc, char* argv[])
     double rhoi = 1E-5*pow(PhysicalConstants::hbarc_GeVfm, 3);
     double rhof = 3.80*pow(PhysicalConstants::hbarc_GeVfm, 3);
     int NrhoB = 8000;
-    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, HYBRIDS, "eos.dat");
+    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, MultiRootFindingMethod::HYBRIDS, "eos.dat");
 
 
     std::ofstream file;

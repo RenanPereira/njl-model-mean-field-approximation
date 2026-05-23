@@ -199,12 +199,12 @@ One can execute the `scripts/tests/build_all_calculations_plots.sh` script to bu
 As a disclaimer, the reader must be warned: this code was written by a physicist without the most in-depth knowledge about the standards and structures of `Clean Code`. Improvements to structure, formatting and logic are always being considered and developed. The following conventions are being used in the code (at least trying to...): 
 
 C++ code:
-- classes  → PascalCase
-- namespaces → PascalCase
-- methods → camelCase
-- member variables → camelCase
-- header guard → UPPER_CASE with underscores
-- enums → PascalCase except where, for readability, UPPER_CASE is used
+- classes  → PascalCase;
+- namespaces → PascalCase;
+- methods → camelCase;
+- member variables → camelCase;
+- header guard → UPPER_CASE with underscores;
+- enums values → UPPER_CASE is used except where, for readability, PascalCase is used, depending on what makes sense, giving importance to what is readable;
 
 Python code:
 - classes  → PascalCase

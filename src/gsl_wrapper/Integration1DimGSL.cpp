@@ -540,9 +540,11 @@ bool Integration1DimGSLQAWCQAGS::isSingularityInsideTheIntegrationInterval()
 
 double Integration1DimGSLQAWCQAGS::evaluate()
 {   
-    if ( isSingularityInsideTheIntegrationInterval()==true && 
-         fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
-         fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity )
+    if ( 
+        isSingularityInsideTheIntegrationInterval()==true && 
+        fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
+        fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity 
+    )
     {   
         //evaluate the principal value of the integral
         Integration1DimGSLQAWC integralQAWC(lowerBound, upperBound, singularity, integrandParameters, F.function, absolutePrecision, relativePrecision, workspaceLimitSize);
@@ -563,9 +565,10 @@ double Integration1DimGSLQAWCQAGS::evaluateIntegration1DimNewtonCotes(int number
 {   
     Integration1DimNewtonCotes trapezoidalSum(lowerBound, upperBound, numberOfPartitions, &numeratorParameters, changeQAWCIntegrandToQAGSIntegrand, rule);
 
-    if ( isSingularityInsideTheIntegrationInterval()==true && 
-         fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
-         fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity )
+    if ( 
+        isSingularityInsideTheIntegrationInterval()==true && 
+        fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
+        fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity )
     {   
 
         return trapezoidalSum.evaluateAvoidingSingularPoint(singularity);

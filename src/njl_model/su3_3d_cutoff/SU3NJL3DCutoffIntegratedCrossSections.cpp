@@ -2335,7 +2335,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 		fixedTemperature, 
 		numberOfPointsFromVacToMinTemp, 
 		gapPrecision, 
-		HYBRIDS
+		MultiRootFindingMethod::HYBRIDS
 	);
 
     for (int i = 0; i < int(finiteTSolution.size()); ++i)
@@ -2357,7 +2357,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 			minChemPot, 
 			numberOfPointsFromMinTempToMinChemPot, 
 			gapPrecision, 
-			HYBRIDS
+			MultiRootFindingMethod::HYBRIDS
 		);
         for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
 	    {   
@@ -2375,7 +2375,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 			maxChemPot, 
 			numberOfPointsFromMinToMaxChemPot, 
 			gapPrecision, 
-			HYBRIDS
+			MultiRootFindingMethod::HYBRIDS
 		);
 	    for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
 	    {   
@@ -2395,7 +2395,7 @@ void evaluateIntegratedCrossSectionsWithFixedTemperature(
 			maxChemPot, 
 			numberOfPointsFromMinTempToMinChemPot, 
 			gapPrecision, 
-			HYBRIDS
+			MultiRootFindingMethod::HYBRIDS
 		);
 	    for (int i = 0; i < int(finiteChemPotSolution.size()); ++i)
 	    {   

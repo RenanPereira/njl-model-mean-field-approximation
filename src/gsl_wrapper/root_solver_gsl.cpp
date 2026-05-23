@@ -81,19 +81,19 @@ void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void*
 	gsl_multiroot_fsolver *s;
 	
 	//choose root fiding method
-	if ( method==HYBRIDS )
+	if ( method==MultiRootFindingMethod::HYBRIDS )
 	{
 		T = gsl_multiroot_fsolver_hybrids;
 	}
-	else if ( method==HYBRID )
+	else if ( method==MultiRootFindingMethod::HYBRID )
 	{
 		T = gsl_multiroot_fsolver_hybrid;
 	}
-	else if ( method==DNEWTON )
+	else if ( method==MultiRootFindingMethod::DNEWTON )
 	{
 		T = gsl_multiroot_fsolver_dnewton;
 	}
-	else if ( method==BROYDEN )
+	else if ( method==MultiRootFindingMethod::BROYDEN )
 	{
 		T = gsl_multiroot_fsolver_broyden;
 	}
