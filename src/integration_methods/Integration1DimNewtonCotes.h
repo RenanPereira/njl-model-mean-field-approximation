@@ -2,6 +2,7 @@
 #define INTEGRATION1DIMNEWTONCOTES_H
 
 #include <iostream>
+#include "integration_methods/GeneralIntegrandParameters.h"
 
 
 enum class NewtonCotesRule
@@ -9,23 +10,6 @@ enum class NewtonCotesRule
 	TRAPEZOIDAL,
 	ALTERNATIVE_COMPOSITE_SIMPSON
 };
-
-
-class GeneralIntegrandParameters
-{
-public:
-    virtual void printIntegrandVariables()
-    {
-        std::cout << "The method 'printIntegrandVariables' is using the default method from the class GeneralIntegrandParameters!" << "\n";
-    }
-
-    virtual void behaviourAfterFailedIntegration()
-    { 
-    	std::cout << "Using the default behaviour after a failed integration: abort!" << "\n";
-    	abort(); 
-    };
-};
-
 
 class Integration1DimNewtonCotes
 {	
