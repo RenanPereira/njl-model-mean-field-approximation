@@ -42,11 +42,29 @@ int commandLineArgsProcessor(int argc, char* argv[])
 
 void selectPathBasedOnFileDetails(const IniFileParser& configFile)
 {	
-    // Get the file type
-    std::string type = configFile.getValue("FileDetails", "type");
+	const std::string sectionName = "FileDetails";
+	const std::string typeKey = "type";
+
+	if (configFile.getSectionsData(sectionName).empty())
+	{
+		std::cout << "Missing required section: " << sectionName << "\n";
+		return;
+	}
+
+	// Get the file type
+	const std::string type = configFile.getValue(sectionName, typeKey);
+
+	if (type.empty())
+	{
+		std::cout << "The key " << typeKey 
+				  << " under the section " << sectionName 
+				  << " is not valid! Either the key is missing completely or it is present but its value is empty.\n";
+		return;
+	}
 	
-	std::cout << "\nFileDetails:" << std::endl;
-	std::cout << "type = " << type << std::endl;
+	std::cout << '\n'
+			  << sectionName << ":\n"
+			  << typeKey << " = " << type << "\n";
 
 	// Check if file is written correctly and then make calculation
 	if(type==SU3NJL3DCutoffFileParser::Vacuum::Masses::calculationType)
