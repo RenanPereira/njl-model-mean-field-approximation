@@ -17,8 +17,8 @@ run-calculations:
     - echo "Running NJL model calculations in Docker container"
 
     # Run calculations
-    - cd calculations/su3_3d_cutoff_phase_diagram && ./execute_calculations.sh
-    - cd calculations/su3_3d_cutoff_phase_diagram && ./build_plots.sh
+    - cd calculations/su3_3d_cutoff_phase_diagram && bash execute_calculations.sh
+    - cd calculations/su3_3d_cutoff_phase_diagram && bash build_plots.sh
 
     # Return to repo root
     - cd "$CI_PROJECT_DIR"
