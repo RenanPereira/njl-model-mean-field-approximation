@@ -12,7 +12,7 @@ int main()
     allTestsPassed &= testGetSectionData();
     allTestsPassed &= testGetSections();
 
-    return 0;
+    return 1;
 /*
     if (allTestsPassed) 
     {
