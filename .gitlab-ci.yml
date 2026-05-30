@@ -44,3 +44,5 @@ su3_3d_cutoff_phase_diagram:
   extends: .calculation_template
   variables:
     CALC_DIR: "su3_3d_cutoff_phase_diagram"
+    EXE_CALC_SCRIPT: "execute_calculations.sh" 
+    EXE_PLOT_SCRIPT: "build_plots.sh"
