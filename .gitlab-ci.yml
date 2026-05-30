@@ -1,0 +1,40 @@
+stages:
+  - test
+
+variables:
+  GIT_STRATEGY: fetch
+
+run-calculations:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+
+  stage: test
+
+  before_script:
+    # Fix Git safety issue in CI container
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - cd calculations/su3_3d_cutoff_phase_diagram && ./execute_calculations.sh
+    - cd calculations/su3_3d_cutoff_phase_diagram && ./build_plots.sh
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
