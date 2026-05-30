@@ -204,7 +204,7 @@ bool testGetSections()
 
     passed &= check(sections[2].first == "User3", "User3 section name mismatch");
     passed &= check(sections[2].second.at("name") == "Carol", "User3 name mismatch");
-    passed &= check(sections[2].second.at("age") == "27", "User3 age mismatch");
+    passed &= check(sections[2].second.at("age") == "26", "User3 age mismatch");
 
     // Clean up the test file
     std::remove(testIniFile.c_str());

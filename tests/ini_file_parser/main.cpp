@@ -12,8 +12,6 @@ int main()
     allTestsPassed &= testGetSectionData();
     allTestsPassed &= testGetSections();
 
-    return 1;
-/*
     if (allTestsPassed) 
     {
         std::cout << "All tests passed!" << std::endl;
@@ -24,5 +22,4 @@ int main()
         std::cout << "Some tests failed!" << std::endl;
         return 1;
     }
-*/
 }

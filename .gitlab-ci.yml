@@ -15,10 +15,17 @@ ini_file_parser_tests:
     - git config --global --add safe.directory "$CI_PROJECT_DIR"
 
   script:
-    - cd tests/ini_file_parser
-    - make -j$(nproc)
-    - ./test.out
-    - make clean
+    - |
+      cd tests/ini_file_parser
+
+      make -j$(nproc)
+
+      TEST_EXIT_CODE=0
+      ./test.out || TEST_EXIT_CODE=$?
+
+      make clean
+
+      exit $TEST_EXIT_CODE
 
 
 two_fermion_line_integral_3d_cutoff:
