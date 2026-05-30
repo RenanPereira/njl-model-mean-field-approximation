@@ -60,7 +60,7 @@ two_fermion_line_integral_3d_cutoff:
 su3_3d_cutoff_vacuum_masses:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
-  stage: execute_calculationss
+  stage: execute_calculations
 
   before_script:
     # Fix Git safety issue in CI container
@@ -95,7 +95,7 @@ su3_3d_cutoff_vacuum_masses:
 su3_3d_cutoff_phase_diagram:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
-  stage: execute_calculationss
+  stage: execute_calculations
 
   before_script:
     # Fix Git safety issue in CI container
