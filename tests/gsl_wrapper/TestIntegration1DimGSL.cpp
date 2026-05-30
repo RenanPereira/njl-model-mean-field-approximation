@@ -127,7 +127,7 @@ bool hardcodedTestIntegration1DimGSL(double relativeDifference)
     double compositeSumQAWCQAGSIn = normalization*integralQAWCQAGSIn.evaluateIntegration1DimNewtonCotes(10, NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON);
     cout << "compositeSumQAWCQAGSIn: " << compositeSumQAWCQAGSIn << "\n";
 
-    Integration1DimGSLQAWCQAGS integralQAWCQAGSOut(-5.0, 5.0, 8.0, &aux6, integrandTestGSLCauchy, 1E-8, 1E-8, 1000);
+    Integration1DimGSLQAWCQAGS integralQAWCQAGSOut(-5.0, 5.0, 9.0, &aux6, integrandTestGSLCauchy, 1E-8, 1E-8, 1000);
     normalization = (-1.0/log(13.0/3.0));
     
     double resultQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluate();

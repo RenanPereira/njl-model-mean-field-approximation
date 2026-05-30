@@ -35,7 +35,7 @@ bool testIntegration1DimNewtonCotes(double relativeDifference)
     std::cout << "resultNewtonCotesSum: " << resultNewtonCotesSum << "\n";
 
     TestIntegrandParameters aux2("integrandTestNewtonCotesCPV");
-    Integration1DimNewtonCotes newtonCotesSumCPV(-1.0, 2.0, 100, &aux2, integrandTestNewtonCotesCPV, NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON);
+    Integration1DimNewtonCotes newtonCotesSumCPV(-1.0, 4.0, 100, &aux2, integrandTestNewtonCotesCPV, NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON);
     normalization = (-1.0/log(2.0));
     double resultNewtonCotesSumCPV = normalization*newtonCotesSumCPV.evaluateAvoidingSingularPoint(1.0);
     std::cout << "resultNewtonCotesSumCPV: " << resultNewtonCotesSumCPV << "\n";
