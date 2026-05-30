@@ -2,39 +2,45 @@ stages:
   - test
 
 variables:
-  GIT_STRATEGY: fetch
+  GIT_STRATEGY: clone
 
-run-calculations:
+# -----------------------------
+# Generic template (hidden job)
+# -----------------------------
+.calculation_template:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
   stage: test
 
   before_script:
-    # Fix Git safety issue in CI container
     - git config --global --add safe.directory "$CI_PROJECT_DIR"
 
   script:
-    - echo "Running NJL model calculations in Docker container"
+    - echo "Running calculation: $CALC_DIR"
+    - echo "Running script: $EXE_CALC_SCRIPT"
+    - echo "Running plot script: $EXE_PLOT_SCRIPT"
 
-    # Run calculations
-    - cd calculations/su3_3d_cutoff_phase_diagram && bash execute_calculations.sh
-    - cd calculations/su3_3d_cutoff_phase_diagram && bash build_plots.sh
+    # Run calculation
+    - cd calculations/$CALC_DIR && bash $EXE_CALC_SCRIPT
+    - cd calculations/$CALC_DIR && bash $EXE_PLOT_SCRIPT
 
     # Return to repo root
     - cd "$CI_PROJECT_DIR"
 
-    # Show changes for debugging
-    - echo "Checking git status..."
+    # Check reproducibility
     - git status --porcelain
     - git diff --stat
 
-    # Fail pipeline if there are changes
     - |
       if [ -n "$(git status --porcelain)" ]; then
         echo "ERROR: Working directory is not clean after execution"
-        echo "The following files were modified:"
         git status --porcelain
         exit 1
       else
         echo "SUCCESS: No changes detected"
       fi
+
+su3_3d_cutoff_phase_diagram:
+  extends: .calculation_template
+  variables:
+    CALC_DIR: "su3_3d_cutoff_phase_diagram"
