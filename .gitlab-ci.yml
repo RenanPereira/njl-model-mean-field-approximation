@@ -1,13 +1,30 @@
 stages:
-  - test
+  - test_modules
+  - execute_calculations
 
 variables:
   GIT_STRATEGY: clone
 
+
+ini_file_parser_tests:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+
+  stage: test_modules
+
+  before_script:
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+
+  script:
+    - cd tests/ini_file_parser
+    - make -j$(nproc)
+    - ./test.out
+    - make clean
+
+
 two_fermion_line_integral_3d_cutoff:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
-  stage: test
+  stage: execute_calculationss
 
   before_script:
     # Fix Git safety issue in CI container
@@ -39,10 +56,11 @@ two_fermion_line_integral_3d_cutoff:
         echo "SUCCESS: No changes detected"
       fi
 
+
 su3_3d_cutoff_vacuum_masses:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
-  stage: test
+  stage: execute_calculationss
 
   before_script:
     # Fix Git safety issue in CI container
@@ -73,10 +91,11 @@ su3_3d_cutoff_vacuum_masses:
         echo "SUCCESS: No changes detected"
       fi
 
+
 su3_3d_cutoff_phase_diagram:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
-  stage: test
+  stage: execute_calculationss
 
   before_script:
     # Fix Git safety issue in CI container
