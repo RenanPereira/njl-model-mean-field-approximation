@@ -86,6 +86,8 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 (cd tests/gsl_wrapper/ && ./execute_tests.sh)
 ```
 
+A Dockerfile is provided in the `docker/` directory, containing all the necessary system dependencies and Python requirements to build a fully reproducible environment for running the NJL mean-field approximation code. This setup ensures that the calculations code can be executed consistently across different systems without manual dependency installation. Instructions for building and running the Docker container are included in the same directory. Additionally, commands for building the image and pushing it to the GitLab Container Registry are provided, enabling easy versioning and deployment of the computational environment.
+
 # Calculations
 
 ## B0 Integral Study (two_fermion_line_integral_3d_cutoff)
