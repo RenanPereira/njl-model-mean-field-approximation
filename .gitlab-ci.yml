@@ -24,7 +24,7 @@ ini_file_parser_tests:
 two_fermion_line_integral_3d_cutoff:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
-  stage: execute_calculationss
+  stage: execute_calculations
 
   before_script:
     # Fix Git safety issue in CI container
