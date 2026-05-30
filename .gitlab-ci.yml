@@ -290,43 +290,8 @@ su3_3d_cutoff_thermodynamics:
     - echo "Running NJL model calculations in Docker container"
 
     # Run calculations
-    - cd calculations/su3_3d_cutoff_thermodynamics && bash execute_calculations.sh
-    - cd calculations/su3_3d_cutoff_thermodynamics && bash build_plots.sh
-
-    # Return to repo root
-    - cd "$CI_PROJECT_DIR"
-
-    # Show changes for debugging
-    - echo "Checking git status..."
-    - git status --porcelain
-    - git diff --stat
-
-    # Fail pipeline if there are changes
-    - |
-      if [ -n "$(git status --porcelain)" ]; then
-        echo "ERROR: Working directory is not clean after execution"
-        echo "The following files were modified:"
-        git status --porcelain
-        exit 1
-      else
-        echo "SUCCESS: No changes detected"
-      fi
-
-su3_3d_cutoff_klev_1996_reproduction:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
-
-  stage: execute_calculations
-
-  before_script:
-    # Fix Git safety issue in CI container
-    - git config --global --add safe.directory "$CI_PROJECT_DIR"
-
-  script:
-    - echo "Running NJL model calculations in Docker container"
-
-    # Run calculations
-    - cd calculations/su3_3d_cutoff_klev_1996_reproduction && bash execute_calculations.sh
-    - cd calculations/su3_3d_cutoff_klev_1996_reproduction && bash build_plots.sh
+    - cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && bash execute_calculations.sh
+    - cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && bash build_plots.sh
 
     # Return to repo root
     - cd "$CI_PROJECT_DIR"
