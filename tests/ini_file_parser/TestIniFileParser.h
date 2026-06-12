@@ -1,16 +1,30 @@
 #ifndef TESTINIFILEPARSER_H
 #define TESTINIFILEPARSER_H
 
-bool check(bool , const std::string& );
+class TestIniFileParser
+{
+private:
+    static bool check(bool , const std::string& );
 
-bool testGetValue();
+    static void printTestResult(bool , const std::string& );
 
-bool testGetInt();
+    static bool testGetValue();
+    static bool testGetInt();
+    static bool testGetDouble(double );
+    static bool testGetSectionData();
+    static bool testGetSections();
+    static bool testValidatePositiveDouble();
+    static bool testIsKeyPresent();
+    static bool testValidatePositiveInteger();
+    static bool testValidateNonNegativeDouble();
+    static bool testValidateRequiredSections();
+    static bool testValidateRequiredKeys();
+    static bool testGetBool();
+    static bool testValidateBool();
 
-bool testGetDouble(double );
+public:
+    static bool runAllTests();
+};
 
-bool testGetSectionData();
-
-bool testGetSections();
 
 #endif
