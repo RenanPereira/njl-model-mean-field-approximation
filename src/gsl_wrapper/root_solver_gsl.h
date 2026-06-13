@@ -41,13 +41,38 @@ bool isValidMultiRootFindingMethod(const std::string& , const std::string& );
 
 bool isValidMultiRootFindingMethod(const std::string& );
 
-void multiDimensionalRootFind(int , double , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod );
+void multiDimensionalRootFind(
+    int , 
+    double , 
+    double* , 
+    void* , 
+    int placeholder_f(const gsl_vector* , void*, gsl_vector* ), 
+    MultiRootFindingMethod 
+);
 
-double OneDimensionalRootFind(double , double , double , void* , double placeholder_f(double, void*), RootFindingMethod );
+double OneDimensionalRootFind(
+    double , 
+    double , 
+    double , 
+    void* , 
+    double placeholder_f (double , void* ), 
+    RootFindingMethod 
+);
 
-std::vector<double> multiDimensionalRootFindRelativeErrors(int , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*));
+std::vector<double> multiDimensionalRootFindRelativeErrors(
+    int , 
+    double* , 
+    void* , 
+    int placeholder_f(const gsl_vector* , void*, gsl_vector* )
+);
 
-int multiDimensionalRootFindTestResidual(int , double , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*));
+int multiDimensionalRootFindTestResidual(
+    int , 
+    double , 
+    double* , 
+    void* , 
+    int placeholder_f(const gsl_vector* , void*, gsl_vector* )
+);
 
 std::vector<gsl_complex> sortGSLComplexNumbersByAbsoluteSize(std::vector<gsl_complex> );
 

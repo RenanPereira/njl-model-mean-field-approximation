@@ -8,7 +8,6 @@
 
 using std::string;
 using std::cout;
-using std::endl;
 using std::vector;
 
 
@@ -21,7 +20,7 @@ string toString(MultiRootFindingMethod method)
     } 
     else 
     {
-        cout << "Error: MultiRootFindingMethod not found in map! Returning UNKNOWN." << endl;
+        cout << "Error: MultiRootFindingMethod not found in map! Returning UNKNOWN.\n";
         return "UNKNOWN";
     }
 }
@@ -37,7 +36,7 @@ MultiRootFindingMethod stringToMultiRootFindingMethod(const std::string& methodS
         }
     }
 
-    std::cout << "Invalid stringToMultiRootFindingMethod string: " << methodString << ". Aborting!" << std::endl;
+    std::cout << "Invalid stringToMultiRootFindingMethod string: " << methodString << ". Aborting!\n";
     abort();
 }
 
@@ -58,7 +57,7 @@ bool isValidMultiRootFindingMethod(const string& methodString, const string& inv
     {   
         if( !invalidMessage.empty() )
         {
-            cout << invalidMessage << endl;
+            cout << invalidMessage << "\n";
         }
         cout << "The value " + methodString + " is not a MultiRootFindingMethod!\n";
     }
@@ -72,7 +71,14 @@ bool isValidMultiRootFindingMethod(const string& methodString)
 }
 
 //Multi-dimensional root-finding
-void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void* params, int placeholder_f(const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod method)
+void multiDimensionalRootFind(
+    int n_eqs, 
+    double precision, 
+    double* x_init, 
+    void* params, 
+    int placeholder_f(const gsl_vector*, void*, gsl_vector*), 
+    MultiRootFindingMethod method
+)
 {
 	//set number of equations
 	const size_t dim = n_eqs;
@@ -139,7 +145,14 @@ void multiDimensionalRootFind(int n_eqs, double precision, double* x_init, void*
 }
 
 // One-dimensional root-finding
-double OneDimensionalRootFind(double precision, double x_low, double x_high, void* params, double placeholder_f (double, void*), RootFindingMethod method)
+double OneDimensionalRootFind(
+    double precision, 
+    double x_low, 
+    double x_high, 
+    void* params, 
+    double placeholder_f (double, void*), 
+    RootFindingMethod method
+)
 {	
 	gsl_function F;
     F.function = placeholder_f;
@@ -161,7 +174,10 @@ double OneDimensionalRootFind(double precision, double x_low, double x_high, voi
 	{
 		T = gsl_root_fsolver_falsepos;
 	}
-	else{ T = gsl_root_fsolver_bisection; }//standart method if no other is selected
+	else
+    { 
+        T = gsl_root_fsolver_bisection; //standart method if no other is selected
+    }
 
 	//allocate memory
 	s =  gsl_root_fsolver_alloc (T);		
@@ -194,7 +210,12 @@ double OneDimensionalRootFind(double precision, double x_low, double x_high, voi
 }
 
 //Return the relative errors given a set of "roots" (x) and the multi root system of equations placeholder_f
-vector<double> multiDimensionalRootFindRelativeErrors(int n, double* x, void* params, int placeholder_f(const gsl_vector*, void*, gsl_vector*))
+vector<double> multiDimensionalRootFindRelativeErrors(
+    int n, 
+    double* x, 
+    void* params, 
+    int placeholder_f(const gsl_vector* , void*, gsl_vector* )
+)
 {
     //create gsl vectors
     gsl_vector *xAux = gsl_vector_alloc(n);
@@ -218,7 +239,13 @@ vector<double> multiDimensionalRootFindRelativeErrors(int n, double* x, void* pa
     return relativeErrors;
 }
 
-int multiDimensionalRootFindTestResidual(int n, double precision, double* x, void* params, int placeholder_f(const gsl_vector*, void*, gsl_vector*))
+int multiDimensionalRootFindTestResidual(
+    int n, 
+    double precision, 
+    double* x, 
+    void* params, 
+    int placeholder_f(const gsl_vector* , void*, gsl_vector* )
+)
 {
     //create gsl vectors
     gsl_vector *xAux = gsl_vector_alloc(n);
@@ -258,7 +285,11 @@ vector<gsl_complex> sortGSLComplexNumbersByAbsoluteSize(vector<gsl_complex> nonO
 		orderedSet.push_back( nonOrderedSet[index] );
 	}
 
-	if ( int(orderedSet.size())!=int(nonOrderedSet.size()) ){ cout << "Ordered set and non ordered set do not have the same size!\n"; abort(); }
+	if ( int(orderedSet.size())!=int(nonOrderedSet.size()) )
+    { 
+        cout << "Ordered set and non ordered set do not have the same size!\n"; 
+        abort(); 
+    }
 
 
 	return orderedSet;
@@ -365,7 +396,11 @@ vector<gsl_complex> solveCubicEquationCardano(gsl_complex a, gsl_complex b, gsl_
 
 vector<gsl_complex> calculateEigenvalues3By3ComplexMatrix(ComplexSquareMatrixGSL M)
 {	
-	if ( int(M.getDimension())!=3 ){ cout << "Trying to calculate eigenvalues of matrix with size !=3 using Cardano!\n"; abort(); }
+	if ( int(M.getDimension())!=3 )
+    { 
+        cout << "Trying to calculate eigenvalues of matrix with size !=3 using Cardano!\n"; 
+        abort(); 
+    }
 
 	//write cubic polynomial for eigenvalues
 	gsl_complex a = gsl_complex_rect(-1.0, 0.0);
