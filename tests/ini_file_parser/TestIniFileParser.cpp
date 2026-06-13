@@ -113,7 +113,6 @@ bool TestIniFileParser::testGetDouble(double absError)
 {   
     std::cout << "\nRunning " << __func__ << "...\n";
     
-    // Create an INI test file
     const std::string testIniFile = std::string(__func__) + ".ini";
 
     std::ofstream out(testIniFile);

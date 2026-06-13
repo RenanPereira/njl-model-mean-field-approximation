@@ -271,8 +271,12 @@ bool IniFileParser::isKeyPresent(const std::string& section, const std::string& 
     }
 }
 
-bool IniFileParser::validatePositiveInteger(const std::string& section, const std::string& key, 
-                                            const std::string& invalidFileMessage, const std::string& conditionMessage) const 
+bool IniFileParser::validatePositiveInteger(
+    const std::string& section, 
+    const std::string& key, 
+    const std::string& invalidFileMessage, 
+    const std::string& conditionMessage
+) const 
 {
     if ( isKeyPresent(section, key)==true )
     {
@@ -293,8 +297,12 @@ bool IniFileParser::validatePositiveInteger(const std::string& section, const st
     }
 }
 
-bool IniFileParser::validatePositiveDouble(const std::string& section, const std::string& key, 
-                                           const std::string& invalidFileMessage, const std::string& conditionMessage) const 
+bool IniFileParser::validatePositiveDouble(
+    const std::string& section, 
+    const std::string& key, 
+    const std::string& invalidFileMessage, 
+    const std::string& conditionMessage
+) const 
 {
     if ( isKeyPresent(section, key)==true )
     {
@@ -315,8 +323,12 @@ bool IniFileParser::validatePositiveDouble(const std::string& section, const std
     }
 }
 
-bool IniFileParser::validateNonNegativeDouble(const std::string& section, const std::string& key, 
-                                              const std::string& invalidFileMessage, const std::string& conditionMessage) const 
+bool IniFileParser::validateNonNegativeDouble(
+    const std::string& section, 
+    const std::string& key, 
+    const std::string& invalidFileMessage, 
+    const std::string& conditionMessage
+) const 
 {
     if (isKeyPresent(section, key) == true) 
     {
@@ -369,7 +381,10 @@ bool IniFileParser::validateRequiredKeys(const std::string& section, const std::
     return allPresent;
 }
 
-bool IniFileParser::validateRequiredKeys(const std::map<std::string, std::string>& section, const std::vector<std::string>& requiredKeys) const 
+bool IniFileParser::validateRequiredKeys(
+    const std::map<std::string, std::string>& section, 
+    const std::vector<std::string>& requiredKeys
+) const 
 {
     bool allPresent = true;
 
@@ -412,8 +427,11 @@ bool IniFileParser::getBool(const std::string& section, const std::string& key) 
 }
 
 bool IniFileParser::validateBool(
-    const std::string& section, const std::string& key, 
-    const std::string& invalidFileMessage, const std::string& conditionMessage) const 
+    const std::string& section, 
+    const std::string& key, 
+    const std::string& invalidFileMessage, 
+    const std::string& conditionMessage
+) const 
 {
     std::string value = trim(getValue(section, key));
 
