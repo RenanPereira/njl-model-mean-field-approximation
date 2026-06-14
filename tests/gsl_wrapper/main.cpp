@@ -6,7 +6,7 @@ int main()
     bool allTestsPassed = true;
 
     // Run each test and collect the result
-    allTestsPassed &= hardcodedTestIntegration1DimGSL(1E-8);
+    allTestsPassed &= TestIntegration1DimGSL::hardcodedTestIntegration1DimGSL(1E-8);
 
     if (allTestsPassed) 
     {
