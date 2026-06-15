@@ -15,6 +15,7 @@ plt.rcParams.update({
     "axes.unicode_minus": False
 })
 
+
 def plot_energy_vs_temperature(
     fig_dpi: int,
     fig_x_size: int,
