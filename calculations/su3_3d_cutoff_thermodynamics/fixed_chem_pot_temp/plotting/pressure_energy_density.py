@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
-import numpy as np
+from matplotlib.figure import Figure
+from matplotlib.axes import Axes
+from common_utils.io_utils import print_unique_filepaths
 from common_utils.plot_helper import configure_axes, add_annotation_block
 from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
 
@@ -17,145 +19,75 @@ def plot_pressure_vs_energy(
     fig_dpi: int,
     fig_x_size: int,
     fig_y_size: int,
-    path_data_folder: str,
-    path_plots_folder: str,
-    filename: str,
-    parameter_set_annotation: str,
-    plotname: str,
+    data_specs: list[tuple[str, str, str, int, str]],
+    path_output_plot: str,
+    legend_loc: str | None = None,
     legend_fontsize: int = 18,
     labels_fontsize: int = 22,
+    label_energy_density: str | None = None,
+    label_pressure: str | None = None,
+    xlim: tuple[float, float] = (0.0 , 1.0),
+    ylim: tuple[float, float] = (0.0 , 1.0),
+    x_num_ticks: int = 6,
+    y_num_ticks: int = 6,
     tick_fontsize: int = 20,
+    x_formatter: str = "%.2f",
+    y_formatter: str = "%.1f",
+    annotation_texts: list[str] | None = None,
+    x_annotation: float = 0.05,
+    y_annotation: float = 0.05,
+    annotation_vert_space: float = 0.06,
     annotation_fontsize: int = 18
-) -> None:
+) -> tuple[Figure, Axes]:
+    """
+    This function plots the pressure versus energy density from FixedChemPotTempData.
+    
+    data_specs:
+        List of tuples defining datasets and plot styles:
+        (filepath, label, color, linewidth, linestyle)
+    """
     print("Building plot: pressure versus energy density.")
-    print(f"Using datafile {filename}.\n")
+    print_unique_filepaths(data_specs)
+
+    datasets: list[tuple[FixedChemPotTempData, str, str, int, str]] = []
+    for filepath, label, color, linewidth, linestyle in data_specs:
+        data = FixedChemPotTempData(filepath)
+        datasets.append((data, label, color, linewidth, linestyle))
 
     # Create a new figure
     fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
-
-    # Plot data
-    data = FixedChemPotTempData(path_data_folder + filename)
     
-    color = 'black'
-    linestyle = '-'
-
-    ax.plot(
-        data.get_energy_density(), 
-        data.get_pressure(), 
-        label=parameter_set_annotation, 
-        color=color, 
-        linewidth=2, 
-        linestyle=linestyle
-    )
-
-    # Axes labels
-    ax.set_xlabel(r'$\epsilon \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
-    ax.set_ylabel(r'$P \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
-
-    # Grid and legend
-    ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
-
-    # Configure axes using the helper function
-    xmin = 0.000
-    xmax = 0.6
-    ymin = 0.0
-    ymax = 0.2
-    x_num_ticks = 5
-    y_num_ticks = 5
-    configure_axes(
-        ax, 
-        xmin, 
-        xmax, 
-        ymin, 
-        ymax, 
-        x_num_ticks, 
-        y_num_ticks, 
-        tick_fontsize=tick_fontsize, 
-        spine_width=1.5, 
-        tick_width=1.5, 
-        tick_length=6
-    )
-
-    ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-    ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-
-    # Add text annotations
-    auxH = 0.06; auxX = 0.68; auxY = 0.05
-    texts = [
-        r'$\mu = 0.0\ \mathrm{GeV}$',
-    ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
-
-    fig.tight_layout()
-
-    plt.savefig(path_plots_folder + plotname)
-
-    # Clean up
-    plt.clf()
-    plt.close()
-
-
-def plot_pressure_vs_energy_given_list(
-    fig_dpi: int,
-    fig_x_size: int,
-    fig_y_size: int,
-    path_data_folder: str,
-    path_plots_folder: str,
-    filenames: list[str],
-    parameter_sets_annotation: list[str],
-    colors: list[str],
-    linestyles: list[str],
-    plotname: str,
-    legend_fontsize: int = 18,
-    labels_fontsize: int = 22,
-    tick_fontsize: int = 20,
-    annotation_fontsize: int = 18
-) -> None:
-    print("Building plot: comparing pressure versus energy density for different files.\n")
-
-    # Check all list sizes
-    lengths = [
-        len(filenames), 
-        len(parameter_sets_annotation),
-        len(colors),
-        len(linestyles)
-    ]
-    if (min(lengths)!=max(lengths)):
-        print("Lists provided have different sizes!")
-        return
-    
-    # Create a new figure
-    fig, ax = plt.subplots(figsize=(fig_x_size, fig_y_size), dpi=fig_dpi)
-    
-    # Plot data
-    for i in range(0, len(filenames)):
-        data = FixedChemPotTempData(path_data_folder + filenames[i])
-
+    for data, label, color, linewidth, linestyle in datasets:
         ax.plot(
-            data.get_energy_density(), 
-            data.get_pressure(), 
-            label=fr'{parameter_sets_annotation[i]}', 
-            color=colors[i], 
-            linewidth=2, 
-            linestyle=linestyles[i]
+            data.get_energy_density(),
+            data.get_pressure(),  
+            label=label, 
+            color=color, 
+            linewidth=linewidth, 
+            linestyle=linestyle
         )
-    
-    # Axes labels
-    ax.set_xlabel(r'$\epsilon \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
-    ax.set_ylabel(r'$P \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
-
-    # Grid and legend
+        
+    # Grid
     ax.grid(True, linestyle='--', alpha=0.5)
-    plt.legend(loc="upper left", fontsize=legend_fontsize, frameon=False)
+    
+    # Legend
+    if legend_loc is not None:
+        ax.legend(loc=legend_loc, fontsize=legend_fontsize, frameon=False)
 
-    # Configure axes using the helper function
-    xmin = 0.000
-    xmax = 0.6
-    ymin = 0.0
-    ymax = 0.2
-    x_num_ticks = 5
-    y_num_ticks = 5
+    # Axes labels
+    if label_energy_density is None:
+        ax.set_xlabel(r'$\epsilon \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
+    else:
+        ax.set_xlabel(label_energy_density, fontsize=labels_fontsize)
+    if label_pressure is None:
+        ax.set_ylabel(r'$P \, [\mathrm{GeV}^4]$', fontsize=labels_fontsize)
+    else: 
+        ax.set_ylabel(label_pressure, fontsize=labels_fontsize)
+
+    xmin = xlim[0]
+    xmax = xlim[1]
+    ymin = ylim[0]
+    ymax = ylim[1]
     configure_axes(
         ax, 
         xmin, 
@@ -169,95 +101,26 @@ def plot_pressure_vs_energy_given_list(
         tick_width=1.5, 
         tick_length=6
     )
-
-    ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-    ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+    ax.xaxis.set_major_formatter(FormatStrFormatter(x_formatter))
+    ax.yaxis.set_major_formatter(FormatStrFormatter(y_formatter))
 
     # Add text annotations
-    auxH = 0.06; auxX = 0.68; auxY = 0.05
-    texts = [
-        r'$\mu = 0.0\ \mathrm{GeV}$',
-    ]
-    add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
+    if annotation_texts is not None:
+        add_annotation_block(
+            ax, 
+            xmin, 
+            xmax, 
+            ymin, 
+            ymax, 
+            x_annotation, 
+            y_annotation, 
+            annotation_vert_space, 
+            annotation_texts, 
+            fontsize=annotation_fontsize
+        )
 
     fig.tight_layout()
 
-    plt.savefig(path_plots_folder + plotname)
-
-    # Clean up
-    plt.clf()
-    plt.close()
-
-
-##########################################################################
-
-
-fig_dpi = 150
-fig_x_size = 6
-fig_y_size = 6
-
-# Location of the data and plots folder with respect to calculations folder
-path_data_folder = "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/"
-path_plots_folder = "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/"
-
-plot_pressure_vs_energy(
-    fig_dpi,
-    fig_x_size,
-    fig_y_size,
-    path_data_folder,
-    path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
-    "set A",
-    "pressure_vs_energy_CP0_setA.png"
-)
-
-plot_pressure_vs_energy(
-    fig_dpi,
-    fig_x_size,
-    fig_y_size,
-    path_data_folder,
-    path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
-    "set B",
-    "pressure_vs_energy_CP0_setB.png"
-)
-
-plot_pressure_vs_energy(
-    fig_dpi,
-    fig_x_size,
-    fig_y_size,
-    path_data_folder,
-    path_plots_folder,
-    "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
-    "set C",
-    "pressure_vs_energy_CP0_setC.png"
-)
-
-plot_pressure_vs_energy_given_list(
-    fig_dpi,
-    fig_x_size,
-    fig_y_size,
-    path_data_folder,
-    path_plots_folder,
-    [
-        "SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p0.dat",
-        "SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
-        "SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
-    ],
-    [
-        "set A",
-        "set B",
-        "set C",
-    ],
-    [
-        'black', 
-        'red', 
-        'blue',
-        ],
-    [
-        '-', 
-        '-', 
-        '-',
-    ],
-    "pressure_vs_energy_CP0_setsABC.png"
-)
+    plt.savefig(path_output_plot)
+    
+    return fig, ax
