@@ -57,51 +57,51 @@ In this section we present the results for some transport coefficients for diffe
 
 ### Shear Viscosity - Zero chemical potential
 
-<p align="center">
+<p align="left">
   <img src="plots/eta_vs_temp_setA_CP0.png" width="32%">
   <img src="plots/eta_over_s_vs_temp_setA_CP0.png" width="32%">
 </p>
 
 ### Shear Viscosity - CEP chemical potential
 
-<p align="center">
+<p align="left">
   <img src="plots/eta_vs_temp_setA_CPCEP.png" width="32%">
   <img src="plots/eta_over_s_vs_temp_setA_CPCEP.png" width="32%">
 </p>
 
 ### Electrical Conductivity - Zero chemical potential
 
-<p align="center">
+<p align="left">
   <img src="plots/sigmae_vs_temp_setA_CP0.png" width="32%">
   <img src="plots/sigmae_over_temp_vs_temp_setA_CP0.png" width="32%">
 </p>
 
 ### Electrical Conductivity - CEP chemical potential
 
-<p align="center">
+<p align="left">
   <img src="plots/sigmae_vs_temp_setA_CPCEP.png" width="32%">
   <img src="plots/sigmae_over_temp_vs_temp_setA_CPCEP.png" width="32%">
 </p>
 
 ### Shear Viscosity and Electrical Conductivity Ratios - Zero chemical potential
 
-<p align="center">
+<p align="left">
   <img src="plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CP0.png" width="32%">
   <img src="plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CP0_zoom.png" width="32%">
 </p>
 
-<p align="center">
+<p align="left">
   <img src="plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CP0.png" width="32%">
   <img src="plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CP0_zoom.png" width="32%">
 </p>
 
 ### Shear Viscosity and Electrical Conductivity Ratios - CEP chemical potential
 
-<p align="center">
+<p align="left">
   <img src="plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CPCEP.png" width="32%">
 </p>
 
-<p align="center">
+<p align="left">
   <img src="plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CPCEP.png" width="32%">
   <img src="plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CPCEP_zoom.png" width="32%">
 </p>

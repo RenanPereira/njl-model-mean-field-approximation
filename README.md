@@ -217,18 +217,6 @@ Python code:
 
 Some of the results that can be obtained using this code are shown below. For more information regarding the parameter sets used in these plots, see [here](../su3_3d_cutoff_phase_diagram/README.md).
 
-### Quark masses
-
-<p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setC.png" width="32%">
-</p>
-
-<p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
-</p>
-
 
 ### Phase Diagram
 
@@ -244,6 +232,18 @@ Some of the results that can be obtained using this code are shown below. For mo
   <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setB_rhoB_vs_temp.png" width="24%">
   <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setC_rhoB_vs_temp.png" width="24%">
   <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_allSets_rhoB_vs_temp.png" width="24%">
+</p>
+
+### Quark masses
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setB.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setC.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
 </p>
 
 
@@ -300,6 +300,25 @@ Some of the results that can be obtained using this code are shown below. For mo
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setsABC.png" width="32%">
 </p>
 
+### Quark density and Baryon density
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setA_T0p075.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setB_T0p12.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setC_T0p13.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_vs_muB_setA_T0p075.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_vs_muB_setB_T0p12.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_vs_muB_setC_T0p13.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setA_T0p075.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setB_T0p12.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setC_T0p13.png" width="32%">
+</p>
 
 ### Shear Viscosity - Zero chemical potential
 
