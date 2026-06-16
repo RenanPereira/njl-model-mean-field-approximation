@@ -46,7 +46,7 @@ def plot_energy_vs_temperature(
         List of tuples defining datasets and plot styles:
         (filepath, label, color, linewidth, linestyle)
     """
-    print("Building plot: effective energy density versus temperature.")
+    print("Building plot: energy density versus temperature.")
     print_unique_filepaths(data_specs)
 
     datasets: list[tuple[FixedChemPotTempData, str, str, int, str]] = []
@@ -152,7 +152,7 @@ def plot_energy_euler_eq_vs_temperature(
         List of tuples defining datasets and plot styles:
         (filepath, label, color, linewidth, linestyle)
     """
-    print("Building plot: effective energy density, euler equation versus temperature.")
+    print("Building plot: energy density, euler equation versus temperature.")
     print_unique_filepaths(data_specs)
 
     datasets: list[tuple[FixedChemPotTempData, str, str, int, str, bool]] = []
