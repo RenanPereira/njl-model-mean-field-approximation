@@ -6,7 +6,7 @@ echo ""
 cd ../../
 
 python3 -m su3_3d_cutoff_thermodynamics.fixed_chem_pot_temp.plotting.generate_effective_masses
-python3 -m su3_3d_cutoff_thermodynamics.fixed_chem_pot_temp.plotting.entropy_density
+python3 -m su3_3d_cutoff_thermodynamics.fixed_chem_pot_temp.plotting.generate_entropy_density
 python3 -m su3_3d_cutoff_thermodynamics.fixed_chem_pot_temp.plotting.pressure
 python3 -m su3_3d_cutoff_thermodynamics.fixed_chem_pot_temp.plotting.generate_energy_density_plots
 python3 -m su3_3d_cutoff_thermodynamics.fixed_chem_pot_temp.plotting.pressure_energy_density
