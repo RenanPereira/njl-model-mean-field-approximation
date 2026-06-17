@@ -68,16 +68,6 @@ gsl_wrapper:
 
       exit $TEST_EXIT_CODE
 
-show_threads:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
-  stage: test_modules
-  script:
-    - echo "CPU cores visible to runner:"
-    - nproc
-    - echo "OpenMP max threads:"
-    - machine_threads=$(nproc)
-    - echo "This machine has a total of $machine_threads threads."
-
 two_fermion_line_integral_3d_cutoff:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
@@ -247,6 +237,36 @@ su3_3d_cutoff_thermodynamics:
     # Run calculations
     - cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && bash execute_calculations.sh
     - cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && bash build_plots.sh
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
+
+show_threads:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - cd calculations/su3_3d_cutoff_cross_sections_lite && ./execute_calculations.sh
 
     # Return to repo root
     - cd "$CI_PROJECT_DIR"
