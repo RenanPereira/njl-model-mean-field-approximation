@@ -94,6 +94,12 @@ In this section we present some thermodynamic quantities of the SU3 NJL model re
   <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
 </p>
 
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setA_T0p075.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setB_T0p12.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setC_T0p13.png" width="32%">
+</p>
+
 ### Pressure
 
 <p align="left">
@@ -104,9 +110,8 @@ In this section we present some thermodynamic quantities of the SU3 NJL model re
 
 <p align="left">
   <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_muB_setsABC_diffT.png" width="32%">
 </p>
-
-
 
 ### Entropy density
 
@@ -119,6 +124,11 @@ In this section we present some thermodynamic quantities of the SU3 NJL model re
 <p align="left">
   <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setsABC.png" width="32%">
   <img src="fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_CP0_setsABC.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_muB_setsABC_diffT.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/s_over_temp3_vs_muB_setsABC_diffT.png" width="32%">
 </p>
 
 
@@ -140,6 +150,7 @@ In the plots below we also calculate the temperature derivative of the pressure 
 
 <p align="left">
   <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_muB_setsABC_diffT.png" width="32%">
 </p>
 
 In the plots below we also calculate the energy density via the Euler equation. Hence, one can assess the compatibility of the results provided in the data file.
@@ -160,6 +171,7 @@ In the plots below we also calculate the energy density via the Euler equation. 
 
 <p align="left">
   <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setsABC.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_setsABC_diffT.png" width="32%">
 </p>
 
 ### Quark density and Baryon density
@@ -181,4 +193,3 @@ In the plots below we also calculate the energy density via the Euler equation. 
   <img src="fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setB_T0p12.png" width="32%">
   <img src="fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setC_T0p13.png" width="32%">
 </p>
-

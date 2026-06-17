@@ -4,7 +4,7 @@
 # (cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && ./execute_calculations.sh)
 
 echo "Script that calculates the thermodynamics and in medium quark effective masses for the \
-SU3 NJL model for different parameter sets as functions of temperature at zero checmical potential."
+SU3 NJL model for different parameter sets as functions of temperature at zero chemical potential."
 echo ""
 
 data_folder="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data"

@@ -43,7 +43,7 @@ def plot_quark_dens_vs_chem_pot(
     annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
-    This function plots quark densities vs checmical potential from FixedChemPotTempData.
+    This function plots quark densities vs chemical potential from FixedChemPotTempData.
     
     data_specs:
         List of tuples defining datasets and plot styles:
@@ -149,7 +149,7 @@ def plot_baryon_dens_vs_baryon_chem_pot(
     annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
-    This function plots the baryon density vs baryon checmical potential from FixedChemPotTempData.
+    This function plots the baryon density vs baryon chemical potential from FixedChemPotTempData.
     
     data_specs:
         List of tuples defining datasets and plot styles:
@@ -252,7 +252,7 @@ def plot_baryon_dens_dPdmuB_vs_baryon_chem_pot(
     annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
-    This function plots the baryon density vs baryon checmical potential from FixedChemPotTempData.
+    This function plots the baryon density vs baryon chemical potential from FixedChemPotTempData.
     
     data_specs:
         List of tuples defining datasets and plot styles:

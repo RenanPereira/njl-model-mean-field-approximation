@@ -1,7 +1,9 @@
 from su3_3d_cutoff_thermodynamics.fixed_chem_pot_temp.plotting.entropy_density import (
     plot_entropy_density_vs_temperature, 
     plot_entropy_density_dPdT_vs_temperature,
-    plot_s_over_temp3_vs_temp
+    plot_s_over_temp3_vs_temp,
+    plot_entropy_density_vs_baryon_chem_pot,
+    plot_s_over_temp3_vs_baryon_chem_pot
 )
 
 fig_dpi = 150
@@ -293,4 +295,79 @@ plot_s_over_temp3_vs_temp(
     ],
     x_annotation=0.05,
     y_annotation=0.05
+)
+
+plot_entropy_density_vs_baryon_chem_pot(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetA_T0p075_CPUMin0p0_CPUMax0p5.dat",
+            r'set A , $T\, [\mathrm{GeV}] = 0.075$', 
+            "black", 
+            2, 
+            "-"
+        ),
+        (
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetB_T0p12_CPUMin0p0_CPUMax0p5.dat",
+            r'set B , $T\, [\mathrm{GeV}] = 0.120$', 
+            "red", 
+            2, 
+            "-"
+        ),
+        (
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetC_T0p13_CPUMin0p0_CPUMax0p5.dat",
+            r'set C , $T\, [\mathrm{GeV}] = 0.130$', 
+            "blue", 
+            2, 
+            "-"
+        ),
+    ],
+    path_plots_folder + "entropy_vs_muB_setsABC_diffT.png",
+    "upper left",
+    xlim=(0.0, 1.500),
+    ylim=(0.0, 0.15),
+    x_num_ticks=7,
+    y_num_ticks=6,
+    x_formatter="%.2f", 
+    y_formatter="%.2f",
+)
+
+plot_s_over_temp3_vs_baryon_chem_pot(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_SetA_T0p075_CPUMin0p0_CPUMax0p5.dat",  
+            r'set A , $T\, [\mathrm{GeV}] = 0.075$', 
+            "black", 
+            2, 
+            "-"
+        ),
+        (
+            path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_SetB_T0p12_CPUMin0p0_CPUMax0p5.dat",  
+            r'set B , $T\, [\mathrm{GeV}] = 0.120$', 
+            "red", 
+            2, 
+            "-"
+        ),
+            (
+            path_data_folder + "SU3NJL3DCutoffFixedChemPotTemp_SetC_T0p13_CPUMin0p0_CPUMax0p5.dat", 
+            r'set C , $T\, [\mathrm{GeV}] = 0.130$', 
+            "blue", 
+            2, 
+            "-"
+        ),
+    ],
+    path_plots_folder + "s_over_temp3_vs_muB_setsABC_diffT.png",
+    stefan_boltzmann_limit=True,
+    legend_loc="upper left",
+    xlim=(0.0, 1.500),
+    ylim=(0.0, 150.0),
+    x_num_ticks=7,
+    y_num_ticks=6,
+    x_formatter="%.2f",
+    y_formatter="%.0f",
 )
