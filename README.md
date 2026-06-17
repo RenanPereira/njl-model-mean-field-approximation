@@ -213,7 +213,7 @@ Python code:
 - functions, variables → snake_case
 
 
-# Some Results
+# Results
 
 Some of the results that can be obtained using this code are shown below. For more information regarding the parameter sets used in these plots, see [here](../su3_3d_cutoff_phase_diagram/README.md).
 
@@ -237,13 +237,13 @@ Some of the results that can be obtained using this code are shown below. For mo
 ### Quark masses
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setsABC_CP0.png" width="32%">
 </p>
 
 <p align="left">
@@ -255,27 +255,27 @@ Some of the results that can be obtained using this code are shown below. For mo
 ### Pressure
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_setsABC_CP0.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_muB_setsABC_diffT.png" width="32%">
 </p>
 
 ### Entropy density
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setsABC.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_setsABC_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_setsABC_CP0.png" width="32%">
 </p>
 
 <p align="left">
@@ -287,42 +287,42 @@ Some of the results that can be obtained using this code are shown below. For mo
 In the plots below we also calculate the temperature derivative of the pressure at fixed chemical potential, which yields the entropy density. Hence, one can assess the compatibility of the results provided in the data file.
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 ### Energy density
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_setsABC_CP0.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_muB_setsABC_diffT.png" width="32%">
 </p>
 
 In the plots below we also calculate the energy density via the Euler equation. Hence, one can assess the compatibility of the results provided in the data file.
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 ### Pressure and Energy density
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setsABC_CP0.png" width="32%">
   <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setsABC_diffT.png" width="32%">
 </p>
 

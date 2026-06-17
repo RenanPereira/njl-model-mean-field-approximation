@@ -23,7 +23,7 @@ plot_pressure_vs_energy(
             "-"
         ),
     ],
-    path_plots_folder + "pressure_vs_energy_CP0_setA.png",
+    path_plots_folder + "pressure_vs_energy_setA_CP0.png",
     "upper left",
     xlim=(0.0, 0.600),
     ylim=(0.0, 0.2),
@@ -51,7 +51,7 @@ plot_pressure_vs_energy(
             "-"
         ),
     ],
-    path_plots_folder + "pressure_vs_energy_CP0_setB.png",
+    path_plots_folder + "pressure_vs_energy_setB_CP0.png",
     "upper left",
     xlim=(0.0, 0.600),
     ylim=(0.0, 0.2),
@@ -79,7 +79,7 @@ plot_pressure_vs_energy(
             "-"
         ),
     ],
-    path_plots_folder + "pressure_vs_energy_CP0_setC.png",
+    path_plots_folder + "pressure_vs_energy_setC_CP0.png",
     "upper left",
     xlim=(0.0, 0.600),
     ylim=(0.0, 0.2),
@@ -121,7 +121,7 @@ plot_pressure_vs_energy(
             "-"
         ),
     ],
-    path_plots_folder + "pressure_vs_energy_CP0_setsABC.png",
+    path_plots_folder + "pressure_vs_energy_setsABC_CP0.png",
     "upper left",
     xlim=(0.0, 0.600),
     ylim=(0.0, 0.2),

@@ -27,7 +27,7 @@ plot_entropy_density_vs_temperature(
             "-"
         ),
     ],
-    path_plots_folder + "entropy_vs_temp_CP0_setA.png",
+    path_plots_folder + "entropy_vs_temp_setA_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.4),
@@ -55,7 +55,7 @@ plot_entropy_density_vs_temperature(
             "-"
         ),
     ],
-    path_plots_folder + "entropy_vs_temp_CP0_setB.png",
+    path_plots_folder + "entropy_vs_temp_setB_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.4),
@@ -83,7 +83,7 @@ plot_entropy_density_vs_temperature(
             "-"
         ),
     ],
-    path_plots_folder + "entropy_vs_temp_CP0_setC.png",
+    path_plots_folder + "entropy_vs_temp_setC_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.4),
@@ -125,7 +125,7 @@ plot_entropy_density_vs_temperature(
             "-"
         ),
     ],
-    path_plots_folder + "entropy_vs_temp_CP0_setsABC.png",
+    path_plots_folder + "entropy_vs_temp_setsABC_CP0.png",
     "upper left",
     xlim=(0.1, 0.2),
     ylim=(0.0, 0.105),
@@ -162,7 +162,7 @@ plot_entropy_density_dPdT_vs_temperature(
             True
         ),
     ],
-    path_plots_folder + "entropy_dPdT_vs_temp_CP0_setA.png",
+    path_plots_folder + "entropy_dPdT_vs_temp_setA_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.4),
@@ -200,7 +200,7 @@ plot_entropy_density_dPdT_vs_temperature(
             True
         ),
     ],
-    path_plots_folder + "entropy_dPdT_vs_temp_CP0_setB.png",
+    path_plots_folder + "entropy_dPdT_vs_temp_setB_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.4),
@@ -238,7 +238,7 @@ plot_entropy_density_dPdT_vs_temperature(
             True
         ),
     ],
-    path_plots_folder + "entropy_dPdT_vs_temp_CP0_setC.png",
+    path_plots_folder + "entropy_dPdT_vs_temp_setC_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.4),
@@ -281,7 +281,7 @@ plot_s_over_temp3_vs_temp(
             "-"
         ),
     ],
-    path_plots_folder + "s_over_temp3_vs_temp_CP0_setsABC.png",
+    path_plots_folder + "s_over_temp3_vs_temp_setsABC_CP0.png",
     stefan_boltzmann_limit=True,
     legend_loc="lower right",
     xlim=(0.120, 0.300),

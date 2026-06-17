@@ -24,7 +24,7 @@ plot_pressure_vs_temperature(
             "-"
         ),
     ],
-    path_plots_folder + "pressure_vs_temp_CP0_setA.png",
+    path_plots_folder + "pressure_vs_temp_setA_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.03),
@@ -52,7 +52,7 @@ plot_pressure_vs_temperature(
             "-"
         ),
     ],
-    path_plots_folder + "pressure_vs_temp_CP0_setB.png",
+    path_plots_folder + "pressure_vs_temp_setB_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.03),
@@ -80,7 +80,7 @@ plot_pressure_vs_temperature(
             "-"
         ),
     ],
-    path_plots_folder + "pressure_vs_temp_CP0_setC.png",
+    path_plots_folder + "pressure_vs_temp_setC_CP0.png",
     "upper left",
     xlim=(0.0, 0.300),
     ylim=(0.0, 0.03),
@@ -122,7 +122,7 @@ plot_pressure_vs_temperature(
             "-"
         ),
     ],
-    path_plots_folder + "pressure_vs_temp_CP0_setsABC.png",
+    path_plots_folder + "pressure_vs_temp_setsABC_CP0.png",
     "upper left",
     xlim=(0.1, 0.200),
     ylim=(0.0, 0.005),
