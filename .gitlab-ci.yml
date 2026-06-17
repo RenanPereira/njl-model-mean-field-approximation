@@ -68,6 +68,16 @@ gsl_wrapper:
 
       exit $TEST_EXIT_CODE
 
+show_threads:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  stage: test_modules
+  script:
+    - echo "CPU cores visible to runner:"
+    - nproc
+    - echo "OpenMP max threads:"
+    - machine_threads=$(nproc)
+    - echo "This machine has a total of $machine_threads threads."
+
 two_fermion_line_integral_3d_cutoff:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
