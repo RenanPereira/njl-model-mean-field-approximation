@@ -17,3 +17,4 @@ cd calculations/su3_3d_cutoff_cross_sections_lite/data
 rm nambuJonaLasinioModel.out
 
 cd ..
+
