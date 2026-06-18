@@ -257,7 +257,7 @@ su3_3d_cutoff_thermodynamics:
         echo "SUCCESS: No changes detected"
       fi
 
-show_threads:
+su3_3d_cutoff_cross_sections_lite:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
 
   stage: execute_calculations
@@ -266,7 +266,7 @@ show_threads:
     - echo "Running NJL model calculations in Docker container"
 
     # Run calculations
-    - cd calculations/su3_3d_cutoff_cross_sections_lite && ./execute_calculations.sh
+    - cd calculations/su3_3d_cutoff_cross_sections_lite && bash execute_calculations.sh
 
     # Return to repo root
     - cd "$CI_PROJECT_DIR"
