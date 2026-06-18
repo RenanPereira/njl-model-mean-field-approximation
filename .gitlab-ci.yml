@@ -287,3 +287,34 @@ su3_3d_cutoff_cross_sections_test:
       else
         echo "SUCCESS: No changes detected"
       fi
+
+su3_3d_cutoff_int_cross_sections_test:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - machine_threads=$(nproc)
+    - cd calculations/su3_3d_cutoff_int_cross_sections_test && bash execute_calculations.sh $machine_threads
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
