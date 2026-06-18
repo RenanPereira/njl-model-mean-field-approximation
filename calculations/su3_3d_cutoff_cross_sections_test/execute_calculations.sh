@@ -8,9 +8,9 @@ cd ../.. || exit
 
 make -j"$threads"
 
-cp bin/nambuJonaLasinioModel.out calculations/su3_3d_cutoff_cross_sections_lite/data
+cp bin/nambuJonaLasinioModel.out calculations/su3_3d_cutoff_cross_sections_test/data
 
-cd calculations/su3_3d_cutoff_cross_sections_lite/data
+cd calculations/su3_3d_cutoff_cross_sections_test/data
 
 ./nambuJonaLasinioModel.out use-config-file crossSections_T0p215000_CP0p000000.ini
 
