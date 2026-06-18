@@ -36,6 +36,6 @@ sed -i "s/^numberOfThreads = .*/numberOfThreads = $threads/" crossSections_T0p21
 
 rm nambuJonaLasinioModel.out
 
-sed -i "s/^numberOfThreads = .*/numberOfThreads = 2/" crossSections_T0p215000_CP0p000000.ini
+sed -i "s/^numberOfThreads = .*/numberOfThreads = 15/" crossSections_T0p215000_CP0p000000.ini
 
 cd ..
