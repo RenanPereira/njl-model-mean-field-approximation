@@ -266,7 +266,8 @@ su3_3d_cutoff_cross_sections_test:
     - echo "Running NJL model calculations in Docker container"
 
     # Run calculations
-    - cd calculations/su3_3d_cutoff_cross_sections_test && bash execute_calculations.sh
+    - machine_threads=$(nproc)
+    - cd calculations/su3_3d_cutoff_cross_sections_test && bash execute_calculations.sh $machine_threads
 
     # Return to repo root
     - cd "$CI_PROJECT_DIR"
