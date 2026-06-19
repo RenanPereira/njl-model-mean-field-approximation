@@ -6,7 +6,7 @@ import numpy as np
 from common_utils.io_utils import print_unique_filepaths
 from common_utils.plot_helper import configure_axes, add_annotation_block
 from common_utils.su3_njl_3d_cutoff_data import FixedChemPotTempData
-from common_utils.stefan_boltzmann import StefanBoltzmannMasslessQuarks
+from common_utils.stefan_boltzmann import StefanBoltzmannMasslessFlavorDegenerateQuarks
 
 
 # Select font that will be used for the different plots
@@ -319,7 +319,7 @@ def plot_s_over_temp3_vs_temp(
     
     # add Stefan Boltzmann reference
     if stefan_boltzmann_limit:
-        sb = StefanBoltzmannMasslessQuarks(number_of_colors=3,number_of_flavors=3)
+        sb = StefanBoltzmannMasslessFlavorDegenerateQuarks(number_of_colors=3,number_of_flavors=3)
         temp = datasets[0][0].get_temperature()
         mask = temp > 0
         temp = temp[mask]
@@ -564,7 +564,7 @@ def plot_s_over_temp3_vs_baryon_chem_pot(
     
     # add Stefan Boltzmann reference using the first dataset provided
     if stefan_boltzmann_limit:
-        sb = StefanBoltzmannMasslessQuarks(number_of_colors=3,number_of_flavors=3)
+        sb = StefanBoltzmannMasslessFlavorDegenerateQuarks(number_of_colors=3,number_of_flavors=3)
         temp = datasets[0][0].get_temperature()
         mask = temp > 0
         temp = temp[mask]
