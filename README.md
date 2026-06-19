@@ -117,6 +117,11 @@ A Dockerfile is provided in the `docker/` directory, containing all the necessar
 (cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./build_plots.sh)
 ```
 
+### Test (su3_3d_cutoff_cross_sections_test)
+```bash
+(cd calculations/su3_3d_cutoff_cross_sections_test && ./execute_calculations.sh)
+```
+
 ## SU3 NJL Integrated Cross Section Study (su3_3d_cutoff_int_cross_sections)
 
 ### Zero chemical potential
@@ -135,6 +140,11 @@ A Dockerfile is provided in the `docker/` directory, containing all the necessar
 (cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_calculations_ZHUANG.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_local_main.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./build_plots.sh)
+```
+
+### Test (su3_3d_cutoff_int_cross_sections_test)
+```bash
+(cd calculations/su3_3d_cutoff_int_cross_sections_test && ./execute_calculations.sh)
 ```
 
 ## SU3 NJL Quark Relaxation Time Study (su3_3d_cutoff_quark_relaxation_times)
