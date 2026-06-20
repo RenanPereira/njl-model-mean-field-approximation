@@ -197,6 +197,10 @@ The results generated when running the `execute_calculations_lite.sh` script can
 ```bash
 (cd scripts/tests/ && ./clean_calculations.sh)
 ```
+or, for the lite version,
+```bash
+(cd scripts/tests/ && ./clean_calculations_lite.sh)
+```
 
 ## Plots
 
