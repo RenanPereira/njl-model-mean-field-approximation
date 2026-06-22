@@ -6,7 +6,7 @@ variables:
   GIT_STRATEGY: clone
 
 ini_file_parser:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: test_modules
 
@@ -27,7 +27,7 @@ ini_file_parser:
       exit $TEST_EXIT_CODE
 
 integration_methods:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: test_modules
 
@@ -48,7 +48,7 @@ integration_methods:
       exit $TEST_EXIT_CODE
 
 gsl_wrapper:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: test_modules
 
@@ -69,7 +69,7 @@ gsl_wrapper:
       exit $TEST_EXIT_CODE
 
 two_fermion_line_integral_3d_cutoff:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: execute_calculations
 
@@ -104,7 +104,7 @@ two_fermion_line_integral_3d_cutoff:
       fi
 
 su3_3d_cutoff_vacuum_masses:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: execute_calculations
 
@@ -134,7 +134,7 @@ su3_3d_cutoff_vacuum_masses:
       fi
 
 su3_3d_cutoff_phase_diagram:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: execute_calculations
 
@@ -165,7 +165,7 @@ su3_3d_cutoff_phase_diagram:
       fi
 
 su3_3d_cutoff_quark_relaxation_times:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: execute_calculations
 
@@ -196,7 +196,7 @@ su3_3d_cutoff_quark_relaxation_times:
       fi
 
 su3_3d_cutoff_transport_coefficients:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: execute_calculations
 
@@ -227,7 +227,7 @@ su3_3d_cutoff_transport_coefficients:
       fi
 
 su3_3d_cutoff_thermodynamics:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: execute_calculations
 
@@ -258,7 +258,7 @@ su3_3d_cutoff_thermodynamics:
       fi
 
 su3_3d_cutoff_cross_sections_test:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: execute_calculations
 
@@ -289,7 +289,7 @@ su3_3d_cutoff_cross_sections_test:
       fi
 
 su3_3d_cutoff_int_cross_sections_test:
-  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
   stage: execute_calculations
 
