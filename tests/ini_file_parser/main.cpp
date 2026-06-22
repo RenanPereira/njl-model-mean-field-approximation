@@ -2,24 +2,17 @@
 #include "TestIniFileParser.h"
 
 int main() 
-{
-    bool allTestsPassed = true;
-    
-    // Run each test and collect the result
-    allTestsPassed &= testGetValue();
-    allTestsPassed &= testGetInt();
-    allTestsPassed &= testGetDouble(1E-10);
-    allTestsPassed &= testGetSectionData();
-    allTestsPassed &= testGetSections();
+{   
+    bool allTestsPassed = TestIniFileParser::runAllTests();
 
     if (allTestsPassed) 
     {
-        std::cout << "All tests passed!" << std::endl;
+        std::cout << "\nAll tests passed!\n";
         return 0;
     } 
     else 
     {
-        std::cout << "Some tests failed!" << std::endl;
+        std::cout << "\nSome tests failed!\n";
         return 1;
     }
 }

@@ -10,7 +10,9 @@
 
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffIntegratedCrossSections.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::vector;
 
 
 int main(int argc, char* argv[])
@@ -43,10 +45,10 @@ int main(int argc, char* argv[])
     double m0s = 0.1407;
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
+    NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("setA");
 
 
@@ -63,7 +65,7 @@ int main(int argc, char* argv[])
     int numberOfPointsFromVacToMinTemp = 200; 
     int numberOfPointsFromMinToMaxTemp = 11;
     bool largeAngleScatteringContribution = false;
-    IntegratedCrossSectionApproximationMethod approximationMethod = COMPLETE_COV;
+    IntegratedCrossSectionApproximationMethod approximationMethod = IntegratedCrossSectionApproximationMethod::COMPLETE_COV;
 	double propagatorIntegralPrecision = 1E-5;
 	double crossSectionIntegralPrecision = 1E-4;
 	double integratedCrossSectionIntegralPrecision_dXdY = 1E-10;
@@ -109,9 +111,13 @@ int main(int argc, char* argv[])
 
     //find solution in the at finite temperature and fixed chemical potentials
     SU3NJL3DCutoffFixedChemPotTemp inMedium(parameters, T, effChemPotU, effChemPotD, effChemPotS);
-    inMedium.solve(1E-8, HYBRIDS, vacuum.getUpQuarkEffectiveMass(), 
-                                  vacuum.getDownQuarkEffectiveMass(), 
-                                  vacuum.getStrangeQuarkEffectiveMass());
+    inMedium.solve(
+        1E-8, 
+        MultiRootFindingMethod::HYBRIDS, 
+        vacuum.getUpQuarkEffectiveMass(), 
+        vacuum.getDownQuarkEffectiveMass(), 
+        vacuum.getStrangeQuarkEffectiveMass()
+    );
 
     cout << "inMediumSolution=" << inMedium.testSolution(1E-8) << "\n";
     cout << "Mu=" << inMedium.getUpQuarkEffectiveMass() << "GeV" << "\t" 
@@ -126,7 +132,7 @@ int main(int argc, char* argv[])
     double effMassS = inMedium.getStrangeQuarkEffectiveMass();
 
 
-    scatteringProcess process = UUUU;
+    ScatteringProcess process = UUUU;
     evaluateCrossSectionProcess12To34ToFile(parameters, T, 
                                             effChemPotU, effChemPotD, effChemPotS, 
                                             effMassU, effMassD, effMassS, 
@@ -146,7 +152,7 @@ int main(int argc, char* argv[])
     double effMassU, effMassD, effMassS;
 
     double T = 0.250;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromVacuumToFiniteTemperatureAtZeroChemicalPotential(vacuum, T, 100, 1E-8, MultiRootFindingMethod::HYBRIDS);
 
     effMassU = finiteTempSol[int(finiteTempSol.size()-1)].getUpQuarkEffectiveMass();
     effMassD = finiteTempSol[int(finiteTempSol.size()-1)].getDownQuarkEffectiveMass();
@@ -158,7 +164,7 @@ int main(int argc, char* argv[])
 
 
     double chemPot = 0.100;
-    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, HYBRIDS);
+    vector<SU3NJL3DCutoffFixedChemPotTemp> inMediumSol = SU3NJL3DCutoffFixedChemPotTemp::solveFromFiniteTemperatureToFiniteChemicalPotential(finiteTempSol[int(finiteTempSol.size()-1)], chemPot, 100, 1E-8, MultiRootFindingMethod::HYBRIDS);
 
     effMassU = inMediumSol[int(inMediumSol.size()-1)].getUpQuarkEffectiveMass();
     effMassD = inMediumSol[int(inMediumSol.size()-1)].getDownQuarkEffectiveMass();
@@ -178,7 +184,7 @@ int main(int argc, char* argv[])
     int numberOfPointsMinTempToChemPot = 200;
     int numberOfPointsFromMinToMaxTemp = 261;
     bool largeAngleScatteringContribution = false;
-    IntegratedCrossSectionApproximationMethod approximationMethod = COMPLETE_COV;
+    IntegratedCrossSectionApproximationMethod approximationMethod = IntegratedCrossSectionApproximationMethod::COMPLETE_COV;
     double propagatorIntegralPrecision = 1E-7;
     double crossSectionIntegralPrecision = 1E-4;
     double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
@@ -229,7 +235,7 @@ int main(int argc, char* argv[])
     int numberOfPointsFromVacToMinTemp = 200; 
     int numberOfPointsFromMinToMaxTemp = 181;
     bool largeAngleScatteringContribution = false;
-    IntegratedCrossSectionApproximationMethod approximationMethod = COMPLETE_COV;
+    IntegratedCrossSectionApproximationMethod approximationMethod = IntegratedCrossSectionApproximationMethod::COMPLETE_COV;
     double propagatorIntegralPrecision = 1E-7;
     double crossSectionIntegralPrecision = 1E-4;
     double integratedCrossSectionIntegralPrecision_dXdY = 1E-12;
@@ -284,24 +290,24 @@ int main(int argc, char* argv[])
     //double gOmega4 = 7.0*pow(0.5*gs, 10);
 
     //Fix Lagrangian dimensionful couplings
-    //NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q, gs, kappa, gOmega1, gOmega2, gOmega3, gOmega4);
+    //NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q, gs, kappa, gOmega1, gOmega2, gOmega3, gOmega4);
 
     vector<double> gOmegaAdimensional = {0.8, 1.0, -3.0, 3.0, -1.0};
     vector<double> gOmegaDimensionful = multiQuarkVPCouplingWithDimensions(gOmegaAdimensional, 0.5*gs);
     
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ_VPMULTIQ, gs, kappa, gOmegaDimensionful);
+    NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ_VPMULTIQ, gs, kappa, gOmegaDimensionful);
 
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
     parameters.setParameterSetName("renanMasterThesis");
 
 
     //solve model in the vacuum
     double gapPrecision = 1E-8;
     SU3NJL3DCutoffVacuum vacuum(parameters);
-    vacuum.solve(gapPrecision, HYBRIDS, 0.3, 0.3, 0.5);
+    vacuum.solve(gapPrecision, MultiRootFindingMethod::HYBRIDS, 0.3, 0.3, 0.5);
 
     cout << "Vacuum effective masses: \n";
     cout << "testSolution=" << vacuum.testSolution(gapPrecision) << "\n";
@@ -313,7 +319,7 @@ int main(int argc, char* argv[])
     double rhoi = 1E-5*pow(PhysicalConstants::hbarc_GeVfm, 3);
     double rhof = 3.80*pow(PhysicalConstants::hbarc_GeVfm, 3);
     int NrhoB = 8000;
-    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, HYBRIDS, "eos.dat");
+    writeBetaEquilibriumEOSAtZeroTemperatureToFile(vacuum, rhoi, rhof, NrhoB, gapPrecision, MultiRootFindingMethod::HYBRIDS, "eos.dat");
 
 
     std::ofstream file;

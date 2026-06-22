@@ -1,7 +1,10 @@
 #include "gsl_wrapper/Integration1DimGSL.h"
 #include "TestIntegration1DimGSL.h"
 
-double integrandTestGSL(double x, void *parameters)
+using std::cout;
+
+
+double TestIntegration1DimGSL::integrandTestGSL(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
     double integrand = pow(x,2);
@@ -9,7 +12,7 @@ double integrandTestGSL(double x, void *parameters)
     return integrand;
 }
 
-double integrandTestGSLCauchy(double x, void *parameters)
+double TestIntegration1DimGSL::integrandTestGSLCauchy(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
     x = x; /* avoid unused parameter warning */
@@ -19,7 +22,7 @@ double integrandTestGSLCauchy(double x, void *parameters)
     return integrand;
 }
 
-double integrandTestGSLQAGP(double x, void *parameters)
+double TestIntegration1DimGSL::integrandTestGSLQAGP(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
@@ -28,7 +31,7 @@ double integrandTestGSLQAGP(double x, void *parameters)
     return integrand;
 }
 
-double integrandTestGSLQAGI(double x, void *parameters)
+double TestIntegration1DimGSL::integrandTestGSLQAGI(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
@@ -37,7 +40,7 @@ double integrandTestGSLQAGI(double x, void *parameters)
     return integrand;
 }
 
-double integrandTestGSLQAWS(double x, void *parameters)
+double TestIntegration1DimGSL::integrandTestGSLQAWS(double x, void *parameters)
 {   
     (void)(parameters); /* avoid unused parameter warning */
 
@@ -46,7 +49,7 @@ double integrandTestGSLQAWS(double x, void *parameters)
     return integrand;
 }
 
-bool hardcodedTestIntegration1DimGSL(double relativeDifference)
+bool TestIntegration1DimGSL::hardcodedTestIntegration1DimGSL(double relativeDifference)
 {   
     cout << "Testing several GSL integration methods with different integrands.\n";
     cout << "All the integrals are normalized to 1.\n";
@@ -59,25 +62,21 @@ bool hardcodedTestIntegration1DimGSL(double relativeDifference)
     double resultQNG = normalization*integralQNG.evaluate();
     cout << "resultQNG: " << resultQNG << "\n";
 
-
     Integration1DimGSLQAG integralQAG(-1.0, +2.0, &aux1, integrandTestGSL, 1E-8, 1E-8, 1000, 1);
     normalization = (1.0/3.0);
     double resultQAG = normalization*integralQAG.evaluate();
     cout << "resultQAG: " << resultQAG << "\n";
-
 
     Integration1DimGSLQAGS integralQAGS(-1.0, +2.0, &aux1, integrandTestGSL, 1E-8, 1E-8, 1000);
     normalization = (1.0/3.0);
     double resultQAGS = normalization*integralQAGS.evaluate();
     cout << "resultQAGS: " << resultQAGS << "\n";
 
-
     TestIntegrandParameters aux2("integrandTestGSLCauchy");
     Integration1DimGSLQAWC integralQAWC(-1.0, +2.0, 1.0, &aux2, integrandTestGSLCauchy, 1E-8, 1E-8, 1000);
     normalization = (-1.0/log(2.0));
     double resultQAWC = normalization*integralQAWC.evaluate();
     cout << "resultQAWC: " << resultQAWC << "\n";
-
 
     TestIntegrandParameters aux3("integrandTestGSLQAGP");
     Integration1DimGSLQAGP integralQAGP(0, +1.0, {0.0}, &aux3, integrandTestGSLQAGP, 1E-8, 1E-8, 1000);
@@ -89,7 +88,6 @@ bool hardcodedTestIntegration1DimGSL(double relativeDifference)
     normalization = -0.25;
     double resultCQUAD = normalization*integralCQUAD.evaluate();
     cout << "resultCQUAD: " << resultCQUAD << "\n";
-
 
     TestIntegrandParameters aux4("integrandTestGSLQAGI");
     Integration1DimGSLQAGI integralQAGI(&aux4, integrandTestGSLQAGI, 1E-8, 1E-8, 1000);
@@ -113,7 +111,6 @@ bool hardcodedTestIntegration1DimGSL(double relativeDifference)
     double resultQAWS = normalization*integralQAWS.evaluate();
     cout << "resultQAWS: " << resultQAWS << "\n";
 
-
     TestIntegrandParameters aux6("integrandTestGSLQAWCQAGS");
     Integration1DimGSLQAWCQAGS integralQAWCQAGSIn(-5.0, 5.0, 4.0, &aux6, integrandTestGSLCauchy, 1E-8, 1E-8, 1000);
     normalization = (-1.0/log(9.0));
@@ -121,7 +118,7 @@ bool hardcodedTestIntegration1DimGSL(double relativeDifference)
     double resultQAWCQAGSIn = normalization*integralQAWCQAGSIn.evaluate();
     cout << "resultQAWCQAGSIn: " << resultQAWCQAGSIn << "\n";
 
-    double compositeSumQAWCQAGSIn = normalization*integralQAWCQAGSIn.evaluateIntegration1DimNewtonCotes(10, alternativeCompositeSimpson);
+    double compositeSumQAWCQAGSIn = normalization*integralQAWCQAGSIn.evaluateIntegration1DimNewtonCotes(10, NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON);
     cout << "compositeSumQAWCQAGSIn: " << compositeSumQAWCQAGSIn << "\n";
 
     Integration1DimGSLQAWCQAGS integralQAWCQAGSOut(-5.0, 5.0, 8.0, &aux6, integrandTestGSLCauchy, 1E-8, 1E-8, 1000);
@@ -130,9 +127,8 @@ bool hardcodedTestIntegration1DimGSL(double relativeDifference)
     double resultQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluate();
     cout << "resultQAWCQAGSOut: " << resultQAWCQAGSOut << "\n";
 
-    double newtonCotesSumQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluateIntegration1DimNewtonCotes(10, alternativeCompositeSimpson);
+    double newtonCotesSumQAWCQAGSOut = normalization*integralQAWCQAGSOut.evaluateIntegration1DimNewtonCotes(10, NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON);
     cout << "newtonCotesSumQAWCQAGSOut: " << newtonCotesSumQAWCQAGSOut << "\n";
-
 
     bool testIntegralQNG = true;
     if ( fabs(resultQNG-1)>relativeDifference )

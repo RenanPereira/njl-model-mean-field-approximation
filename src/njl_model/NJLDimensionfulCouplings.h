@@ -6,10 +6,8 @@
 #include <map>
 #include "ini_file_parser/IniFileParser.h"
 
-using namespace std;
 
-
-enum LagrangianInteractions 
+enum class LagrangianInteractions 
 { 
 	SP4Q_DET2NFQ,
 	SP4Q_DET2NFQ_VP4Q,
@@ -29,28 +27,28 @@ enum LagrangianInteractions
 };
 
 // Create the mapping between the enum and its string representation
-inline const map<LagrangianInteractions, string> LagrangianInteractionsMap = 
+inline const std::map<LagrangianInteractions, std::string> LagrangianInteractionsMap = 
 {
-    {SP4Q_DET2NFQ, "SP4Q_DET2NFQ"},
-    {SP4Q_DET2NFQ_VP4Q, "SP4Q_DET2NFQ_VP4Q"},
-    {SP4Q_DET2NFQ_VP4Q_VP8Q, "SP4Q_DET2NFQ_VP4Q_VP8Q"},
-    {SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q, "SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q"},
-    {SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q, "SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q"},
-    {SP4Q_DET2NFQ_VP4Q_VIPI4Q, "SP4Q_DET2NFQ_VP4Q_VIPI4Q"},
-    {SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q, "SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q"},
-    {SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q, "SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q"},
-    {SP4Q_DET2NFQ_VP4Q_VP8Q_SPVP8Q, "SP4Q_DET2NFQ_VP4Q_VP8Q_SPVP8Q"},
-    {SP4Q_DET2NFQ_SP8Q, "SP4Q_DET2NFQ_SP8Q"},
-    {SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q, "SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q"},
-    {SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q_SPVP8Q, "SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q_SPVP8Q"},
-    {SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q, "SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q"},
-    {SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q, "SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q"},
-    {SP4Q_DET2NFQ_VPMULTIQ, "SP4Q_DET2NFQ_VPMULTIQ"}
+    {LagrangianInteractions::SP4Q_DET2NFQ, "SP4Q_DET2NFQ"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VP4Q, "SP4Q_DET2NFQ_VP4Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q, "SP4Q_DET2NFQ_VP4Q_VP8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q, "SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q, "SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VIPI4Q, "SP4Q_DET2NFQ_VP4Q_VIPI4Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q, "SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q, "SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q_SPVP8Q, "SP4Q_DET2NFQ_VP4Q_VP8Q_SPVP8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_SP8Q, "SP4Q_DET2NFQ_SP8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q, "SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q_SPVP8Q, "SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q_SPVP8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q, "SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q, "SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q"},
+    {LagrangianInteractions::SP4Q_DET2NFQ_VPMULTIQ, "SP4Q_DET2NFQ_VPMULTIQ"}
 };
 
-string toString(LagrangianInteractions );
+std::string toString(LagrangianInteractions );
 
-LagrangianInteractions stringToLagrangianInteractions(const string& );
+LagrangianInteractions stringToLagrangianInteractions(const std::string& );
 
 bool isValidLagrangianInteractions(const std::string& );
 
@@ -85,7 +83,7 @@ private:
 	double sixteenQuarkVPCoupling = 0.0;//gOmega4
 
 	//multi VP quark interaction couplings: the number of elements corresponds to the number of considered increasing VP interactions
-	vector<double> multiQuarkVPCoupling = {};
+	std::vector<double> multiQuarkVPCoupling = {};
 	bool interactionsIncludeMultiQuarkVPCouplings = false;
 
 public:
@@ -98,7 +96,7 @@ public:
 	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double , double , double , double );
 	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double , double , double , double , double , double );
 	NJLDimensionfulCouplings(LagrangianInteractions , double , double , double , double , double , double , double , double , double , double , double );
-	NJLDimensionfulCouplings(LagrangianInteractions , double , double , vector<double> );
+	NJLDimensionfulCouplings(LagrangianInteractions , double , double , std::vector<double> );
 
 	LagrangianInteractions getLagrangianInteractions(){ return interactions; };
 	
@@ -120,7 +118,7 @@ public:
 
 	double getSixteenQuarkVPCoupling(){ return sixteenQuarkVPCoupling; };
 
-	vector<double> getMultiQuarkVPCoupling(){ return multiQuarkVPCoupling; }
+	std::vector<double> getMultiQuarkVPCoupling(){ return multiQuarkVPCoupling; }
 	double getMultiQuarkVPCoupling(int i){ return multiQuarkVPCoupling[i]; }
 	bool getInteractionsIncludeMultiQuarkVPCouplings(){ return interactionsIncludeMultiQuarkVPCouplings; }
 	int numberOfMultiQuarkVPCoupling(){ return int( multiQuarkVPCoupling.size() ); }
@@ -129,8 +127,8 @@ public:
 };
 
 
-vector<double> multiQuarkVPCouplingWithDimensions(vector<double> , double );
+std::vector<double> multiQuarkVPCouplingWithDimensions(std::vector<double> , double );
 
-bool validateNJLDimensionfulCouplings(const IniFileParser& , string , string );
+bool validateNJLDimensionfulCouplings(const IniFileParser& , std::string , std::string );
 
 #endif

@@ -1,0 +1,320 @@
+stages:
+  - test_modules
+  - execute_calculations
+
+variables:
+  GIT_STRATEGY: clone
+
+ini_file_parser:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: test_modules
+
+  before_script:
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+
+  script:
+    - |
+      cd tests/ini_file_parser
+
+      make -j$(nproc)
+
+      TEST_EXIT_CODE=0
+      ./test.out || TEST_EXIT_CODE=$?
+
+      make clean
+
+      exit $TEST_EXIT_CODE
+
+integration_methods:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: test_modules
+
+  before_script:
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+
+  script:
+    - |
+      cd tests/integration_methods
+
+      make -j$(nproc)
+
+      TEST_EXIT_CODE=0
+      ./test.out || TEST_EXIT_CODE=$?
+
+      make clean
+
+      exit $TEST_EXIT_CODE
+
+gsl_wrapper:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: test_modules
+
+  before_script:
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+
+  script:
+    - |
+      cd tests/gsl_wrapper
+
+      make -j$(nproc)
+
+      TEST_EXIT_CODE=0
+      ./test.out || TEST_EXIT_CODE=$?
+
+      make clean
+
+      exit $TEST_EXIT_CODE
+
+two_fermion_line_integral_3d_cutoff:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: execute_calculations
+
+  # before_script:
+  #   # Fix Git safety issue in CI container
+  #   - git config --global --add safe.directory "$CI_PROJECT_DIR"
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - cd calculations/two_fermion_line_integral_3d_cutoff && bash execute_calculations.sh
+    - cd calculations/two_fermion_line_integral_3d_cutoff && bash build_plots.sh
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
+
+su3_3d_cutoff_vacuum_masses:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - cd calculations/su3_3d_cutoff_vacuum_masses && bash execute_calculations.sh
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
+
+su3_3d_cutoff_phase_diagram:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - cd calculations/su3_3d_cutoff_phase_diagram && bash execute_calculations.sh
+    - cd calculations/su3_3d_cutoff_phase_diagram && bash build_plots.sh
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
+
+su3_3d_cutoff_quark_relaxation_times:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - cd calculations/su3_3d_cutoff_quark_relaxation_times && bash execute_calculations.sh
+    - cd calculations/su3_3d_cutoff_quark_relaxation_times && bash build_plots.sh
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
+
+su3_3d_cutoff_transport_coefficients:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - cd calculations/su3_3d_cutoff_transport_coefficients && bash execute_calculations.sh
+    - cd calculations/su3_3d_cutoff_transport_coefficients && bash build_plots.sh
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
+
+su3_3d_cutoff_thermodynamics:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && bash execute_calculations.sh
+    - cd calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp && bash build_plots.sh
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
+
+su3_3d_cutoff_cross_sections_test:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - machine_threads=$(nproc)
+    - cd calculations/su3_3d_cutoff_cross_sections_test && bash execute_calculations.sh $machine_threads
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
+
+su3_3d_cutoff_int_cross_sections_test:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+
+  stage: execute_calculations
+
+  script:
+    - echo "Running NJL model calculations in Docker container"
+
+    # Run calculations
+    - machine_threads=$(nproc)
+    - cd calculations/su3_3d_cutoff_int_cross_sections_test && bash execute_calculations.sh $machine_threads
+
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
+
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
+
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi

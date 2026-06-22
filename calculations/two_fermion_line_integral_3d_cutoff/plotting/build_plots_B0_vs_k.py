@@ -7,12 +7,21 @@ from common_utils.b03d_cutoff_vs_momentum_data import *
 ####################################################################################################
 # Common configurations between plots
 
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 fig_dpi = 150
 fig_x_size = 6
 fig_y_size = 6
+
+labels_fontsize = 22
+tick_fontsize = 20
+annotation_fontsize = 18
 
 # Location of the data and plots folder with respect to calculations folder
 data_folder = "two_fermion_line_integral_3d_cutoff/data/"
@@ -84,15 +93,15 @@ ax.plot(data_B0_vs_k_k025.get_momentum_to_Lambda_ratio(),
         label=r'$\mathrm{Im}[B_0]$', color=colork025, linewidth=2, linestyle='--')
 
 # Axes labels
-ax.set_xlabel(r'$|\mathbf{k}|/\Lambda$', fontsize=20)
-ax.set_ylabel(r'$B_0$', fontsize=20)
+ax.set_xlabel(r'$|\mathbf{k}|/\Lambda$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$B_0$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
 
 # Configure axes using the helper function
 xmin= 0.0; xmax = 2.5; ymin = -3.0; ymax = 3.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
 auxH = 0.065; auxX = 0.66; auxY = 0.75
@@ -102,7 +111,7 @@ texts = [
     r'$\mu_{i,j}/\Lambda = 0.0$',
     r'$M_{i,j}/\Lambda = 0.4$',
 ]
-add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
 # Add legend lines and labels
 dist = 0.06
@@ -112,7 +121,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.58, 
                       y_factor=0.35 - auxH*0,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colork000, color2=colork000, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
@@ -122,7 +131,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.58, 
                       y_factor=0.35 - auxH*1,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colork005, color2=colork005, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
@@ -132,7 +141,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.58, 
                       y_factor=0.35 - auxH*2,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colork010, color2=colork010, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
@@ -142,7 +151,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.58, 
                       y_factor=0.35 - auxH*3,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colork015, color2=colork015, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
@@ -152,7 +161,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.58, 
                       y_factor=0.35 - auxH*4,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colork020, color2=colork020, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
@@ -162,7 +171,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.58, 
                       y_factor=0.35 - auxH*5,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colork025, color2=colork025, 
                       width1=2, width2=2, 
                       style1="-", style2="--")

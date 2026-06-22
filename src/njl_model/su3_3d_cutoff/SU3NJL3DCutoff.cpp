@@ -5,7 +5,6 @@
 #include "physics_utils/distribution_functions.h"
 #include "njl_model/n_fermion_line_integrals/one_fermion_line_integral_3d_cutoff.h"
 
-using namespace std;
 
 /*
 Coupling constants at the Lagrangian Level
@@ -286,7 +285,7 @@ double fermionParticleDensity3DCutoff(
     if ( T>0.0 )
     {   
         //finite T
-        if ( reguScheme==CUTOFF_EVERYWHERE || reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+        if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE || reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU )
         {   
             Integration1DimGSLQAGS fermionParticleDensity(
                 0.0, 
@@ -297,7 +296,7 @@ double fermionParticleDensity3DCutoff(
             );
             fermionDensity = ( 1.0/(M_PI*M_PI) )*fermionParticleDensity.evaluate();
         }
-        else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
+        else if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
         {
             Integration1DimGSLQAGIU fermionParticleDensity(
                 0.0, 
@@ -315,7 +314,7 @@ double fermionParticleDensity3DCutoff(
     }
 
     //if the chosen regularization includes the CTmu term, add it to the fermion density
-	if ( reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+	if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU )
 	{
 		fermionDensity = fermionDensity + fermionParticleDensity3DCutoffStefanBoltzmannCTmu(cutoff, T, effChemPot, integralPrecision);
 	}
@@ -394,7 +393,7 @@ double fermionPressure3DCutoff(
     if ( T>0.0 )
     {   
     	//finite T
-    	if ( reguScheme==CUTOFF_EVERYWHERE || reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+    	if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE || reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU )
     	{  
             //divergent contribution
             fermionPressure = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass);
@@ -409,7 +408,7 @@ double fermionPressure3DCutoff(
             );
             fermionPressure = fermionPressure + T*fermionPressureConvergent.evaluate();
     	}
-    	else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
+    	else if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
     	{  
             //divergent contribution
             fermionPressure = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass);
@@ -434,7 +433,7 @@ double fermionPressure3DCutoff(
     fermionPressure = ( 1.0/(M_PI*M_PI) )*fermionPressure;
 
     //if the chosen regularization includes the CTmu term, add it to the pressure
-	if ( reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+	if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU )
 	{
 		fermionPressure = fermionPressure + fermionPressure3DCutoffStefanBoltzmannCTmu(cutoff, T, effChemPot, integralPrecision);
 	}
@@ -475,7 +474,7 @@ double fermionEnergyDensity3DCutoff(
     if ( T>0.0 )
     {   
         //finite T
-        if ( reguScheme==CUTOFF_EVERYWHERE || reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+        if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE || reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU )
         {   
             //divergent contribution
             fermionEnergy = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass);
@@ -490,7 +489,7 @@ double fermionEnergyDensity3DCutoff(
             );
             fermionEnergy = fermionEnergy + fermionEnergyConvergent.evaluate();
         }
-        else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
+        else if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
         {   
             //divergent contribution
             fermionEnergy = fermionPressureDivergentPrimitive3DCutoff(cutoff, effMass);
@@ -515,7 +514,7 @@ double fermionEnergyDensity3DCutoff(
     fermionEnergy = - ( 1.0/(M_PI*M_PI) )*fermionEnergy;
 
 	//if the chosen regularization includes the CTmu term, add it to the energy density
-	if ( reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+	if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU )
 	{
 		fermionEnergy = fermionEnergy + fermionEnergyDensity3DCutoffStefanBoltzmannCTmu(cutoff, T, effChemPot, chemPot, integralPrecision);
 	}
@@ -587,7 +586,7 @@ double fermionEntropyDensity3DCutoff(
     if ( T>0.0 )
     {   
     	//finite T
-        if ( reguScheme==CUTOFF_EVERYWHERE || reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+        if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE || reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU )
         {   
             //convergent contributions
             Integration1DimGSLQAGS fermionEntropyConvergent1(
@@ -608,7 +607,7 @@ double fermionEntropyDensity3DCutoff(
             );
             fermionEntropy = fermionEntropy + fermionEntropyConvergent2.evaluate();
         }
-        else if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
+        else if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
         {   
             //convergent contributions
             Integration1DimGSLQAGIU fermionEntropyConvergent1(
@@ -637,7 +636,7 @@ double fermionEntropyDensity3DCutoff(
     
 
 	//if the chosen regularization includes the CTmu term, add it to the entropy density
-	if ( reguScheme==CUTOFF_EVERYWHERE_WITH_CTMU )
+	if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE_WITH_CTMU )
 	{
 		fermionEntropy = fermionEntropy + fermionEntropyDensity3DCutoffStefanBoltzmannCTmu(cutoff, T, effChemPot, integralPrecision);
 	}

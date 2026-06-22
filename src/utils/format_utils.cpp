@@ -1,11 +1,9 @@
 #include "utils/format_utils.h"
 
-using namespace std;
 
-
-string trim0ToDot0(const double value) 
+std::string trim0ToDot0(const double value) 
 {
-    string result = to_string(value);
+    std::string result = std::to_string(value);
 
     // Remove unnecessary trailing zeroes
     result.erase(result.find_last_not_of('0') + 1);
@@ -19,7 +17,7 @@ string trim0ToDot0(const double value)
     return result;
 }
 
-void replaceChar(string& str, char oldChar, char newChar)
+void replaceChar(std::string& str, char oldChar, char newChar)
 {
     for (int i = 0; i < int(str.size()); ++i)
     {

@@ -47,7 +47,17 @@ class FixedChemPotTempData:
     
     def get_strange_quark_effective_mass(self) -> np.ndarray:
         return self.strange_quark_effective_mass
-    
+
+    def get_quark_effective_mass(self, quark_species: str) -> np.ndarray:        
+        if quark_species == "up_quark":
+            return self.get_up_quark_effective_mass()
+        elif quark_species == "down_quark":
+            return self.get_down_quark_effective_mass()
+        elif quark_species == "strange_quark":
+            return self.get_strange_quark_effective_mass()
+        else:
+            raise ValueError(f"The provided quark_species='{quark_species}' is not valid!")
+
     def get_up_quark_chemical_potential(self) -> np.ndarray:
         return self.up_quark_chemical_potential
     

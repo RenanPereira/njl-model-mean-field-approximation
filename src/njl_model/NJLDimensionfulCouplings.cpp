@@ -3,7 +3,9 @@
 #include "njl_model/NJLDimensionfulCouplings.h"
 #include "njl_model/NJLDimensionlessCouplings.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::vector;
 
 
 string toString(LagrangianInteractions interaction) 
@@ -15,7 +17,7 @@ string toString(LagrangianInteractions interaction)
     } 
     else 
     {
-        cout << "Error: LagrangianInteractions not found in map! Returning UNKNOWN." << endl;
+        cout << "Error: LagrangianInteractions not found in map! Returning UNKNOWN." << std::endl;
         return "UNKNOWN";
     }
 }
@@ -24,7 +26,7 @@ string toString(LagrangianInteractions interaction)
 LagrangianInteractions stringToLagrangianInteractions(const string& interactionString) 
 {
 	// Iterate over the map with explicit type
-    for (map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
+    for (std::map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
     {
         if (it->second == interactionString) 
         {
@@ -41,7 +43,7 @@ bool isValidLagrangianInteractions(const string& interactionString)
 {
 	bool isLagrangianInteractionsValid = false;
     // Iterate over the map with explicit type
-    for (map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
+    for (std::map<LagrangianInteractions, string>::const_iterator it = LagrangianInteractionsMap.begin(); it != LagrangianInteractionsMap.end(); ++it) 
     {
         if (it->second == interactionString) 
         {
@@ -69,7 +71,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {	
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -82,7 +84,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ_VP4Q )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VP4Q )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -96,21 +98,21 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {	
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ_SP8Q )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_SP8Q )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		eightQuarkSPOziViolatingCoupling = c3;
 		eightQuarkSPNonOziViolatingCoupling = c4;
 	}
-	else if ( interactions==SP4Q_DET2NFQ_VP4Q_VIPI4Q )
+	else if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VIPI4Q )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
 		fourQuarkVPCoupling = c3;
 		fourQuarkVIPICoupling = c4;
 	}
-	else if ( interactions==SP4Q_DET2NFQ_VP4Q_VP8Q )
+	else if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q )
 	{
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -125,7 +127,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ_VP4Q_VP8Q_SPVP8Q )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q_SPVP8Q )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -133,7 +135,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 		eightQuarkVPCoupling = c4;
 		eightQuarkSPVPCoupling = c5;
 	}
-	else if ( interactions==SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q )
+	else if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q )
 	{
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -149,7 +151,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -158,7 +160,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 		fourQuarkVPCoupling = c5;
 		eightQuarkVPCoupling = c6;
 	}
-	else if ( interactions==SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q )
+	else if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VP8Q_VP12Q_VP16Q )
 	{
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -175,7 +177,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q_SPVP8Q )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_SP8Q_VP4Q_VP8Q_SPVP8Q )
 	{
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -185,7 +187,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 		eightQuarkVPCoupling = c6;
 		eightQuarkSPVPCoupling = c7;
 	}
-	else if( interactions==SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q )
+	else if( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -203,7 +205,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {	
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -215,7 +217,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 		eightQuarkVIPICoupling = c8;
 		eightQuarkVPVIPICoupling = c9;
 	}
-	else if ( interactions==SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q )
+	else if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q )
 	{
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -235,7 +237,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_SP8Q_VP4Q_VIPI4Q_VP8Q_VIPI8Q_VPVIPI8Q_SPVP8Q_SPVIPI8Q )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -257,7 +259,7 @@ NJLDimensionfulCouplings::NJLDimensionfulCouplings(LagrangianInteractions intera
 {	
 	interactions = interactionsAux;
 
-	if ( interactions==SP4Q_DET2NFQ_VPMULTIQ )
+	if ( interactions==LagrangianInteractions::SP4Q_DET2NFQ_VPMULTIQ )
 	{	
 		fourQuarkSPCoupling = c1;
 		determinantCoupling = c2;
@@ -291,7 +293,7 @@ bool validateNJLDimensionfulCouplings(const IniFileParser& config, string sectio
 {    
     LagrangianInteractions interaction = stringToLagrangianInteractions(config.getValue(sectionNJLDimensionfulCouplings, keyLagrangianInteractions));
 	
-    if ( interaction==SP4Q_DET2NFQ )
+    if ( interaction==LagrangianInteractions::SP4Q_DET2NFQ )
 	{   
         bool fourQuarkSPCouplingPresent = config.isKeyPresent(sectionNJLDimensionfulCouplings, NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING);
         bool determinantCouplingPresent = config.isKeyPresent(sectionNJLDimensionfulCouplings, NJLDimensionlessCouplings::DETERMINANT_COUPLING);
@@ -303,7 +305,7 @@ bool validateNJLDimensionfulCouplings(const IniFileParser& config, string sectio
         }
         else{ return false; }
 	}
-	else if( interaction==SP4Q_DET2NFQ_SP8Q )
+	else if( interaction==LagrangianInteractions::SP4Q_DET2NFQ_SP8Q )
 	{   
         bool fourQuarkSPCouplingPresent = config.isKeyPresent(sectionNJLDimensionfulCouplings, NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING);
         bool determinantCouplingPresent = config.isKeyPresent(sectionNJLDimensionfulCouplings, NJLDimensionlessCouplings::FOUR_QUARK_SP_COUPLING);

@@ -71,10 +71,17 @@ The following block can also be added to the `main.cpp` file for debugging purpo
     double m0s = 0.1407;
 
     //Fix Lagrangian dimensionful couplings
-    NJLDimensionfulCouplings couplings(SP4Q_DET2NFQ, gs, kappa);
+    NJLDimensionfulCouplings couplings(LagrangianInteractions::SP4Q_DET2NFQ, gs, kappa);
 
     //Create NJL parameter set
-    SU3NJL3DCutoffParameters parameters(CUTOFF_EVERYWHERE, cutoff, couplings, m0u, m0d, m0s);
+    SU3NJL3DCutoffParameters parameters(
+        NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE, 
+        cutoff, 
+        couplings, 
+        m0u, 
+        m0d, 
+        m0s
+    );
     parameters.setParameterSetName("setA");
 
     //solve model in the vacuum
@@ -106,7 +113,7 @@ The following block can also be added to the `main.cpp` file for debugging purpo
         0.303279809165436, 
         0.512749442947671, 
         1E-7, 
-        UUUU, 
+        ScatteringProcess::UUUU, 
         false, 
         1E-5,
         1E-6, 
@@ -115,7 +122,7 @@ The following block can also be added to the `main.cpp` file for debugging purpo
     cout << sigma_uuuu << "\n";
     
     gsl_complex test = pseudoscalarPolarizationOperator3DCutoff(
-        CUTOFF_EVERYWHERE, 
+        NJL3DCutoffRegularizationScheme::CUTOFF_EVERYWHERE, 
         cutoff, 
         3.0, 
 		0.150, 

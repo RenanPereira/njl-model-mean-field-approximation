@@ -86,6 +86,8 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 (cd tests/gsl_wrapper/ && ./execute_tests.sh)
 ```
 
+A Dockerfile is provided in the `docker/` directory, containing all the necessary system dependencies and Python requirements to build a fully reproducible environment for running the NJL mean-field approximation code. This setup ensures that the calculations code can be executed consistently across different systems without manual dependency installation. Instructions for building and running the Docker container are included in the same directory. Additionally, commands for building the image and pushing it to the GitLab Container Registry are provided, enabling easy versioning and deployment of the computational environment.
+
 # Calculations
 
 ## B0 Integral Study (two_fermion_line_integral_3d_cutoff)
@@ -115,6 +117,11 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 (cd calculations/su3_3d_cutoff_cross_sections_klevansky && ./build_plots.sh)
 ```
 
+### Test (su3_3d_cutoff_cross_sections_test)
+```bash
+(cd calculations/su3_3d_cutoff_cross_sections_test && ./execute_calculations.sh)
+```
+
 ## SU3 NJL Integrated Cross Section Study (su3_3d_cutoff_int_cross_sections)
 
 ### Zero chemical potential
@@ -133,6 +140,11 @@ To test the `gsl_wrapper` module, one can execute the `execute_tests.sh` script 
 (cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_calculations_ZHUANG.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_local_main.sh)
 (cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./build_plots.sh)
+```
+
+### Test (su3_3d_cutoff_int_cross_sections_test)
+```bash
+(cd calculations/su3_3d_cutoff_int_cross_sections_test && ./execute_calculations.sh)
 ```
 
 ## SU3 NJL Quark Relaxation Time Study (su3_3d_cutoff_quark_relaxation_times)
@@ -172,13 +184,22 @@ Can be executed in the root folder using:
 
 ## Calculations
 
-One can execute the `scripts/tests/execute_calculations.sh` script to execute all the calulations configured inside the calculations folder in the root of the project. This can be used to test the code base and understand if the modification of the code or implementation of new features broke something unexpectedly. Executing this can be quite time consuming due to the complex nature of all the calculations. Thus, one can also find `scripts/tests/execute_calculations_lite.sh` which contains less calculations, while covering a similar part of the entire code base. These tests can be considered functional tests. Execute them with
+One can execute the `scripts/tests/execute_calculations.sh` script to execute all the calulations configured inside the calculations folder in the root of the project. This can be used to test the code base and understand if the modification of the code or implementation of new features broke something unexpectedly. Executing this can be quite time consuming due to the complex nature of all the calculations. Thus, one can also find `scripts/tests/execute_calculations_lite.sh` which contains less calculations, while covering a similar part of the entire code base. These tests can be considered functional tests. Execute them with:
 ```bash
 (cd scripts/tests/ && ./execute_calculations.sh)
 ```
 or, for the lite version,
 ```bash
 (cd scripts/tests/ && ./execute_calculations_lite.sh)
+```
+
+The results generated when running the `execute_calculations_lite.sh` script can be deleted locally by running the following script:
+```bash
+(cd scripts/tests/ && ./clean_calculations.sh)
+```
+or, for the lite version,
+```bash
+(cd scripts/tests/ && ./clean_calculations_lite.sh)
 ```
 
 ## Plots
@@ -194,85 +215,149 @@ One can execute the `scripts/tests/build_all_calculations_plots.sh` script to bu
 As a disclaimer, the reader must be warned: this code was written by a physicist without the most in-depth knowledge about the standards and structures of `Clean Code`. Improvements to structure, formatting and logic are always being considered and developed. The following conventions are being used in the code (at least trying to...): 
 
 C++ code:
-- classes  → PascalCase
-- namespaces → PascalCase
-- methods → camelCase
-- member variables → camelCase
-- header guard → UPPER_CASE with underscores
-- enums → PascalCase except where, for readability, UPPER_CASE is used
+- classes  → PascalCase;
+- namespaces → PascalCase;
+- methods → camelCase;
+- member variables → camelCase;
+- header guard → UPPER_CASE with underscores;
+- enums values → UPPER_CASE is used except where, for readability, PascalCase is used, depending on what makes sense, giving importance to what is readable;
 
 Python code:
 - classes  → PascalCase
 - functions, variables → snake_case
 
 
-# Some Results
+# Results
 
 Some of the results that can be obtained using this code are shown below. For more information regarding the parameter sets used in these plots, see [here](../su3_3d_cutoff_phase_diagram/README.md).
+
+
+### Phase Diagram
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setA_muq_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setB_muq_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setC_muq_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_allSets_muq_vs_temp.png" width="24%">
+</p>
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setA_rhoB_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setB_rhoB_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_setC_rhoB_vs_temp.png" width="24%">
+  <img src="calculations/su3_3d_cutoff_phase_diagram/plots/first_order_allSets_rhoB_vs_temp.png" width="24%">
+</p>
 
 ### Quark masses
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setsABC_CP0.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setA_T0p075.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setB_T0p12.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setC_T0p13.png" width="32%">
 </p>
 
 ### Pressure
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_setC_CP0.png" width="32%">
 </p>
 
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_temp_setsABC_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_muB_setsABC_diffT.png" width="32%">
+</p>
 
 ### Entropy density
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setsABC.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_temp_setsABC_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_setsABC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_vs_muB_setsABC_diffT.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/s_over_temp3_vs_muB_setsABC_diffT.png" width="32%">
+</p>
+
+
+In the plots below we also calculate the temperature derivative of the pressure at fixed chemical potential, which yields the entropy density. Hence, one can assess the compatibility of the results provided in the data file.
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 ### Energy density
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_temp_setsABC_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_vs_muB_setsABC_diffT.png" width="32%">
 </p>
 
+In the plots below we also calculate the energy density via the Euler equation. Hence, one can assess the compatibility of the results provided in the data file.
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setC_CP0.png" width="32%">
+</p>
 
 ### Pressure and Energy density
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setA.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setB.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setB_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setC_CP0.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setsABC.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setsABC_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/pressure_vs_energy_setsABC_diffT.png" width="32%">
+</p>
+
+### Quark density and Baryon density
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setA_T0p075.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setB_T0p12.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setC_T0p13.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_vs_muB_setA_T0p075.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_vs_muB_setB_T0p12.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_vs_muB_setC_T0p13.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setA_T0p075.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setB_T0p12.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setC_T0p13.png" width="32%">
 </p>
 
 

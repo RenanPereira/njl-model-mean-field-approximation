@@ -7,12 +7,21 @@ from common_utils.first_order_line_data import *
 ####################################################################################################
 # Common configurations between plots
 
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 fig_dpi = 150
 fig_x_size = 6
 fig_y_size = 6
+
+legend_fontsize = 18
+labels_fontsize = 22
+tick_fontsize = 20
 
 # Location of the data and plots folder with respect to calculations folder
 data_folder = "su3_3d_cutoff_phase_diagram/data/"
@@ -43,16 +52,16 @@ cep_temp = data_setA.get_temperature()[-1]
 ax.plot(cep_rhoB, cep_temp, marker='o', markersize=10, color=color_setA)
 
 # Axes labels
-ax.set_xlabel(r'$\rho_{\mathrm{B}} \, [\mathrm{fm}^{-3}]$', fontsize=20)
-ax.set_ylabel(r'$\mathrm{T} \, [\mathrm{GeV}]$', fontsize=20)
+ax.set_xlabel(r'$\rho_{\mathrm{B}} \, [\mathrm{fm}^{-3}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\mathrm{T} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False) # Show legend
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False) # Show legend
 
 # Configure axes using the helper function
 xmin= 0; xmax = 0.45; ymin = 0.0; ymax = 0.2
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=4, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=4, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
@@ -99,16 +108,16 @@ cep_temp = data_setB.get_temperature()[-1]
 ax.plot(cep_rhoB, cep_temp, marker='o', markersize=10, color=color_setB)
 
 # Axes labels
-ax.set_xlabel(r'$\rho_{\mathrm{B}} \, [\mathrm{fm}^{-3}]$', fontsize=20)
-ax.set_ylabel(r'$\mathrm{T} \, [\mathrm{GeV}]$', fontsize=20)
+ax.set_xlabel(r'$\rho_{\mathrm{B}} \, [\mathrm{fm}^{-3}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\mathrm{T} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False) # Show legend
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False) # Show legend
 
 # Configure axes using the helper function
 xmin= 0; xmax = 0.45; ymin = 0.0; ymax = 0.2
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=4, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=4, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
@@ -155,16 +164,16 @@ cep_temp = data_setC.get_temperature()[-1]
 ax.plot(cep_rhoB, cep_temp, marker='o', markersize=10, color=color_setC)
 
 # Axes labels
-ax.set_xlabel(r'$\rho_{\mathrm{B}} \, [\mathrm{fm}^{-3}]$', fontsize=20)
-ax.set_ylabel(r'$\mathrm{T} \, [\mathrm{GeV}]$', fontsize=20)
+ax.set_xlabel(r'$\rho_{\mathrm{B}} \, [\mathrm{fm}^{-3}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\mathrm{T} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False) # Show legend
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False) # Show legend
 
 # Configure axes using the helper function
 xmin= 0; xmax = 0.45; ymin = 0.0; ymax = 0.2
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=4, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=4, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
@@ -233,16 +242,16 @@ cep_temp_setC = data_setC.get_temperature()[-1]
 ax.plot(cep_rhoB_setC, cep_temp_setC, marker='o', markersize=10, color=color_setC)
 
 # Axes labels
-ax.set_xlabel(r'$\rho_{\mathrm{B}} \, [\mathrm{fm}^{-3}]$', fontsize=20)
-ax.set_ylabel(r'$\mathrm{T} \, [\mathrm{GeV}]$', fontsize=20)
+ax.set_xlabel(r'$\rho_{\mathrm{B}} \, [\mathrm{fm}^{-3}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\mathrm{T} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False) # Show legend
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False) # Show legend
 
 # Configure axes using the helper function
 xmin= 0; xmax = 0.45; ymin = 0.0; ymax = 0.2
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=4, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=4, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))

@@ -21,7 +21,7 @@ private:
     double strangeQuarkEffectiveMass = 0.0/0.0;
     double centerOfMassEnergy = 0.0/0.0;
     double propagatorIntegralPrecision = 1E-8;
-    scatteringProcess process;
+    ScatteringProcess process;
     bool largeAngleScatteringContribution = false;
 
 public:
@@ -37,7 +37,7 @@ public:
         double strangeQuarkEffectiveMassAux, 
         double centerOfMassEnergyAux, 
         double propagatorIntegralPrecisionAux, 
-        scatteringProcess processAux, 
+        ScatteringProcess processAux, 
         bool largeAngleScatteringContributionAux
     )
     {   
@@ -84,27 +84,27 @@ public:
     double getStrangeQuarkEffectiveChemicalPotential(){ return strangeQuarkEffectiveChemicalPotential; };
     double getCenterOfMassEnergy(){ return centerOfMassEnergy; }
     double getPropagatorIntegralPrecision(){ return propagatorIntegralPrecision; }
-    scatteringProcess getProcess(){ return process; }
+    ScatteringProcess getProcess(){ return process; }
     bool getLargeAngleScatteringContribution(){ return largeAngleScatteringContribution; }
 
     void setIntegralID(std::string integralIDAux){ integralID = integralIDAux; }
 
     void printIntegrandVariables() override
     {   
-        cout << "integralID = " << integralID << "\n";
+        std::cout << "integralID = " << integralID << "\n";
 
-        cout << "SU3NJL3DCutoffParameters are not being printed!" << "\n";
+        std::cout << "SU3NJL3DCutoffParameters are not being printed!" << "\n";
 
-        cout << "T = " << temperature << "\n";
-        cout << "effChemPotU = " << upQuarkEffectiveChemicalPotential << "\n";
-        cout << "effChemPotD = " << downQuarkEffectiveChemicalPotential << "\n";
-        cout << "effChemPotS = " << strangeQuarkEffectiveChemicalPotential << "\n";
-        cout << "effMassU = " << upQuarkEffectiveMass << "\n";
-        cout << "effMassD = " << downQuarkEffectiveMass << "\n";
-        cout << "effMassS = " << strangeQuarkEffectiveMass << "\n";
-        cout << "s = " << centerOfMassEnergy << "\n";
-        cout << "propagatorPrecision = " << propagatorIntegralPrecision << "\n";
-        cout << "scatteringProcess = " << toString(process) << "\n";
+        std::cout << "T = " << temperature << "\n";
+        std::cout << "effChemPotU = " << upQuarkEffectiveChemicalPotential << "\n";
+        std::cout << "effChemPotD = " << downQuarkEffectiveChemicalPotential << "\n";
+        std::cout << "effChemPotS = " << strangeQuarkEffectiveChemicalPotential << "\n";
+        std::cout << "effMassU = " << upQuarkEffectiveMass << "\n";
+        std::cout << "effMassD = " << downQuarkEffectiveMass << "\n";
+        std::cout << "effMassS = " << strangeQuarkEffectiveMass << "\n";
+        std::cout << "s = " << centerOfMassEnergy << "\n";
+        std::cout << "propagatorPrecision = " << propagatorIntegralPrecision << "\n";
+        std::cout << "ScatteringProcess = " << toString(process) << "\n";
     }
 };
 
@@ -145,7 +145,7 @@ double crossSectionProcess12To34(
     double , 
     double , 
     double , 
-    scatteringProcess ,
+    ScatteringProcess ,
     bool , 
     double 
 );
@@ -160,7 +160,7 @@ void evaluateCrossSectionProcess12To34ToFile(
     double , 
     double , 
     double , 
-    scatteringProcess , 
+    ScatteringProcess , 
     bool , 
     double , 
     int , 

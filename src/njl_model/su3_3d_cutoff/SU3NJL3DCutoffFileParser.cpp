@@ -34,7 +34,7 @@ NJLDimensionfulCouplings Common::extractDimensionfulCouplings() const
     );
 	cout << "interaction = " << toString(interaction) << endl;
 
-	if ( interaction == SP4Q_DET2NFQ )
+	if ( interaction == LagrangianInteractions::SP4Q_DET2NFQ )
 	{
 		double fourQuarkSPCouplingCutoff2 = config.getDouble(
             SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section,              
@@ -55,7 +55,7 @@ NJLDimensionfulCouplings Common::extractDimensionfulCouplings() const
 
 		return couplingsSU3NJL3DCutoff;
 	}
-	else if( interaction == SP4Q_DET2NFQ_SP8Q )
+	else if( interaction == LagrangianInteractions::SP4Q_DET2NFQ_SP8Q )
 	{
 		double fourQuarkSPCouplingCutoff2 = config.getDouble(
             SU3NJL3DCutoffFileParserKeys::DimensionfulCouplings::section, 

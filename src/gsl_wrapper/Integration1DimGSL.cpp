@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <gsl/gsl_errno.h>
 
-using namespace std;
+using std::cout;
 
 
 void Integration1DimGSL::setVariables(double lowerBoundAux, double upperBoundAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux)
@@ -33,7 +33,7 @@ double Integration1DimGSL::evaluate()
 }
 
 
-void Integration1DimGSL::errorHandler(int code, string methodName)
+void Integration1DimGSL::errorHandler(int code, std::string methodName)
 {
     if( code!=0 )
     {   
@@ -236,7 +236,7 @@ double Integration1DimGSLQAWC::evaluate()
 
 
 //QAGP method constructor
-Integration1DimGSLQAGP::Integration1DimGSLQAGP(double lowerBoundAux, double upperBoundAux, vector<double> singularitiesAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux)
+Integration1DimGSLQAGP::Integration1DimGSLQAGP(double lowerBoundAux, double upperBoundAux, std::vector<double> singularitiesAux, GeneralIntegrandParameters* integrandParametersAux, double integrand(double, void*), double absolutePrecisionAux, double relativePrecisionAux, int workspaceLimitSizeAux)
 {   
     setVariables(lowerBoundAux, upperBoundAux, integrandParametersAux, integrand, absolutePrecisionAux, relativePrecisionAux, workspaceLimitSizeAux);
 
@@ -540,9 +540,11 @@ bool Integration1DimGSLQAWCQAGS::isSingularityInsideTheIntegrationInterval()
 
 double Integration1DimGSLQAWCQAGS::evaluate()
 {   
-    if ( isSingularityInsideTheIntegrationInterval()==true && 
-         fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
-         fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity )
+    if ( 
+        isSingularityInsideTheIntegrationInterval()==true && 
+        fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
+        fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity 
+    )
     {   
         //evaluate the principal value of the integral
         Integration1DimGSLQAWC integralQAWC(lowerBound, upperBound, singularity, integrandParameters, F.function, absolutePrecision, relativePrecision, workspaceLimitSize);
@@ -563,9 +565,10 @@ double Integration1DimGSLQAWCQAGS::evaluateIntegration1DimNewtonCotes(int number
 {   
     Integration1DimNewtonCotes trapezoidalSum(lowerBound, upperBound, numberOfPartitions, &numeratorParameters, changeQAWCIntegrandToQAGSIntegrand, rule);
 
-    if ( isSingularityInsideTheIntegrationInterval()==true && 
-         fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
-         fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity )
+    if ( 
+        isSingularityInsideTheIntegrationInterval()==true && 
+        fabs(lowerBound-singularity)>minimumDistanceBetweenBoundAndSingularity && 
+        fabs(singularity-upperBound)>minimumDistanceBetweenBoundAndSingularity )
     {   
 
         return trapezoidalSum.evaluateAvoidingSingularPoint(singularity);

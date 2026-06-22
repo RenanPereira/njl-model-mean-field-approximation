@@ -6,7 +6,14 @@
 #include "math_utils/OneVariableFunction.h"
 #include "gsl_wrapper/root_solver_gsl.h"
 
-enum InterpolationGSL1DimMethod { linear, steffen, cubic, akima, polynomial };
+enum class InterpolationGSL1DimMethod 
+{ 
+    LINEAR, 
+    STEFFEN, 
+    CUBIC, 
+    AKIMA, 
+    POLYNOMIAL 
+};
 
 class InterpolationGSL1Dim
 {

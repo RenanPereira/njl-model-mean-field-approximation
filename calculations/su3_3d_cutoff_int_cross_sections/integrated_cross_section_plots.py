@@ -7,8 +7,13 @@ from common_utils.plot_helper import configure_axes, add_annotation_block
 from common_utils.integrated_cross_section_data import IntegratedCrossSectionData
 
 
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 
 def plot_integrated_cross_section_vs_temperature(
@@ -18,17 +23,21 @@ def plot_integrated_cross_section_vs_temperature(
     data_specs: list[tuple[list[str], str, str, int, str]],
     path_output_plot: str,
     legend_loc: str | None = None,
+    legend_fontsize: int = 18,
+    labels_fontsize: int = 22,
     label_int_cross_section: str | None = None,
     xlim: tuple[float, float] = (0.0 , 1.0),
     ylim: tuple[float, float] = (0.0 , 1.0),
     x_num_ticks: int = 6,
     y_num_ticks: int = 6,
+    tick_fontsize: int = 20,
     x_formatter: str = "%.2f",
     y_formatter: str = "%.1f",
     annotation_texts: list[str] | None = None,
     x_annotation: float = 0.05,
     y_annotation: float = 0.05,
-    annotation_vert_space: float = 0.06
+    annotation_vert_space: float = 0.06,
+    annotation_fontsize: int = 18
 ) -> tuple[Figure, Axes]:
     """
     This function plots integrated cross sections vs temperature.
@@ -78,14 +87,14 @@ def plot_integrated_cross_section_vs_temperature(
     
     # Legend
     if legend_loc is not None:
-        ax.legend(loc=legend_loc, fontsize=16, frameon=False)
+        ax.legend(loc=legend_loc, fontsize=legend_fontsize, frameon=False)
 
     # Axes labels
-    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=20)
+    ax.set_xlabel(r'$T\, [\mathrm{GeV}]$', fontsize=labels_fontsize)
     if label_int_cross_section is None:
-        ax.set_ylabel(r'$\overline{\sigma} \, [\mathrm{GeV}^{-2}]$', fontsize=20)
+        ax.set_ylabel(r'$\overline{\sigma} \, [\mathrm{GeV}^{-2}]$', fontsize=labels_fontsize)
     else: 
-        ax.set_ylabel(label_int_cross_section, fontsize=20)
+        ax.set_ylabel(label_int_cross_section, fontsize=labels_fontsize)
 
     # Configure axes using the helper function
     xmin = xlim[0]
@@ -100,7 +109,7 @@ def plot_integrated_cross_section_vs_temperature(
         ymax, 
         x_num_ticks, 
         y_num_ticks, 
-        tick_fontsize=16, 
+        tick_fontsize=tick_fontsize, 
         spine_width=1.5, 
         tick_width=1.5, 
         tick_length=6
@@ -120,7 +129,7 @@ def plot_integrated_cross_section_vs_temperature(
             y_annotation, 
             auxH=annotation_vert_space, 
             texts=annotation_texts, 
-            fontsize=16
+            fontsize=annotation_fontsize
         )
 
     fig.tight_layout()

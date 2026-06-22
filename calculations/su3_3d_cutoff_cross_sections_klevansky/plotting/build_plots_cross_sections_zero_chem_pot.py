@@ -7,12 +7,21 @@ from common_utils.cross_section_data import *
 ####################################################################################################
 # Common configurations between plots
 
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 fig_dpi = 150
 fig_x_size = 6
 fig_y_size = 6
+
+legend_fontsize = 16
+labels_fontsize = 22
+tick_fontsize = 20
 
 # Location of the data and plots folder with respect to calculations folder
 data_folder = "su3_3d_cutoff_cross_sections_klevansky/data/"
@@ -48,16 +57,16 @@ ax.plot(data_uuuu_T0215.get_sqrt_center_of_mass_energy()[0], data_uuuu_T0215.get
 ax.plot(data_udud_T0215.get_sqrt_center_of_mass_energy()[0], data_udud_T0215.get_cross_section()[0], marker='o', markersize=6, color=color_udud)
 
 # Axes labels
-ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=20)
-ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=20)
+ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False, title='T[GeV]=0.215', title_fontsize=14)
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False, title='T[GeV]=0.215', title_fontsize=legend_fontsize)
 
 # Configure axes using the helper function
 xmin= 0; xmax = 1.2; ymin = 0.0; ymax = 3.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=7, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=7, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
@@ -109,16 +118,16 @@ ax.plot(data_uuuu_T0250.get_sqrt_center_of_mass_energy()[0], data_uuuu_T0250.get
 ax.plot(data_udud_T0250.get_sqrt_center_of_mass_energy()[0], data_udud_T0250.get_cross_section()[0], marker='o', markersize=6, color=color_udud)
 
 # Axes labels
-ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=20)
-ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=20)
+ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False, title='T[GeV]=0.250', title_fontsize=14)
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False, title='T[GeV]=0.250', title_fontsize=legend_fontsize)
 
 # Configure axes using the helper function
 xmin= 0; xmax = 1.2; ymin = 0.0; ymax = 3.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=7, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=7, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
@@ -170,16 +179,16 @@ ax.plot(data_usus_T0215.get_sqrt_center_of_mass_energy()[0], data_usus_T0215.get
 ax.plot(data_ssss_T0215.get_sqrt_center_of_mass_energy()[0], data_ssss_T0215.get_cross_section()[0], marker='o', markersize=6, color=color_ssss)
 
 # Axes labels
-ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=20)
-ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=20)
+ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False, title='T[GeV]=0.215', title_fontsize=14)
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False, title='T[GeV]=0.215', title_fontsize=legend_fontsize)
 
 # Configure axes using the helper function
 xmin= 0; xmax = 1.2; ymin = 0.0; ymax = 6.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=7, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=7, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
@@ -231,16 +240,16 @@ ax.plot(data_usus_T0250.get_sqrt_center_of_mass_energy()[0], data_usus_T0250.get
 ax.plot(data_ssss_T0250.get_sqrt_center_of_mass_energy()[0], data_ssss_T0250.get_cross_section()[0], marker='o', markersize=6, color=color_ssss)
 
 # Axes labels
-ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=20)
-ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=20)
+ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False, title='T[GeV]=0.250', title_fontsize=14)
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False, title='T[GeV]=0.250', title_fontsize=legend_fontsize)
 
 # Configure axes using the helper function
 xmin= 0; xmax = 1.2; ymin = 0.0; ymax = 6.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=7, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=7, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
@@ -308,16 +317,16 @@ ax.plot(data_uubaruubar_T0215.get_sqrt_center_of_mass_energy()[0], data_uubarddb
 ax.plot(data_uubarssbar_T0215.get_sqrt_center_of_mass_energy()[0], data_uubarssbar_T0215.get_cross_section()[0], marker='o', markersize=6, color=color_uubarssbar)
 
 # Axes labels
-ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=20)
-ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=20)
+ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper right', fontsize=14, frameon=False, title='T[GeV]=0.215', title_fontsize=14)
+plt.legend(loc='upper right', fontsize=legend_fontsize, frameon=False, title='T[GeV]=0.215', title_fontsize=legend_fontsize)
 
 # Configure axes using the helper function
 xmin= 0; xmax = 1.2; ymin = 0.0; ymax = 50.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=6, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=6, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
@@ -384,16 +393,16 @@ ax.plot(data_uubaruubar_T0250.get_sqrt_center_of_mass_energy()[0], data_uubarddb
 ax.plot(data_uubarssbar_T0250.get_sqrt_center_of_mass_energy()[0], data_uubarssbar_T0250.get_cross_section()[0], marker='o', markersize=6, color=color_uubarssbar)
 
 # Axes labels
-ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=20)
-ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=20)
+ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper right', fontsize=14, frameon=False, title='T[GeV]=0.250', title_fontsize=14)
+plt.legend(loc='upper right', fontsize=legend_fontsize, frameon=False, title='T[GeV]=0.250', title_fontsize=legend_fontsize)
 
 # Configure axes using the helper function
 xmin= 0; xmax = 1.2; ymin = 0.0; ymax = 50.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=6, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=6, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
@@ -453,16 +462,16 @@ ax.plot(data_ssbaruubar_T0215.get_sqrt_center_of_mass_energy()[0], data_ssbaruub
 ax.plot(data_ssbaruubar_T0215.get_sqrt_center_of_mass_energy()[0], data_ssbarssbar_T0215.get_cross_section()[0], marker='o', markersize=6, color=color_ssbarssbar)
 
 # Axes labels
-ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=20)
-ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=20)
+ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False, title='T[GeV]=0.215', title_fontsize=14)
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False, title='T[GeV]=0.215', title_fontsize=legend_fontsize)
 
 # Configure axes using the helper function
 xmin= 0; xmax = 1.2; ymin = 0.0; ymax = 25.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=6, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=6, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
@@ -522,16 +531,16 @@ ax.plot(data_ssbaruubar_T0250.get_sqrt_center_of_mass_energy()[0], data_ssbaruub
 ax.plot(data_ssbaruubar_T0250.get_sqrt_center_of_mass_energy()[0], data_ssbarssbar_T0250.get_cross_section()[0], marker='o', markersize=6, color=color_ssbarssbar)
 
 # Axes labels
-ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=20)
-ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=20)
+ax.set_xlabel(r'$\sqrt{s} \, [\mathrm{GeV}]$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$\sigma \, [\mathrm{mb}]$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-plt.legend(loc='upper left', fontsize=14, frameon=False, title='T[GeV]=0.250', title_fontsize=14)
+plt.legend(loc='upper left', fontsize=legend_fontsize, frameon=False, title='T[GeV]=0.250', title_fontsize=legend_fontsize)
 
 # Configure axes using the helper function
 xmin= 0; xmax = 1.2; ymin = 0.0; ymax = 25.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=6, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=7, y_num_ticks=6, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))

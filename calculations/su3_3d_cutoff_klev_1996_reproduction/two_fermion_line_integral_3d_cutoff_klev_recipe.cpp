@@ -7,7 +7,9 @@
 #include "njl_model/n_fermion_line_integrals/two_fermion_line_integral_3d_cutoff.h"
 #include "physics_utils/distribution_functions.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::vector;
 
 
 //This function is called if an error is found during a PRO integration.
@@ -756,8 +758,8 @@ double IntB0RehbergKlevanskypkfinT0Im(double lambdax, double Mi, double Mj, doub
             if (int(auxpolos.size())==2)
             {
                 aux = M_PI/k*doublesign(lambdax)*IntfermidistT0(
-                    min(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))-Cp, 
-                    max(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))-Cp
+                    std::min(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))-Cp, 
+                    std::max(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))-Cp
                 );
             }
         }
@@ -811,8 +813,8 @@ double IntB0RehbergKlevanskymkfinT0Im(double lambdax, double Mi, double Mj, doub
             if (int(auxpolos.size())==2)
             {
                 aux = M_PI/k*doublesign(lambdax)*IntfermidistT0(
-                    -(min(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))+Cp),
-                    -(max(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))+Cp)
+                    -(std::min(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))+Cp),
+                    -(std::max(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))+Cp)
                 );
             }
         }
@@ -984,8 +986,8 @@ double IntB0RehbergKlevanskypkfinTfinIm(double lambdax, double Mi, double Mj, do
             if (int(auxpolos.size())==2)
             {
                 aux = M_PI/k*doublesign(lambdax)*Intfermidist(T,
-                    min(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))-Cp,
-                    max(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))-Cp
+                    std::min(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))-Cp,
+                    std::max(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))-Cp
                 );
             }
         }
@@ -1042,8 +1044,8 @@ double IntB0RehbergKlevanskymkfinTfinIm(double lambdax, double Mi, double Mj, do
             if(int(auxpolos.size())==2)
             {
                 aux = -M_PI/k*doublesign(lambdax)*Intfermidist(T,
-                    -(min(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))+Cp),
-                    -(max(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))+Cp)
+                    -(std::min(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))+Cp),
+                    -(std::max(funEner1(lambdax, k, Mi, Mj),funEner2(lambdax, k, Mi, Mj))+Cp)
                 );
             }
         }
@@ -1311,9 +1313,9 @@ gsl_complex klevanskyB0Integral3DCutoffKlevanskyRecipe(
     double /*integralPrecision*/
 )
 {
-    if ( reguScheme==CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
+    if ( reguScheme==NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY )
     {
-        cout << "The function klevanskyB0Integral3DCutoff is not defined for the NJL3DCutoffRegularizationScheme:CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY! Aborting!\n";
+        cout << "The function klevanskyB0Integral3DCutoff is not defined for the NJL3DCutoffRegularizationScheme::CUTOFF_ON_DIVERGENT_INTEGRALS_ONLY! Aborting!\n";
         abort();
     }
 

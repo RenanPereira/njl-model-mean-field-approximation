@@ -8,8 +8,8 @@
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffVacuum.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffBetaEqFixedTempRhoB.h"
 
-using namespace std;
-
+using std::cout;
+using std::vector;
 
 
 SU3NJL3DCutoffBetaEqFixedTempRhoB::SU3NJL3DCutoffBetaEqFixedTempRhoB(void* auxiliar)
@@ -28,7 +28,6 @@ SU3NJL3DCutoffBetaEqFixedTempRhoB::SU3NJL3DCutoffBetaEqFixedTempRhoB(void* auxil
 };
 
 
-
 SU3NJL3DCutoffBetaEqFixedTempRhoB::SU3NJL3DCutoffBetaEqFixedTempRhoB(SU3NJL3DCutoffParameters parametersNJLAux, double electronMassAux, double temperatureAux, double baryonDensityAux)
 {
     parametersNJL = parametersNJLAux;
@@ -38,16 +37,17 @@ SU3NJL3DCutoffBetaEqFixedTempRhoB::SU3NJL3DCutoffBetaEqFixedTempRhoB(SU3NJL3DCut
 }
 
 
-
-SU3NJL3DCutoffBetaEqFixedTempRhoB::SU3NJL3DCutoffBetaEqFixedTempRhoB(SU3NJL3DCutoffParameters parametersNJLAux, 
-                                                                     double electronMassAux,
-                                                                     double temperatureAux,
-                                                                     double upQuarkEffectiveMassAux, 
-                                                                     double downQuarkEffectiveMassAux, 
-                                                                     double strangeQuarkEffectiveMassAux,
-                                                                     double upQuarkEffectiveChemicalPotentialAux, 
-                                                                     double downQuarkEffectiveChemicalPotentialAux, 
-                                                                     double strangeQuarkEffectiveChemicalPotentialAux)
+SU3NJL3DCutoffBetaEqFixedTempRhoB::SU3NJL3DCutoffBetaEqFixedTempRhoB(
+    SU3NJL3DCutoffParameters parametersNJLAux, 
+    double electronMassAux,
+    double temperatureAux,
+    double upQuarkEffectiveMassAux, 
+    double downQuarkEffectiveMassAux, 
+    double strangeQuarkEffectiveMassAux,
+    double upQuarkEffectiveChemicalPotentialAux, 
+    double downQuarkEffectiveChemicalPotentialAux, 
+    double strangeQuarkEffectiveChemicalPotentialAux
+)
 {
     parametersNJL = parametersNJLAux;
     electronMass = electronMassAux;
@@ -60,7 +60,6 @@ SU3NJL3DCutoffBetaEqFixedTempRhoB::SU3NJL3DCutoffBetaEqFixedTempRhoB(SU3NJL3DCut
     downQuarkEffectiveChemicalPotential = downQuarkEffectiveChemicalPotentialAux;
     strangeQuarkEffectiveChemicalPotential = strangeQuarkEffectiveChemicalPotentialAux;
 }
-
 
 
 void SU3NJL3DCutoffBetaEqFixedTempRhoB::setSigmasAndDensitiesAndChemicalPotentials()
@@ -123,15 +122,16 @@ void SU3NJL3DCutoffBetaEqFixedTempRhoB::setSigmasAndDensitiesAndChemicalPotentia
 }
 
 
-
-void SU3NJL3DCutoffBetaEqFixedTempRhoB::solve(double precision, 
-                                              MultiRootFindingMethod method,
-                                              double upQuarkEffectiveMassGuess, 
-                                              double downQuarkEffectiveMassGuess, 
-                                              double strangeQuarkEffectiveMassGuess, 
-                                              double upQuarkEffectiveChemicalPotentialGuess, 
-                                              double downQuarkEffectiveChemicalPotentialGuess, 
-                                              double strangeQuarkEffectiveChemicalPotentialGuess)
+void SU3NJL3DCutoffBetaEqFixedTempRhoB::solve(
+    double precision, 
+    MultiRootFindingMethod method,
+    double upQuarkEffectiveMassGuess, 
+    double downQuarkEffectiveMassGuess, 
+    double strangeQuarkEffectiveMassGuess, 
+    double upQuarkEffectiveChemicalPotentialGuess, 
+    double downQuarkEffectiveChemicalPotentialGuess, 
+    double strangeQuarkEffectiveChemicalPotentialGuess
+)
 {   
     //solve the model given the guesses
     double x[6];
@@ -154,7 +154,6 @@ void SU3NJL3DCutoffBetaEqFixedTempRhoB::solve(double precision,
     //calculate outputs
     setSigmasAndDensitiesAndChemicalPotentials();
 }
-
 
 
 int SU3NJL3DCutoffGapEquationsBetaEquilibriumFixedTemperature(const gsl_vector *x, void *auxiliar, gsl_vector *f)
@@ -217,7 +216,6 @@ int SU3NJL3DCutoffGapEquationsBetaEquilibriumFixedTemperature(const gsl_vector *
 }
 
 
-
 bool SU3NJL3DCutoffBetaEqFixedTempRhoB::testSolution(double precision)
 {   
     double x[6];
@@ -234,7 +232,6 @@ bool SU3NJL3DCutoffBetaEqFixedTempRhoB::testSolution(double precision)
     if (gslTest==0){ return true; }
     else{ return false; }
 }
-
 
 
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculatePressureQuarks(double vacuumPressureQuarks)
@@ -255,7 +252,6 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculatePressureQuarks(double vacuumP
 }
 
 
-
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculatePressureElectrons(double vacuumPressureElectrons)
 {   
     NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
@@ -274,7 +270,6 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculatePressureElectrons(double vacu
 }
 
 
-
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculatePressure(double vacuumPressureQuarks, double vacuumPressureElectrons)
 {
     double pressureQuarks = calculatePressureQuarks(vacuumPressureQuarks);
@@ -286,12 +281,10 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculatePressure(double vacuumPressur
 }
 
 
-
 void SU3NJL3DCutoffBetaEqFixedTempRhoB::setBetaEqPressure(double vacuumPressureQuarks, double vacuumPressureElectrons)
 {
     betaEqPressure = calculatePressure(vacuumPressureQuarks, vacuumPressureElectrons);
 }
-
 
 
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEnergyDensityQuarks(double vacuumPressureQuarks)
@@ -312,7 +305,6 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEnergyDensityQuarks(double va
 }
 
 
-
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEnergyDensityElectrons(double vacuumPressureElectrons)
 {   
     NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
@@ -331,7 +323,6 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEnergyDensityElectrons(double
 }
 
 
-
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEnergyDensity(double vacuumPressureQuarks, double vacuumPressureElectrons)
 {
     double energyQuarks = calculateEnergyDensityQuarks(vacuumPressureQuarks);
@@ -344,12 +335,10 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEnergyDensity(double vacuumPr
 }
 
 
-
 void SU3NJL3DCutoffBetaEqFixedTempRhoB::setBetaEqEnergyDensity(double vacuumPressureQuarks, double vacuumPressureElectrons)
 {
     betaEqEnergyDensity = calculateEnergyDensity(vacuumPressureQuarks, vacuumPressureElectrons);
 }
-
 
 
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEntropyDensityQuarks()
@@ -368,7 +357,6 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEntropyDensityQuarks()
 }
 
 
-
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEntropyDensityElectrons()
 {
     NJL3DCutoffRegularizationScheme reguScheme = parametersNJL.getNJL3DCutoffRegularizationScheme();
@@ -385,7 +373,6 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEntropyDensityElectrons()
 }
 
 
-
 double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEntropyDensity()
 {
     double entropyQuarks = calculateEntropyDensityQuarks();
@@ -398,12 +385,10 @@ double SU3NJL3DCutoffBetaEqFixedTempRhoB::calculateEntropyDensity()
 }
 
 
-
 void SU3NJL3DCutoffBetaEqFixedTempRhoB::setBetaEqEntropyDensity()
 {
     betaEqEntropyDensity = calculateEntropyDensity();
 }
-
 
 
 void SU3NJL3DCutoffBetaEqFixedTempRhoB::setBetaEqThermodynamics(double vacuumPressureQuarks, double vacuumPressureElectrons)
@@ -414,7 +399,7 @@ void SU3NJL3DCutoffBetaEqFixedTempRhoB::setBetaEqThermodynamics(double vacuumPre
 }
 
 
-void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string filename, bool columnsDescription)
+void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, std::string filename, bool columnsDescription)
 {
     int dataPrecision = 15;
     int colW = 25;
@@ -481,8 +466,7 @@ void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, s
 }
 
 
-
-void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string filename, bool columnsDescription)
+void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, std::string filename, bool columnsDescription)
 {
     int dataPrecision = 15;
     int colW = 25;
@@ -513,7 +497,7 @@ void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string 
 }
 
 
-void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, string filename, bool columnsDescription, double minimumBaryonDensity)
+void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, std::string filename, bool columnsDescription, double minimumBaryonDensity)
 {
     int dataPrecision = 15;
     int colW = 25;
@@ -564,7 +548,6 @@ int SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature(const gsl
     double effCPD_restored = gsl_vector_get(x,10);
     double effCPS_restored = gsl_vector_get(x,11);
 
-
     //read parameters from source object
     SU3NJL3DCutoffBetaEqFixedTempRhoB source(auxiliar);
 
@@ -575,17 +558,18 @@ int SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature(const gsl
     double mE = source.getElectronMass();
     double T = source.getTemperature();
 
-
     //Broken phase
-    SU3NJL3DCutoffBetaEqFixedTempRhoB brokenPhase(source.getParametersNJL(), 
-                                                  mE, 
-                                                  T,
-                                                  mU_broken, 
-                                                  mD_broken, 
-                                                  mS_broken, 
-                                                  effCPU_broken, 
-                                                  effCPD_broken, 
-                                                  effCPS_broken);
+    SU3NJL3DCutoffBetaEqFixedTempRhoB brokenPhase(
+        source.getParametersNJL(), 
+        mE, 
+        T,
+        mU_broken, 
+        mD_broken, 
+        mS_broken, 
+        effCPU_broken, 
+        effCPD_broken, 
+        effCPS_broken
+    );
     brokenPhase.setSigmasAndDensitiesAndChemicalPotentials();
 
     double sigmaU_broken = brokenPhase.getUpQuarkSigma();
@@ -604,17 +588,18 @@ int SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature(const gsl
 
     double pressure_broken = brokenPhase.calculatePressure(0.0, 0.0);//the vacuum values can be any value
 
-
     //Restored phase
-    SU3NJL3DCutoffBetaEqFixedTempRhoB restoredPhase(source.getParametersNJL(), 
-                                                    mE, 
-                                                    T,
-                                                    mU_restored, 
-                                                    mD_restored, 
-                                                    mS_restored, 
-                                                    effCPU_restored, 
-                                                    effCPD_restored, 
-                                                    effCPS_restored);
+    SU3NJL3DCutoffBetaEqFixedTempRhoB restoredPhase(
+        source.getParametersNJL(), 
+        mE, 
+        T,
+        mU_restored, 
+        mD_restored, 
+        mS_restored, 
+        effCPU_restored, 
+        effCPD_restored, 
+        effCPS_restored
+    );
     restoredPhase.setSigmasAndDensitiesAndChemicalPotentials();
 
     double sigmaU_restored = restoredPhase.getUpQuarkSigma();
@@ -632,7 +617,6 @@ int SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature(const gsl
     double baryonCP_restored = restoredPhase.getBaryonChemicalPotential();
 
     double pressure_restored = restoredPhase.calculatePressure(0.0, 0.0);//the vacuum values can be any value
-
 
     //equations in the broken phase
     double f0 = SU3NJLNulledGapEquation(couplings, mU_broken-m0U, sigmaU_broken, sigmaD_broken, sigmaS_broken, rhoU_broken, rhoD_broken, rhoS_broken);
@@ -652,7 +636,6 @@ int SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature(const gsl
     double f10 = baryonCP_broken - baryonCP_restored;
     double f11 = pressure_broken - pressure_restored;
 
-
     gsl_vector_set (f,0,f0);
     gsl_vector_set (f,1,f1);
     gsl_vector_set (f,2,f2);
@@ -671,14 +654,17 @@ int SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature(const gsl
 
 
 
-vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTemperature(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, double precision, MultiRootFindingMethod method)
+vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTemperature(
+    vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> solutions, 
+    double precision, 
+    MultiRootFindingMethod method
+)
 {
     //run check that solutions have the same temperature
     for (int i = 0; i < int(solutions.size()); ++i)
     {
         if ( fabs(solutions[0].getTemperature()-solutions[i].getTemperature())>0 ){ cout << "Temperature is not fixed in this vector of solutions!\n"; abort(); }
     }
-
 
     //finding guesses for transition point
     int first = 0;
@@ -706,7 +692,6 @@ vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTempera
             }
         }
     }
-
 
 /*
     //other guessing strategy
@@ -742,11 +727,9 @@ vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTempera
     }
 */
 
-
     vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> transitionPoints;
     if ( first>0 && second>0 )
     {
-
         //estimate guesses
         double mU_broken = solutions[first].getUpQuarkEffectiveMass();
         double mD_broken = solutions[first].getDownQuarkEffectiveMass();
@@ -760,7 +743,6 @@ vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTempera
         double effCPU_restored = solutions[second].getUpQuarkEffectiveChemicalPotential();
         double effCPD_restored = solutions[second].getDownQuarkEffectiveChemicalPotential();
         double effCPS_restored = solutions[second].getStrangeQuarkEffectiveChemicalPotential();
-
 
         //solve system
         double x[12];
@@ -802,51 +784,58 @@ vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTempera
         cout << effCPU_restored << "\t" << effCPD_restored << "\t" << effCPS_restored << "\n";
         */
 
-        SU3NJL3DCutoffBetaEqFixedTempRhoB broken(solutions[0].getParametersNJL(), 
-                                                 solutions[0].getElectronMass(), 
-                                                 solutions[0].getTemperature(), 
-                                                 mU_broken, 
-                                                 mD_broken, 
-                                                 mS_broken, 
-                                                 effCPU_broken, 
-                                                 effCPD_broken, 
-                                                 effCPS_broken);   
+        SU3NJL3DCutoffBetaEqFixedTempRhoB broken(
+            solutions[0].getParametersNJL(), 
+            solutions[0].getElectronMass(), 
+            solutions[0].getTemperature(), 
+            mU_broken, 
+            mD_broken, 
+            mS_broken, 
+            effCPU_broken, 
+            effCPD_broken, 
+            effCPS_broken
+        );
         broken.setSigmasAndDensitiesAndChemicalPotentials();
         double baryonDensity_broken = SU3BaryonDensity(broken.getUpQuarkDensity(), broken.getDownQuarkDensity(), broken.getStrangeQuarkDensity());
         broken.setBaryonDensity(baryonDensity_broken);
 
-
-        SU3NJL3DCutoffBetaEqFixedTempRhoB restored(solutions[0].getParametersNJL(), 
-                                                   solutions[0].getElectronMass(), 
-                                                   solutions[0].getTemperature(), 
-                                                   mU_restored, 
-                                                   mD_restored, 
-                                                   mS_restored, 
-                                                   effCPU_restored, 
-                                                   effCPD_restored, 
-                                                   effCPS_restored);
+        SU3NJL3DCutoffBetaEqFixedTempRhoB restored(
+            solutions[0].getParametersNJL(), 
+            solutions[0].getElectronMass(), 
+            solutions[0].getTemperature(), 
+            mU_restored, 
+            mD_restored, 
+            mS_restored, 
+            effCPU_restored, 
+            effCPD_restored, 
+            effCPS_restored
+        );
         restored.setSigmasAndDensitiesAndChemicalPotentials();
         double baryonDensity_restored = SU3BaryonDensity(restored.getUpQuarkDensity(), restored.getDownQuarkDensity(), restored.getStrangeQuarkDensity());
         restored.setBaryonDensity(baryonDensity_restored);
-
 
         transitionPoints.push_back(broken);
         transitionPoints.push_back(restored);
 
     }
 
-
     return transitionPoints;
 }
 
 
-
 void addVacuumSolution(SU3NJL3DCutoffVacuum vacuum, double electronMass, double pressureVac, double pressureVacElec, vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> &solutions)
 {
-    SU3NJL3DCutoffBetaEqFixedTempRhoB aux(vacuum.getParametersNJL(), electronMass, 0.0,
-                                          vacuum.getUpQuarkEffectiveMass(),
-                                          vacuum.getDownQuarkEffectiveMass(),
-                                          vacuum.getStrangeQuarkEffectiveMass(), 0.0, 0.0, 0.0);
+    SU3NJL3DCutoffBetaEqFixedTempRhoB aux(
+        vacuum.getParametersNJL(), 
+        electronMass, 
+        0.0,
+        vacuum.getUpQuarkEffectiveMass(),
+        vacuum.getDownQuarkEffectiveMass(),
+        vacuum.getStrangeQuarkEffectiveMass(), 
+        0.0, 
+        0.0, 
+        0.0
+    );
     aux.setBaryonDensity(0.0);
     aux.setSigmasAndDensitiesAndChemicalPotentials();
     aux.setBetaEqThermodynamics(pressureVac, pressureVacElec);
@@ -855,10 +844,14 @@ void addVacuumSolution(SU3NJL3DCutoffVacuum vacuum, double electronMass, double 
 }
 
 
-vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> 
-calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum, 
-                                  double minimumBaryonDensity, double maximumBaryonDensity, int numberOfPoints, 
-                                  double gapPrecision, MultiRootFindingMethod method)
+vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> calculateZeroTemperatureSolutions(
+    SU3NJL3DCutoffVacuum vacuum, 
+    double minimumBaryonDensity, 
+    double maximumBaryonDensity, 
+    int numberOfPoints, 
+    double gapPrecision, 
+    MultiRootFindingMethod method
+)
 {
     double pressureVacuum = vacuum.calculatePressure();
     double energyVacuum = vacuum.calculateEnergyDensity();
@@ -868,10 +861,8 @@ calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum,
     double pressureVacuumElectron = vacuum.calculateVacuumPressureElectrons(PhysicalConstants::electronMass_GeV);
     cout << "pressureVacuumElectron=" << pressureVacuumElectron << "\n";
 
-
     vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> betaEqSolutions;
     addVacuumSolution(vacuum, PhysicalConstants::electronMass_GeV, pressureVacuum, pressureVacuumElectron, betaEqSolutions);
-
 
     //guesses for i=0
     double mUGuess = vacuum.getUpQuarkEffectiveMass();
@@ -880,7 +871,6 @@ calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum,
     double effCPUGuess = mUGuess + 1E-3;
     double effCPDGuess = mUGuess + 1E-3;
     double effCPSGuess = mUGuess + 1E-3;
-
 
     double temperature = 0.0;
     double delta = (maximumBaryonDensity-minimumBaryonDensity)/(numberOfPoints-1);
@@ -906,7 +896,6 @@ calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum,
         //calculate thermodynamics
         betaEq.setBetaEqThermodynamics(pressureVacuum, pressureVacuumElectron);
 
-
         //print to console
         cout << rhoB/pow(PhysicalConstants::hbarc_GeVfm,3) << "\t"
              << betaEq.getUpQuarkEffectiveMass() << "\t"
@@ -916,11 +905,9 @@ calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum vacuum,
              << betaEq.getDownQuarkEffectiveChemicalPotential() << "\t"
              << betaEq.getStrangeQuarkEffectiveChemicalPotential() << "\n";
 
-
         //push to solutions vector
         betaEqSolutions.push_back(betaEq);
     }
-
 
     return betaEqSolutions;
 }
@@ -933,20 +920,17 @@ void writeBetaEquilibriumEOSAtZeroTemperatureToFile(
     int numberOfPoints, 
     double gapPrecision, 
     MultiRootFindingMethod method,
-    string filename
+    std::string filename
 )
 {
     vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> betaEqSolutions = 
     calculateZeroTemperatureSolutions(vacuum, minimumBaryonDensity, maximumBaryonDensity, numberOfPoints, gapPrecision, method);
 
-
     //save all information in file
     writeSolutionsToFile(betaEqSolutions, "solutions.dat", true);
 
-
     //find chiral transition if it exists
     vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> transitionPoints = findChiralTransitionPointsFixedTemperature(betaEqSolutions, gapPrecision, method);
-
 
     //save EOS to file: if it has first order phase transition, save only after restoration 
     if ( int(transitionPoints.size())>0 )

@@ -42,25 +42,45 @@ public:
 
     static std::string trim(const std::string& );
 
-    bool isKeyPresent(const std::string& section, const std::string& key) const;
+    bool isKeyPresent(const std::string& , const std::string& ) const;
     
-    bool validatePositiveInteger(const std::string& section, const std::string& key, 
-                                 const std::string& invalidFileMessage, const std::string& conditionMessage) const;
+    bool validatePositiveInteger(
+        const std::string& , 
+        const std::string& , 
+        const std::string& , 
+        const std::string& 
+    ) const;
     
-    bool validatePositiveDouble(const std::string& section, const std::string& key, 
-                                const std::string& invalidFileMessage, const std::string& conditionMessage) const;
+    bool validatePositiveDouble(
+        const std::string& , 
+        const std::string& , 
+        const std::string& , 
+        const std::string& 
+    ) const;
     
-    bool validateNonNegativeDouble(const std::string& section, const std::string& key, 
-                                   const std::string& invalidFileMessage, const std::string& conditionMessage) const;
+    bool validateNonNegativeDouble(
+        const std::string& , 
+        const std::string& , 
+        const std::string& , 
+        const std::string& 
+    ) const;
     
     bool validateRequiredSections(const std::vector<std::string>& ) const;
     
     bool validateRequiredKeys(const std::string& , const std::vector<std::string>& ) const;
-    bool validateRequiredKeys(const std::map<std::string, std::string>& , const std::vector<std::string>& ) const;
+    bool validateRequiredKeys(
+        const std::map<std::string, std::string>& , 
+        const std::vector<std::string>& 
+    ) const;
 
     bool getBool(const std::string& , const std::string& , bool ) const;
     bool getBool(const std::string& , const std::string& ) const;
-    bool validateBool(const std::string& , const std::string& , const std::string& , const std::string& ) const;
+    bool validateBool(
+        const std::string& , 
+        const std::string& , 
+        const std::string& , 
+        const std::string& 
+    ) const;
 };
 
 

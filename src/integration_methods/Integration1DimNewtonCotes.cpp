@@ -1,8 +1,6 @@
 #include "integration_methods/Integration1DimNewtonCotes.h"
 #include <cmath>
 
-using namespace std;
-
 
 void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*), NewtonCotesRule ruleAux)
 {
@@ -16,20 +14,20 @@ void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upper
     rule = ruleAux;
 
     //check if number of partitions are appropriate for the chosen rule
-    if ( rule==trapezoidal )
+    if ( rule==NewtonCotesRule::TRAPEZOIDAL )
     {
         if ( numberOfPartitions<2 )
         {
-            cout << "Integration1DimNewtonCotes: to use the trapezoidal rule, at least 2 partitions are necessary!\n";
+            std::cout << "Integration1DimNewtonCotes: to use the TRAPEZOIDAL rule, at least 2 partitions are necessary!\n";
             abort();
         }
     }
 
-    if ( rule==alternativeCompositeSimpson )
+    if ( rule==NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON )
     {
         if ( numberOfPartitions<8 )
         {
-            cout << "Integration1DimNewtonCotes: to use the alternative Composite Simpson rule, at least 8 partitions are necessary!\n";
+            std::cout << "Integration1DimNewtonCotes: to use the alternative Composite Simpson rule, at least 8 partitions are necessary!\n";
             abort();
         }
     }
@@ -38,7 +36,7 @@ void Integration1DimNewtonCotes::setVariables(double lowerBoundAux, double upper
 
 Integration1DimNewtonCotes::Integration1DimNewtonCotes(double lowerBoundAux, double upperBoundAux, int numberOfPartitionsAux, GeneralIntegrandParameters* integrandParametersAux, double integrandAux(double, void*))
 {
-    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, trapezoidal);
+    setVariables(lowerBoundAux, upperBoundAux, numberOfPartitionsAux, integrandParametersAux, integrandAux, NewtonCotesRule::TRAPEZOIDAL);
 }
 
 
@@ -94,11 +92,11 @@ double Integration1DimNewtonCotes::evaluate()
 {   
     double area = 0.0;
 
-    if ( rule==trapezoidal )
+    if ( rule==NewtonCotesRule::TRAPEZOIDAL )
     {
         area = evaluateTrapezoidal();
     }
-    else if ( rule==alternativeCompositeSimpson )
+    else if ( rule==NewtonCotesRule::ALTERNATIVE_COMPOSITE_SIMPSON )
     {
         area = evaluateAlternativeCompositeSimpson();
     }
@@ -159,8 +157,3 @@ double Integration1DimNewtonCotes::evaluateAvoidingSingularPoint(double singular
     return area;
 
 }
-
-
-
-
-

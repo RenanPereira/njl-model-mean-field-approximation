@@ -78,86 +78,118 @@ cd fixed_chem_pot_temp
 ./build_plots.sh
 ```
 
-## Results Zero chemical potential
+## Results
 
 In this section we present some thermodynamic quantities of the SU3 NJL model resulting from these calculations.
 
 ### Quark masses
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setA.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setB.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setA_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setB_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setC_CP0.png" width="32%">
 </p>
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_CP0_setsABC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_temp_setsABC_CP0.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setA_T0p075.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setB_T0p12.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/quark_eff_masses_vs_muB_setC_T0p13.png" width="32%">
 </p>
 
 ### Pressure
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setA.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setB.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_setA_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_setB_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_setC_CP0.png" width="32%">
 </p>
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_CP0_setsABC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_temp_setsABC_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_muB_setsABC_diffT.png" width="32%">
 </p>
-
-
 
 ### Entropy density
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setA.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setB.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_setA_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_setB_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_setC_CP0.png" width="32%">
 </p>
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_CP0_setsABC.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_CP0_setsABC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_temp_setsABC_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/s_over_temp3_vs_temp_setsABC_CP0.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/entropy_vs_muB_setsABC_diffT.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/s_over_temp3_vs_muB_setsABC_diffT.png" width="32%">
 </p>
 
 
 In the plots below we also calculate the temperature derivative of the pressure at fixed chemical potential, which yields the entropy density. Hence, one can assess the compatibility of the results provided in the data file.
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setA.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setB.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_CP0_setC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setA_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setB_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/entropy_dPdT_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 ### Energy density
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setA.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setB.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_setA_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_setB_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_setC_CP0.png" width="32%">
 </p>
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_CP0_setsABC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_temp_setsABC_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_vs_muB_setsABC_diffT.png" width="32%">
 </p>
 
 In the plots below we also calculate the energy density via the Euler equation. Hence, one can assess the compatibility of the results provided in the data file.
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setA.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setB.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_CP0_setC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setA_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setB_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/energy_euler_eq_vs_temp_setC_CP0.png" width="32%">
 </p>
 
 ### Pressure and Energy density
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setA.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setB.png" width="32%">
-  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_setA_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_setB_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_setC_CP0.png" width="32%">
 </p>
 
-<p align="center">
-  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_CP0_setsABC.png" width="32%">
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_setsABC_CP0.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/pressure_vs_energy_setsABC_diffT.png" width="32%">
+</p>
+
+### Quark density and Baryon density
+
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setA_T0p075.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setB_T0p12.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/rho_quarks_vs_mu_setC_T0p13.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/rhoB_vs_muB_setA_T0p075.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/rhoB_vs_muB_setB_T0p12.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/rhoB_vs_muB_setC_T0p13.png" width="32%">
+</p>
+
+<p align="left">
+  <img src="fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setA_T0p075.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setB_T0p12.png" width="32%">
+  <img src="fixed_chem_pot_temp/plots/rhoB_dPdmuB_vs_muB_setC_T0p13.png" width="32%">
 </p>

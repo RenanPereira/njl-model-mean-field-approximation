@@ -4,8 +4,6 @@
 #include <vector>
 #include "physics_utils/distribution_functions.h"
 #include "njl_model/NJLDimensionfulCouplings.h"
-using namespace std;
-
 
 
 class SU3NJL3DCutoffBetaEqFixedTempRhoB
@@ -144,20 +142,20 @@ private:
 
 int SU3NJL3DCutoffGapEquationsBetaEquilibriumFixedTemperature(const gsl_vector *, void *, gsl_vector *);
 
-void writeSolutionsToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> , string , bool );
+void writeSolutionsToFile(std::vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> , std::string , bool );
 
-void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> , string , bool );
+void writeEOSToFile(std::vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> , std::string , bool );
 
-void writeEOSToFile(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> , string , bool , double );
+void writeEOSToFile(std::vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> , std::string , bool , double );
 
 int SU3NJL3DCutoffChiralTransitionPointBetaEquilibriumFixedTemperature(const gsl_vector *, void *, gsl_vector *);
 
-vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTemperature(vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> , double , MultiRootFindingMethod );
+std::vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> findChiralTransitionPointsFixedTemperature(std::vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> , double , MultiRootFindingMethod );
 
-void addVacuumSolution(SU3NJL3DCutoffVacuum , double , double , double , vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> &);
+void addVacuumSolution(SU3NJL3DCutoffVacuum , double , double , double , std::vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> &);
 
-vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod );
+std::vector<SU3NJL3DCutoffBetaEqFixedTempRhoB> calculateZeroTemperatureSolutions(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod );
 
-void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod , string );
+void writeBetaEquilibriumEOSAtZeroTemperatureToFile(SU3NJL3DCutoffVacuum , double , double , int , double , MultiRootFindingMethod , std::string );
 
 #endif

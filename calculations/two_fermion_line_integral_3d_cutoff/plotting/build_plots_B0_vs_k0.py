@@ -7,13 +7,22 @@ from common_utils.b03d_cutoff_vs_momentum_data import *
 ####################################################################################################
 # Common configurations between plots
 
-#Select font that will be used for the different plots
-plt.rcParams['font.family'] = 'sans-serif'
+# Select font that will be used for the different plots
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["STIXGeneral"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False
+})
 
 
 fig_dpi = 150
 fig_x_size = 6
 fig_y_size = 6
+
+labels_fontsize = 22
+tick_fontsize = 20
+annotation_fontsize = 18
 
 # Location of the data and plots folder with respect to calculations folder
 data_folder = "two_fermion_line_integral_3d_cutoff/data/"
@@ -41,16 +50,15 @@ ax.plot(data_B0_vs_k0_kvec00.get_momentum_to_Lambda_ratio(),
         label=r'$\mathrm{Im}[B_0]$', color=colorkvec00, linewidth=2, linestyle='--')
 
 # Axes labels
-ax.set_xlabel(r'$k_0/\Lambda$', fontsize=20)
-ax.set_ylabel(r'$B_0$', fontsize=20)
+ax.set_xlabel(r'$k_0/\Lambda$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$B_0$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-#plt.legend(loc='upper left', fontsize=14, frameon=False) # Show legend
 
 # Configure axes using the helper function
 xmin= -2.5; xmax = 2.5; ymin = -5.0; ymax = 5.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
 auxH = 0.065; auxX = 0.520; auxY = 0.050
@@ -61,10 +69,10 @@ texts = [
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$|\mathbf{k}|/\Lambda = 0.0$',
 ]
-add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
 auxY=0.93
-add_annotation(ax, xmin, xmax, ymin, ymax, auxX, auxY, r'$\mathrm{Shift:}\ M^2 \rightarrow M^2 - i\epsilon$', fontsize=16)
+add_annotation(ax, xmin, xmax, ymin, ymax, auxX, auxY, r'$\mathrm{Shift:}\ M^2 \rightarrow M^2 - i\epsilon$', fontsize=annotation_fontsize)
 
 # Automatically adjust layout
 fig.tight_layout()
@@ -105,8 +113,8 @@ ax.plot(data_B0_vs_k0_kvec00.get_momentum_to_Lambda_ratio(),
         label=r'$\mathrm{Im}[B_0]$', color=colorkvec00, linewidth=2, linestyle='--')
 
 # Axes labels
-ax.set_xlabel(r'$k_0/\Lambda$', fontsize=20)
-ax.set_ylabel(r'$B_0$', fontsize=20)
+ax.set_xlabel(r'$k_0/\Lambda$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$B_0$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
@@ -116,7 +124,7 @@ xmin= -2.5
 xmax = 2.5
 ymin = -5.0
 ymax = 5.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 # Add text annotations
 auxH = 0.065
 auxX = 0.520
@@ -128,10 +136,10 @@ texts = [
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$|\mathbf{k}|/\Lambda = 0.0$',
 ]
-add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
 auxY=0.93
-add_annotation(ax, xmin, xmax, ymin, ymax, auxX, auxY, r'$\mathrm{Shift:}\ k_0 \rightarrow k_0 + i\epsilon$', fontsize=16)
+add_annotation(ax, xmin, xmax, ymin, ymax, auxX, auxY, r'$\mathrm{Shift:}\ k_0 \rightarrow k_0 + i\epsilon$', fontsize=annotation_fontsize)
 
 # Automatically adjust layout
 fig.tight_layout()
@@ -172,20 +180,18 @@ ax.plot(data_B0_vs_k0_kvec05.get_momentum_to_Lambda_ratio(),
         label=r'$\mathrm{Im}[B_0]$', color=colorkvec05, linewidth=2, linestyle='--')
 
 # Axes labels
-ax.set_xlabel(r'$k_0/\Lambda$', fontsize=20)
-ax.set_ylabel(r'$B_0$', fontsize=20)
+ax.set_xlabel(r'$k_0/\Lambda$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$B_0$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-# Show legend
-#plt.legend(loc='upper left', fontsize=14, frameon=False)
 
 # Configure axes using the helper function
 xmin= -2.5
 xmax = 2.5
 ymin = -5.0
 ymax = 5.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
 auxH = 0.065
@@ -198,10 +204,10 @@ texts = [
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$|\mathbf{k}|/\Lambda = 0.5$',
 ]
-add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
 auxY=0.93
-add_annotation(ax, xmin, xmax, ymin, ymax, auxX, auxY, r'$\mathrm{Shift:}\ M^2 \rightarrow M^2 - i\epsilon$', fontsize=16)
+add_annotation(ax, xmin, xmax, ymin, ymax, auxX, auxY, r'$\mathrm{Shift:}\ M^2 \rightarrow M^2 - i\epsilon$', fontsize=annotation_fontsize)
 
 # Automatically adjust layout
 fig.tight_layout()
@@ -242,20 +248,18 @@ ax.plot(data_B0_vs_k0_kvec10.get_momentum_to_Lambda_ratio(),
         label=r'$\mathrm{Im}[B_0]$', color=colorkvec10, linewidth=2, linestyle='--')
 
 # Axes labels
-ax.set_xlabel(r'$k_0/\Lambda$', fontsize=20)
-ax.set_ylabel(r'$B_0$', fontsize=20)
+ax.set_xlabel(r'$k_0/\Lambda$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$B_0$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-# Show legend
-#plt.legend(loc='upper left', fontsize=14, frameon=False)
 
 # Configure axes using the helper function
 xmin= -2.5
 xmax = 2.5
 ymin = -5.0
 ymax = 5.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
 auxH = 0.065
@@ -268,10 +272,10 @@ texts = [
     r'$M_{i,j}/\Lambda = 0.4$',
     r'$|\mathbf{k}|/\Lambda = 1.0$',
 ]
-add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
 auxY=0.93
-add_annotation(ax, xmin, xmax, ymin, ymax, auxX, auxY, r'$\mathrm{Shift:}\ M^2 \rightarrow M^2 - i\epsilon$', fontsize=16)
+add_annotation(ax, xmin, xmax, ymin, ymax, auxX, auxY, r'$\mathrm{Shift:}\ M^2 \rightarrow M^2 - i\epsilon$', fontsize=annotation_fontsize)
 
 # Automatically adjust layout
 fig.tight_layout()
@@ -338,16 +342,15 @@ ax.plot(data_B0_vs_k0_kvec15.get_momentum_to_Lambda_ratio(),
         label=r'$\mathrm{Im}[B_0]$', color=colorkvec15, linewidth=2, linestyle='--')
 
 # Axes labels
-ax.set_xlabel(r'$k_0/\Lambda$', fontsize=20)
-ax.set_ylabel(r'$B_0$', fontsize=20)
+ax.set_xlabel(r'$k_0/\Lambda$', fontsize=labels_fontsize)
+ax.set_ylabel(r'$B_0$', fontsize=labels_fontsize)
 
 # Grid and legend
 ax.grid(True, linestyle='--', alpha=0.5)
-#plt.legend(loc='upper left', fontsize=14, frameon=False) # Show legend
 
 # Configure axes using the helper function
 xmin= 0; xmax = 2.5; ymin = -5.0; ymax = 5.0
-configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=16, spine_width=1.5, tick_width=1.5, tick_length=6)
+configure_axes(ax, xmin, xmax, ymin, ymax, x_num_ticks=6, y_num_ticks=5, tick_fontsize=tick_fontsize, spine_width=1.5, tick_width=1.5, tick_length=6)
 
 # Add text annotations
 auxH = 0.065; auxX = 0.050; auxY = 0.050
@@ -357,7 +360,7 @@ texts = [
     r'$\mu_{i,j}/\Lambda = 0.0$',
     r'$M_{i,j}/\Lambda = 0.4$',
 ]
-add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=16)
+add_annotation_block(ax, xmin, xmax, ymin, ymax, auxX, auxY, auxH, texts=texts, fontsize=annotation_fontsize)
 
 
 # Add legend lines and labels
@@ -368,7 +371,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.05, 
                       y_factor=0.94 - auxH*0,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colorkvec00, color2=colorkvec00, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
@@ -378,7 +381,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.05, 
                       y_factor=0.94 - auxH*1,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colorkvec05, color2=colorkvec05, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
@@ -388,7 +391,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.5, 
                       y_factor=0.94 - auxH*0,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colorkvec10, color2=colorkvec10, 
                       width1=2, width2=2, 
                       style1="-", style2="--")
@@ -398,7 +401,7 @@ annotate_with_2_lines(ax, xmin, xmax, ymin, ymax, dist,
                       x_start_factor=0.5, 
                       y_factor=0.94 - auxH*1,
                       length_line_fraction_of_box=0.4, 
-                      fontsize=16, 
+                      fontsize=annotation_fontsize, 
                       color1=colorkvec15, color2=colorkvec15, 
                       width1=2, width2=2, 
                       style1="-", style2="--")

@@ -8,7 +8,11 @@
 #include "math_utils/useful_functions.h"
 #include "utils/format_utils.h"
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::endl;
+using std::vector;
+
 
 // Constructor that takes generic pointer (void*), casts it into class object and copy it to the current instance
 SU3NJL3DCutoffFixedChemPotTemp::SU3NJL3DCutoffFixedChemPotTemp(void* auxiliar)
@@ -122,7 +126,7 @@ int SU3NJL3DCutoffGapEquationsFixedChemicalPotentialsTemperature(const gsl_vecto
     double cPS = solution->getStrangeQuarkChemicalPotential();
 
     //This solution does not take into account vector degrees of freedom
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -173,7 +177,7 @@ bool SU3NJL3DCutoffFixedChemPotTemp::testSolution(double precision)
 }
 
 SU3NJL3DCutoffMeson SU3NJL3DCutoffFixedChemPotTemp::calculateMesonMassAndWidth(
-    mesonState mesonIDAux, 
+    MesonState mesonIDAux, 
     double precision, 
     MultiRootFindingMethod method, 
     double mesonMassGuess, 
@@ -580,7 +584,7 @@ vector<SU3NJL3DCutoffFixedChemPotTemp> SU3NJL3DCutoffFixedChemPotTemp::solveToCh
 vector<SU3NJL3DCutoffMeson> mesonPropertiesFromVacuumToFiniteTemperatureAtZeroChemicalPotential(
     SU3NJL3DCutoffVacuum vacuumSolution, 
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, 
-    mesonState mesonID, 
+    MesonState mesonID, 
     double mesonPropertiesPrecision, 
     MultiRootFindingMethod method, 
     double mesonMassVacuumGuess, 
@@ -652,7 +656,7 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
     
     //Meson propagator stuff
     double mesonPropagatorPrecision = solution.getParametersNJL().getSigmaIntegralPrecision();
-    mesonState mesonID = solution.getMesonID();
+    MesonState mesonID = solution.getMesonID();
     double k0 = mesonStateMassAtMeltingPoint(mU, mD, mS, mesonID);
     gsl_complex mesonPropagator = nonDiagonalMesonPropagator(
         solution.getParametersNJL(), 
@@ -686,7 +690,7 @@ int SU3NJL3DCutoffNondiagonalMesonMottTemperatureFixedChemicalPotentials(const g
 }
 
 void SU3NJL3DCutoffFixedChemPotTemp::findNondiagonalMesonMottTemperature(
-    mesonState mesonIDAux,
+    MesonState mesonIDAux,
     double precision, 
     MultiRootFindingMethod method, 
     double upQuarkEffectiveMassGuess, 
@@ -720,7 +724,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::findNondiagonalMesonMottTemperature(
 SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(
     SU3NJL3DCutoffVacuum vacuumSolution, 
     vector<SU3NJL3DCutoffFixedChemPotTemp> finiteTempSolution, 
-    mesonState mesonID, 
+    MesonState mesonID, 
     double mesonPropertiesPrecision, 
     MultiRootFindingMethod method, 
     double mesonMassVacuumGuess, 
@@ -765,7 +769,7 @@ SU3NJL3DCutoffFixedChemPotTemp nondiagonalMesonMeltingPoint(
         mottSolution.findNondiagonalMesonMottTemperature(
             mesonID, 
             mesonPropertiesPrecision, 
-            HYBRIDS, 
+            MultiRootFindingMethod::HYBRIDS, 
             mesonFiniteT[meltingPointGuess].getUpQuarkEffectiveMass(), 
             mesonFiniteT[meltingPointGuess].getDownQuarkEffectiveMass(), 
             mesonFiniteT[meltingPointGuess].getStrangeQuarkEffectiveMass(), 
@@ -870,7 +874,7 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculatePressure(double vacuumPressure)
     //This holds if no vector interactions are considered
     //If vector interactions are considered, abort until this is updated
     LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -902,7 +906,7 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEnergyDensity(double vacuumEnerg
     //This holds if no vector interactions are considered
     //If vector interactions are considered, abort until this is updated
     LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -928,14 +932,13 @@ double SU3NJL3DCutoffFixedChemPotTemp::calculateEnergyDensity(double vacuumEnerg
     return energyNJL;
 }
 
-
 double SU3NJL3DCutoffFixedChemPotTemp::calculateEntropyDensity()
 {
     //Consider chemical potentials equal to effective chemical potentials
     //This holds if no vector interactions are considered
     //If vector interactions are considered, abort until this is updated
     LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -965,7 +968,7 @@ void SU3NJL3DCutoffFixedChemPotTemp::setQuarkDensities()
     //This holds if no vector interactions are considered
     //If vector interactions are considered, abort until this is updated
     LagrangianInteractions lagrangianInteractions = getParametersNJL().getDimensionfulCouplings().getLagrangianInteractions();
-    if ( lagrangianInteractions!=SP4Q_DET2NFQ && lagrangianInteractions!=SP4Q_DET2NFQ_SP8Q  )
+    if ( lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ && lagrangianInteractions!=LagrangianInteractions::SP4Q_DET2NFQ_SP8Q  )
     {   
         cout << "Lagrangian interactions contain vector degrees of freedom! "
              << "The class SU3NJL3DCutoffFixedChemPotTemp is not prepared for this!\n";
@@ -1106,8 +1109,8 @@ void SU3NJL3DCutoffFixedChemPotTemp::evaluateInMediumMassesAndThermodynamics(
 
     string filename = "SU3NJL3DCutoffFixedChemPotTemp";
     filename = filename + "_" + finiteTSolution[0].getParametersNJL().getParameterSetName();
-    filename = filename + "_TMin" + to_string(finiteTSolution[0].getTemperature());
-    filename = filename + "_TMax" + to_string(finiteTSolution[finiteTSolution.size()-1].getTemperature());
+    filename = filename + "_TMin" + std::to_string(finiteTSolution[0].getTemperature());
+    filename = filename + "_TMax" + std::to_string(finiteTSolution[finiteTSolution.size()-1].getTemperature());
     filename = filename + "_CP0";
     replaceChar(filename, '.', 'p');
     filename =  filename +".dat";

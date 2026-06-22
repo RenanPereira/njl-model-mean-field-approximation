@@ -1,12 +1,9 @@
 #ifndef SU3NJL3DCUTOFFVACUUM_H
 #define SU3NJL3DCUTOFFVACUUM_H
 
-#include <vector>
 #include "physics_utils/distribution_functions.h"
 #include "njl_model/NJLDimensionfulCouplings.h"
 #include "njl_model/su3_3d_cutoff/SU3NJL3DCutoffMesonPropagators.h"
-using namespace std;
-
 
 
 class SU3NJL3DCutoffVacuum
@@ -50,8 +47,8 @@ public:
 	double calculateVacuumPressureElectrons(double );
 
 	//meson properties
-	SU3NJL3DCutoffMeson calculateMesonMassAndWidth(mesonState , double , MultiRootFindingMethod , double , double );
-	void logVacuumSolutionToFile(string );
+	SU3NJL3DCutoffMeson calculateMesonMassAndWidth(MesonState , double , MultiRootFindingMethod , double , double );
+	void logVacuumSolutionToFile(std::string );
 
 	static void evaluateVacuumMasses(
         SU3NJL3DCutoffParameters& ,                                

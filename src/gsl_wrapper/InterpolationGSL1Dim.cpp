@@ -1,6 +1,7 @@
 #include "gsl_wrapper/InterpolationGSL1Dim.h"
 
-using namespace std;
+using std::cout;
+using std::vector;
 
 void InterpolationGSL1Dim::setSpline()
 {   
@@ -14,12 +15,30 @@ void InterpolationGSL1Dim::setSpline()
     copy(discretizedFunction.begin(), discretizedFunction.end(), function);
 
     //allocate memory for GSL interpolation
-    if ( method==linear ){ spline = gsl_spline_alloc(gsl_interp_linear, N); }
-    else if( method==steffen ){ spline = gsl_spline_alloc(gsl_interp_steffen, N); }
-    else if( method==cubic ){ spline = gsl_spline_alloc(gsl_interp_cspline, N); }
-    else if( method==akima ){ spline = gsl_spline_alloc(gsl_interp_akima, N); }	
-    else if( method==polynomial ){ spline = gsl_spline_alloc(gsl_interp_polynomial, N); }
-    else { spline = gsl_spline_alloc(gsl_interp_linear, N); }
+    if ( method==InterpolationGSL1DimMethod::LINEAR  )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_linear, N); 
+	}
+    else if( method==InterpolationGSL1DimMethod::STEFFEN )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_steffen, N); 
+	}
+    else if( method==InterpolationGSL1DimMethod::CUBIC )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_cspline, N); 
+	}
+    else if( method==InterpolationGSL1DimMethod::AKIMA )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_akima, N);
+	}	
+    else if( method==InterpolationGSL1DimMethod::POLYNOMIAL )
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_polynomial, N); 
+	}
+    else 
+	{ 
+		spline = gsl_spline_alloc(gsl_interp_linear, N); 
+	}
 
     //initiate interpolation
     gsl_spline_init(spline, variable, function, N);
@@ -287,7 +306,7 @@ vector<double> InterpolationGSL1Dim::findRoots2ndDerivative(RootFindingMethod me
 
 void InterpolationGSL1Dim::tests(OneVariableFunction testFunction)
 {
-	vector<double> roots = findRoots(brent, 1E-8);
+	vector<double> roots = findRoots(RootFindingMethod::BRENT, 1E-8);
 
 	cout << "Number of simple roots found = " << roots.size() << "\n";
 	cout << "The roots in the provided interpolation bounds are (x , y):\n";
@@ -297,7 +316,7 @@ void InterpolationGSL1Dim::tests(OneVariableFunction testFunction)
 		cout << "(" << x << " , " << testFunction.evaluate(x) << ")" << "\n";
 	}
 
-    vector<double> extrema = findRoots1stDerivative(brent, 1E-8);
+    vector<double> extrema = findRoots1stDerivative(RootFindingMethod::BRENT, 1E-8);
     cout << "Number of extrema found = " << extrema.size() << "\n";
 	cout << "The extrema in the provided interpolation bounds are  (x , y):\n";
     for (int i = 0; i < int(extrema.size()); i++)
@@ -352,6 +371,3 @@ double equationToFindRootsOfInterpolation2ndDerivative(double x, void *interpola
 
 	return fx;
 }
-
-
-

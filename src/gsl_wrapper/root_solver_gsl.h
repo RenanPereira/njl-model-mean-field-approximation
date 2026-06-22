@@ -10,7 +10,7 @@
 // Maximum number of iterations in the root-finding loops
 inline constexpr int MAX_ITERATIONS = 1000;
 
-enum MultiRootFindingMethod 
+enum class MultiRootFindingMethod 
 { 
     HYBRIDS, 
     HYBRID, 
@@ -26,11 +26,11 @@ inline const std::map<MultiRootFindingMethod, std::string> MultiRootFindingMetho
     {MultiRootFindingMethod::BROYDEN, "BROYDEN"}
 };
 
-enum RootFindingMethod 
+enum class RootFindingMethod 
 { 
-    brent, 
-    bisection, 
-    falsepos 
+    BRENT,
+    BISECTION,
+    FALSEPOS
 };
 
 std::string toString(MultiRootFindingMethod );
@@ -41,13 +41,38 @@ bool isValidMultiRootFindingMethod(const std::string& , const std::string& );
 
 bool isValidMultiRootFindingMethod(const std::string& );
 
-void multiDimensionalRootFind(int , double , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*), MultiRootFindingMethod );
+void multiDimensionalRootFind(
+    int , 
+    double , 
+    double* , 
+    void* , 
+    int placeholder_f(const gsl_vector* , void*, gsl_vector* ), 
+    MultiRootFindingMethod 
+);
 
-double OneDimensionalRootFind(double , double , double , void* , double placeholder_f(double, void*), RootFindingMethod );
+double OneDimensionalRootFind(
+    double , 
+    double , 
+    double , 
+    void* , 
+    double placeholder_f (double , void* ), 
+    RootFindingMethod 
+);
 
-std::vector<double> multiDimensionalRootFindRelativeErrors(int , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*));
+std::vector<double> multiDimensionalRootFindRelativeErrors(
+    int , 
+    double* , 
+    void* , 
+    int placeholder_f(const gsl_vector* , void*, gsl_vector* )
+);
 
-int multiDimensionalRootFindTestResidual(int , double , double* , void* , int placeholder_f(const gsl_vector*, void*, gsl_vector*));
+int multiDimensionalRootFindTestResidual(
+    int , 
+    double , 
+    double* , 
+    void* , 
+    int placeholder_f(const gsl_vector* , void*, gsl_vector* )
+);
 
 std::vector<gsl_complex> sortGSLComplexNumbersByAbsoluteSize(std::vector<gsl_complex> );
 

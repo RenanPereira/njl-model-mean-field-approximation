@@ -158,7 +158,7 @@ double crossSectionProcess12To34Integrand(double x, void *parameters)
     double effMassS = aux.getStrangeQuarkEffectiveMass();
     double s = aux.getCenterOfMassEnergy();
     double integralPrecision = aux.getPropagatorIntegralPrecision();
-    scatteringProcess process = aux.getProcess();
+    ScatteringProcess process = aux.getProcess();
     bool largeAngleScatteringContribution = aux.getLargeAngleScatteringContribution();
 
     double integrand = differentialCrossSectionProcess12To34(
@@ -199,12 +199,12 @@ double crossSectionProcess12To34(
     double effMassS, 
     double s, 
     double propIntPrecision, 
-    scatteringProcess process, 
+    ScatteringProcess process, 
     bool largeAngleScatteringContribution, 
     double crossSecIntPrecision
 )
 {   
-    string integralID = "crossSectionProcess" + toString(process);
+    std::string integralID = "crossSectionProcess" + toString(process);
     SU3NJL3DCutoffCrossSectionIntegrand aux(
         integralID, 
         parametersNJL, 
@@ -233,7 +233,7 @@ double crossSectionProcess12To34(
     double sMin = centerOfMassEnergyThreshold(m1, m2, m3, m4);
     if ( s<sMin )
     { 
-        cout << "Chosen value for the value of s=" << s 
+        std::cout << "Chosen value for the value of s=" << s 
              << " (the center of mass energy) is smaller then the energy threshold, smin=" << sMin
              << ", for the scattering process " << toString(process) << "! Returning 0!\n"; 
         return 0.0; 
@@ -266,12 +266,12 @@ double crossSectionProcess12To34(
 
     //for processes involving completely identical particles, we have to remove extra counting
     if ( 
-        process==UUUU || 
-        process==DDDD || 
-        process==SSSS ||
-        process==UBarUBarUBarUBar || 
-        process==DBarDBarDBarDBar || 
-        process==SBarSBarSBarSBar 
+        process==ScatteringProcess::UUUU || 
+        process==ScatteringProcess::DDDD || 
+        process==ScatteringProcess::SSSS ||
+        process==ScatteringProcess::UBarUBarUBarUBar || 
+        process==ScatteringProcess::DBarDBarDBarDBar || 
+        process==ScatteringProcess::SBarSBarSBarSBar 
     )
     { 
         crossSection = 0.5*crossSection; 
@@ -291,7 +291,7 @@ void evaluateCrossSectionProcess12To34ToFile(
     double effMassD, 
     double effMassS, 
     double propIntPrecision, 
-    scatteringProcess process, 
+    ScatteringProcess process, 
     bool largeAngleScatteringContribution, 
     double crossSecIntPrecision,
     int numberOfPoints, 
@@ -299,8 +299,8 @@ void evaluateCrossSectionProcess12To34ToFile(
 )
 {   
     //create arrays to save the calculation of the cross sections as a function of the center of mass energy
-    vector<double> sqrtCenterOfMassEnergy(numberOfPoints);
-    vector<double> crossSection(numberOfPoints);
+    std::vector<double> sqrtCenterOfMassEnergy(numberOfPoints);
+    std::vector<double> crossSection(numberOfPoints);
 
     //set incoming and outgoing masses
     double m1, m2, m3, m4;
@@ -311,7 +311,7 @@ void evaluateCrossSectionProcess12To34ToFile(
     double sqrtCenterOfMassMax = sqrt( sMaximumKlevansky(parametersNJL.getThreeMomentumCutoff(), effMassU, effMassD, effMassS) );
     double sqrtDelta = (sqrtCenterOfMassMax - sqrtCenterOfMassMin)/(numberOfPoints-1);
 
-    cout << "Number of threads being used: " << numberOfThreads << "\n";
+    std::cout << "Number of threads being used: " << numberOfThreads << "\n";
     #pragma omp parallel for schedule(dynamic) num_threads(numberOfThreads)
     for (int i = 0; i < numberOfPoints; ++i)
     {   
@@ -336,12 +336,12 @@ void evaluateCrossSectionProcess12To34ToFile(
     }
 
     //create filename
-    string filename = "crossSection" 
+    std::string filename = "crossSection" 
         + toString(process) 
-        + "_T"   + to_string(T) 
-        + "_CPU" + to_string(effChemPotU)
-        + "_CPD" + to_string(effChemPotD)
-        + "_CPS" + to_string(effChemPotS); 
+        + "_T"   + std::to_string(T) 
+        + "_CPU" + std::to_string(effChemPotU)
+        + "_CPD" + std::to_string(effChemPotD)
+        + "_CPS" + std::to_string(effChemPotS); 
     replaceChar(filename, '.', 'p');
     filename = filename + ".dat";
 
@@ -352,7 +352,7 @@ void evaluateCrossSectionProcess12To34ToFile(
     fileCrossSection.precision(15);
     fileCrossSection.width(25);   fileCrossSection << "sqrt(s) [GeV]"; 
     fileCrossSection.width(25);   fileCrossSection << "sigma [mb]"; 
-    fileCrossSection << endl;
+    fileCrossSection << std::endl;
 
     for (int i = 0; i <numberOfPoints; ++i)
     {
@@ -385,23 +385,24 @@ void evaluateCrossSectionsKlevanskyPaper(
     // uu->uu, ud->ud, us->us, ss->ss
     // uubar->uubar, uubar->ddbar, uubar->ssbar, udbar->udbar, usbar->usbar, ssbar->uubar, ssbar->ssbar
 
-    vector<scatteringProcess> processes = { 
-        UDUD, 
-        USUS, 
-        UUUU, 
-        SSSS, 
-        UDBarUDBar, 
-        USBarUSBar, 
-        UUBarUUBar, 
-        UUBarDDBar, 
-        UUBarSSBar, 
-        SSBarUUBar, 
-        SSBarSSBar 
+    std::vector<ScatteringProcess> processes = 
+    { 
+        ScatteringProcess::UDUD, 
+        ScatteringProcess::USUS, 
+        ScatteringProcess::UUUU, 
+        ScatteringProcess::SSSS, 
+        ScatteringProcess::UDBarUDBar, 
+        ScatteringProcess::USBarUSBar, 
+        ScatteringProcess::UUBarUUBar, 
+        ScatteringProcess::UUBarDDBar, 
+        ScatteringProcess::UUBarSSBar, 
+        ScatteringProcess::SSBarUUBar, 
+        ScatteringProcess::SSBarSSBar 
     };
 
     for (int i = 0; i < int(processes.size()); ++i)
     {
-        cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
+        std::cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
         evaluateCrossSectionProcess12To34ToFile(
             parametersNJL, 
             T, 
@@ -442,28 +443,29 @@ void evaluateCrossSectionsEqualLightMassesEqualChemicalPotential(
     // uubar->uubar, uubar->ddbar, uubar->ssbar, udbar->udbar ,usbar->usbar, subar->subar, ssbar->uubar, ssbar->ssbar
     // ubarubar->ubarubar, sbarsbar->sbarsbar, ubardbar->ubardbar, ubarsbar->ubarsbar
 
-    vector<scatteringProcess> processes = { 
-        UDUD, 
-        USUS, 
-        UUUU, 
-        SSSS, 
-        UDBarUDBar, 
-        USBarUSBar, 
-        UUBarUUBar, 
-        UUBarDDBar, 
-        UUBarSSBar, 
-        SSBarUUBar, 
-        SSBarSSBar, 
-        SUBarSUBar, 
-        UBarUBarUBarUBar, 
-        SBarSBarSBarSBar, 
-        UBarDBarUBarDBar, 
-        UBarSBarUBarSBar 
+    std::vector<ScatteringProcess> processes = 
+    { 
+        ScatteringProcess::UDUD, 
+        ScatteringProcess::USUS, 
+        ScatteringProcess::UUUU, 
+        ScatteringProcess::SSSS, 
+        ScatteringProcess::UDBarUDBar, 
+        ScatteringProcess::USBarUSBar, 
+        ScatteringProcess::UUBarUUBar, 
+        ScatteringProcess::UUBarDDBar, 
+        ScatteringProcess::UUBarSSBar, 
+        ScatteringProcess::SSBarUUBar, 
+        ScatteringProcess::SSBarSSBar, 
+        ScatteringProcess::SUBarSUBar, 
+        ScatteringProcess::UBarUBarUBarUBar, 
+        ScatteringProcess::SBarSBarSBarSBar, 
+        ScatteringProcess::UBarDBarUBarDBar, 
+        ScatteringProcess::UBarSBarUBarSBar 
     };
 
     for (int i = 0; i < int(processes.size()); ++i)
     {
-        cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
+        std::cout << "Calculating cross section for the process: " << toString(processes[i]) << "\n";
         evaluateCrossSectionProcess12To34ToFile(
             parametersNJL, 
             T,
