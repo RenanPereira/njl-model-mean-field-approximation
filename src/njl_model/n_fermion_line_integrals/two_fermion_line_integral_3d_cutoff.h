@@ -22,10 +22,13 @@ private:
     double etaVariable = 0.0/0.0;
 
 public:
-    TwoFermionLine3DCutoffIntegrand(std::string integralIDAux, 
-                                    double threeMomentumCutoffAux, 
-                                    double effectiveMass1Aux, double effectiveMass2Aux, 
-                                    double threeMomentumAux)
+    TwoFermionLine3DCutoffIntegrand(
+        std::string integralIDAux, 
+        double threeMomentumCutoffAux, 
+        double effectiveMass1Aux, 
+        double effectiveMass2Aux, 
+        double threeMomentumAux
+    )
     {   
         integralID = integralIDAux;
         threeMomentumCutoff = threeMomentumCutoffAux;
@@ -34,13 +37,17 @@ public:
         threeMomentum = threeMomentumAux;
     };
 
-    TwoFermionLine3DCutoffIntegrand(std::string integralIDAux, 
-                                    double temperatureAux, 
-                                    double effectiveChemicalPotential1Aux, double effectiveChemicalPotential2Aux,
-                                    double threeMomentumCutoffAux,
-                                    double effectiveMass1Aux, double effectiveMass2Aux,
-                                    double zeroMomentumAux, double threeMomentumAux,
-                                    double etaVariableAux)
+    TwoFermionLine3DCutoffIntegrand(
+        std::string integralIDAux, 
+        double temperatureAux, 
+        double effectiveChemicalPotential1Aux, 
+        double effectiveChemicalPotential2Aux,
+        double threeMomentumCutoffAux,
+        double effectiveMass1Aux, 
+        double effectiveMass2Aux,
+        double zeroMomentumAux, 
+        double threeMomentumAux,
+        double etaVariableAux)
     {   
         integralID = integralIDAux;
         temperature = temperatureAux;
@@ -54,11 +61,16 @@ public:
         etaVariable = etaVariableAux;
     };
 
-    TwoFermionLine3DCutoffIntegrand(double temperatureAux, 
-                                    double effectiveChemicalPotential1Aux, double effectiveChemicalPotential2Aux,
-                                    double threeMomentumCutoffAux,
-                                    double effectiveMass1Aux, double effectiveMass2Aux,
-                                    double zeroMomentumAux, double threeMomentumAux)
+    TwoFermionLine3DCutoffIntegrand(
+        double temperatureAux, 
+        double effectiveChemicalPotential1Aux, 
+        double effectiveChemicalPotential2Aux,
+        double threeMomentumCutoffAux,
+        double effectiveMass1Aux, 
+        double effectiveMass2Aux,
+        double zeroMomentumAux, 
+        double threeMomentumAux
+    )
     {   
         temperature = temperatureAux;
         effectiveChemicalPotential1 = effectiveChemicalPotential1Aux;
@@ -235,7 +247,17 @@ double gPlusEta(double , double , double , double , double , double , double , d
 
 double real16Pi2f1Pair3DCutoffNumerator(double , void *);
 
-double real16Pi2f1Pair3DCutoff(double , double , double , double , double , double , double , double , double );
+double real16Pi2f1Pair3DCutoff(
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 double imag16Pi2f1Pair3DCutoff(double , double , double , double , double , double , double , double );
 
@@ -265,7 +287,16 @@ double gPlusEtaZero3Momentum(double , double , double , double , double , double
 
 double real16Pi2f1PairZero3Momentum3DCutoffNumerator(double , void *);
 
-double real16Pi2f1PairZero3Momentum3DCutoff(double , double , double , double , double , double , double , double );
+double real16Pi2f1PairZero3Momentum3DCutoff(
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 double imag16Pi2f1PairZero3Momentum3DCutoff(double , double , double , double , double , double , double );
 
@@ -285,23 +316,79 @@ double gMinusEtaZero3Momentum(double , double , double , double , double , doubl
 
 double real16Pi2f1ScatZero3Momentum3DCutoffDifferentMassesNumerator(double , void *);
 
-double real16Pi2f1ScatZero3Momentum3DCutoffDifferentMasses(double , double , double , double , double , double , double , double );
+double real16Pi2f1ScatZero3Momentum3DCutoffDifferentMasses(
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 double real16Pi2f1ScatZero3Momentum3DCutoffEqualMassesIntegrand(double , void *);
 
 double real16Pi2f1ScatZero3Momentum3DCutoffEqualMasses(double , double , double , double , double , double , double , double );
 
-double imag16Pi2f1ScatZero3Momentum3DCutoffDifferentMasses(double , double , double , double , double , double , double );
+double imag16Pi2f1ScatZero3Momentum3DCutoffDifferentMasses(
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-double real16Pi2f1Zero3Momentum3DCutoff(double , double , double , double , double , double , double , double );
+double real16Pi2f1Zero3Momentum3DCutoff(
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 double imag16Pi2f1Zero3Momentum3DCutoff(double , double , double , double , double , double , double );
 
-double real16Pi2f13DCutoff(double , double , double , double , double , double , double , double , double );
+double real16Pi2f13DCutoff(
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-double imag16Pi2f13DCutoff(double , double , double , double , double , double , double , double );
+double imag16Pi2f13DCutoff(
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
-gsl_complex klevanskyB0Integral3DCutoff(NJL3DCutoffRegularizationScheme , double , double , double , double , double , double , double , double , double );
+gsl_complex klevanskyB0Integral3DCutoff(
+    NJL3DCutoffRegularizationScheme , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double , 
+    double 
+);
 
 
 #endif
