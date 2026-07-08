@@ -720,17 +720,20 @@ vector<SU3NJL3DCutoffFixedTempRhoBEqualChemPot::ChiralTransitionPoint> SU3NJL3DC
             mD_restored = point.downQuarkEffectiveMassRestored; 
             mS_restored = point.strangeQuarkEffectiveMassRestored;
             effCP_restored = point.quarkEffectiveChemicalPotentialRestored;
+            
+            deltaCEP = fabs(mU_broken - mU_restored);
 
-            //Store the chiral transition point
-            firtOrderLine.push_back(point);
+            if ( deltaCEP>massDifferenceCEP )
+            {
+                //Store the chiral transition point
+                firtOrderLine.push_back(point);
             
-            printf("Temperature=%.6f [GeV]\n", T);
-            printf("Broken phase:\n");
-            printf("mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n", mU_broken, mD_broken, mS_broken, effCP_broken);
-            printf("Restored phase:\n");
-            printf("mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n\n", mU_restored, mD_restored, mS_restored, effCP_restored);
-            
-            deltaCEP = abs(mU_broken - mU_restored);
+                printf("Temperature=%.6f [GeV]\n", T);
+                printf("Broken phase:\n");
+                printf("mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n", mU_broken, mD_broken, mS_broken, effCP_broken);
+                printf("Restored phase:\n");
+                printf("mU=%.6f, mD=%.6f, mS=%.6f, effCP=%.6f [GeV] \n\n", mU_restored, mD_restored, mS_restored, effCP_restored);
+            }
             
             //Increase temperature
             T = T + deltaT;
