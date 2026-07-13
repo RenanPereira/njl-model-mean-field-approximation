@@ -65,7 +65,7 @@ plot_quark_rel_time_vs_temperature(
     annotation_vert_space=0.06
 )
 
-plot_quark_rel_time_vs_temperature(
+""" plot_quark_rel_time_vs_temperature(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -175,7 +175,7 @@ plot_quark_rel_time_vs_temperature(
     x_annotation=0.10,
     y_annotation=0.8,
     annotation_vert_space=0.06
-)
+) """
 
 plot_quark_rel_time_vs_temperature(
     fig_dpi,
@@ -190,22 +190,22 @@ plot_quark_rel_time_vs_temperature(
             2, 
             "-"
         ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
-            "up_quark",
-            r"Method II", 
-            "black", 
-            2, 
-            "--"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
-            "up_quark",
-            r"Method III", 
-            "black", 
-            2, 
-            ":"
-        ),
+        # (
+        #     path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
+        #     "up_quark",
+        #     r"Method II", 
+        #     "black", 
+        #     2, 
+        #     "--"
+        # ),
+        # (
+        #     path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
+        #     "up_quark",
+        #     r"Method III", 
+        #     "black", 
+        #     2, 
+        #     ":"
+        # ),
     ],
     path_output_plot=path_plots_folder + f"l_quark_rel_time_setA_CPCEP.png",
     legend_loc="upper right",
@@ -238,22 +238,22 @@ plot_quark_rel_time_vs_temperature(
             2, 
             "-"
         ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
-            "up_antiquark",
-            r"Method II", 
-            "black", 
-            2, 
-            "--"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
-            "up_antiquark",
-            r"Method III", 
-            "black", 
-            2, 
-            ":"
-        ),
+        # (
+        #     path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
+        #     "up_antiquark",
+        #     r"Method II", 
+        #     "black", 
+        #     2, 
+        #     "--"
+        # ),
+        # (
+        #     path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
+        #     "up_antiquark",
+        #     r"Method III", 
+        #     "black", 
+        #     2, 
+        #     ":"
+        # ),
     ],
     path_output_plot=path_plots_folder + f"l_antiquark_rel_time_setA_CPCEP.png",
     legend_loc="upper right",
@@ -286,22 +286,22 @@ plot_quark_rel_time_vs_temperature(
             2, 
             "-"
         ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
-            "strange_quark",
-            r"Method II", 
-            "black", 
-            2, 
-            "--"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
-            "strange_quark",
-            r"Method III", 
-            "black", 
-            2, 
-            ":"
-        ),
+        # (
+        #     path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
+        #     "strange_quark",
+        #     r"Method II", 
+        #     "black", 
+        #     2, 
+        #     "--"
+        # ),
+        # (
+        #     path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
+        #     "strange_quark",
+        #     r"Method III", 
+        #     "black", 
+        #     2, 
+        #     ":"
+        # ),
     ],
     path_output_plot=path_plots_folder + f"s_quark_rel_time_setA_CPCEP.png",
     legend_loc="upper right",
@@ -334,22 +334,22 @@ plot_quark_rel_time_vs_temperature(
             2, 
             "-"
         ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
-            "strange_antiquark",
-            r"Method II", 
-            "black", 
-            2, 
-            "--"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
-            "strange_antiquark",
-            r"Method III", 
-            "black", 
-            2, 
-            ":"
-        ),
+        # (
+        #     path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
+        #     "strange_antiquark",
+        #     r"Method II", 
+        #     "black", 
+        #     2, 
+        #     "--"
+        # ),
+        # (
+        #     path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
+        #     "strange_antiquark",
+        #     r"Method III", 
+        #     "black", 
+        #     2, 
+        #     ":"
+        # ),
     ],
     path_output_plot=path_plots_folder + f"s_antiquark_rel_time_setA_CPCEP.png",
     legend_loc="upper right",

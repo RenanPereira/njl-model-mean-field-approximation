@@ -9,6 +9,9 @@ fig_y_size = 6
 path_transport_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
 path_output_plot_folder = "su3_3d_cutoff_transport_coefficients/plots/"
 
+####################################################################################################
+# set A
+
 datasets_cp0 = [
     (
         path_transport_data_folder + "ShearViscosity_setA_COMPLETE_COV_CP0.dat",  
@@ -81,22 +84,8 @@ plot_eta_over_s_vs_temp(
 datasets_cpcep = [
     (
         path_transport_data_folder + "ShearViscosity_setA_COMPLETE_COV_CPCEP.dat",  
-        r"Method I", 
+        "", 
         "black", 
-        2, 
-        "-"
-    ),
-    (
-        path_transport_data_folder + "ShearViscosity_setA_KLEVANSKY_CPCEP.dat",  
-        r"Method II", 
-        "red", 
-        2, 
-        "-"
-    ),
-        (
-        path_transport_data_folder + "ShearViscosity_setA_ZHUANG_CPCEP.dat", 
-        r"Method III", 
-        "blue", 
         2, 
         "-"
     ),
@@ -128,7 +117,7 @@ plot_eta_over_s_vs_temp(
     fig_x_size,
     fig_y_size,
     datasets_cpcep,
-    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_SetA_TMin0p0_TMax0p5_CPU0p318434.dat",
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_SetA_TMin0p0_TMax0p5_CPU0p318436.dat",
     path_output_plot_folder + "eta_over_s_vs_temp_setA_CPCEP.png",
     include_kss_bound=True,
     legend_loc="upper right",
@@ -140,6 +129,252 @@ plot_eta_over_s_vs_temp(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
+        r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
+    ],
+    x_annotation=0.05,
+    y_annotation=0.85,
+)
+
+####################################################################################################
+# set B
+
+plot_eta_vs_temp(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_transport_data_folder + "ShearViscosity_setB_COMPLETE_COV_CP0.dat",  
+            "", 
+            "black", 
+            2, 
+            "-"
+        ),
+    ],
+    path_output_plot_folder + "eta_vs_temp_setB_CP0.png",
+    "upper left",
+    xlim=(0.120, 0.300),
+    ylim=(0.0, 0.4),
+    x_num_ticks=4,
+    y_num_ticks=5,
+    x_formatter="%.3f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set B",
+        r"$\mu [\mathrm{GeV}] = 0.0$",
+    ],
+    x_annotation=0.60,
+    y_annotation=0.88,
+)
+
+plot_eta_over_s_vs_temp(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_transport_data_folder + "ShearViscosity_setB_COMPLETE_COV_CP0.dat",  
+            "", 
+            "black", 
+            2, 
+            "-"
+        ),
+    ],
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p0.dat",
+    path_output_plot_folder + "eta_over_s_vs_temp_setB_CP0.png",
+    include_kss_bound=True,
+    legend_loc="upper right",
+    xlim=(0.120, 0.300),
+    ylim=(0.0, 3.0),
+    x_num_ticks=4,
+    y_num_ticks=7,
+    x_formatter="%.3f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set B",
+        r"$\mu [\mathrm{GeV}] = 0.0$",
+    ],
+    x_annotation=0.05,
+    y_annotation=0.85,
+)
+
+plot_eta_vs_temp(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_transport_data_folder + "ShearViscosity_setB_COMPLETE_COV_CPCEP.dat",  
+            "", 
+            "black", 
+            2, 
+            "-"
+        ),
+    ],
+    path_output_plot_folder + "eta_vs_temp_setB_CPCEP.png",
+    "upper left",
+    xlim=(0.075, 0.300),
+    ylim=(0.0, 1.5),
+    x_num_ticks=6,
+    y_num_ticks=4,
+    x_formatter="%.3f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set B",
+        r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
+    ],
+    x_annotation=0.60,
+    y_annotation=0.88,
+)
+
+plot_eta_over_s_vs_temp(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_transport_data_folder + "ShearViscosity_setB_COMPLETE_COV_CPCEP.dat",  
+            "", 
+            "black", 
+            2, 
+            "-"
+        ),
+    ],
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setB_TMin0p0_TMax0p5_CPU0p23103.dat",
+    path_output_plot_folder + "eta_over_s_vs_temp_setB_CPCEP.png",
+    include_kss_bound=True,
+    legend_loc="upper right",
+    xlim=(0.075, 0.300),
+    ylim=(0.0, 6.0),
+    x_num_ticks=6,
+    y_num_ticks=4,
+    x_formatter="%.3f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set B",
+        r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
+    ],
+    x_annotation=0.05,
+    y_annotation=0.85,
+)
+
+####################################################################################################
+# set C
+
+plot_eta_vs_temp(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_transport_data_folder + "ShearViscosity_setC_COMPLETE_COV_CP0.dat",  
+            "", 
+            "black", 
+            2, 
+            "-"
+        ),
+    ],
+    path_output_plot_folder + "eta_vs_temp_setC_CP0.png",
+    "upper left",
+    xlim=(0.120, 0.300),
+    ylim=(0.0, 0.4),
+    x_num_ticks=4,
+    y_num_ticks=5,
+    x_formatter="%.3f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set C",
+        r"$\mu [\mathrm{GeV}] = 0.0$",
+    ],
+    x_annotation=0.60,
+    y_annotation=0.88,
+)
+
+plot_eta_over_s_vs_temp(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_transport_data_folder + "ShearViscosity_setC_COMPLETE_COV_CP0.dat",  
+            "", 
+            "black", 
+            2, 
+            "-"
+        ),
+    ],
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p0.dat",
+    path_output_plot_folder + "eta_over_s_vs_temp_setC_CP0.png",
+    include_kss_bound=True,
+    legend_loc="upper right",
+    xlim=(0.120, 0.300),
+    ylim=(0.0, 3.0),
+    x_num_ticks=4,
+    y_num_ticks=7,
+    x_formatter="%.3f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set C",
+        r"$\mu [\mathrm{GeV}] = 0.0$",
+    ],
+    x_annotation=0.05,
+    y_annotation=0.85,
+)
+
+plot_eta_vs_temp(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_transport_data_folder + "ShearViscosity_setC_COMPLETE_COV_CPCEP.dat",  
+            "", 
+            "black", 
+            2, 
+            "-"
+        ),
+    ],
+    path_output_plot_folder + "eta_vs_temp_setC_CPCEP.png",
+    "upper left",
+    xlim=(0.084, 0.300),
+    ylim=(0.0, 1.5),
+    x_num_ticks=5,
+    y_num_ticks=4,
+    x_formatter="%.3f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set C",
+        r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
+    ],
+    x_annotation=0.60,
+    y_annotation=0.88,
+)
+
+plot_eta_over_s_vs_temp(
+    fig_dpi,
+    fig_x_size,
+    fig_y_size,
+    [
+        (
+            path_transport_data_folder + "ShearViscosity_setC_COMPLETE_COV_CPCEP.dat",  
+            "", 
+            "black", 
+            2, 
+            "-"
+        ),
+    ],
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setC_TMin0p0_TMax0p5_CPU0p164012.dat",
+    path_output_plot_folder + "eta_over_s_vs_temp_setC_CPCEP.png",
+    include_kss_bound=True,
+    legend_loc="upper right",
+    xlim=(0.084, 0.300),
+    ylim=(0.0, 6.0),
+    x_num_ticks=5,
+    y_num_ticks=4,
+    x_formatter="%.3f", 
+    y_formatter="%.1f",
+    annotation_texts=[
+        "set C",
         r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
     ],
     x_annotation=0.05,

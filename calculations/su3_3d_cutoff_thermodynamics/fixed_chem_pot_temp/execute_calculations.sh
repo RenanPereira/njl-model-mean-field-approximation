@@ -29,7 +29,13 @@ filename="SU3NJL3DCutoffFixedChemPotTempThermo_setB_CP0.ini"
 filename="SU3NJL3DCutoffFixedChemPotTempThermo_setC_CP0.ini"
 ./nambuJonaLasinioModel.out use-config-file $filename
 
-filename="SU3NJL3DCutoffFixedChemPotTempThermo_setA_CPCEP.ini"
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setA_CP0p318436.ini"
+./nambuJonaLasinioModel.out use-config-file $filename
+
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setB_CP0p231030.ini"
+./nambuJonaLasinioModel.out use-config-file $filename
+
+filename="SU3NJL3DCutoffFixedChemPotTempThermo_setC_CP0p164012.ini"
 ./nambuJonaLasinioModel.out use-config-file $filename
 
 filename="SU3NJL3DCutoffFixedChemPotTempThermo_setA_T0p075.ini"
