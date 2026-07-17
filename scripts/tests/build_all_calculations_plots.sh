@@ -26,7 +26,7 @@ echo "Building plots: SU3 NJL Cross Section Study with Klevansky parameter set"
 
 # SU3 NJL Integrated Cross Section Study
 echo "Building plots: SU3 NJL Integrated Cross Section Study"
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./build_plots.sh)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./build_plots.sh)
 
 
 # SU3 NJL Quark Relaxation Time Study

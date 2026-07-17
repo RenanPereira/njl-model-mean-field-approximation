@@ -10,6 +10,7 @@ src/*/*.o*
 src/*/*.d
 
 calculations/**/__pycache__/
+calculations/**/**/**/*.out
 
 tests/**/*.d
 tests/**/*.o

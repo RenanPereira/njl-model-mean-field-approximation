@@ -124,22 +124,25 @@ A Dockerfile is provided in the `docker/` directory, containing all the necessar
 
 ## SU3 NJL Integrated Cross Section Study (su3_3d_cutoff_int_cross_sections)
 
-### Zero chemical potential
 ```bash
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_COMPLETE_COV.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_KLEVANSKY.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_ZHUANG.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_local_main.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./build_plots.sh)
-```
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p000000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p000000_KLEVANSKY)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p000000_ZHUANG)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p100000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p200000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p300000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p318436)
 
-### CEP chemical potential
-```bash
-(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_calculations_COMPLETE_COV.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_calculations_KLEVANSKY.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_calculations_ZHUANG.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./execute_local_main.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/cep_chem_pot && ./build_plots.sh)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setB_CP0p000000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setB_CP0p000000)
+
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setC_CP0p000000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setC_CP0p164012)
+
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_local_main.sh setA_CP0p000000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_local_main.sh setA_CP0p318436)
+
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./build_plots.sh)
 ```
 
 ### Test (su3_3d_cutoff_int_cross_sections_test)

@@ -27,7 +27,7 @@ rm -rf calculations/su3_3d_cutoff_cross_sections_klevansky/data/*.dat
 rm -rf calculations/su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/*.dat
 
 # SU3 NJL Integrated Cross Section Study (delete only the `_COMPLETE_COV_` data files)
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot/data/ && \
+(cd calculations/su3_3d_cutoff_int_cross_sections/data/setA_CP0p000000/ && \
 find . -maxdepth 1 -type f -name "*.dat" \
     ! -name "*_KLEVANSKY_*" \
     ! -name "*_ZHUANG_*" \

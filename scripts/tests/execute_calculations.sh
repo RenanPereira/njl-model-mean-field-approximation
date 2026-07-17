@@ -26,9 +26,9 @@ cd ../.. || exit
 
 
 # SU3 NJL Integrated Cross Section Study
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_COMPLETE_COV.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_KLEVANSKY.sh)
-(cd calculations/su3_3d_cutoff_int_cross_sections/zero_chem_pot && ./execute_calculations_ZHUANG.sh)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p000000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p000000_KLEVANSKY)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p000000_ZHUANG)
 
 
 # SU3 NJL Quark Relaxation Time Study
