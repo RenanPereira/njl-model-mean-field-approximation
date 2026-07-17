@@ -83,7 +83,11 @@ elif [ "$calculation" = "setA_CP0p318436" ]; then
     ./nambuJonaLasinioModel.out use-config-file $filename
 
 elif [ "$calculation" = "setB_CP0p000000" ]; then
+    filename="integratedCrossSections_setB_TMin0p120000_TMax0p300000.ini"
+    ./nambuJonaLasinioModel.out use-config-file $filename
 
+    filename="integratedCrossSections_setB_TMin0p153000_TMax0p178000.ini"
+    ./nambuJonaLasinioModel.out use-config-file $filename
 
 elif [ "$calculation" = "setB_CP0p231030" ]; then
     filename="integratedCrossSections_setB_TMin0p070000_TMax0p300000.ini"
@@ -93,7 +97,11 @@ elif [ "$calculation" = "setB_CP0p231030" ]; then
     ./nambuJonaLasinioModel.out use-config-file $filename
 
 elif [ "$calculation" = "setC_CP0p000000" ]; then
+    filename="integratedCrossSections_setC_TMin0p120000_TMax0p300000.ini"
+    ./nambuJonaLasinioModel.out use-config-file $filename
 
+    filename="integratedCrossSections_setC_TMin0p135000_TMax0p160000.ini"
+    ./nambuJonaLasinioModel.out use-config-file $filename
 
 elif [ "$calculation" = "setC_CP0p164012" ]; then
     filename="integratedCrossSections_setC_TMin0p084000_TMax0p300000.ini"

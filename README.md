@@ -134,7 +134,7 @@ A Dockerfile is provided in the `docker/` directory, containing all the necessar
 (cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setA_CP0p318436)
 
 (cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setB_CP0p000000)
-(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setB_CP0p000000)
+(cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setB_CP0p231030)
 
 (cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setC_CP0p000000)
 (cd calculations/su3_3d_cutoff_int_cross_sections && ./execute_calculations.sh setC_CP0p164012)
