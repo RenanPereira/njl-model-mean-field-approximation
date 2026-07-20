@@ -2,45 +2,52 @@ import os
 from common_utils.transport_coefficients.shear_viscosity import ShearViscosity
 
 
-path_input_data_folder = "su3_3d_cutoff_quark_relaxation_times/data/"
-path_output_data_folder = "su3_3d_cutoff_transport_coefficients/data/"
+quark_rel_times_filepath_prefix = "su3_3d_cutoff_quark_relaxation_times/data/RelaxationTimes"
+output_filepath_prefix = "su3_3d_cutoff_transport_coefficients/data/ShearViscosity"
 
-parameter_sets = ["setA"]
-int_cross_section_methods = ["KLEVANSKY", "ZHUANG"]
-suffixes = ["CP0"]
+configs = [
+    {
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setA_COMPLETE_COV_CP0.dat",
+        "output_filepath": f"{output_filepath_prefix}_setA_COMPLETE_COV_CP0.dat"
+    },
+    {
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setA_KLEVANSKY_CP0.dat",
+        "output_filepath": f"{output_filepath_prefix}_setA_KLEVANSKY_CP0.dat"
+    },
+    {
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setA_ZHUANG_CP0.dat",
+        "output_filepath": f"{output_filepath_prefix}_setA_ZHUANG_CP0.dat"
+    },
+    {
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setA_COMPLETE_COV_CPCEP.dat",
+        "output_filepath": f"{output_filepath_prefix}_setA_COMPLETE_COV_CPCEP.dat"
+    },
+    {
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setB_COMPLETE_COV_CP0.dat",
+        "output_filepath": f"{output_filepath_prefix}_setB_COMPLETE_COV_CP0.dat"
+    },
+    {
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setB_COMPLETE_COV_CPCEP.dat",
+        "output_filepath": f"{output_filepath_prefix}_setB_COMPLETE_COV_CPCEP.dat"
+    },
+    {
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setC_COMPLETE_COV_CP0.dat",
+        "output_filepath": f"{output_filepath_prefix}_setC_COMPLETE_COV_CP0.dat"
+    },
+    {
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setC_COMPLETE_COV_CPCEP.dat",
+        "output_filepath": f"{output_filepath_prefix}_setC_COMPLETE_COV_CPCEP.dat"
+    },
+]
 
-for parameter_set in parameter_sets:
-    for method in int_cross_section_methods:
-        for suffix in suffixes:
+for config in configs:
+    quark_rel_times_filepath = config["quark_rel_times_filepath"]
+    output_filepath = config["output_filepath"]
+    if not os.path.exists(quark_rel_times_filepath):
+        print(f"Skipping missing file: {quark_rel_times_filepath}")
+        continue
             
-            input_filepath = path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_{suffix}.dat'
-            output_filepath = path_output_data_folder + f'ShearViscosity_{parameter_set}_{method}_{suffix}.dat'
-            
-            if not os.path.exists(input_filepath):
-                print(f"Skipping missing file: {input_filepath}")
-                continue
-            
-            print(f"Calculating the Shear Viscosity based on the file: {input_filepath}")
-            print(f"[{parameter_set} | {method} | {suffix}] Processing...")
-            
-            ShearViscosity(input_filepath, output_filepath)
-
-parameter_sets = ["setA", "setB", "setC"]
-int_cross_section_methods = ["COMPLETE_COV"]
-suffixes = ["CP0", "CPCEP"]
-
-for parameter_set in parameter_sets:
-    for method in int_cross_section_methods:
-        for suffix in suffixes:
-            
-            input_filepath = path_input_data_folder + f'RelaxationTimes_{parameter_set}_{method}_{suffix}.dat'
-            output_filepath = path_output_data_folder + f'ShearViscosity_{parameter_set}_{method}_{suffix}.dat'
-            
-            if not os.path.exists(input_filepath):
-                print(f"Skipping missing file: {input_filepath}")
-                continue
-            
-            print(f"Calculating the Shear Viscosity based on the file: {input_filepath}")
-            print(f"[{parameter_set} | {method} | {suffix}] Processing...")
-            
-            ShearViscosity(input_filepath, output_filepath)
+    print(f"Calculating the Shear Viscosity using the file:")
+    print(quark_rel_times_filepath)
+    ShearViscosity(quark_rel_times_filepath, output_filepath)
+    print()
