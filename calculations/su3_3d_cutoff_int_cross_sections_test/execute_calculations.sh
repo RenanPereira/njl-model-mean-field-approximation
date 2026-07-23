@@ -24,8 +24,6 @@ fi
 echo "The calculation will be executed using $threads threads."
 echo ""
 
-make -j"$threads"
-
 # Clean previous build and re-build
 make clean
 make -j$(nproc)
