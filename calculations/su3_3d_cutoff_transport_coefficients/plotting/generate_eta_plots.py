@@ -120,7 +120,7 @@ fig, ax = plot_eta_over_s_vs_temp(
     fig_x_size,
     fig_y_size,
     datasets_cpcep,
-    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_SetA_TMin0p0_TMax0p5_CPU0p318436.dat",
+    "su3_3d_cutoff_thermodynamics/fixed_chem_pot_temp/data/SU3NJL3DCutoffFixedChemPotTemp_setA_TMin0p0_TMax0p5_CPU0p318436.dat",
     path_output_plot_folder + "eta_over_s_vs_temp_setA_CPCEP.png",
     include_kss_bound=True,
     legend_loc="upper right",

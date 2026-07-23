@@ -143,21 +143,21 @@ plot_pressure_vs_baryon_chem_pot(
     fig_y_size,
     [
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetA_T0p075_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setA_T0p075_CPUMin0p0_CPUMax0p5.dat",
             r'set A , $T\, [\mathrm{GeV}] = 0.075$', 
             "black", 
             2, 
             "-"
         ),
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetB_T0p12_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setB_T0p12_CPUMin0p0_CPUMax0p5.dat",
             r'set B , $T\, [\mathrm{GeV}] = 0.120$', 
             "red", 
             2, 
             "-"
         ),
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetC_T0p13_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setC_T0p13_CPUMin0p0_CPUMax0p5.dat",
             r'set C , $T\, [\mathrm{GeV}] = 0.130$', 
             "blue", 
             2, 

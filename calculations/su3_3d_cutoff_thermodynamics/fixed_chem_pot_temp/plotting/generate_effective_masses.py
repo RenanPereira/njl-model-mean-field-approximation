@@ -178,7 +178,7 @@ plot_quark_masses_vs_baryon_chem_pot(
     fig_y_size,
     [
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetA_T0p075_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setA_T0p075_CPUMin0p0_CPUMax0p5.dat",
             "up_quark",
             r'$M_\ell$', 
             "black", 
@@ -186,7 +186,7 @@ plot_quark_masses_vs_baryon_chem_pot(
             "-"
         ),
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetA_T0p075_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setA_T0p075_CPUMin0p0_CPUMax0p5.dat",
             "strange_quark",
             r'$M_s$', 
             "red", 
@@ -216,7 +216,7 @@ plot_quark_masses_vs_baryon_chem_pot(
     fig_y_size,
     [
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetB_T0p12_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setB_T0p12_CPUMin0p0_CPUMax0p5.dat",
             "up_quark",
             r'$M_\ell$', 
             "black", 
@@ -224,7 +224,7 @@ plot_quark_masses_vs_baryon_chem_pot(
             "-"
         ),
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetB_T0p12_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setB_T0p12_CPUMin0p0_CPUMax0p5.dat",
             "strange_quark",
             r'$M_s$', 
             "red", 
@@ -254,7 +254,7 @@ plot_quark_masses_vs_baryon_chem_pot(
     fig_y_size,
     [
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetC_T0p13_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setC_T0p13_CPUMin0p0_CPUMax0p5.dat",
             "up_quark",
             r'$M_\ell$', 
             "black", 
@@ -262,7 +262,7 @@ plot_quark_masses_vs_baryon_chem_pot(
             "-"
         ),
         (
-            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_SetC_T0p13_CPUMin0p0_CPUMax0p5.dat",
+            path_data_folder + f"SU3NJL3DCutoffFixedChemPotTemp_setC_T0p13_CPUMin0p0_CPUMax0p5.dat",
             "strange_quark",
             r'$M_s$', 
             "red", 

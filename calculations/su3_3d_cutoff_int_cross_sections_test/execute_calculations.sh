@@ -38,7 +38,7 @@ sed -i "s/^numberOfThreads = .*/numberOfThreads = $threads/" $filename
 
 cd calculations/su3_3d_cutoff_int_cross_sections_test/data
 
-# SetA
+# setA
 ./nambuJonaLasinioModel.out use-config-file $filename
 
 rm nambuJonaLasinioModel.out
