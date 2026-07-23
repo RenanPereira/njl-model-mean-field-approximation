@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from su3_3d_cutoff_transport_coefficients.plotting.eta_sigmae_ratios_plots import (
     plot_eta_temp_over_sigmae_s_vs_temp, 
     plot_eta_over_sigmae_temp2_vs_temp
@@ -42,7 +43,7 @@ datasets_cp0 = [
     ),
 ]
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -63,8 +64,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.035,
 )
+plt.close(fig)
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -85,8 +87,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -106,8 +109,9 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -127,6 +131,7 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
 datasets_cpcep = [
     (
@@ -139,7 +144,7 @@ datasets_cpcep = [
     ),
 ]
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -160,8 +165,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.035,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -181,8 +187,9 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -202,11 +209,12 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
 ####################################################################################################
 # set B
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -236,8 +244,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.035,
 )
+plt.close(fig)
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -267,8 +276,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -297,8 +307,9 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -327,8 +338,9 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -358,8 +370,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.035,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -388,8 +401,9 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -418,11 +432,12 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
 ####################################################################################################
 # set C
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -452,8 +467,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.035,
 )
+plt.close(fig)
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -483,8 +499,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -513,8 +530,9 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -543,8 +561,9 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_temp_over_sigmae_s_vs_temp(
+fig, ax = plot_eta_temp_over_sigmae_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -574,8 +593,9 @@ plot_eta_temp_over_sigmae_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.035,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -604,8 +624,9 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_eta_over_sigmae_temp2_vs_temp(
+fig, ax = plot_eta_over_sigmae_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -634,3 +655,4 @@ plot_eta_over_sigmae_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.05,
 )
+plt.close(fig)

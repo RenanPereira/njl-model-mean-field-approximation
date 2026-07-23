@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from su3_3d_cutoff_transport_coefficients.plotting.kappa_plots import (
     plot_kappa_vs_temp, 
     plot_kappa_over_temp2_vs_temp,
@@ -25,7 +26,7 @@ datasets_cpcep = [
     ),
 ]
 
-plot_kappa_vs_temp(
+fig, ax = plot_kappa_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -45,8 +46,9 @@ plot_kappa_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_kappa_over_temp2_vs_temp(
+fig, ax = plot_kappa_over_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -66,11 +68,12 @@ plot_kappa_over_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
 ####################################################################################################
 # set B
 
-plot_kappa_vs_temp(
+fig, ax = plot_kappa_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -98,8 +101,9 @@ plot_kappa_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_kappa_over_temp2_vs_temp(
+fig, ax = plot_kappa_over_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -127,11 +131,12 @@ plot_kappa_over_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
 ####################################################################################################
 # set C
 
-plot_kappa_vs_temp(
+fig, ax = plot_kappa_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -159,8 +164,9 @@ plot_kappa_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_kappa_over_temp2_vs_temp(
+fig, ax = plot_kappa_over_temp2_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -188,3 +194,4 @@ plot_kappa_over_temp2_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)

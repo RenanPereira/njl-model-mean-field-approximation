@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from su3_3d_cutoff_transport_coefficients.plotting.eta_plots import plot_eta_vs_temp, plot_eta_over_s_vs_temp
 
 
@@ -36,7 +37,7 @@ datasets_cp0 = [
     ),
 ]
 
-plot_eta_vs_temp(
+fig, ax = plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -56,8 +57,9 @@ plot_eta_vs_temp(
     x_annotation=0.60,
     y_annotation=0.88,
 )
+plt.close(fig)
 
-plot_eta_over_s_vs_temp(
+fig, ax = plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -79,7 +81,7 @@ plot_eta_over_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.85,
 )
-
+plt.close(fig)
 
 datasets_cpcep = [
     (
@@ -91,7 +93,7 @@ datasets_cpcep = [
     ),
 ]
 
-plot_eta_vs_temp(
+fig, ax = plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -111,8 +113,9 @@ plot_eta_vs_temp(
     x_annotation=0.60,
     y_annotation=0.88,
 )
+plt.close(fig)
 
-plot_eta_over_s_vs_temp(
+fig, ax = plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -134,11 +137,12 @@ plot_eta_over_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.85,
 )
+plt.close(fig)
 
 ####################################################################################################
 # set B
 
-plot_eta_vs_temp(
+fig, ax = plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -166,8 +170,9 @@ plot_eta_vs_temp(
     x_annotation=0.60,
     y_annotation=0.88,
 )
+plt.close(fig)
 
-plot_eta_over_s_vs_temp(
+fig, ax = plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -197,8 +202,9 @@ plot_eta_over_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.85,
 )
+plt.close(fig)
 
-plot_eta_vs_temp(
+fig, ax = plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -226,8 +232,9 @@ plot_eta_vs_temp(
     x_annotation=0.60,
     y_annotation=0.88,
 )
+plt.close(fig)
 
-plot_eta_over_s_vs_temp(
+fig, ax = plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -257,11 +264,12 @@ plot_eta_over_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.85,
 )
+plt.close(fig)
 
 ####################################################################################################
 # set C
 
-plot_eta_vs_temp(
+fig, ax = plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -289,8 +297,9 @@ plot_eta_vs_temp(
     x_annotation=0.60,
     y_annotation=0.88,
 )
+plt.close(fig)
 
-plot_eta_over_s_vs_temp(
+fig, ax = plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -320,8 +329,9 @@ plot_eta_over_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.85,
 )
+plt.close(fig)
 
-plot_eta_vs_temp(
+fig, ax = plot_eta_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -349,8 +359,9 @@ plot_eta_vs_temp(
     x_annotation=0.60,
     y_annotation=0.88,
 )
+plt.close(fig)
 
-plot_eta_over_s_vs_temp(
+fig, ax = plot_eta_over_s_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -380,3 +391,4 @@ plot_eta_over_s_vs_temp(
     x_annotation=0.05,
     y_annotation=0.85,
 )
+plt.close(fig)

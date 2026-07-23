@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from su3_3d_cutoff_transport_coefficients.plotting.sigmae_plots import (
     plot_sigmae_vs_temp, 
     plot_sigmae_over_temp_vs_temp
@@ -39,7 +40,7 @@ datasets_cp0 = [
     ),
 ]
 
-plot_sigmae_vs_temp(
+fig, ax = plot_sigmae_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -59,8 +60,9 @@ plot_sigmae_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_sigmae_over_temp_vs_temp(
+fig, ax = plot_sigmae_over_temp_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -80,6 +82,7 @@ plot_sigmae_over_temp_vs_temp(
     x_annotation=0.03,
     y_annotation=0.05,
 )
+plt.close(fig)
 
 datasets_cpcep = [
     (
@@ -91,7 +94,7 @@ datasets_cpcep = [
     ),
 ]
 
-plot_sigmae_vs_temp(
+fig, ax = plot_sigmae_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -111,8 +114,9 @@ plot_sigmae_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_sigmae_over_temp_vs_temp(
+fig, ax = plot_sigmae_over_temp_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -132,11 +136,12 @@ plot_sigmae_over_temp_vs_temp(
     x_annotation=0.03,
     y_annotation=0.05,
 )
+plt.close(fig)
 
 ####################################################################################################
 # set B
 
-plot_sigmae_vs_temp(
+fig, ax = plot_sigmae_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -164,8 +169,9 @@ plot_sigmae_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_sigmae_over_temp_vs_temp(
+fig, ax = plot_sigmae_over_temp_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -193,8 +199,9 @@ plot_sigmae_over_temp_vs_temp(
     x_annotation=0.03,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_sigmae_vs_temp(
+fig, ax = plot_sigmae_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -222,8 +229,9 @@ plot_sigmae_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_sigmae_over_temp_vs_temp(
+fig, ax = plot_sigmae_over_temp_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -251,11 +259,12 @@ plot_sigmae_over_temp_vs_temp(
     x_annotation=0.03,
     y_annotation=0.05,
 )
+plt.close(fig)
 
 ####################################################################################################
 # set C
 
-plot_sigmae_vs_temp(
+fig, ax = plot_sigmae_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -283,8 +292,9 @@ plot_sigmae_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_sigmae_over_temp_vs_temp(
+fig, ax = plot_sigmae_over_temp_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -312,8 +322,9 @@ plot_sigmae_over_temp_vs_temp(
     x_annotation=0.03,
     y_annotation=0.05,
 )
+plt.close(fig)
 
-plot_sigmae_vs_temp(
+fig, ax = plot_sigmae_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -341,8 +352,9 @@ plot_sigmae_vs_temp(
     x_annotation=0.05,
     y_annotation=0.665,
 )
+plt.close(fig)
 
-plot_sigmae_over_temp_vs_temp(
+fig, ax = plot_sigmae_over_temp_vs_temp(
     fig_dpi,
     fig_x_size,
     fig_y_size,
@@ -370,3 +382,4 @@ plot_sigmae_over_temp_vs_temp(
     x_annotation=0.03,
     y_annotation=0.05,
 )
+plt.close(fig)
