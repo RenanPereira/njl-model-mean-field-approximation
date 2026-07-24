@@ -470,7 +470,7 @@ double realKlevanskyAIntegral3DCutoff(NJL3DCutoffRegularizationScheme reguScheme
             
             //This quantity is independent of the value chosen for M2!
             double M1 = M;
-            double M2 = (1-1E-4)*cutoff;
+            double M2 = M1;
 
             realKlevanskyA = realKlevanskyA + realKlevanskyAPair3DCutoff(T, Cp, cutoff, M1, M2, k, integralPrecision);
             realKlevanskyA = realKlevanskyA + realKlevanskyAScat3DCutoff(T, Cp, cutoff, M1, M2, k, integralPrecision);
