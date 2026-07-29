@@ -24,6 +24,7 @@ su3_3d_cutoff_quark_relaxation_times:
     - echo "Checking git status..."
     - git status --porcelain
     - git diff --stat
+    - git diff -- calculations/su3_3d_cutoff_quark_relaxation_times/data/RelaxationTimes_setA_COMPLETE_COV_CP0.dat
 
     # Fail pipeline if there are changes
     - |
