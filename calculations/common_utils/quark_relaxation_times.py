@@ -254,7 +254,6 @@ class QuarkRelaxationTimes:
         if (min(data_lengths) != max(data_lengths)):
             raise ValueError("Data files with different sizes!")
 
-        """
         checks = [
             ("temperature", lambda data: data.get_temperature()),
             ("up quark number", lambda data: data.get_up_quark_number()),
@@ -283,7 +282,6 @@ class QuarkRelaxationTimes:
                         f"Problem found! {name.capitalize()} is not "
                         f"the same in all data! Mismatch found between data indexes {i} and {i+1}"
                     )
-        """
 
     def _calculate_quark_relaxation_times(self) -> None:
 
