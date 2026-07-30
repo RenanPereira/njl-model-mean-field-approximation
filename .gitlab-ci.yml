@@ -195,36 +195,36 @@ su3_3d_cutoff_quark_relaxation_times:
         echo "SUCCESS: No changes detected"
       fi
 
-# su3_3d_cutoff_transport_coefficients:
-#   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
+su3_3d_cutoff_transport_coefficients:
+  image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
 
-#   stage: execute_calculations
+  stage: execute_calculations
 
-#   script:
-#     - echo "Running NJL model calculations in Docker container"
+  script:
+    - echo "Running NJL model calculations in Docker container"
 
-#     # Run calculations
-#     - (cd calculations/su3_3d_cutoff_transport_coefficients && bash execute_calculations.sh)
-#     - (cd calculations/su3_3d_cutoff_transport_coefficients && bash build_plots.sh)
+    # Run calculations
+    - (cd calculations/su3_3d_cutoff_transport_coefficients && bash execute_calculations.sh)
+    - (cd calculations/su3_3d_cutoff_transport_coefficients && bash build_plots.sh)
 
-#     # Return to repo root
-#     - cd "$CI_PROJECT_DIR"
+    # Return to repo root
+    - cd "$CI_PROJECT_DIR"
 
-#     # Show changes for debugging
-#     - echo "Checking git status..."
-#     - git status --porcelain
-#     - git diff --stat
+    # Show changes for debugging
+    - echo "Checking git status..."
+    - git status --porcelain
+    - git diff --stat
 
-#     # Fail pipeline if there are changes
-#     - |
-#       if [ -n "$(git status --porcelain)" ]; then
-#         echo "ERROR: Working directory is not clean after execution"
-#         echo "The following files were modified:"
-#         git status --porcelain
-#         exit 1
-#       else
-#         echo "SUCCESS: No changes detected"
-#       fi
+    # Fail pipeline if there are changes
+    - |
+      if [ -n "$(git status --porcelain)" ]; then
+        echo "ERROR: Working directory is not clean after execution"
+        echo "The following files were modified:"
+        git status --porcelain
+        exit 1
+      else
+        echo "SUCCESS: No changes detected"
+      fi
 
 su3_3d_cutoff_thermodynamics:
   image: registry.gitlab.com/nambu-jona-lasinio-model/njl-model-mean-field-approximation:1.0-gsl-2.8
