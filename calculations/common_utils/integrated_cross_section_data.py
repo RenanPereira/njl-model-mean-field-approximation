@@ -8,7 +8,7 @@ class IntegratedCrossSectionData:
         
         self.data = np.empty((0, 14))
 
-        self.float_tolerance = 1e-8
+        self.float_tolerance = 1e-12
         
         self.temperature = np.array([])
         self.up_quark_number = np.array([])
@@ -134,7 +134,7 @@ class IntegratedCrossSectionData:
         prefix: str
     ) -> "IntegratedCrossSectionData":
         files = []
-        for file in os.listdir(path_data_folder):
+        for file in sorted(os.listdir(path_data_folder)):
             if file.startswith(prefix):
                 files.append(path_data_folder + file)
         
