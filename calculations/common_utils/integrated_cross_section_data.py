@@ -50,7 +50,7 @@ class IntegratedCrossSectionData:
     
     def _sort_data_based_on_temperature(self) -> None:
         # Get sorting indices based on the first column and sort based on those
-        sort_indices = np.argsort(self.data[:, 0])
+        sort_indices = np.argsort(self.data[:, 0], kind="stable")
         sorted_data = self.data[sort_indices]
         
         if sorted_data.shape[0] == 0:
