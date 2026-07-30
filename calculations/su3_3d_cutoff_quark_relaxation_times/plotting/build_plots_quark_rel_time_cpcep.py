@@ -65,117 +65,117 @@ plot_quark_rel_time_vs_temperature(
     annotation_vert_space=0.06
 )
 
-""" plot_quark_rel_time_vs_temperature(
-    fig_dpi,
-    fig_x_size,
-    fig_y_size,
-    data_specs=[
-        (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
-            "up_quark",
-            r"$\tau_{l}$",
-            "black", 
-            2, 
-            "-"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
-            "strange_quark",
-            r"$\tau_{s}$",
-            "red", 
-            2, 
-            ":"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
-            "up_antiquark",
-            r"$\tau_{\overline{l}}$",
-            "black", 
-            2, 
-            "--"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
-            "strange_antiquark",
-            r"$\tau_{\overline{s}}$",
-            "red", 
-            2, 
-            "-."
-        ),
-    ],
-    path_output_plot=path_plots_folder + f"quarks_rel_time_setA_methodII_CPCEP.png",
-    legend_loc="upper right",
-    xlim=(0.040, 0.300),
-    ylim=(0.0, 30.0),
-    x_num_ticks=5,
-    y_num_ticks=7,
-    x_formatter="%.2f",
-    y_formatter="%.1f",
-    annotation_texts=[
-        "set A",
-        "Method II",
-        r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
-    ],
-    x_annotation=0.10,
-    y_annotation=0.8,
-    annotation_vert_space=0.06
-)
+# plot_quark_rel_time_vs_temperature(
+#     fig_dpi,
+#     fig_x_size,
+#     fig_y_size,
+#     data_specs=[
+#         (
+#             path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
+#             "up_quark",
+#             r"$\tau_{l}$",
+#             "black", 
+#             2, 
+#             "-"
+#         ),
+#         (
+#             path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
+#             "strange_quark",
+#             r"$\tau_{s}$",
+#             "red", 
+#             2, 
+#             ":"
+#         ),
+#         (
+#             path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
+#             "up_antiquark",
+#             r"$\tau_{\overline{l}}$",
+#             "black", 
+#             2, 
+#             "--"
+#         ),
+#         (
+#             path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CPCEP.dat",
+#             "strange_antiquark",
+#             r"$\tau_{\overline{s}}$",
+#             "red", 
+#             2, 
+#             "-."
+#         ),
+#     ],
+#     path_output_plot=path_plots_folder + f"quarks_rel_time_setA_methodII_CPCEP.png",
+#     legend_loc="upper right",
+#     xlim=(0.040, 0.300),
+#     ylim=(0.0, 30.0),
+#     x_num_ticks=5,
+#     y_num_ticks=7,
+#     x_formatter="%.2f",
+#     y_formatter="%.1f",
+#     annotation_texts=[
+#         "set A",
+#         "Method II",
+#         r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
+#     ],
+#     x_annotation=0.10,
+#     y_annotation=0.8,
+#     annotation_vert_space=0.06
+# )
 
-plot_quark_rel_time_vs_temperature(
-    fig_dpi,
-    fig_x_size,
-    fig_y_size,
-    data_specs=[
-        (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
-            "up_quark",
-            r"$\tau_{l}$",
-            "black", 
-            2, 
-            "-"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
-            "strange_quark",
-            r"$\tau_{s}$",
-            "red", 
-            2, 
-            ":"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
-            "up_antiquark",
-            r"$\tau_{\overline{l}}$",
-            "black", 
-            2, 
-            "--"
-        ),
-        (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
-            "strange_antiquark",
-            r"$\tau_{\overline{s}}$",
-            "red", 
-            2, 
-            "-."
-        ),
-    ],
-    path_output_plot=path_plots_folder + f"quarks_rel_time_setA_methodIII_CPCEP.png",
-    legend_loc="upper right",
-    xlim=(0.040, 0.300),
-    ylim=(0.0, 30.0),
-    x_num_ticks=5,
-    y_num_ticks=7,
-    x_formatter="%.2f",
-    y_formatter="%.1f",
-    annotation_texts=[
-        "set A",
-        "Method III",
-        r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
-    ],
-    x_annotation=0.10,
-    y_annotation=0.8,
-    annotation_vert_space=0.06
-) """
+# plot_quark_rel_time_vs_temperature(
+#     fig_dpi,
+#     fig_x_size,
+#     fig_y_size,
+#     data_specs=[
+#         (
+#             path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
+#             "up_quark",
+#             r"$\tau_{l}$",
+#             "black", 
+#             2, 
+#             "-"
+#         ),
+#         (
+#             path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
+#             "strange_quark",
+#             r"$\tau_{s}$",
+#             "red", 
+#             2, 
+#             ":"
+#         ),
+#         (
+#             path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
+#             "up_antiquark",
+#             r"$\tau_{\overline{l}}$",
+#             "black", 
+#             2, 
+#             "--"
+#         ),
+#         (
+#             path_data_folder + f"RelaxationTimes_setA_ZHUANG_CPCEP.dat",
+#             "strange_antiquark",
+#             r"$\tau_{\overline{s}}$",
+#             "red", 
+#             2, 
+#             "-."
+#         ),
+#     ],
+#     path_output_plot=path_plots_folder + f"quarks_rel_time_setA_methodIII_CPCEP.png",
+#     legend_loc="upper right",
+#     xlim=(0.040, 0.300),
+#     ylim=(0.0, 30.0),
+#     x_num_ticks=5,
+#     y_num_ticks=7,
+#     x_formatter="%.2f",
+#     y_formatter="%.1f",
+#     annotation_texts=[
+#         "set A",
+#         "Method III",
+#         r"$\mu [\mathrm{GeV}] = \mu_{\mathrm{CEP}}$",
+#     ],
+#     x_annotation=0.10,
+#     y_annotation=0.8,
+#     annotation_vert_space=0.06
+# )
 
 plot_quark_rel_time_vs_temperature(
     fig_dpi,
