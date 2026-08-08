@@ -59,24 +59,24 @@ In this section we present the results of the quark relaxation time for differen
 ### Set A, Zero chemical potential
 
 <p align="left">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UUUU_CP0.png" width="24%">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UUBarUUBar_CP0.png" width="24%">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UUBarSSBar_CP0.png" width="24%">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UUBarDDBar_CP0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UUUU_CP0p0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UUBarUUBar_CP0p0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UUBarSSBar_CP0p0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UUBarDDBar_CP0p0.png" width="24%">
 </p>
 
 <p align="left">
   
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_USUS_CP0.png" width="24%">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_USBarUSBar_CP0.png" width="24%">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_SSBarUUBar_CP0.png" width="24%">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_SSBarSSBar_CP0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_USUS_CP0p0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_USBarUSBar_CP0p0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_SSBarUUBar_CP0p0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_SSBarSSBar_CP0p0.png" width="24%">
 </p>
 
 <p align="left">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UDUD_CP0.png" width="24%">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UDBarUDBar_CP0.png" width="24%">
-  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_SSSS_CP0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UDUD_CP0p0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_UDBarUDBar_CP0p0.png" width="24%">
+  <img src="plots/setA_CP0p000000/integrated_cross_section_setA_SSSS_CP0p0.png" width="24%">
 </p>
 
 

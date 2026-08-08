@@ -44,7 +44,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p0p0.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p0.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.120, 0.300),
