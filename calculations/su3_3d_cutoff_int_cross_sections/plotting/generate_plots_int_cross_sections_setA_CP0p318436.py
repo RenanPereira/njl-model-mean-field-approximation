@@ -27,7 +27,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -38,7 +38,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.08,
     y_annotation=0.88,
@@ -61,7 +61,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -72,7 +72,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.88,
@@ -96,7 +96,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -107,7 +107,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -131,7 +131,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -142,7 +142,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -166,7 +166,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -177,7 +177,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -200,7 +200,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -211,7 +211,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -234,7 +234,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -245,7 +245,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.08,
     y_annotation=0.88,
@@ -268,7 +268,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -279,7 +279,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -302,7 +302,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -313,7 +313,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.85,
@@ -336,7 +336,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -347,7 +347,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -370,7 +370,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -381,7 +381,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -405,7 +405,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -416,7 +416,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -439,7 +439,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -450,7 +450,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.88,
@@ -474,7 +474,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -485,7 +485,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -508,7 +508,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -519,7 +519,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,
@@ -542,7 +542,7 @@ plot_integrated_cross_section_vs_temperature(
             "-"
         ),
     ],
-    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CPCEP.png",
+    path_output_plot=plots_folder + f"integrated_cross_section_setA_{process}_CP0p318436.png",
     legend_loc="upper right",
     label_int_cross_section=process_to_ylabel_latex(process),
     xlim=(0.040, 0.300),
@@ -553,7 +553,7 @@ plot_integrated_cross_section_vs_temperature(
     y_formatter="%.1f",
     annotation_texts=[
         "set A",
-        r"$\mu = \mu_{\mathrm{CEP}}$",
+        r"$\mu [\mathrm{GeV}] = 0.3184$",
     ],
     x_annotation=0.05,
     y_annotation=0.05,

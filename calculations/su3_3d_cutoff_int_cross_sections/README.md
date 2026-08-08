@@ -83,29 +83,29 @@ In this section we present the results of the quark relaxation time for differen
 ### Set A, CEP chemical potential
 
 <p align="left">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UUUU_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UUBarUUBar_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UUBarSSBar_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UUBarDDBar_CPCEP.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UUUU_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UUBarUUBar_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UUBarSSBar_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UUBarDDBar_CP0p318436.png" width="24%">
 </p>
 
 <p align="left">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_USUS_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_USBarUSBar_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UDUD_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UDBarUDBar_CPCEP.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_USUS_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_USBarUSBar_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UDUD_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UDBarUDBar_CP0p318436.png" width="24%">
 </p>
 
 <p align="left">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SSSS_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SSBarUUBar_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SSBarSSBar_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SUBarSUBar_CPCEP.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SSSS_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SSBarUUBar_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SSBarSSBar_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SUBarSUBar_CP0p318436.png" width="24%">
 </p>
 
 <p align="left">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UBarUBarUBarUBar_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UBarSBarUBarSBar_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UBarDBarUBarDBar_CPCEP.png" width="24%">
-  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SBarSBarSBarSBar_CPCEP.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UBarUBarUBarUBar_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UBarSBarUBarSBar_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_UBarDBarUBarDBar_CP0p318436.png" width="24%">
+  <img src="plots/setA_CP0p318436/integrated_cross_section_setA_SBarSBarSBarSBar_CP0p318436.png" width="24%">
 </p>
