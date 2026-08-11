@@ -16,7 +16,7 @@ plot_quark_rel_time_vs_temperature(
     fig_y_size,
     data_specs=[
         (
-            path_data_folder + f"RelaxationTimes_setA_COMPLETE_COV_CP0.dat",
+            path_data_folder + f"RelaxationTimes_setA_COMPLETE_COV_CP0p0.dat",
             "up_quark",
             r"$\tau_{l,\overline{l}}$  | Method I", 
             "black", 
@@ -24,7 +24,7 @@ plot_quark_rel_time_vs_temperature(
             "-"
         ),
         (
-            path_data_folder + f"RelaxationTimes_setA_COMPLETE_COV_CP0.dat",
+            path_data_folder + f"RelaxationTimes_setA_COMPLETE_COV_CP0p0.dat",
             "strange_quark",
             r"$\tau_{s,\overline{s}}$ | Method I", 
             "red", 
@@ -32,7 +32,7 @@ plot_quark_rel_time_vs_temperature(
             "-"
         ),
         (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CP0.dat",
+            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CP0p0.dat",
             "up_quark",
             r"$\tau_{l,\overline{l}}$  | Method II", 
             "black", 
@@ -40,7 +40,7 @@ plot_quark_rel_time_vs_temperature(
             "--"
         ),
         (
-            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CP0.dat",
+            path_data_folder + f"RelaxationTimes_setA_KLEVANSKY_CP0p0.dat",
             "strange_quark",
             r"$\tau_{s,\overline{s}}$ | Method II", 
             "red", 
@@ -48,7 +48,7 @@ plot_quark_rel_time_vs_temperature(
             "--"
         ),
         (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CP0.dat",
+            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CP0p0.dat",
             "up_quark",
             r"$\tau_{l,\overline{l}}$  | Method III", 
             "black", 
@@ -56,7 +56,7 @@ plot_quark_rel_time_vs_temperature(
             ":"
         ),
         (
-            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CP0.dat",
+            path_data_folder + f"RelaxationTimes_setA_ZHUANG_CP0p0.dat",
             "strange_quark",
             r"$\tau_{s,\overline{s}}$ | Method III", 
             "red", 
@@ -64,7 +64,7 @@ plot_quark_rel_time_vs_temperature(
             ":"
         ),
     ],
-    path_output_plot=path_plots_folder + f"quarks_rel_time_setA_CP0.png",
+    path_output_plot=path_plots_folder + f"quarks_rel_time_setA_CP0p0.png",
     legend_loc="upper right",
     xlim=(0.120, 0.300),
     ylim=(0.0, 15.0),

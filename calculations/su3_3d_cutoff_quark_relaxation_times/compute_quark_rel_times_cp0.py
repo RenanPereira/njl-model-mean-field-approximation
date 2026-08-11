@@ -13,7 +13,7 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0p0.dat'
 )
 
 path_input_data_folder = "su3_3d_cutoff_int_cross_sections/data/setA_CP0p000000/"
@@ -24,7 +24,7 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0p0.dat'
 )
 
 path_input_data_folder = "su3_3d_cutoff_int_cross_sections/data/setA_CP0p000000/"
@@ -35,7 +35,7 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0p0.dat'
 )
 
 # set B, zero chemical potential
@@ -47,7 +47,7 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0p0.dat'
 )
 
 # set C, zero chemical potential
@@ -59,5 +59,5 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0p0.dat'
 )

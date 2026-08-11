@@ -13,7 +13,7 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0p318436.dat'
 )
 
 # set B, CEP chemical potential
@@ -25,7 +25,7 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0p231030.dat'
 )
 
 # set C, CEP chemical potential
@@ -37,5 +37,5 @@ quark_relaxation_times = QuarkRelaxationTimes(
     parameter_set, 
     method, 
     physical_scenario,
-    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CPCEP.dat'
+    path_output_data_folder + f'RelaxationTimes_{parameter_set}_{method}_CP0p164012.dat'
 )

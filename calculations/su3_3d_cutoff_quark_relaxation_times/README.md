@@ -33,22 +33,22 @@ In this section we present the results of the quark relaxation time for differen
 ### Set A, Zero chemical potential
 
 <p align="left">
-  <img src="plots/quarks_rel_time_setA_CP0.png" width="32%">
+  <img src="plots/quarks_rel_time_setA_CP0p0.png" width="32%">
 </p>
 
 ### Set A, CEP chemical potential
 
 <p align="left">
-  <img src="plots/quarks_rel_time_setA_methodI_CPCEP.png" width="32%">
-  <img src="plots/quarks_rel_time_setA_methodII_CPCEP.png" width="32%">
-  <img src="plots/quarks_rel_time_setA_methodIII_CPCEP.png" width="32%">
+  <img src="plots/quarks_rel_time_setA_methodI_CP0p318436.png" width="32%">
+  <img src="plots/quarks_rel_time_setA_methodII_CP0p318436.png" width="32%">
+  <img src="plots/quarks_rel_time_setA_methodIII_CP0p318436.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="plots/l_quark_rel_time_setA_CPCEP.png" width="32%">
-  <img src="plots/s_quark_rel_time_setA_CPCEP.png" width="32%">
+  <img src="plots/l_quark_rel_time_setA_CP0p318436.png" width="32%">
+  <img src="plots/s_quark_rel_time_setA_CP0p318436.png" width="32%">
 </p>
 <p align="left">
-  <img src="plots/l_antiquark_rel_time_setA_CPCEP.png" width="32%">
-  <img src="plots/s_antiquark_rel_time_setA_CPCEP.png" width="32%">
+  <img src="plots/l_antiquark_rel_time_setA_CP0p318436.png" width="32%">
+  <img src="plots/s_antiquark_rel_time_setA_CP0p318436.png" width="32%">
 </p>
