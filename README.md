@@ -367,25 +367,25 @@ In the plots below we also calculate the energy density via the Euler equation. 
 ### Shear Viscosity - Zero chemical potential
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_vs_temp_setA_CP0.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_s_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_vs_temp_setA_CP0p0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_s_vs_temp_setA_CP0p0.png" width="32%">
 </p>
 
 ### Electrical Conductivity - Zero chemical potential
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_vs_temp_setA_CP0.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_over_temp_vs_temp_setA_CP0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_vs_temp_setA_CP0p0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/sigmae_over_temp_vs_temp_setA_CP0p0.png" width="32%">
 </p>
 
 ### Shear Viscosity and Electrical Conductivity Ratios - Zero chemical potential
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CP0.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CP0_zoom.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CP0p0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_temp_over_sigmae_s_vs_temp_methods_setA_CP0p0_zoom.png" width="32%">
 </p>
 
 <p align="left">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CP0.png" width="32%">
-  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CP0_zoom.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CP0p0.png" width="32%">
+  <img src="calculations/su3_3d_cutoff_transport_coefficients/plots/eta_over_sigmae_temp2_vs_temp_methods_setA_CP0p0_zoom.png" width="32%">
 </p>

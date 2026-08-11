@@ -8,19 +8,19 @@ output_filepath_prefix = "su3_3d_cutoff_transport_coefficients/data/ThermalCondu
 
 configs = [
     {
-        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setA_COMPLETE_COV_CPCEP.dat",
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setA_COMPLETE_COV_CP0p318436.dat",
         "thermodynamics_filepath": f"{thermodynamics_filepath_prefix}_setA_TMin0p0_TMax0p5_CPU0p318436.dat",
-        "output_filepath": f"{output_filepath_prefix}_setA_COMPLETE_COV_CPCEP.dat"
+        "output_filepath": f"{output_filepath_prefix}_setA_COMPLETE_COV_CP0p318436.dat"
     },
     {
-        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setB_COMPLETE_COV_CPCEP.dat",
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setB_COMPLETE_COV_CP0p231030.dat",
         "thermodynamics_filepath": f"{thermodynamics_filepath_prefix}_setB_TMin0p0_TMax0p5_CPU0p23103.dat",
-        "output_filepath": f"{output_filepath_prefix}_setB_COMPLETE_COV_CPCEP.dat"
+        "output_filepath": f"{output_filepath_prefix}_setB_COMPLETE_COV_CP0p231030.dat"
     },
     {
-        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setC_COMPLETE_COV_CPCEP.dat",
+        "quark_rel_times_filepath": f"{quark_rel_times_filepath_prefix}_setC_COMPLETE_COV_CP0p164012.dat",
         "thermodynamics_filepath": f"{thermodynamics_filepath_prefix}_setC_TMin0p0_TMax0p5_CPU0p164012.dat",
-        "output_filepath": f"{output_filepath_prefix}_setC_COMPLETE_COV_CPCEP.dat"
+        "output_filepath": f"{output_filepath_prefix}_setC_COMPLETE_COV_CP0p164012.dat"
     },
 ]
 
